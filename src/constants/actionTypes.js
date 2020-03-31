@@ -1,0 +1,4 @@
+export const actionTypes = {
+    GET_CLUSTERS: "GET_CLUSTERS",
+    CLUSTERS_RECIEVED: "CLUSTERS_RECIEVED"
+};

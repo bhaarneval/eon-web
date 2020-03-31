@@ -4,8 +4,7 @@
     "commonjs": true,
     "es6": true,
     "node": true,
-    "browser": true,
-    "jest": true
+    "browser": true
   },
   "extends": ["plugin:react/recommended", "eslint:recommended"],
   "parserOptions": {
