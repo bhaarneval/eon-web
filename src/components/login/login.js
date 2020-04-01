@@ -45,7 +45,7 @@ class Login extends Component {
             }}
           >
             {({ handleChange, handleSubmit, values, errors }) => (
-              <form style={{height:'50%'}} onSubmit={handleSubmit}>
+              <form style={{height:'40%'}} onSubmit={handleSubmit}>
                 <div className="flex flex-column vertical-center example-input">
                     <Input 
                       size="large" 
