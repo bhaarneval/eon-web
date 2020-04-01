@@ -4,6 +4,7 @@ import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Login from "../../components/login/login";
+import ForgotPassword from "../../components/forgotPassword/forgotPassword";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import App from "../../App";
@@ -23,6 +24,7 @@ function StyledComp() {
             <Switch>
               <Route path="/login" exact component={Login} />
               <Route path="/" exact component={App} />
+              <Route path="/forgot-password" exact component={ForgotPassword} />
             </Switch>
           </div>
         </div>

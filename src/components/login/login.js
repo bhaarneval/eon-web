@@ -5,13 +5,12 @@ import { EMAIL_REQUIRED, PASSWORD_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
 import {  Form, Input, Button  } from 'antd';
 import { Tabs } from 'antd';
-import illustration from "../../assets/illustration.jpg";
 
 const { TabPane } = Tabs;
 
 import { UserOutlined } from '@ant-design/icons';
 
-class Login extends Component {
+class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +84,7 @@ class Login extends Component {
               rules={[
                 {
                   required: true,
-                  message: 'Please input your username!',
+                  message: 'Please input your email!',
                 },
               ]}
             >
@@ -109,13 +108,11 @@ class Login extends Component {
               {this.state.validationErrorsBadEmail ? 'Invalid Email' : null}
             </Form.Item>
           </Form>
-        </div>
-        <div className="rightBody">
-            <img className="image" src={illustration}/>
+          <a onClick={() => this.props.history.push('/forgot-password')} >Forgot Password?</a>
         </div>
     </div>
     );
   }
 }
 
-export default Login;
+export default ForgotPassword;
