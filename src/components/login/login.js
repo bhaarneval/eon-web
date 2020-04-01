@@ -1,5 +1,5 @@
 /* eslint-disable */
-import "./login.less";
+import "./login.css";
 import { Formik } from "formik";
 import { EMAIL, PASSWORD, SUBMIT } from "../../constants/constants";
 import { EMAIL_REQUIRED, PASSWORD_REQUIRED } from "../../constants/messages";
@@ -46,10 +46,9 @@ class Login extends Component {
                   />
                   {errors.password ? errors.password : null}
                   <Button
-                    style={{ width: "30%" }}
-                    type="submit"
+                    type="primary"
+                    // type="submit"
                     variant="contained"
-                    color="primary"
                   >
                     {SUBMIT}
                   </Button>

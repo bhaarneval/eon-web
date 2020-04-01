@@ -26,7 +26,8 @@ const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 
 const postcssNormalize = require('postcss-normalize');
-
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, '../src/ant-theme-vars.less'), 'utf8'));
 const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -349,7 +350,7 @@ module.exports = function(webpackEnv) {
           test: /\.js$/,
           resolve: { extensions: ['.js'] },
           options: {
-              presets: ['@babel/preset-react'],
+              presets: ["@babel/preset-env", "@babel/preset-react"],
               cacheDirectory: true,
               plugins: [
                   ['import', { libraryName: "antd", style: true }],
@@ -453,6 +454,29 @@ module.exports = function(webpackEnv) {
               sideEffects: true,
             },
             {
+              test: /\.css$/,
+              loaders: ['style-loader', 'css-loader'],
+            },
+            {
+              test: /\.less$/,
+              exclude: /antd/,
+              use: [
+                  {loader: "style-loader"},
+                  {loader: "css-loader",
+                  options: {
+                    modules: {
+                        localIdentName: "[name]__[local]___[hash:base64:5]",
+                    },													
+                },
+                  },
+                  {loader: "less-loader",
+                      options: {
+                          javascriptEnabled: true,
+                      },
+                  },
+              ],
+            },
+            {
               test: /\.less$/,
               include: /antd/,
               use: [
@@ -465,7 +489,8 @@ module.exports = function(webpackEnv) {
                 {
                   loader: 'less-loader', // compiles Less to CSS
                   options: {
-                    javascriptEnabled: true
+                    javascriptEnabled: true,
+                    modifyVars: themeVariables,
                   }
                 },
               ],

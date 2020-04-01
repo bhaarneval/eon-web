@@ -1,4 +1,5 @@
-import './index.less';
+import './index.css';
+import './flex.less';
 
 import * as serviceWorker from './serviceWorker';
 /* eslint-disable */
@@ -13,6 +14,7 @@ import rootReducer from "./reducers/rootReducer";
 import rootSaga from "./sagas";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
+import './ant-overrides.css';
 
 
 const sagaMiddleware = createSagaMiddleware();

@@ -1,10 +1,11 @@
-import "./layout.less";
+import "./layout.css";
 /* eslint-disable */
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Login from "../../components/login/login";
 import Navbar from "../../components/nav/navbar";
+import App from "../../App";
 
 function StyledComp() {
   return (
@@ -15,6 +16,7 @@ function StyledComp() {
           <div className="contentBody">
             <Switch>
               <Route path="/login" exact component={Login} />
+              <Route path="/" exact component={App} />
             </Switch>
           </div>
         </div>
