@@ -69,13 +69,6 @@ class SideNav extends Component {
     const themeWiseIconClass = `${iconClass} ${isDark ? 'activeDark' : 'activeLight'}`;
     return (
       <div className="sideNav">
-
-      <div
-          className={iconClass}
-          onClick={() => this.onClick(constants.HOME)}
-        >
-          EON
-        </div>
         <div
           className={iconClass}
           onClick={() => this.onClick(constants.HOME)}
