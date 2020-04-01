@@ -5,12 +5,18 @@ import { Route, Switch } from "react-router-dom";
 
 import Login from "../../components/login/login";
 import Navbar from "../../components/nav/navbar";
+import SideNav from "../../components/sideNav/sideNav";
 import App from "../../App";
 
 function StyledComp() {
   return (
     <div>
       <div className="flex flex-row layoutContainer">
+        <div className="flex flex-column layoutNavContainer">
+          <div>
+            <SideNav />
+          </div>
+        </div>
         <div className="mainContentContainer">
           <Navbar />
           <div className="contentBody">

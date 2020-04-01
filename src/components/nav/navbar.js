@@ -3,6 +3,10 @@ import "./nav.css";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
+import { Button } from 'antd';
+import {
+  LogoutOutlined
+} from '@ant-design/icons';
 
 import {
   LOGOUT,
@@ -45,12 +49,14 @@ class Navbar extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className="flex flex-row flex-end">
-        <div>
-          <div className="flex flex-row vertical-center space-between">
-            fsdfsd
-          </div>
-        </div>
+      <div className="flex flex-row flex-end top-nav">
+        <Button
+          type="primary"
+          variant="contained"
+        >
+          Register
+        </Button>
+        <LogoutOutlined />
       </div>
     );
   }

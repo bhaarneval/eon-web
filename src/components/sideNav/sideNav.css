@@ -1,0 +1,28 @@
+
+.sideNav {
+  padding-top: 18%;
+}
+
+.iconContainer {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 25% 0;
+  }
+
+.icon {
+    color: blue;
+    font-size: xx-large !important;
+  }
+
+  .activeLight {
+    border-left: 5px solid blue;
+  }
+
+  .activeDark {
+    border-left: 5px solid blue;
+  }
+
+  .sideNavImg {
+    height: 25px;
+  }
