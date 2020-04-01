@@ -1,0 +1,110 @@
+/* Override for ant styles */
+
+.ant-rate {
+  font-size: 14px !important;
+}
+
+.ant-rate-star {
+  margin-right: 4px !important;
+}
+
+.ant-drawer-body {
+  padding: 0 !important;
+}
+
+.ant-collapse-content > .ant-collapse-content-box {
+  padding: 5px !important;
+}
+
+.ant-card-head-title {
+  padding: 10px 0px !important;
+  font-size: 11px !important;
+  font-weight: bold !important;
+}
+
+.ant-card-extra {
+  font-size: 12px !important;
+}
+
+.ant-card-head {
+  padding: 0 10px !important;
+}
+
+.ant-checkbox-inner::after {
+    display: none !important;
+}
+
+.ant-modal-body {
+    padding: 4px !important;
+}
+/* Gets rid of stupid ant zoom that screws up image placement */
+.ant-card-body {
+  padding: 0px 0px !important;
+}
+
+.ant-carousel .slick-slide {
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}
+
+.ant-steps-item-process .ant-steps-item-icon { 
+  background: #F0BA1B !important; 
+  border: 1px solid #d3d3d3 !important;
+}
+
+.ant-steps-item-process .ant-steps-item-icon .ant-steps-icon {
+  color: #000 !important;
+  line-height: 2 !important;
+}
+
+.ant-steps-item-wait .ant-steps-item-icon .ant-steps-icon {
+  line-height: 2 !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon .ant-steps-icon {
+  line-height: 2 !important;
+  top: 4px;
+}
+
+.ant-steps-item-process .ant-steps-item-title {
+  font-weight: bold !important;
+}
+
+.ant-modal-header {
+  background: #F0BA1B !important;
+}
+
+.ant-modal-footer {
+  background-color: #d3d3d3 !important;
+}
+
+.ant-menu-item, .ant-menu-submenu-title {
+  padding: 0 10px !important;
+}
+
+@media (min-width: 320px) and (max-width: 720px) {
+  .ant-radio-button-wrapper {
+    padding: 0 10px !important;
+  }
+}
+
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  background: #333 !important;
+  border-color: #333 !important;
+  font-weight: bold;
+  box-shadow: none !important;
+}
+
+@media screen and (max-width: 600px) {
+  .ant-radio-group{
+    display: flex !important;
+    box-shadow: none !important;
+    flex-direction: column !important;
+    width: 100%;
+    padding: 0px 20px !important;
+  }
+}

@@ -1,4 +1,4 @@
-import './App.less';
+import './App.css';
 /* eslint-disable */
 
 import React, { Component } from "react";

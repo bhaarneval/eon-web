@@ -1,0 +1,87 @@
+/*
+ * Custom Flexbox Helper Classes
+ */
+.flex {
+    display: flex;
+
+    &.cell {
+        flex: 1;
+    }
+    &.equal-sizing {
+        > * {
+            flex-basis: 0;
+            flex-grow: 1;
+        }
+    }
+
+    &.flex-column {
+        flex-direction: column;
+        &.top {
+            align-items: flex-start;
+        }
+        &.bottom {
+            align-items: flex-end;
+        }
+        &.vertical-center {
+            align-items: center;
+        }
+        &.space-between {
+            align-items: space-between;
+        }
+        &.space-evenly {
+            justify-content: space-evenly;
+        }
+        &.flex-end {
+            justify-content: flex-end;
+        }
+        &.space-around {
+            align-items: space-around;
+        }
+    } // end column
+
+    &.flex-row {
+        flex-direction: row;
+        &.wrap {
+            flex-flow: row wrap;
+        }
+        &.top {
+            align-items: flex-start;
+        }
+        &.bottom {
+            align-items: flex-end;
+        }
+        &.vertical-center {
+            align-items: center;
+        }
+        &.baseline {
+            align-items: baseline;
+        }
+        &.stretch {
+            align-items: stretch;
+        }
+    } // end row
+
+    // along main axis
+    &.start {
+        justify-content: flex-start;
+    }
+    &.end {
+        justify-content: flex-end;
+    }
+    &.center {
+        justify-content: center;
+    }
+    &.space-between {
+        justify-content: space-between;
+    }
+    &.space-evenly {
+        justify-content: space-evenly;
+    }
+    &.space-around {
+        justify-content: space-around;
+    }
+    &.flex-end {
+        justify-content: flex-end;
+    }
+
+} // end flexbox helpers
