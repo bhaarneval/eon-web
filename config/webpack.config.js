@@ -344,6 +344,19 @@ module.exports = function(webpackEnv) {
           include: paths.appSrc,
         },
         {
+          loader: 'babel-loader',
+          exclude: /node_modules/,
+          test: /\.js$/,
+          resolve: { extensions: ['.js'] },
+          options: {
+              presets: ['@babel/preset-react'],
+              cacheDirectory: true,
+              plugins: [
+                  ['import', { libraryName: "antd", style: true }],
+              ],
+          },
+        },
+        {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
@@ -441,7 +454,7 @@ module.exports = function(webpackEnv) {
             },
             {
               test: /\.less$/,
-              // exclude: cssModuleRegex,
+              include: /antd/,
               use: [
                 {
                   loader: 'style-loader', // creates style nodes from JS strings
@@ -451,6 +464,9 @@ module.exports = function(webpackEnv) {
                 },
                 {
                   loader: 'less-loader', // compiles Less to CSS
+                  options: {
+                    javascriptEnabled: true
+                  }
                 },
               ],
               // Don't consider CSS imports dead code even if the
