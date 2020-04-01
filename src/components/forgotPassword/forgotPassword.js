@@ -5,7 +5,6 @@ import { EMAIL_REQUIRED, PASSWORD_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
 import {  Form, Input, Button  } from 'antd';
 import { Tabs } from 'antd';
-import illustration from "../../assets/illustration.jpg";
 
 const { TabPane } = Tabs;
 
@@ -71,6 +70,7 @@ class Login extends Component {
     return (
       <div className="loginContainer">
         <div className="leftBody">
+          <h1>Forgot Password</h1>
           <Form
             name="basic"
             initialValues={{
@@ -113,16 +113,13 @@ class Login extends Component {
               <Input.Password  placeholder="Confirm Password" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                Reset Password
               </Button>
               {this.state.validationErrorsBadEmail ? 'Invalid Email' : null}
               {this.state.validationErrorsBadPassword ? 'Passwords doesnt match' : null}
             </Form.Item>
           </Form>
-        </div>
-        <div className="rightBody">
-            <img className="image" src={illustration}/>
         </div>
     </div>
     );

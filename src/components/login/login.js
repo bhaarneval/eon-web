@@ -65,10 +65,10 @@ class ForgotPassword extends Component {
         <div className="leftBody">
           <Tabs onChange={this.tabChange}>
             <TabPane tab="Organizer" key="1">
-              Organizer Login
+              <h2>Organizer Login</h2>
             </TabPane>
             <TabPane tab="Subscriber" key="2">
-              Subscriber Login
+              <h2>Subscriber Login</h2>
             </TabPane>
           </Tabs>
           <Form
@@ -102,8 +102,8 @@ class ForgotPassword extends Component {
               <Input.Password  placeholder="Password" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                Login
               </Button>
               {this.state.validationErrorsBadEmail ? 'Invalid Email' : null}
             </Form.Item>
