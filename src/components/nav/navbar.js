@@ -3,7 +3,7 @@ import "./nav.css";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import { Button } from 'antd';
+import { Dropdown, Menu } from 'antd';
 import logo from "../../assets/logo.png";
 import {
   LogoutOutlined
@@ -47,17 +47,31 @@ class Navbar extends Component {
     this.props.history.push("/login");
   };
 
+  takeMenuAction = (input) => {
+    if(input.key === "1")
+      this.props.history.push(`/register/organiser`);
+    else
+      this.props.history.push(`/register/subscriber`)
+  }
+
   render() {
+    const menu = (
+      <Menu onClick={key => this.takeMenuAction(key)}>
+        <Menu.Item key="1">Organiser Registration</Menu.Item>
+        <Menu.Item key="2">Subscriber Registration</Menu.Item>
+      </Menu>
+    );
     return (
       <div className="flex flex-row flex-end nav-container">
         <img className="top-nav" src={logo}/>
         <div className="top-nav">
-          <Button
+          <Dropdown.Button
+            overlay = {menu}
             type="primary"
             variant="contained"
           >
             Register
-          </Button>
+          </Dropdown.Button>
           <LogoutOutlined />
         </div>
       </div>
