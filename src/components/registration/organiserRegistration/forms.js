@@ -134,7 +134,6 @@ export function PasswordDetails(props) {
           className = 'input-style'
           prefix={<img src={lockImg} />}
           placeholder="Enter Password"
-          size="large"
           maxLength = {16}
           onChange = {handlePasswordChange}
         />
@@ -149,7 +148,6 @@ export function PasswordDetails(props) {
           className = 'input-style'
           prefix={<img src={lockImg} />}
           placeholder="Confirm Password"
-          size="large"
           maxLength = {16}
           visibilityToggle = {false}
           onChange = {handleConfirmPassword}

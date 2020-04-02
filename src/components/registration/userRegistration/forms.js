@@ -47,7 +47,6 @@ export default function userDetails(props) {
           rules={[{ required: true, message: NAME_REQUIRED }]}
         >
           <Input
-            size="large"
             prefix={<img src={userImg} />}
             placeholder="Your Full Name"
             className="input-style"
@@ -59,7 +58,6 @@ export default function userDetails(props) {
         >
           <Input
             prefix={<img src={emailImg} />}
-            size="large"
             placeholder="Email"
             className="input-style"
           />
@@ -75,7 +73,6 @@ export default function userDetails(props) {
         >
           <Input
             prefix={<img src={phoneImg} />}
-            size="large"
             placeholder="Contact No."
             className="input-style"
           />
@@ -98,7 +95,6 @@ export default function userDetails(props) {
             className="input-style"
             prefix={<img src={lockImg} />}
             placeholder="Enter Password"
-            size="large"
             maxLength = {16}
             onChange={handlePasswordChange}
           />
@@ -114,7 +110,6 @@ export default function userDetails(props) {
             className="input-style"
             prefix={<img src={lockImg} />}
             placeholder="Confirm Password"
-            size="large"
             maxLength = {16}
             visibilityToggle = {false}
             onChange={handleConfirmPassword}
