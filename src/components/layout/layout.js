@@ -26,7 +26,7 @@ function StyledComp() {
             <Switch>
               <Route path="/login" exact component={Login} />
               <Route path="/register/organiser" component={OrganiserRegistration}/>
-              <Route path="/register/user" component={UserRegistration}/>
+              <Route path="/register/subscriber" component={UserRegistration}/>
               <Route path="/" exact component={App} />
               <Route path="/forgot-password" exact component={ForgotPassword} />
             </Switch>
