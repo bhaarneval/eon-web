@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from "prop-types";
 import {BasicDetails, PasswordDetails} from '../../components/registration/organiserRegistration/forms';
 import FormSteps from '../../components/registration/FormSteps';
 import TermsAndConditions from '../../components/registration/TermsAndCondition';
@@ -32,7 +32,7 @@ handleModalClose = () => {
 
 handleAccept = () => {
     if(this.state.isChecked){
-        console.log("Accepted");
+        this.props.history.push(`/dashboard`);
     }
     else
         console.log("Failed");
@@ -113,7 +113,6 @@ confirmPassword = (value) => {
     else {
         const { password } = values;
         formData = {...formData, password};
-        console.log(formData);
         this.setState({
             formData: formData,
             showModal: true
@@ -192,5 +191,8 @@ confirmPassword = (value) => {
   );
    }
  }
+ OrganiserRegistration.propTypes = {
+    history: PropTypes.object,
+}
 
 export default OrganiserRegistration;
