@@ -39,4 +39,5 @@ export const NEXT = "NEXT";
 export const SUBMIT = "Submit";
 
 export const lightborder = "#EBEEF3";
+export const veryDarkBlue = '#262C6F';
 
