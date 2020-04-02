@@ -1,7 +1,6 @@
 /* eslint-disable */
 import "./login.css";
-import { EMAIL, PASSWORD, SUBMIT } from "../../constants/constants";
-import { EMAIL_REQUIRED, PASSWORD_REQUIRED } from "../../constants/messages";
+import { EMAIL_REQUIRED, INVALID_PASSWORD } from "../../constants/messages";
 import React, { Component } from "react";
 import {  Form, Input, Button  } from 'antd';
 import { Tabs } from 'antd';
@@ -10,16 +9,18 @@ const { TabPane } = Tabs;
 
 import { UserOutlined } from '@ant-design/icons';
 
-class ForgotPassword extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userType : 'Organizer',
       email : '',
       password : '',
-      validationErrorsBadEmail: false,
-      validationErrorsWrongPassword: false,
     }
+  }
+
+  componentWillMount(){
+    localStorage.setItem('loggedin', false)
   }
 
     tabChange = (key) => {
@@ -49,9 +50,9 @@ class ForgotPassword extends Component {
   }
 
   onFinish = values => {
-    if (this.validate(values.email)){
-      console.log('Success:', values);
-    }
+    console.log(values)
+    localStorage.setItem('loggedin', true)
+    this.props.history.push(`/dashbord`)
   };
 
   onFinishFailed = errorInfo => {
@@ -81,14 +82,12 @@ class ForgotPassword extends Component {
           >
             <Form.Item
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your email!',
-                },
-              ]}
+              rules={[{ required: true, message: EMAIL_REQUIRED },{
+                pattern:/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                message:EMAIL_REQUIRED
+              }]}
             >
-              <Input placeholder="Email" prefix={<UserOutlined />} />
+              <Input className="input-style" placeholder="Email" prefix={<UserOutlined />} />
             </Form.Item>
             <Form.Item
               name="password"
@@ -97,15 +96,19 @@ class ForgotPassword extends Component {
                   required: true,
                   message: 'Please input your password!',
                 },
+                {
+                  pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
+                  min:8,
+                  message: INVALID_PASSWORD
+                }
               ]}
             >
-              <Input.Password  placeholder="Password" />
+              <Input.Password className="input-style"  placeholder="Password" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Login
               </Button>
-              {this.state.validationErrorsBadEmail ? 'Invalid Email' : null}
             </Form.Item>
           </Form>
         </div>
@@ -114,4 +117,4 @@ class ForgotPassword extends Component {
   }
 }
 
-export default ForgotPassword;
+export default Login;

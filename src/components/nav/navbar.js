@@ -50,8 +50,18 @@ class Navbar extends Component {
   takeMenuAction = (input) => {
     if(input.key === "1")
       this.props.history.push(`/register/organiser`);
-    else
+    else if(input.key === "2")
       this.props.history.push(`/register/subscriber`)
+    else if(input.key === "3")
+      this.props.history.push(`/change-password`)
+    else
+      this.props.history.push(`/login`)
+  }
+
+
+  logout = () => {
+    localStorage.setItem('loggedIn', false)
+    this.props.history.push('login')
   }
 
   render() {
@@ -61,10 +71,23 @@ class Navbar extends Component {
         <Menu.Item key="2">Subscriber Registration</Menu.Item>
       </Menu>
     );
+    const menuSidebar = (
+      <Menu onClick={key => this.takeMenuAction(key)}>
+        <Menu.Item key="3">Change Password</Menu.Item>
+        <Menu.Item key="4"><LogoutOutlined onClick={this.logout}/></Menu.Item>
+      </Menu>
+    );
     return (
       <div className="flex flex-row flex-end nav-container">
         <img className="top-nav" src={logo}/>
-        <div className="top-nav">
+        <div className="top-nav" style={{justifyContent:'flex-end'}}>
+        {localStorage.getItem('loggedin') === "true"?
+          <Dropdown.Button
+            overlay = {menuSidebar}
+            type="primary"
+            variant="contained"
+          />
+        :
           <Dropdown.Button
             overlay = {menu}
             type="primary"
@@ -72,7 +95,7 @@ class Navbar extends Component {
           >
             Register
           </Dropdown.Button>
-          <LogoutOutlined />
+        }
         </div>
       </div>
     );

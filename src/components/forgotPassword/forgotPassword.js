@@ -1,22 +1,18 @@
 /* eslint-disable */
 import "./forgotPassword.css";
-import { EMAIL, PASSWORD, SUBMIT } from "../../constants/constants";
-import { EMAIL_REQUIRED, PASSWORD_REQUIRED } from "../../constants/messages";
+import { INVALID_PASSWORD, CONFIRM_PASSWORD, PASSWORD_DO_NOT_MATCH, EMAIL_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
 import {  Form, Input, Button  } from 'antd';
-import { Tabs } from 'antd';
-
-const { TabPane } = Tabs;
 
 import { UserOutlined } from '@ant-design/icons';
 
-class Login extends Component {
+class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userType : 'Organizer',
-      validationErrorsBadEmail: false,
-      validationErrorsBadPassword: false,
+      confirmPassword: false,
+      password: '',
     }
   }
 
@@ -46,31 +42,42 @@ class Login extends Component {
       return (validEmail);
   }
 
-  validatePassword (newPassword, confirmpassword) {
-    const validPassword = newPassword === confirmpassword 
-    this.setState({
-      validationErrorsBadPassword : !validPassword
-    });
-    return (validPassword);
-}
-
   onFinish = values => {
-    console.log(values)
-    if (this.validate(values.email) && this.validatePassword(values.newpassword, values.confirmpassword)){
-      this.props.history('/')
-    }
+    this.props.history.push('/')
   };
+
+  handlePasswordChange = (value) => {
+    this.setState({
+      password: value.target.value
+    })
+  }
+
+  confirmPassword = (value) => {
+    let {password, confirmPassword} = this.state;
+    let input  = value.target.value;
+    if(input === password){
+        confirmPassword = true;
+    }
+    else{
+        confirmPassword = false;
+    }
+    this.setState({
+        confirmPassword: confirmPassword
+    })
+}
 
   onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
 
   render() {
-    console.log(this.state)
+    let passwordPattern = "^"+this.state.password+"$";
+    passwordPattern = new RegExp(passwordPattern);
     return (
-      <div className="loginContainer">
-        <div className="leftBody">
+      <div className="changePasswordContainer">
+        <div>
           <h1>Change Password</h1>
+          <div style={{fontSize: '12px', paddingBottom:'5px'}}>Password must be of length including capital letter, numeric and special character.</div>
           <Form
             name="basic"
             initialValues={{
@@ -81,14 +88,28 @@ class Login extends Component {
           >
             <Form.Item
               name="email"
+              rules={[{ required: true, message: EMAIL_REQUIRED },{
+                pattern:/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                message:EMAIL_REQUIRED
+              }]}
+            >
+              <Input placeholder="Email" className="input-style"  prefix={<UserOutlined />} />
+            </Form.Item>
+            <Form.Item
+              name="oldpassword"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your email!',
+                  message: 'Please input your old password!',
                 },
+                {
+                  pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
+                  min:8,
+                  message: INVALID_PASSWORD
+                }
               ]}
             >
-              <Input placeholder="Email" prefix={<UserOutlined />} />
+              <Input.Password className="input-style"  placeholder="Old Password" />
             </Form.Item>
             <Form.Item
               name="newpassword"
@@ -97,27 +118,28 @@ class Login extends Component {
                   required: true,
                   message: 'Please input your password!',
                 },
+                {
+                  pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
+                  min:8,
+                  message: INVALID_PASSWORD
+                }
               ]}
             >
-              <Input.Password  placeholder="Password" />
+              <Input.Password className="input-style" placeholder="New Password" onChange={this.handlePasswordChange}/>
             </Form.Item>
             <Form.Item
               name="confirmpassword"
               rules={[
-                {
-                  required: true,
-                  message: 'Please input your password again!',
-                },
+                { required: true, message: CONFIRM_PASSWORD },
+                { pattern: passwordPattern, message: PASSWORD_DO_NOT_MATCH }
               ]}
             >
-              <Input.Password  placeholder="Confirm Password" />
+              <Input.Password className="input-style" placeholder="Confirm Password"  onChange={this.confirmPassword}/>
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Reset Password
               </Button>
-              {this.state.validationErrorsBadEmail ? 'Invalid Email' : null}
-              {this.state.validationErrorsBadPassword ? 'Passwords doesnt match' : null}
             </Form.Item>
           </Form>
         </div>
@@ -126,4 +148,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default ForgotPassword;

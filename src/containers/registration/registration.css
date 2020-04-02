@@ -2,6 +2,7 @@
     display: flex;
     width: 100%;
     height: 100%;
+    background-color: white;
 }
 .image-style {
     height: 100%;
@@ -11,7 +12,7 @@
     height: 100%;
     width: 100%;
     background-color: #F6F8FC;
-    padding: 2%;
+    padding: 2% 5%;
 }
 .form-header-user {
     padding-bottom: 4%;

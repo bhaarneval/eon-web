@@ -33,6 +33,7 @@ handleModalClose = () => {
 
 handleAccept = () => {
     if(this.state.isChecked){
+        localStorage.setItem('loggedin', true)
         this.props.history.push(`/dashboard`);
     }
     else
@@ -46,43 +47,47 @@ handleCheckBoxChange = () => {
 }
 
 handlePassWordChange = (values) => {
-    let {smallLetters, capitalLetters, numerals, passwordLength, password} = this.state;
-        smallLetters = false;
-        capitalLetters = false;
-        numerals = false;
-        passwordLength = false;
-        password = "";
-    if (values.target.value !== "") {
-        let input = values.target.value;
-        let smallAplhabets = /^[a-z]+$/;
-        let capitalAlphabets = /^[A-Z]+$/;
-        let numbers = /^[0-9]+$/;
+    // let {smallLetters, capitalLetters, numerals, passwordLength, password} = this.state;
+    //     smallLetters = false;
+    //     capitalLetters = false;
+    //     numerals = false;
+    //     passwordLength = false;
+    //     password = "";
+    // if (values.target.value !== "") {
+    //     let input = values.target.value;
+    //     let smallAplhabets = /^[a-z]+$/;
+    //     let capitalAlphabets = /^[A-Z]+$/;
+    //     let numbers = /^[0-9]+$/;
         
-        password = input;
-        if(input.length >= 8 && input.length <= 16){
-            passwordLength = true;
-        }
-        else {
-            passwordLength = false;
-        }
+    //     password = input;
+    //     if(input.length >= 8 && input.length <= 16){
+    //         passwordLength = true;
+    //     }
+    //     else {
+    //         passwordLength = false;
+    //     }
         
-        input.split("").map(text => {
-            if (text.match(smallAplhabets)) {
-                smallLetters = true;
-              } else if (text.match(capitalAlphabets)) {
-                capitalLetters = true;
-              } else if (text.match(numbers)) {
-                numerals = true;
-              }
-        })
-      } 
-      this.setState({
-          smallLetters: smallLetters,
-          capitalLetters: capitalLetters,
-          numerals: numerals,
-          passwordLength: passwordLength,
-          password: password
-      })
+    //     input.split("").map(text => {
+    //         if (text.match(smallAplhabets)) {
+    //             smallLetters = true;
+    //           } else if (text.match(capitalAlphabets)) {
+    //             capitalLetters = true;
+    //           } else if (text.match(numbers)) {
+    //             numerals = true;
+    //           }
+    //     })
+    //   } 
+    //   this.setState({
+    //       smallLetters: smallLetters,
+    //       capitalLetters: capitalLetters,
+    //       numerals: numerals,
+    //       passwordLength: passwordLength,
+    //       password: password
+    //   })
+    let currentPassword = values.target.value;
+    this.setState({
+      password: currentPassword
+    })
 }
 
 confirmPassword = (value) => {
@@ -129,26 +134,28 @@ confirmPassword = (value) => {
  }
 
  render() {
-     const { showModal, activeKey,stepList,formData, smallLetters, capitalLetters, isChecked, numerals, passwordLength, confirmPassword, password } = this.state;
+     const {
+       showModal,
+       activeKey,
+       stepList,
+       formData,
+      //  smallLetters,
+      //  capitalLetters,
+       isChecked,
+      //  numerals,
+      //  passwordLength,
+      //  confirmPassword,
+       password
+     } = this.state;
   return (
-    <div
-      className = "registration-main"
-    >
+    <div className="registration-main">
       {activeKey === 0 ? (
-        <img
-          src={BasicDetailsImg}
-          className = 'image-style'
-        />
+        <img src={BasicDetailsImg} className="image-style" />
       ) : (
-        <img
-          src={PasswordImg}
-          className = 'image-style'
-        />
+        <img src={PasswordImg} className="image-style" />
       )}
-      <div
-        className = 'form-container'
-      >
-        <div className = "form-header">
+      <div className="form-container">
+        <div className="form-header">
           <h1>
             <b>Event Organiser Sign Up</b>
           </h1>
@@ -162,20 +169,26 @@ confirmPassword = (value) => {
             handleSubmit={this.handleSubmit}
             values={formData}
             handleBack={this.handleBack}
-            handlePasswordChange = {this.handlePassWordChange}
-            passwordVerification = {{smallLetters, capitalLetters, numerals, passwordLength,confirmPassword, currentPassword:password}}
-            handleConfirmPassword = {this.confirmPassword}
+            handlePasswordChange={this.handlePassWordChange}
+            passwordVerification={{
+              // smallLetters,
+              // capitalLetters,
+              // numerals,
+              // passwordLength,
+              // confirmPassword,
+              currentPassword: password
+            }}
+            handleConfirmPassword={this.confirmPassword}
           />
         ) : null}
-        {
-            showModal ? 
-            <TermsAndConditions  
-                isChecked = {isChecked} 
-                handleClose = {this.handleModalClose}
-                handleAccept = {this.handleAccept}
-                handleCheckChange = {this.handleCheckBoxChange}
-            />:null
-        }
+        {showModal ? (
+          <TermsAndConditions
+            isChecked={isChecked}
+            handleClose={this.handleModalClose}
+            handleAccept={this.handleAccept}
+            handleCheckChange={this.handleCheckBoxChange}
+          />
+        ) : null}
       </div>
     </div>
   );

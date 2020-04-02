@@ -1,7 +1,7 @@
 
 .nav-container{
     justify-content: space-between;
-    padding: 1% 0;
+    padding: 3px 1%;
 }
 .top-nav {
     display: flex;

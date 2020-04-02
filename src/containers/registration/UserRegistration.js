@@ -41,47 +41,51 @@ class UserRegistration extends Component {
   };
 
   handlePassWordChange = values => {
-    let {
-      smallLetters,
-      capitalLetters,
-      numerals,
-      passwordLength,
-      password
-    } = this.state;
-    smallLetters = false;
-    capitalLetters = false;
-    numerals = false;
-    passwordLength = false;
-    password = "";
-    if (values.target.value !== "") {
-      let input = values.target.value;
-      let smallAplhabets = /^[a-z]+$/;
-      let capitalAlphabets = /^[A-Z]+$/;
-      let numbers = /^[0-9]+$/;
+    // let {
+    //   smallLetters,
+    //   capitalLetters,
+    //   numerals,
+    //   passwordLength,
+    //   password
+    // } = this.state;
+    // smallLetters = false;
+    // capitalLetters = false;
+    // numerals = false;
+    // passwordLength = false;
+    // password = "";
+    // if (values.target.value !== "") {
+    //   let input = values.target.value;
+    //   let smallAplhabets = /^[a-z]+$/;
+    //   let capitalAlphabets = /^[A-Z]+$/;
+    //   let numbers = /^[0-9]+$/;
 
-      password = input;
-      if (input.length >= 8 && input.length <= 16) {
-        passwordLength = true;
-      } else {
-        passwordLength = false;
-      }
+    //   password = input;
+    //   if (input.length >= 8 && input.length <= 16) {
+    //     passwordLength = true;
+    //   } else {
+    //     passwordLength = false;
+    //   }
 
-      input.split("").map(text => {
-        if (text.match(smallAplhabets)) {
-          smallLetters = true;
-        } else if (text.match(capitalAlphabets)) {
-          capitalLetters = true;
-        } else if (text.match(numbers)) {
-          numerals = true;
-        }
-      });
-    }
+    //   input.split("").map(text => {
+    //     if (text.match(smallAplhabets)) {
+    //       smallLetters = true;
+    //     } else if (text.match(capitalAlphabets)) {
+    //       capitalLetters = true;
+    //     } else if (text.match(numbers)) {
+    //       numerals = true;
+    //     }
+    //   });
+    // }
+    // this.setState({
+    //   smallLetters: smallLetters,
+    //   capitalLetters: capitalLetters,
+    //   numerals: numerals,
+    //   passwordLength: passwordLength,
+    //   password: password
+    // });
+    let currentPassword = values.target.value;
     this.setState({
-      smallLetters: smallLetters,
-      capitalLetters: capitalLetters,
-      numerals: numerals,
-      passwordLength: passwordLength,
-      password: password
+      password: currentPassword
     });
   };
 
@@ -111,12 +115,12 @@ class UserRegistration extends Component {
     const {
       showModal,
       formData,
-      smallLetters,
-      capitalLetters,
+      // smallLetters,
+      // capitalLetters,
       isChecked,
-      numerals,
-      passwordLength,
-      confirmPassword,
+      // numerals,
+      // passwordLength,
+      // confirmPassword,
       password
     } = this.state;
     return (
@@ -141,11 +145,11 @@ class UserRegistration extends Component {
             values={formData}
             handlePasswordChange={this.handlePassWordChange}
             passwordVerification={{
-              smallLetters,
-              capitalLetters,
-              numerals,
-              passwordLength,
-              confirmPassword,
+              // smallLetters,
+              // capitalLetters,
+              // numerals,
+              // passwordLength,
+              // confirmPassword,
               currentPassword: password
             }}
             handleConfirmPassword={this.confirmPassword}
