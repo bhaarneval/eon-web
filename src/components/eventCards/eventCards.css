@@ -1,0 +1,38 @@
+.cards-style {
+    width: 24%;
+    height: 100%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+}
+.cards-cover-style {
+    height: 10em;
+    width: 100%;
+    object-fit: inherit;
+}
+.image-status-container {
+    display: flex;
+}
+.status-button {
+    cursor: none;
+    margin-left: -65px;
+    margin-top: 3%;
+    background-color: transparent;
+    color: white;
+}
+.card-desc-grid{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    margin-top: -5%;
+}
+.event-name{
+    font-weight: bold;
+    font-size: 20px;
+}
+.card-desc-flex{
+    display: flex;
+    justify-content: space-between;
+}
+.calendar-gap{
+    padding-right: 5px;
+}
