@@ -83,7 +83,6 @@ class UserRegistration extends Component {
       passwordLength: passwordLength,
       password: password
     });
-    console.log(this.state.password);
   };
 
   confirmPassword = value => {

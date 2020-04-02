@@ -83,7 +83,6 @@ handlePassWordChange = (values) => {
           passwordLength: passwordLength,
           password: password
       })
-      console.log(this.state.password);
 }
 
 confirmPassword = (value) => {
