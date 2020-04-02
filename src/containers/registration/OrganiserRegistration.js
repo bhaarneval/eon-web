@@ -174,7 +174,7 @@ confirmPassword = (value) => {
             values={formData}
             handleBack={this.handleBack}
             handlePasswordChange = {this.handlePassWordChange}
-            passwordVerification = {{smallLetters, capitalLetters, numerals, passwordLength,confirmPassword, currentpassword:password}}
+            passwordVerification = {{smallLetters, capitalLetters, numerals, passwordLength,confirmPassword, currentPassword:password}}
             handleConfirmPassword = {this.confirmPassword}
           />
         ) : null}

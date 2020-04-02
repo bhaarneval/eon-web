@@ -136,10 +136,15 @@ export function PasswordDetails(props) {
             message: "Please Input Password!"
               
           },
-          // {
-          //   pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,16}$/,
-          //   message: "Password doesn't meet all the requirements"
-          // }
+          {
+            pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
+            min:8,
+            message: "Password doesn't meet all the requirements"
+          },
+          {
+            max:16,
+            message: "Password doesn't meet all the requirements"
+          }
         ]}
       >
         <Input.Password
@@ -153,7 +158,7 @@ export function PasswordDetails(props) {
       <Form.Item
         name="confirmPassword"
         rules={[{ required: true, message: "Please Confirm Password!"},
-        //  {pattern: passwordPattern, message: "Passwords do not match!"}
+         {pattern: passwordPattern, message: "Passwords do not match!"}
       ]}
       >
         <Input.Password
