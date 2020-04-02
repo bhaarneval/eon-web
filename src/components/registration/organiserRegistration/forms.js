@@ -13,7 +13,7 @@ import lockImg from '../../../assets/Password_login.svg';
 import organisationImg from "../../../assets/Organisation Name.svg";
 import phoneImg from "../../../assets/Phone - .svg";
 import emailImg from "../../../assets/Email ID.svg";
-import {ORGANISATION_NAME,ORGANISATION_ADDRESS,EMAIL_REQUIRED,CONTACT_NO,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD,} from '../../../constants/messages';
+import {ORGANISATION_NAME,ORGANISATION_ADDRESS,EMAIL_REQUIRED,CONTACT_NO,INVALID_CONATCT,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD,} from '../../../constants/messages';
 
 BasicDetails.propTypes = {
   values: PropTypes.object.isRequired,
@@ -51,7 +51,11 @@ export function BasicDetails(props) {
       <Form.Item
         name="email"
         rules={[
-          { required: true, message: EMAIL_REQUIRED }
+          { required: true, message: EMAIL_REQUIRED },
+          {
+            pattern:/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+            message: EMAIL_REQUIRED
+          }
         ]}
       >
         <Input prefix={<img src={emailImg} />} size = "large" placeholder = "Email" className = 'input-style'/>
@@ -59,10 +63,18 @@ export function BasicDetails(props) {
       <Form.Item
         name="contactNumber"
         rules={[
-          { required: true, message: CONTACT_NO }
+          { required: true, message: CONTACT_NO },
+          {
+            pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+            min: 10,
+            message: INVALID_CONATCT
+          }
+          
         ]}
       >
-        <Input prefix={<img src = {phoneImg} />} size = "large" placeholder = "Contact No." className = 'input-style'/>
+        <Input prefix={<img src = {phoneImg} />} size = "large" minLength = {10}
+          maxLength = {10}
+         placeholder = "Contact No." className = 'input-style'/>
       </Form.Item>
       <Form.Item
         label = 'Address'

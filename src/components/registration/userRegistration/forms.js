@@ -12,7 +12,7 @@ import lockImg from '../../../assets/Password_login.svg';
 import userImg from '../../../assets/user.svg';
 import phoneImg from "../../../assets/Phone - .svg";
 import emailImg from "../../../assets/Email ID.svg";
-import {NAME_REQUIRED,EMAIL_REQUIRED,CONTACT_NO,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD,} from '../../../constants/messages';
+import {NAME_REQUIRED,EMAIL_REQUIRED,CONTACT_NO,INVALID_CONATCT,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD,} from '../../../constants/messages';
 
 userDetails.propTypes = {
   values: PropTypes.object.isRequired,
@@ -54,7 +54,10 @@ export default function userDetails(props) {
         </Form.Item>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: EMAIL_REQUIRED  }]}
+          rules={[{ required: true, message: EMAIL_REQUIRED },{
+            pattern:/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+            message:EMAIL_REQUIRED
+          }]}
         >
           <Input
             prefix={<img src={emailImg} />}
@@ -68,6 +71,11 @@ export default function userDetails(props) {
             {
               required: true,
               message: CONTACT_NO
+            },
+            {
+              pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+              min: 10,
+              message: INVALID_CONATCT
             }
           ]}
         >
@@ -75,6 +83,9 @@ export default function userDetails(props) {
             prefix={<img src={phoneImg} />}
             placeholder="Contact No."
             className="input-style"
+            minLength = {10}
+            maxLength = {10}
+            type = "number"
           />
         </Form.Item>
         <Form.Item
@@ -116,9 +127,7 @@ export default function userDetails(props) {
           />
         </Form.Item>
         <div>Password Must Contains</div>
-        <div
-          className = 'password-style'
-        >
+        <div className = "password-style">
           <div>
             {smallLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
             Lower Case
@@ -136,12 +145,8 @@ export default function userDetails(props) {
             8-16 Characters
           </div>
         </div>
-        <div
-          className = 'one-button-style'
-        >
-          <StyledButtons
-            content={<RightOutlined className = 'button-arrow' />}
-          />
+        <div className ="one-button-style">
+          <StyledButtons content={<RightOutlined className="button-arrow" />} />
         </div>
       </Form>
     );
