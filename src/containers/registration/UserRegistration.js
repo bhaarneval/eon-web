@@ -132,7 +132,7 @@ class UserRegistration extends Component {
         >
           <div className = "form-header">
             <h1>
-              <b>Subscriber Registration</b>
+              <b>User Subscriber Sign Up</b>
             </h1>
             <h4>Please provide the following details</h4>
           </div>
