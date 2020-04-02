@@ -8,15 +8,15 @@ import {
   CheckSquareTwoTone,
   CheckSquareOutlined
 } from "@ant-design/icons";
+import lockImg from '../../../assets/Password_login.svg';
+import organisationImg from "../../../assets/Organisation Name.svg";
+import phoneImg from "../../../assets/Phone - .svg";
+import emailImg from "../../../assets/Email ID.svg";
 
 BasicDetails.propTypes = {
   values: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired
 };
-import lockImg from '../../../assets/Password_login.svg';
-import organisationImg from "../../../assets/Organisation Name.svg";
-import phoneImg from "../../../assets/Phone - .svg";
-import emailImg from "../../../assets/Email ID.svg";
 export function BasicDetails(props) {
   const { values, handleSubmit } = props;
   const {
