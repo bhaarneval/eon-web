@@ -1,21 +1,20 @@
 .form-main {
     align-self: center;
     width: 100%;
-    padding: 2em;
 }
 .input-style {
-    padding: 4%;
+    padding: 2%;
 }
 .button-arrow {
-    font-size: 300%;
+    font-size: 200%;
 }
 .password-style {
-    margin-top: 5%;
+    margin-top: 2%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 5%;
-    grid-row-gap: 20%;
+    grid-row-gap: 10%;
 }
 .two-button-style {
     display: flex;
@@ -27,7 +26,7 @@
     display: flex;
     width: 100%;
     justify-content: flex-end;
-    margin-top: 8%;
+    margin-top: 2%;
 }
 .multistep-style {
     display: flex;
