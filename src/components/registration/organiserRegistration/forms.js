@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StyledButtons from '../StyledButtons';
+import '../forms.css';
 import { Form, Input } from "antd";
 import {
   RightOutlined,
@@ -27,13 +28,8 @@ export function BasicDetails(props) {
   } = values;
   return (
     <Form
-      style={{
-        padding: "2em",
-        alignSelf:"center",
-        width :"100%"
-      }}
+      className = "form-main"
       name="basicDetails"
-      className="login-form"
       initialValues={{
         email: email,
         organisationName: organisationName,
@@ -49,7 +45,7 @@ export function BasicDetails(props) {
           { required: true, message: "Please input your Oragnaisation Name!" }
         ]}
       >
-        <Input size = "large"  prefix = {<img src={organisationImg}/>} placeholder = "Organisation Name" style = {{padding: '1em'}}/>
+        <Input size = "large"  prefix = {<img src={organisationImg}/>} placeholder = "Organisation Name" className = 'input-style'/>
       </Form.Item>
       <Form.Item
         name="email"
@@ -57,7 +53,7 @@ export function BasicDetails(props) {
           { required: true, message: "Please input your Organisation Email!" }
         ]}
       >
-        <Input prefix={<img src={emailImg} />} size = "large" placeholder = "Email" style = {{padding: '1em'}}/>
+        <Input prefix={<img src={emailImg} />} size = "large" placeholder = "Email" className = 'input-style'/>
       </Form.Item>
       <Form.Item
         name="contactNumber"
@@ -65,7 +61,7 @@ export function BasicDetails(props) {
           { required: true, message: "Please input your contact information!" }
         ]}
       >
-        <Input prefix={<img src = {phoneImg} />} size = "large" placeholder = "Contact No." style = {{padding: '1em'}}/>
+        <Input prefix={<img src = {phoneImg} />} size = "large" placeholder = "Contact No." className = 'input-style'/>
       </Form.Item>
       <Form.Item
         label = 'Address'
@@ -77,17 +73,13 @@ export function BasicDetails(props) {
           }
         ]}
       >
-        <Input.TextArea placeholder = "Enter Address" autoSize = {false} style = {{padding: '1em'}}/>
+        <Input.TextArea placeholder = "Enter Address" autoSize = {false} className = 'input-style'/>
       </Form.Item>
       <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end"
-        }}
+        className = 'one-button-style'
       >
         <StyledButtons
-          content = {<RightOutlined style={{fontSize: "2em"}}/>}
+          content = {<RightOutlined className = 'button-arrow'/>}
         />
       </div>
     </Form>
@@ -110,16 +102,10 @@ export function PasswordDetails(props) {
   const {smallLetters, capitalLetters, numerals, passwordLength, currentPassword } = passwordVerification;
   let passwordPattern = "^"+currentPassword+"$";
   passwordPattern = new RegExp(passwordPattern);
-  console.log(passwordPattern);
   return (
     <Form
-      style={{
-        padding: "2em",
-        alignSelf: "center",
-        width: "100%"
-      }}
+      className = "form-main"
       name="passwordDetails"
-      className="login-form"
       initialValues={{
         password: currentPassword,
         confirmPassword: password
@@ -148,7 +134,7 @@ export function PasswordDetails(props) {
         ]}
       >
         <Input.Password
-          style={{ padding: "1em" }}
+          className = 'input-style'
           prefix={<img src={lockImg} />}
           placeholder="Enter Password"
           size="large"
@@ -162,7 +148,7 @@ export function PasswordDetails(props) {
       ]}
       >
         <Input.Password
-          style={{ padding: "1em" }}
+          className = 'input-style'
           prefix={<img src={lockImg} />}
           placeholder="Confirm Password"
           size="large"
@@ -171,14 +157,7 @@ export function PasswordDetails(props) {
       </Form.Item>
       <div>Password Must Contains</div>
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gridTemplateRows: "1fr 1fr",
-          gridColumnGap: "0.5em",
-          gridRowGap: "0.5em",
-          padding:'0.5em'
-        }}
+        className = 'password-style'
       >
         <div>
           {smallLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
@@ -197,19 +176,14 @@ export function PasswordDetails(props) {
         </div>
       </div>
       <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop:'4em',
-        }}
+        className = 'two-button-style'
       >
         <StyledButtons
-          content={<LeftOutlined style={{ fontSize: "2em" }} />}
+          content={<LeftOutlined className = 'button-arrow' />}
           onClick={handleBack}
         />
         <StyledButtons
-          content={<RightOutlined style={{ fontSize: "2em" }} />}
+          content={<RightOutlined className = 'button-arrow' />}
         />
       </div>
     </Form>

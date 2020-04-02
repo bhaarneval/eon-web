@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StyledButtons from '../StyledButtons';
+import '../forms.css';
 import { Form, Input } from "antd";
 import {
     RightOutlined,
@@ -29,13 +30,8 @@ export default function userDetails(props) {
 
     return (
       <Form
-        style={{
-          padding: "2em",
-          alignSelf: "center",
-          width: "100%"
-        }}
+        className="form-main"
         name="userDetails"
-        className="login-form"
         initialValues={{
           name: name,
           email: email,
@@ -48,28 +44,24 @@ export default function userDetails(props) {
       >
         <Form.Item
           name="name"
-          rules={[
-            { required: true, message: "Please input your Full Name!" }
-          ]}
+          rules={[{ required: true, message: "Please input your Full Name!" }]}
         >
           <Input
             size="large"
             prefix={<img src={userImg} />}
             placeholder="Your Full Name"
-            style={{ padding: "1em" }}
+            className="input-style"
           />
         </Form.Item>
         <Form.Item
           name="email"
-          rules={[
-            { required: true, message: "Please input your Email!" }
-          ]}
+          rules={[{ required: true, message: "Please input your Email!" }]}
         >
           <Input
             prefix={<img src={emailImg} />}
             size="large"
             placeholder="Email"
-            style={{ padding: "1em" }}
+            className="input-style"
           />
         </Form.Item>
         <Form.Item
@@ -81,7 +73,12 @@ export default function userDetails(props) {
             }
           ]}
         >
-            <Input prefix={<img src = {phoneImg} />} size = "large" placeholder = "Contact No." style = {{padding: '1em'}}/>
+          <Input
+            prefix={<img src={phoneImg} />}
+            size="large"
+            placeholder="Contact No."
+            className="input-style"
+          />
         </Form.Item>
         <Form.Item
           name="password"
@@ -102,7 +99,7 @@ export default function userDetails(props) {
           ]}
         >
           <Input.Password
-            style={{ padding: "1em" }}
+            className="input-style"
             prefix={<img src={lockImg} />}
             placeholder="Enter Password"
             size="large"
@@ -117,7 +114,7 @@ export default function userDetails(props) {
           ]}
         >
           <Input.Password
-            style={{ padding: "1em" }}
+            className="input-style"
             prefix={<img src={lockImg} />}
             placeholder="Confirm Password"
             size="large"
@@ -126,14 +123,7 @@ export default function userDetails(props) {
         </Form.Item>
         <div>Password Must Contains</div>
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gridTemplateRows: "1fr 1fr",
-            gridColumnGap: "0.5em",
-            gridRowGap: "0.5em",
-            padding: "0.5em"
-          }}
+          className = 'password-style'
         >
           <div>
             {smallLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
@@ -153,15 +143,10 @@ export default function userDetails(props) {
           </div>
         </div>
         <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "4em"
-          }}
+          className = 'one-button-style'
         >
           <StyledButtons
-            content={<RightOutlined style={{ fontSize: "2em" }} />}
+            content={<RightOutlined className = 'button-arrow' />}
           />
         </div>
       </Form>
