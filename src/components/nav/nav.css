@@ -1,8 +1,10 @@
 
+.nav-container{
+    justify-content: space-between;
+    padding: 2% 0;
+}
 .top-nav {
     display: flex;
-    justify-content: flex-end;
-    padding: 2% 0;
     float: right;
     width: 15%;
     justify-content: space-between;

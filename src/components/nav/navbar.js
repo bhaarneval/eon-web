@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { Button } from 'antd';
+import logo from "../../assets/logo.png";
 import {
   LogoutOutlined
 } from '@ant-design/icons';
@@ -47,16 +48,18 @@ class Navbar extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     return (
-      <div className="flex flex-row flex-end top-nav">
-        <Button
-          type="primary"
-          variant="contained"
-        >
-          Register
-        </Button>
-        <LogoutOutlined />
+      <div className="flex flex-row flex-end nav-container">
+        <img className="top-nav" src={logo}/>
+        <div className="top-nav">
+          <Button
+            type="primary"
+            variant="contained"
+          >
+            Register
+          </Button>
+          <LogoutOutlined />
+        </div>
       </div>
     );
   }
