@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import {BasicDetails, PasswordDetails} from '../../components/registration/organiserRegistration/forms';
 import FormSteps from '../../components/registration/FormSteps';
-import TermsAndConditions from '../../components/registration/organiserRegistration/TermsAndCondition';
+import TermsAndConditions from '../../components/registration/TermsAndCondition';
 import  BasicDetailsImg from '../../assets/Basic Details.svg';
 import PasswordImg from '../../assets/Password_Illustration.svg';
 

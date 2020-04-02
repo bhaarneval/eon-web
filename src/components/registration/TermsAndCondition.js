@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Modal, Checkbox, Button} from 'antd';
-import './organiserRegistration.css';
-import {termsConditions} from '../../../constants/termsConditions';
+import './termsAndCondition.css';
+import {termsConditions} from '../../constants/termsConditions';
 
 export default function TermsAndConditions (props){
     const { handleAccept, isChecked, handleClose, handleCheckChange } = props;
