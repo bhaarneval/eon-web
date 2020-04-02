@@ -15,5 +15,15 @@ export const ROOT_PASSWORD_REQUIRED = "Root password is required";
 export const FIRST_PORT_REQUIRED = "First port is required";
 export const SECOND_PORT_REQUIRED = "Second port is required";
 export const THIRD_PORT_REQUIRED = "Third port is required";
-export const EMAIL_REQUIRED = "Email is required";
+
+//signup constants
+export const ORGANISATION_ADDRESS = "Please enter your oragnaisation address!"
+export const ORGANISATION_NAME = "Please enter your oragnaisation name!"
 export const PASSWORD_REQUIRED = "Password is required";
+export const NAME_REQUIRED = "Please enter your full name!";
+export const EMAIL_REQUIRED = "Please enter a valid email!";
+export const CONTACT_NO = "Please enter your contact information!";
+export const SIGNUP_PASSWORD_REQUIRED = "Please enter a password!";
+export const INVALID_PASSWORD = "The entered password doesn't meet all the given requirements";
+export const CONFIRM_PASSWORD = "Please confirm your password!";
+export const PASSWORD_DO_NOT_MATCH = "The entered passwords do not match!";

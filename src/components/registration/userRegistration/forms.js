@@ -12,7 +12,7 @@ import lockImg from '../../../assets/Password_login.svg';
 import userImg from '../../../assets/user.svg';
 import phoneImg from "../../../assets/Phone - .svg";
 import emailImg from "../../../assets/Email ID.svg";
-
+import {NAME_REQUIRED,EMAIL_REQUIRED,CONTACT_NO,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD,} from '../../../constants/messages';
 
 userDetails.propTypes = {
   values: PropTypes.object.isRequired,
@@ -44,7 +44,7 @@ export default function userDetails(props) {
       >
         <Form.Item
           name="name"
-          rules={[{ required: true, message: "Please input your Full Name!" }]}
+          rules={[{ required: true, message: NAME_REQUIRED }]}
         >
           <Input
             size="large"
@@ -55,7 +55,7 @@ export default function userDetails(props) {
         </Form.Item>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: "Please input your Email!" }]}
+          rules={[{ required: true, message: EMAIL_REQUIRED  }]}
         >
           <Input
             prefix={<img src={emailImg} />}
@@ -69,7 +69,7 @@ export default function userDetails(props) {
           rules={[
             {
               required: true,
-              message: "Please input your contact information!"
+              message: CONTACT_NO
             }
           ]}
         >
@@ -85,16 +85,12 @@ export default function userDetails(props) {
           rules={[
             {
               required: true,
-              message: "Please Input Password!"
+              message: SIGNUP_PASSWORD_REQUIRED
             },
             {
               pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
               min: 8,
-              message: "Password doesn't meet all the requirements"
-            },
-            {
-              max: 16,
-              message: "Password doesn't meet all the requirements"
+              message: INVALID_PASSWORD
             }
           ]}
         >
@@ -103,14 +99,15 @@ export default function userDetails(props) {
             prefix={<img src={lockImg} />}
             placeholder="Enter Password"
             size="large"
+            maxLength = {16}
             onChange={handlePasswordChange}
           />
         </Form.Item>
         <Form.Item
           name="confirmPassword"
           rules={[
-            { required: true, message: "Please Confirm Password!" },
-            { pattern: passwordPattern, message: "Passwords do not match!" }
+            { required: true, message: CONFIRM_PASSWORD },
+            { pattern: passwordPattern, message: PASSWORD_DO_NOT_MATCH }
           ]}
         >
           <Input.Password
@@ -118,6 +115,8 @@ export default function userDetails(props) {
             prefix={<img src={lockImg} />}
             placeholder="Confirm Password"
             size="large"
+            maxLength = {16}
+            visibilityToggle = {false}
             onChange={handleConfirmPassword}
           />
         </Form.Item>
