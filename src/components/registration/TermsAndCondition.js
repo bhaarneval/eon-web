@@ -13,7 +13,8 @@ export default function TermsAndConditions (props){
     onCancel = {handleClose}
     title = {<h1 className = 'modal-header'>Terms & Conditions</h1>}
     footer = {null}
-    className = 'modal-custom'
+    width={660}
+    // className = 'modal-custom'
    >
     <div className = 'terms-conditions'>{termsConditions}</div>
     <div className = 'modal-footer'>

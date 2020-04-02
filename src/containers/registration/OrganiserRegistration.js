@@ -150,7 +150,7 @@ confirmPassword = (value) => {
       >
         <div className = "form-header">
           <h1>
-            <b>Registration - Event Organiser</b>
+            <b>Event Organiser Sign Up</b>
           </h1>
           <h4>Please provide the following details</h4>
         </div>

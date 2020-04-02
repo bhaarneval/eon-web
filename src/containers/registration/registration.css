@@ -5,18 +5,13 @@
 }
 .image-style {
     height: 100%;
-    width: 70%;
-    margin-top: -5%;
+    width: 60%;
 }
 .form-container {
     height: 100%;
     width: 100%;
     background-color: #F6F8FC;
-    padding: 5%;
-}
-.form-header {
-    padding-top: 1%;
-    padding-bottom: 4%;
+    padding: 2%;
 }
 .form-header-user {
     padding-bottom: 4%;

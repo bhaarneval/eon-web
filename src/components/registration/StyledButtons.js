@@ -12,8 +12,8 @@ export default function StyledButtons (props) {
   return(
     <Button
     style={{
-      height: "4em",
-      width: "4em",
+      height: "3em",
+      width: "3em",
       backgroundColor:'#262C6F'
     }}
     type="primary"
