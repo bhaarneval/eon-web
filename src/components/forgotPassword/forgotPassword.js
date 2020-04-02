@@ -1,21 +1,16 @@
 /* eslint-disable */
 import "./forgotPassword.css";
-import { INVALID_PASSWORD, CONFIRM_PASSWORD, PASSWORD_DO_NOT_MATCH } from "../../constants/messages";
+import { INVALID_PASSWORD, CONFIRM_PASSWORD, PASSWORD_DO_NOT_MATCH, EMAIL_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
 import {  Form, Input, Button  } from 'antd';
-import { Tabs } from 'antd';
-
-const { TabPane } = Tabs;
 
 import { UserOutlined } from '@ant-design/icons';
 
-class Login extends Component {
+class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userType : 'Organizer',
-      validationErrorsBadEmail: false,
-      validationErrorsBadPassword: false,
       confirmPassword: false,
       password: '',
     }
@@ -48,7 +43,7 @@ class Login extends Component {
   }
 
   onFinish = values => {
-    this.props.history('/')
+    this.props.history.push('/')
   };
 
   handlePasswordChange = (value) => {
@@ -93,12 +88,10 @@ class Login extends Component {
           >
             <Form.Item
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your email!',
-                },
-              ]}
+              rules={[{ required: true, message: EMAIL_REQUIRED },{
+                pattern:/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                message:EMAIL_REQUIRED
+              }]}
             >
               <Input placeholder="Email" prefix={<UserOutlined />} />
             </Form.Item>
@@ -147,8 +140,6 @@ class Login extends Component {
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Reset Password
               </Button>
-              {this.state.validationErrorsBadEmail ? 'Invalid Email' : null}
-              {this.state.validationErrorsBadPassword ? 'Passwords doesnt match' : null}
             </Form.Item>
           </Form>
         </div>
@@ -157,4 +148,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default ForgotPassword;
