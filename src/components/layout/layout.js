@@ -10,6 +10,7 @@ import ForgotPassword from "../../components/forgotPassword/forgotPassword";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import App from "../../App";
+import Dashboard from "../../containers/dashboard/dashboard";
 
 function StyledComp() {
   return (
@@ -27,8 +28,8 @@ function StyledComp() {
               <Route path="/login" exact component={Login} />
               <Route path="/register/organiser" component={OrganiserRegistration}/>
               <Route path="/register/subscriber" component={UserRegistration}/>
-              <Route path="/" exact component={App} />
-              <Route path="/forgot-password" exact component={ForgotPassword} />
+              <Route path="/forgot-password" exact component={ForgotPassword}/>
+              <Route path="/dashboard" component = {Dashboard}/>
             </Switch>
           </div>
         </div>
