@@ -23,6 +23,7 @@ export const PASSWORD_REQUIRED = "Password is required";
 export const NAME_REQUIRED = "Please enter your full name!";
 export const EMAIL_REQUIRED = "Please enter a valid email!";
 export const CONTACT_NO = "Please enter your contact information!";
+export const INVALID_CONATCT = "Contact number that should contain only digits";
 export const SIGNUP_PASSWORD_REQUIRED = "Please enter a password!";
 export const INVALID_PASSWORD = "Password doesn't meet all the given requirements";
 export const CONFIRM_PASSWORD = "Please confirm your password!";
