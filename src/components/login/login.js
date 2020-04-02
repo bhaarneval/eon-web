@@ -20,7 +20,7 @@ class Login extends Component {
   }
 
   componentWillMount(){
-    localStorage.setItem('loggedin', false)
+    localStorage.setItem('loggedIn', false)
   }
 
     tabChange = (key) => {

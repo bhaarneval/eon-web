@@ -79,9 +79,9 @@ class Navbar extends Component {
     );
     return (
       <div className="flex flex-row flex-end nav-container">
-        <img className="top-nav" src={logo}/>
+        {/* <img className="top-nav" src={logo}/> */}
         <div className="top-nav" style={{justifyContent:'flex-end'}}>
-        {localStorage.getItem('loggedin') === "true"?
+        {localStorage.getItem('loggedIn') === "true"?
           <Dropdown.Button
             overlay = {menuSidebar}
             type="primary"
