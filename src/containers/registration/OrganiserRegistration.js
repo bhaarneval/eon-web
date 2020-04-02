@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types";
+import './registration.css';
 import {BasicDetails, PasswordDetails} from '../../components/registration/organiserRegistration/forms';
 import FormSteps from '../../components/registration/FormSteps';
 import TermsAndConditions from '../../components/registration/TermsAndCondition';
@@ -132,33 +133,23 @@ confirmPassword = (value) => {
      const { showModal, activeKey,stepList,formData, smallLetters, capitalLetters, isChecked, numerals, passwordLength, confirmPassword, password } = this.state;
   return (
     <div
-      style={{
-        display: "flex",
-        width: "100%",
-        maxHeight: "89vh",
-        overflow: "hidden"
-      }}
+      className = "registration-main"
     >
       {activeKey === 0 ? (
         <img
           src={BasicDetailsImg}
-          style={{ height: "0%", width: "70%", marginTop: "-4em" }}
+          className = 'image-style'
         />
       ) : (
         <img
           src={PasswordImg}
-          style={{ height: "0%", width: "70%", marginTop: "-4em" }}
+          className = 'image-style'
         />
       )}
       <div
-        style={{
-          maxHeight: "89vh",
-          width: "100%",
-          backgroundColor: "#F6F8FC",
-          padding: "4em"
-        }}
+        className = 'form-container'
       >
-        <div style={{ paddingTop: "1em", paddingBottom: "3em" }}>
+        <div className = "form-header">
           <h1>
             <b>Registration - Event Organiser</b>
           </h1>

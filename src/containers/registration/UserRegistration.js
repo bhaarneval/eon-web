@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import './registration.css';
 import UserDetails from '../../components/registration/userRegistration/forms';
 import TermsAndConditions from "../../components/registration/TermsAndCondition";
 import BasicDetailsImg from "../../assets/Basic Details.svg";
@@ -121,26 +122,16 @@ class UserRegistration extends Component {
     } = this.state;
     return (
       <div
-        style={{
-          display: "flex",
-          width: "100%",
-          maxHeight: "89vh",
-          overflow: "hidden"
-        }}
+        className = 'registration-main'
       >
         <img
           src={BasicDetailsImg}
-          style={{ height: "0%", width: "70%", marginTop: "-4em" }}
+          className = 'image-style'
         />
         <div
-          style={{
-            maxHeight: "89vh",
-            width: "100%",
-            backgroundColor: "#F6F8FC",
-            padding: "4em"
-          }}
+           className = 'form-container'
         >
-          <div style={{  paddingBottom: "1em" }}>
+          <div className = "form-header">
             <h1>
               <b>Registration - User</b>
             </h1>
