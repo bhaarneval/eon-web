@@ -1,7 +1,6 @@
 .modal-custom,ant-modal {
-    max-height: 50em;
-    width: 70em !important;
-    overflow: hidden;
+    max-height: 100%;
+    width: 60% !important;
 }
 
 .modal-header {

@@ -4,29 +4,30 @@
     padding: 2em;
 }
 .input-style {
-    padding: 1em;
+    padding: 4%;
 }
 .button-arrow {
-    font-size: 2em;
+    font-size: 300%;
 }
 .password-style {
+    margin-top: 5%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-column-gap: 0.5em;
-    grid-row-gap: 0.5em;
+    grid-column-gap: 5%;
+    grid-row-gap: 20%;
 }
 .two-button-style {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-top: 4em;
+    margin-top: 40%;
 }
 .one-button-style {
     display: flex;
     width: 100%;
     justify-content: flex-end;
-    margin-top: 4em;
+    margin-top: 8%;
 }
 .multistep-style {
     display: flex;
