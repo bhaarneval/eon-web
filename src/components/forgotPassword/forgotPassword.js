@@ -70,7 +70,7 @@ class Login extends Component {
     return (
       <div className="loginContainer">
         <div className="leftBody">
-          <h1>Forgot Password</h1>
+          <h1>Change Password</h1>
           <Form
             name="basic"
             initialValues={{
