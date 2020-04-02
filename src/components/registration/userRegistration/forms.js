@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StyledButtons from '../StyledButtons';
+/* eslint-disable */
 import '../forms.css';
 import { Form, Input } from "antd";
 import {
@@ -126,7 +127,7 @@ export default function userDetails(props) {
             onChange={handleConfirmPassword}
           />
         </Form.Item>
-        <div>Password Must Contains</div>
+        {/* <div>Password Must Contains</div>
         <div className = "password-style">
           <div>
             {smallLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
@@ -144,7 +145,8 @@ export default function userDetails(props) {
             {passwordLength ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
             8-16 Characters
           </div>
-        </div>
+        </div> */}
+        <div style={{fontSize: '12px', paddingBottom:'5px'}}>Password must be of length including capital letter, numeric and special character.</div>
         <div className ="one-button-style">
           <StyledButtons content={<RightOutlined className="button-arrow" />} />
         </div>

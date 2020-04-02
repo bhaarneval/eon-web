@@ -87,7 +87,7 @@ class Login extends Component {
                 message:EMAIL_REQUIRED
               }]}
             >
-              <Input placeholder="Email" prefix={<UserOutlined />} />
+              <Input className="input-style" placeholder="Email" prefix={<UserOutlined />} />
             </Form.Item>
             <Form.Item
               name="password"
@@ -103,7 +103,7 @@ class Login extends Component {
                 }
               ]}
             >
-              <Input.Password  placeholder="Password" />
+              <Input.Password className="input-style"  placeholder="Password" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>

@@ -74,8 +74,8 @@ class ForgotPassword extends Component {
     let passwordPattern = "^"+this.state.password+"$";
     passwordPattern = new RegExp(passwordPattern);
     return (
-      <div className="loginContainer">
-        <div className="leftBody">
+      <div className="changePasswordContainer">
+        <div>
           <h1>Change Password</h1>
           <div style={{fontSize: '12px', paddingBottom:'5px'}}>Password must be of length including capital letter, numeric and special character.</div>
           <Form
@@ -93,7 +93,7 @@ class ForgotPassword extends Component {
                 message:EMAIL_REQUIRED
               }]}
             >
-              <Input placeholder="Email" prefix={<UserOutlined />} />
+              <Input placeholder="Email" className="input-style"  prefix={<UserOutlined />} />
             </Form.Item>
             <Form.Item
               name="oldpassword"
@@ -109,7 +109,7 @@ class ForgotPassword extends Component {
                 }
               ]}
             >
-              <Input.Password  placeholder="Old Password" />
+              <Input.Password className="input-style"  placeholder="Old Password" />
             </Form.Item>
             <Form.Item
               name="newpassword"
@@ -125,7 +125,7 @@ class ForgotPassword extends Component {
                 }
               ]}
             >
-              <Input.Password  placeholder="New Password" onChange={this.handlePasswordChange}/>
+              <Input.Password className="input-style" placeholder="New Password" onChange={this.handlePasswordChange}/>
             </Form.Item>
             <Form.Item
               name="confirmpassword"
@@ -134,7 +134,7 @@ class ForgotPassword extends Component {
                 { pattern: passwordPattern, message: PASSWORD_DO_NOT_MATCH }
               ]}
             >
-              <Input.Password  placeholder="Confirm Password"  onChange={this.confirmPassword}/>
+              <Input.Password className="input-style" placeholder="Confirm Password"  onChange={this.confirmPassword}/>
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
