@@ -108,7 +108,6 @@ class ForgotPassword extends Component {
               {this.state.validationErrorsBadEmail ? 'Invalid Email' : null}
             </Form.Item>
           </Form>
-          <a onClick={() => this.props.history.push('/forgot-password')} >Forgot Password?</a>
         </div>
     </div>
     );
