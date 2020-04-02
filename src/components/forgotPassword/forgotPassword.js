@@ -1,7 +1,6 @@
 /* eslint-disable */
 import "./forgotPassword.css";
-import { EMAIL, PASSWORD, SUBMIT } from "../../constants/constants";
-import { EMAIL_REQUIRED, PASSWORD_REQUIRED } from "../../constants/messages";
+import { INVALID_PASSWORD, CONFIRM_PASSWORD, PASSWORD_DO_NOT_MATCH } from "../../constants/messages";
 import React, { Component } from "react";
 import {  Form, Input, Button  } from 'antd';
 import { Tabs } from 'antd';
@@ -17,6 +16,8 @@ class Login extends Component {
       userType : 'Organizer',
       validationErrorsBadEmail: false,
       validationErrorsBadPassword: false,
+      confirmPassword: false,
+      password: '',
     }
   }
 
@@ -46,31 +47,42 @@ class Login extends Component {
       return (validEmail);
   }
 
-  validatePassword (newPassword, confirmpassword) {
-    const validPassword = newPassword === confirmpassword 
-    this.setState({
-      validationErrorsBadPassword : !validPassword
-    });
-    return (validPassword);
-}
-
   onFinish = values => {
-    console.log(values)
-    if (this.validate(values.email) && this.validatePassword(values.newpassword, values.confirmpassword)){
-      this.props.history('/')
-    }
+    this.props.history('/')
   };
+
+  handlePasswordChange = (value) => {
+    this.setState({
+      password: value.target.value
+    })
+  }
+
+  confirmPassword = (value) => {
+    let {password, confirmPassword} = this.state;
+    let input  = value.target.value;
+    if(input === password){
+        confirmPassword = true;
+    }
+    else{
+        confirmPassword = false;
+    }
+    this.setState({
+        confirmPassword: confirmPassword
+    })
+}
 
   onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
 
   render() {
-    console.log(this.state)
+    let passwordPattern = "^"+this.state.password+"$";
+    passwordPattern = new RegExp(passwordPattern);
     return (
       <div className="loginContainer">
         <div className="leftBody">
           <h1>Change Password</h1>
+          <div style={{fontSize: '12px', paddingBottom:'5px'}}>Password must be of length including capital letter, numeric and special character.</div>
           <Form
             name="basic"
             initialValues={{
@@ -91,26 +103,45 @@ class Login extends Component {
               <Input placeholder="Email" prefix={<UserOutlined />} />
             </Form.Item>
             <Form.Item
+              name="oldpassword"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your old password!',
+                },
+                {
+                  pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
+                  min:8,
+                  message: INVALID_PASSWORD
+                }
+              ]}
+            >
+              <Input.Password  placeholder="Old Password" />
+            </Form.Item>
+            <Form.Item
               name="newpassword"
               rules={[
                 {
                   required: true,
                   message: 'Please input your password!',
                 },
+                {
+                  pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
+                  min:8,
+                  message: INVALID_PASSWORD
+                }
               ]}
             >
-              <Input.Password  placeholder="Password" />
+              <Input.Password  placeholder="New Password" onChange={this.handlePasswordChange}/>
             </Form.Item>
             <Form.Item
               name="confirmpassword"
               rules={[
-                {
-                  required: true,
-                  message: 'Please input your password again!',
-                },
+                { required: true, message: CONFIRM_PASSWORD },
+                { pattern: passwordPattern, message: PASSWORD_DO_NOT_MATCH }
               ]}
             >
-              <Input.Password  placeholder="Confirm Password" />
+              <Input.Password  placeholder="Confirm Password"  onChange={this.confirmPassword}/>
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
