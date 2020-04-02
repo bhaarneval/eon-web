@@ -6,10 +6,12 @@
 .layoutNavContainer {
   height: 100%;
   position: fixed;
+
+  background-color: #211d70;
   width: 6%;
 }
 .mainContentContainer {
-  padding: 0 1% 0% 6%;
+  /* padding: 0 1% 0% 6%; */
   width: 100vw;
 }
 

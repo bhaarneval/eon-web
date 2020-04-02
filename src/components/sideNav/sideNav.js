@@ -6,13 +6,10 @@ import PropTypes from 'prop-types';
 
 import {isDark} from '../../util/themeIdentify';
 import { constants } from "../../constants/constants";
-
-
-import {
-  NotificationOutlined,
-  TeamOutlined,
-  BarChartOutlined,
-} from '@ant-design/icons';
+import analytics from '../../assets/Analytics.svg';
+import event from '../../assets/Event Mgment.svg';
+import ticket from '../../assets/Tickets.svg';
+import logo from '../../assets/logo.png';
 
 class SideNav extends Component {
   constructor(props) {
@@ -69,17 +66,18 @@ class SideNav extends Component {
     const themeWiseIconClass = `${iconClass} ${isDark ? 'activeDark' : 'activeLight'}`;
     return (
       <div className="sideNav">
+        <img style={{ width: '98%' }} src={logo}/>
         <div
           className={iconClass}
           onClick={() => this.onClick(constants.HOME)}
         >
-          <NotificationOutlined style={{ fontSize: '20px' }} />
+          <img src={analytics} style={{ fontSize: '20px' }} />
         </div>
         <div
           className={ active === constants.CLUSTER ? themeWiseIconClass : iconClass}
           onClick={() => this.onClick(constants.CLUSTER)}
         >
-          <TeamOutlined style={{ fontSize: '20px' }} />
+          <img src={event} sstyle={{ fontSize: '20px' }} />
         </div>
         <div
           className={ active === constants.MONITOR ? themeWiseIconClass : "iconContainer"}
@@ -88,7 +86,7 @@ class SideNav extends Component {
             history.push('/deploy');
             }}
         >
-          <BarChartOutlined style={{ fontSize: '20px' }} />
+          <img src={ticket} sstyle={{ fontSize: '20px' }} />
         </div>
       </div>
     );

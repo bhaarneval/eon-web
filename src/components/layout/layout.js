@@ -16,11 +16,13 @@ function StyledComp() {
   return (
     <div>
       <div className="flex flex-row layoutContainer">
+      {localStorage.getItem('loggedIn') === "true" &&
         <div className="flex flex-column layoutNavContainer">
           <div>
             <SideNav />
           </div>
-        </div>
+      </div>
+      }
         <div className="mainContentContainer">
           <Navbar />
           <div className="contentBody">

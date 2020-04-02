@@ -33,7 +33,7 @@ handleModalClose = () => {
 
 handleAccept = () => {
     if(this.state.isChecked){
-        localStorage.setItem('loggedin', true)
+        localStorage.setItem('loggedIn', true)
         this.props.history.push(`/dashboard`);
     }
     else
