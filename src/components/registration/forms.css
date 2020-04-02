@@ -1,0 +1,38 @@
+.form-main {
+    align-self: center;
+    width: 100%;
+}
+.input-style {
+    padding: 2%;
+}
+.button-arrow {
+    font-size: 200%;
+}
+.password-style {
+    margin-top: 2%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: 5%;
+    grid-row-gap: 10%;
+}
+.two-button-style {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 40%;
+}
+.one-button-style {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 2%;
+}
+.multistep-style {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.step-style {
+    width: 70%;
+}

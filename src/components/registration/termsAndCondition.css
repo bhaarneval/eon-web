@@ -1,0 +1,26 @@
+.modal-custom,ant-modal {
+    max-height: 60%;
+    width: 60% !important;
+}
+
+.modal-header {
+    color: #262C6F;
+    text-align: center;
+}
+
+.terms-conditions {
+    overflow-y: auto;
+    max-height: 30em;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-bottom: 3em; 
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+.accept-button {
+    background-color: #262C6F;
+    color:#ffffff;
+}
