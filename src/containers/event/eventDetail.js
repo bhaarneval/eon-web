@@ -11,36 +11,63 @@ class InviteesPopup extends Component {
         super(props);
         this.state = {
             showModal: true,
-            inviteeList: [],
+            inviteeList: {},
             count: 0,
-            message:''
+            message:'',
+            emailError:''
         }
       }
+
+      validateEmail(email){      
+        var emailPattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+        return emailPattern.test(email); 
+      } 
 
       handleKeyPress = (event) => {
         if(event.key === 'Enter'){
             event.preventDefault();
-            this.setState({
-                count: this.state.count + 1,
-                inviteeList: [...this.state.inviteeList, {[this.state.count] : event.target.value}],
-                message: ''
-            })
+            if(this.validateEmail(event.target.value)){
+                let a = this.state.inviteeList
+                a[this.state.count] = event.target.value
+                if (new Set(Object.values(a)).size !== Object.values(a).length){
+                    delete a[`${this.state.count}`];
+                    this.setState({
+                        emailError: 'Email already exists in the list',
+                        inviteeList: a,
+                    })
+                    return
+                }
+                this.setState({
+                    count: this.state.count + 1,
+                    inviteeList: a,
+                    message: ''
+                })
+            }
+            else{
+                this.setState({
+                    emailError: 'Please enter a valid email address'
+                })
+            }
         }
     }
 
     onChange = (event) => {
         this.setState({
-            message: event.target.value 
+            message: event.target.value,
+            emailError: ''
         })
     }
 
     onDelete = (key) => {
-        console.log(key)
+        let a =this.state.inviteeList;
+        delete a[`${key}`];
+        this.setState({
+            inviteeList: a,
+        })
     }
 
     render(){
         const { handleSend, handleClose, onDiscountChange } = this.props;
-        console.log(this.state.inviteeList)
         return(
             <Modal
                 visible
@@ -51,8 +78,8 @@ class InviteesPopup extends Component {
             >
                 <div>
                     <div className="email-row">
-                        {this.state.inviteeList.map((data, key) => {
-                            return <span className="email" id={key} key={key}>{data[Object.keys(data)[0]]} <span onClick={() => this.onDelete(key)} className="delete-mark">x</span></span> 
+                        {Object.keys(this.state.inviteeList).map((key) => {
+                            return <span className="email" id={key} key={key}>{this.state.inviteeList[key]} <span onClick={() => this.onDelete(key)} className="delete-mark">x</span></span> 
                         })}
                     </div>
                     <TextArea 
@@ -60,6 +87,9 @@ class InviteesPopup extends Component {
                         rows={1} 
                         onChange={this.onChange}
                         onKeyPress={this.handleKeyPress} />
+                    {this.state.emailError.length > 0 &&
+                        <div className="error">{this.state.emailError}</div>
+                    }
                     <div className='discount-row'>
                         <InputNumber
                             min={0}
