@@ -42,10 +42,6 @@ class Navbar extends Component {
     });
   };
 
-  handleLogout = () => {
-    this.handleClosePopover();
-    this.props.history.push("/login");
-  };
 
   takeMenuAction = (input) => {
     if(input.key === "1")
@@ -54,8 +50,9 @@ class Navbar extends Component {
       this.props.history.push(`/register/subscriber`)
     else if(input.key === "3")
       this.props.history.push(`/change-password`)
-    else
-      this.props.history.push(`/login`)
+    else{
+      this.logout()
+    }
   }
 
 
@@ -75,7 +72,7 @@ class Navbar extends Component {
     const menuSidebar = (
       <Menu onClick={key => this.takeMenuAction(key)}>
         <Menu.Item key="3">Change Password</Menu.Item>
-        <Menu.Item key="4"><LogoutOutlined onClick={this.logout}/></Menu.Item>
+        <Menu.Item key="4"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
     return (
