@@ -10,6 +10,7 @@ import ForgotPassword from "../../components/forgotPassword/forgotPassword";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import App from "../../App";
+import Dashboard from "../../containers/dashboard/dashboard";
 
 function StyledComp() {
   return (
@@ -26,11 +27,12 @@ function StyledComp() {
           <Navbar />
           <div className="contentBody">
             <Switch>
+              <Route path="/" exact component={Login} />
               <Route path="/login" exact component={Login} />
               <Route path="/register/organiser" component={OrganiserRegistration}/>
               <Route path="/register/subscriber" component={UserRegistration}/>
-              <Route path="/" exact component={App} />
               <Route path="/change-password" exact component={ForgotPassword} />
+              <Route path="/dashboard" component = {Dashboard}/>
             </Switch>
           </div>
         </div>

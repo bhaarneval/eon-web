@@ -1,3 +1,4 @@
+import dummyImg from '../assets/concert.jpg';
 export const constants = {
     HOME: "HOME",
     CLUSTER: "CLUSTER",
@@ -41,3 +42,83 @@ export const SUBMIT = "Submit";
 export const lightborder = "#EBEEF3";
 export const veryDarkBlue = '#262C6F';
 
+export const dummyList = [
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Food Festival",
+        status: "live",
+        attendies: "2500+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    }
+
+]
