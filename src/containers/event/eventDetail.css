@@ -1,0 +1,35 @@
+.discount-row{
+    width: 50%;
+    justify-content: space-between;
+    display: flex;
+    padding: 5% 0; 
+}
+.send-button-row{
+    display: flex;
+    justify-content: flex-end;
+}
+.send-button{
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+}
+
+.email{
+    border-radius: 12px;
+    background-color: #d3d3d357;
+    font-size: 12px;
+    font-weight: bold;
+    color: darkgrey;
+    padding: 6px;
+    margin-right: 10px;
+}
+
+.email-row{
+    margin-bottom: 10px; 
+}
+.delete-mark{
+    border-radius: 50%;
+    border: 1px solid red;
+    padding: 0px 2px;
+    color: red; 
+}

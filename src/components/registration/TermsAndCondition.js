@@ -9,12 +9,11 @@ export default function TermsAndConditions (props){
  
   return(
    <Modal
-   visible
+    visible
     onCancel = {handleClose}
     title = {<h1 className = 'modal-header'>Terms & Conditions</h1>}
     footer = {null}
     width={660}
-    // className = 'modal-custom'
    >
     <div className = 'terms-conditions'>{termsConditions}</div>
     <div className = 'modal-footer'>
