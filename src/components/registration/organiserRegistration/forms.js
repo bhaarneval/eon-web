@@ -78,7 +78,6 @@ export function BasicDetails(props) {
          placeholder = "Contact No." className = 'input-style'/>
       </Form.Item>
       <Form.Item
-        label = 'Address'
         name="address"
         rules={[
           {

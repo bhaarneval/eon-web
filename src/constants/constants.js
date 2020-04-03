@@ -45,78 +45,67 @@ export const veryDarkBlue = '#262C6F';
 export const dummyList = [
     {
         name: "Food Festival",
-        status: "live",
         attendies: "2500+",
         date: "12-04-2020",
         eventImage: dummyImg
     },
     {
-        name: "Food Festival",
-        status: "live",
+        name: "Technex",
         attendies: "2500+",
         date: "12-04-2020",
         eventImage: dummyImg
     },
     {
-        name: "Food Festival",
-        status: "live",
+        name: "AON Fest",
         attendies: "2500+",
         date: "12-04-2020",
         eventImage: dummyImg
     },
     {
-        name: "Food Festival",
-        status: "live",
+        name: "Cultural Festival",
         attendies: "2500+",
         date: "12-04-2020",
         eventImage: dummyImg
     },
     {
-        name: "Food Festival",
-        status: "live",
+        name: "Finance Festival",
         attendies: "2500+",
         date: "12-04-2020",
         eventImage: dummyImg
     },
     {
-        name: "Food Festival",
-        status: "live",
+        name: "Robotics",
+        attendies: "250+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Flee Festival",
+        attendies: "400+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Book Festival",
+        attendies: "2000+",
+        date: "12-04-2020",
+        eventImage: dummyImg
+    },
+    {
+        name: "Health and Fitness",
         attendies: "2500+",
         date: "12-04-2020",
         eventImage: dummyImg
     },
     {
-        name: "Food Festival",
-        status: "live",
+        name: "Coding",
         attendies: "2500+",
         date: "12-04-2020",
         eventImage: dummyImg
     },
     {
-        name: "Food Festival",
-        status: "live",
-        attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
-    },
-    {
-        name: "Food Festival",
-        status: "live",
-        attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
-    },
-    {
-        name: "Food Festival",
-        status: "live",
-        attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
-    },
-    {
-        name: "Food Festival",
-        status: "live",
-        attendies: "2500+",
+        name: "Marathon",
+        attendies: "200+",
         date: "12-04-2020",
         eventImage: dummyImg
     }

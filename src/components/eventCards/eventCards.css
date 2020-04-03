@@ -13,13 +13,6 @@
 .image-status-container {
     display: flex;
 }
-.status-button {
-    cursor: none;
-    margin-left: -65px;
-    margin-top: 3%;
-    background-color: transparent;
-    color: white;
-}
 .card-desc-grid{
     display: grid;
     grid-template-rows: 1fr 1fr;
@@ -27,7 +20,7 @@
 }
 .event-name{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
 }
 .card-desc-flex{
     display: flex;

@@ -51,8 +51,8 @@ class Login extends Component {
 
   onFinish = values => {
     console.log(values)
-    localStorage.setItem('loggedin', true)
-    this.props.history.push(`/dashbord`)
+    localStorage.setItem('loggedIn', true)
+    this.props.history.push(`/dashboard`)
   };
 
   onFinishFailed = errorInfo => {
