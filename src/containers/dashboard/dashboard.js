@@ -25,7 +25,7 @@ class Dashboard extends Component {
       return (
         <Row key={index} className="cards-row">
           {list.map((event, index) => {
-            return <EventCards key={index} event={event} />;
+            return <EventCards history={this.props.history} key={index} event={event} />;
           })}
         </Row>
       );
@@ -34,10 +34,9 @@ class Dashboard extends Component {
 
   render() {
     const list = dummyList
-    
     return (
       <div className="sub-content">
-        <div className="events-heading"> Events Management </div>
+        <div className="events-heading"> Event Management </div>
         <div className="events-container-flex">
           {this.spliceArray(list)}
         </div>

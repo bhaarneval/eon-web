@@ -7,9 +7,9 @@ import Login from "../../components/login/login";
 import OrganiserRegistration from "../../containers/registration/OrganiserRegistration";
 import UserRegistration from "../../containers/registration/UserRegistration";
 import ForgotPassword from "../../components/forgotPassword/forgotPassword";
+import EventDetail from "../../containers/event/eventDetail";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
-import App from "../../App";
 import Dashboard from "../../containers/dashboard/dashboard";
 
 function StyledComp() {
@@ -33,6 +33,7 @@ function StyledComp() {
               <Route path="/register/subscriber" component={UserRegistration}/>
               <Route path="/change-password" exact component={ForgotPassword} />
               <Route path="/dashboard" component = {Dashboard}/>
+              <Route path="/event-details/1" component = {EventDetail}/>
             </Switch>
           </div>
         </div>

@@ -5,6 +5,7 @@
 
 .events-heading {
     color: #262C6F;
+    font-weight: bold;
     display: flex;
     justify-content: flex-start;
     padding: 1%;
