@@ -34,7 +34,8 @@ handleModalClose = () => {
 handleAccept = () => {
     if(this.state.isChecked){
         localStorage.setItem('loggedIn', true)
-        this.props.history.push(`/dashboard`);
+        // this.props.history.push(`/dashboard`);
+        window.location.replace('/dashboard')
     }
     else
         console.log("Failed");

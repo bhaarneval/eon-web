@@ -29,7 +29,8 @@ class UserRegistration extends Component {
 
   handleAccept = () => {
     if (this.state.isChecked) {
-        this.props.history.push(`/dashboard`);
+        // this.props.history.push(`/dashboard`);
+      window.location.replace('/dashboard')
       console.log("Accepted");
     } else console.log("Failed");
   };

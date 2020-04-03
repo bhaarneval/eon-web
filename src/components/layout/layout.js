@@ -28,7 +28,7 @@ function StyledComp() {
           <div className="contentBody">
             <Switch>
               <Route path="/" exact component={Login} />
-              <Route path="/login" exact component={Login} />
+              <Route path="/login" component={Login} />
               <Route path="/register/organiser" component={OrganiserRegistration}/>
               <Route path="/register/subscriber" component={UserRegistration}/>
               <Route path="/change-password" exact component={ForgotPassword} />

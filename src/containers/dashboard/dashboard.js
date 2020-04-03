@@ -14,7 +14,6 @@ class Dashboard extends Component {
   }
 
   spliceArray = list => {
-
     let splicedList = [];
     splicedList = list.reduce(
       (rows, key, index) =>
@@ -37,12 +36,12 @@ class Dashboard extends Component {
     const list = dummyList
     
     return (
-      <>
+      <div className="sub-content">
         <div className="events-heading"> Events Management </div>
         <div className="events-container-flex">
           {this.spliceArray(list)}
         </div>
-      </>
+      </div>
     );
   }
 }

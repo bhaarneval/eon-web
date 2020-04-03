@@ -61,7 +61,8 @@ class Navbar extends Component {
 
   logout = () => {
     localStorage.setItem('loggedIn', false)
-    this.props.history.push('login')
+    // this.props.history.push('login')
+    window.location.replace('/login')
   }
 
   render() {
