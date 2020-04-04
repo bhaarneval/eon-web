@@ -11,6 +11,7 @@ import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import App from "../../App";
 import Dashboard from "../../containers/dashboard/dashboard";
+import CreateEvent from "../../containers/createEvent/CreateEvent";
 
 function StyledComp() {
   return (
@@ -33,6 +34,7 @@ function StyledComp() {
               <Route path="/register/subscriber" component={UserRegistration}/>
               <Route path="/change-password" exact component={ForgotPassword} />
               <Route path="/dashboard" component = {Dashboard}/>
+              <Route path="/create" component={CreateEvent}/>
             </Switch>
           </div>
         </div>
