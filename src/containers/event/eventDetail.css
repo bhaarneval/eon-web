@@ -11,6 +11,7 @@
 .send-button{
     display: flex;
     width: 30%;
+    padding-top: 20px;
     justify-content: space-between;
 }
 

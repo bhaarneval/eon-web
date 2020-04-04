@@ -2,19 +2,21 @@
     border: 1px solid rgba(0, 0, 0, 0.06);
     background-color: white;
     border-radius: 5px;
-    padding: 15px; 
+    padding: 5px; 
 }
 
 .detail-card-top{
     display: flex;
+    justify-content: space-between
 }
 
 .detail-card-top-descContainer{
     padding: 0% 2%;
+    width: 80%;
 }
 
 .detail-card-top-desc{
-    padding: 2% 0;
+    padding: 1% 0;
 }
 
 .detail-card-top-other{
@@ -36,6 +38,18 @@
     width: 24%;
     justify-content: center;
     display: flex;
+    align-items: center;
+}
+
+.reminder-tile{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.reminder-row{
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .detail-card-count{

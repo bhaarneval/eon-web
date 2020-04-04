@@ -48,8 +48,6 @@ onDiscountChange = (value) => {
 }
 
 handleSend = (inviteeList) => {
-    console.log(inviteeList)
-    console.log(Object.keys(inviteeList))
     let data = [];
     for (let i = 0; i < Object.keys(inviteeList).length; i++) {
         data.push({
