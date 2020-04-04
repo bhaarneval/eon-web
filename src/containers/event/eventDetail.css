@@ -16,10 +16,10 @@
 
 .email{
     border-radius: 12px;
-    background-color: #d3d3d357;
+    background-color: #d3d3d33b;
     font-size: 12px;
-    font-weight: bold;
-    color: darkgrey;
+    font-weight: 600;
+    color: #8e8d8d;
     padding: 6px;
     margin-right: 10px;
 }
@@ -28,11 +28,20 @@
     margin-bottom: 10px; 
 }
 .delete-mark{
-    border-radius: 50%;
     border: 1px solid red;
-    padding: 0px 2px;
     color: red; 
+    height: 15px;
+    width: 15px;
+    display: table-cell;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 5px;
 }
 .error{
     color: red; 
+}
+.invitee-row{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
 }
