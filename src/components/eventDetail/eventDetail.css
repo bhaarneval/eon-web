@@ -64,3 +64,8 @@
     display: flex;
     z-index: 1;
 }
+
+.discount-box{
+    display: flex;
+    flex-direction: column;
+}

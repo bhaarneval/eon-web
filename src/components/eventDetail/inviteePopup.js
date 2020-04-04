@@ -94,20 +94,25 @@ class InviteesPopup extends Component {
                         <div className="error">{this.state.emailError}</div>
                     }
                     <div className='discount-row'>
-                        <InputNumber
-                            label="dsd"
-                            min={0}
-                            size="large"
-                            max={100}
-                            formatter={value => `${value}%`}
-                            parser={value => value.replace('%', '')}
-                            onChange={onDiscountChange}
-                        />
-                        <InputNumber
-                            size="large"
-                            value={200}
-                            disabled={true}
-                        />
+                        <div className='discount-box'>
+                            <div>Discount:</div>
+                            <InputNumber
+                                min={0}
+                                size="large"
+                                max={100}
+                                formatter={value => `${value}%`}
+                                parser={value => value.replace('%', '')}
+                                onChange={onDiscountChange}
+                            />
+                        </div>
+                        <div className='discount-box'>
+                            <div>Updated Fee:</div>
+                            <InputNumber
+                                size="large"
+                                value={200}
+                                disabled={true}
+                            />
+                        </div>
                     </div>
                     <div className = 'send-button-row'>
                         <div className = 'send-button'>
