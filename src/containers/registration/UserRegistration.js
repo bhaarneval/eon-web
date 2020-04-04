@@ -30,6 +30,7 @@ class UserRegistration extends Component {
   handleAccept = () => {
     if (this.state.isChecked) {
         // this.props.history.push(`/dashboard`);
+        localStorage.setItem('loggedIn', true)
       window.location.replace('/dashboard')
       console.log("Accepted");
     } else console.log("Failed");

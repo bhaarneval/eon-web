@@ -6,6 +6,7 @@ import './eventCards.css';
 import moment from 'moment';
 
 
+
 export default function EventCards(props) {
     const {event} = props;
     const {name, attendies, date, eventImage} = event;
@@ -13,6 +14,7 @@ export default function EventCards(props) {
     <Card
       bordered={true}
       className="cards-style"
+      onClick={() => props.history.push(`/event-details/1`)}
       cover={
         <div className="image-status-container">
           <img
@@ -38,4 +40,5 @@ export default function EventCards(props) {
 
 EventCards.propTypes = {
     event: PropTypes.object.isRequired,
+    history: PropTypes.object,
 }

@@ -43,7 +43,7 @@ class ForgotPassword extends Component {
   }
 
   onFinish = values => {
-    this.props.history.push('/')
+    window.location.replace('/dashboard');
   };
 
   handlePasswordChange = (value) => {

@@ -96,11 +96,6 @@ class Login extends Component {
                 {
                   required: true,
                   message: 'Please input your password!',
-                },
-                {
-                  pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
-                  min:8,
-                  message: INVALID_PASSWORD
                 }
               ]}
             >
