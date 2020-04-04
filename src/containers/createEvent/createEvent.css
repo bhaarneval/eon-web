@@ -1,0 +1,14 @@
+.create-container {
+    margin-left: 6%;
+    padding: 0% 2%;
+}
+.header {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.header-text{
+    color: #262C6F;
+    font-size: 120%;
+    margin-left: 1%;
+}

@@ -28,3 +28,13 @@ export const SIGNUP_PASSWORD_REQUIRED = "Please enter a password!";
 export const INVALID_PASSWORD = "Password doesn't meet all the given requirements";
 export const CONFIRM_PASSWORD = "Please confirm your password!";
 export const PASSWORD_DO_NOT_MATCH = "Passwords do not match!";
+
+//create constant messages
+export const EVENT_NAME = "Event name cannot be empty!";
+export const URL_VALID = "Please enter a valid URL!";
+export const EVENT_LOCATION = "location cannot be empty!";
+export const EVENT_DATE = "Event date cannot be empty!";
+export const EVENT_TYPE = "Event type cannot be empty!";
+export const ONLY_NUMERIC = "Must contain digits only!"
+export const EVENT_CAPACITY = "Number of seats can't be empty!"
+export const EVENT_FEES = "Subscription fees can't be empty!";
