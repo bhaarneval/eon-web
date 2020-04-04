@@ -62,7 +62,7 @@ class EventTable extends React.Component {
 
 EventTable.propTypes = {
     data: PropTypes.object,
-    deleteAll: PropTypes.func
+    deleteAll: PropTypes.func,
 };
 
 export default EventTable;

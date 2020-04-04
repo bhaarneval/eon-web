@@ -117,7 +117,7 @@ class InviteesPopup extends Component {
                     <div className = 'send-button-row'>
                         <div className = 'send-button'>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="primary" onClick={handleSend}>Send</Button>
+                            <Button type="primary" onClick={() => handleSend(this.state.inviteeList)}>Send</Button>
                         </div>
                     </div>
                 </div>

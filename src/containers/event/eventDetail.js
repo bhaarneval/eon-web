@@ -7,32 +7,15 @@ import EventCount from "../../components/eventDetail/eventCount";
 import EventTable from "../../components/eventDetail/inviteeTable";
 import InviteesPopup from "../../components/eventDetail/inviteePopup";
 
-let data = [];
-for (let i = 0; i < 4; i++) {
-    data.push({
-    key: i,
-    email: `priyanka${i}@gmail.com`,
-    name: `Edward King${i}${i}${i}`,
-    contact: '1234567890',
-    discount: '10%'
-    });
-}
-data.push({
-    key: 4,
-    email: `priyankagmail.com`,
-    name: 'King2',
-    contact: '1234567890',
-    discount: '10%'
-    });
-
 class EventDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
         showModal: false,
-        rows: data,
+        rows: [],
         searchValue: '',
-        filteredRows: []
+        filteredRows: [],
+        discount: '',
     }
   }
 
@@ -58,7 +41,29 @@ deleteAll = (list) => {
     console.log(deletedList)
 }
 
-handleSend = () => {
+onDiscountChange = (value) => {
+    this.setState({
+        discount: value
+    })
+}
+
+handleSend = (inviteeList) => {
+    console.log(inviteeList)
+    console.log(Object.keys(inviteeList))
+    let data = [];
+    for (let i = 0; i < Object.keys(inviteeList).length; i++) {
+        data.push({
+            key: i,
+            email: inviteeList[Object.keys(inviteeList)[i]],
+            name: inviteeList[Object.keys(inviteeList)[i]],
+            contact: '1234567890',
+            discount: this.state.discount
+        });
+    }
+    this.setState({
+        showModal: false,
+        rows: data
+    })
 }
 
 search = (event) => {
