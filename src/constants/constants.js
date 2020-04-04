@@ -42,6 +42,11 @@ export const SUBMIT = "Submit";
 export const lightborder = "#EBEEF3";
 export const veryDarkBlue = '#262C6F';
 
+//Validation regexp
+export const URLVALIDATION = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+export const NUMBERSVALIDATION = /^\d+$/;
+export const MATCH_ANYTHING = /.*?/;
+
 export const dummyList = [
     {
         name: "Food Festival",
