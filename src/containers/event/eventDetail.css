@@ -42,6 +42,6 @@
 }
 .invitee-row{
     display: flex;
-    margin-top: 20px;
+    margin-top: 30px;
     justify-content: space-between;
 }

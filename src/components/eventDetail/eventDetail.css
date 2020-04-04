@@ -58,3 +58,9 @@
     color: #211d70;
     font-weight: bold;
 }
+
+.deleteButton{
+    float: right;
+    display: flex;
+    z-index: 1;
+}
