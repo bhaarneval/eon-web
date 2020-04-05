@@ -53,9 +53,9 @@ class ForgotPassword extends Component {
     passwordPattern = new RegExp(passwordPattern);
     return (
       <div className="changePasswordContainer">
-        <div>
+        <div className="contentCenter">
           <h1>Change Password</h1>
-    <div style={{fontSize: '12px', paddingBottom:'5px'}}>{PASSWORD_INFO}</div>
+          <div style={{fontSize: '12px', paddingBottom:'5px'}}>{PASSWORD_INFO}</div>
           <Form
             name="basic"
             initialValues={{
