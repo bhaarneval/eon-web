@@ -17,6 +17,7 @@ export const SECOND_PORT_REQUIRED = "Second port is required";
 export const THIRD_PORT_REQUIRED = "Third port is required";
 
 //signup constants
+export const PASSWORD_INFO = "Password must be of length 8-16 characters having one lower case, one upper case and one numeric character.";
 export const ORGANISATION_ADDRESS = "Please enter your oragnaisation address!"
 export const ORGANISATION_NAME = "Please enter your oragnaisation name!"
 export const PASSWORD_REQUIRED = "Password is required";

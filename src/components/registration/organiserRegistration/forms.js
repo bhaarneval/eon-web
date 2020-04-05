@@ -14,7 +14,8 @@ import lockImg from '../../../assets/Password_login.svg';
 import organisationImg from "../../../assets/Organisation Name.svg";
 import phoneImg from "../../../assets/Phone - .svg";
 import emailImg from "../../../assets/Email ID.svg";
-import {ORGANISATION_NAME,ORGANISATION_ADDRESS,EMAIL_REQUIRED,CONTACT_NO,INVALID_CONATCT,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD,} from '../../../constants/messages';
+import {ORGANISATION_NAME,ORGANISATION_ADDRESS,EMAIL_REQUIRED,CONTACT_NO,INVALID_CONATCT,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD, PASSWORD_INFO,} from '../../../constants/messages';
+import { EMAIL_VALIDATION, PHONE_VALIDATION, PASSWORD_VALIDATION} from '../../../constants/constants';
 
 BasicDetails.propTypes = {
   values: PropTypes.object.isRequired,
@@ -54,7 +55,7 @@ export function BasicDetails(props) {
         rules={[
           { required: true, message: EMAIL_REQUIRED },
           {
-            pattern:/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+            pattern:EMAIL_VALIDATION,
             message: EMAIL_REQUIRED
           }
         ]}
@@ -66,7 +67,7 @@ export function BasicDetails(props) {
         rules={[
           { required: true, message: CONTACT_NO },
           {
-            pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+            pattern:PHONE_VALIDATION,
             min: 10,
             message: INVALID_CONATCT
           }
@@ -135,7 +136,7 @@ export function PasswordDetails(props) {
               
           },
           {
-            pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
+            pattern: PASSWORD_VALIDATION,
             min:8,
             message: INVALID_PASSWORD
           }
@@ -164,7 +165,7 @@ export function PasswordDetails(props) {
           onChange = {handleConfirmPassword}
         />
       </Form.Item>
-      <div className="password-info">Password must be of length 8-16 characters having one lower case, one upper case and one numeric character.</div>
+    <div className="password-info">{PASSWORD_INFO}</div>
       <div
         className = 'two-button-style'
       >

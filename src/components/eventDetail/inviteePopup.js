@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
 import {Modal, Button, InputNumber, Input} from 'antd';
+import { EMAIL_VALIDATION } from "../../constants/constants";
 const { TextArea } = Input;
 
 
@@ -17,7 +18,7 @@ class InviteesPopup extends Component {
     }
 
     validateEmail(email){      
-    var emailPattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    var emailPattern = EMAIL_VALIDATION;
     return emailPattern.test(email); 
     } 
 

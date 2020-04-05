@@ -8,6 +8,7 @@ import { Tabs } from 'antd';
 const { TabPane } = Tabs;
 
 import { UserOutlined } from '@ant-design/icons';
+import { EMAIL_VALIDATION} from '../../constants/constants';
 
 class Login extends Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class Login extends Component {
             <Form.Item
               name="email"
               rules={[{ required: true, message: EMAIL_REQUIRED },{
-                pattern:/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                pattern: EMAIL_VALIDATION,
                 message:EMAIL_REQUIRED
               }]}
             >
