@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import './registration.css';
 import {BasicDetails, PasswordDetails} from '../../components/registration/organiserRegistration/forms';
-import FormSteps from '../../components/registration/FormSteps';
-import TermsAndConditions from '../../components/registration/TermsAndCondition';
+import FormSteps from '../../components/registration/formSteps';
+import TermsAndConditions from '../../components/registration/termsAndConditions';
 import  BasicDetailsImg from '../../assets/Basic Details.svg';
 import PasswordImg from '../../assets/Password_Illustration.svg';
 

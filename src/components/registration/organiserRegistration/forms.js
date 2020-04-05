@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 /* eslint-disable */
-import StyledButtons from '../StyledButtons';
+import StyledButtons from '../styledButtons';
 import '../forms.css';
 import { Form, Input } from "antd";
 import {

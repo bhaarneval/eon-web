@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import './registration.css';
 import UserDetails from '../../components/registration/userRegistration/forms';
-import TermsAndConditions from "../../components/registration/TermsAndCondition";
+import TermsAndConditions from "../../components/registration/termsAndConditions";
 import BasicDetailsImg from "../../assets/Basic Details.svg";
 
 class UserRegistration extends Component {
