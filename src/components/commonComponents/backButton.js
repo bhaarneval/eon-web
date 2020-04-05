@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import backImg from "../assets/Back.svg";
+import backImg from "../../assets/Back.svg";
 
 export default function BackButton(props) {
   const { handleOnClick, text } = props;
