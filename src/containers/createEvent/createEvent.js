@@ -23,10 +23,7 @@ class CreateEvent extends Component {
  render() {
   return (
     <div className="create-container">
-      <div className="header">
-        <BackButton handleOnClick={this.goBack}/>
-        <div className="header-text">Create</div>
-      </div>
+      <BackButton handleOnClick={this.goBack} text = "Create Event" />
       <div className="form-div">
           <EventForm values = {{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack}/>
       </div>
