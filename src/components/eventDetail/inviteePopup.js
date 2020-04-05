@@ -71,7 +71,7 @@ class InviteesPopup extends Component {
             <Modal
                 visible
                 onCancel = {handleClose}
-                title = {<h1 className = 'modal-header'>Invitees List</h1>}
+                title = {<div className = 'modal-header'>Invitees List</div>}
                 footer = {null}
                 width={660}
             >

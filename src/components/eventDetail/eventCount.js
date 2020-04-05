@@ -83,7 +83,7 @@ class EventCount extends Component {
                     <Modal
                         visible
                         onCancel = {this.handleClose}
-                        title = {<h1 className = 'modal-header'>{this.state.reminderType === 'update' ? 'Send an update' : 'Send reminder'}</h1>}
+                        title = {<div className = 'modal-header'>{this.state.reminderType === 'update' ? 'Send an update' : 'Send reminder'}</div>}
                         footer = {null}
                         width={660}
                     >

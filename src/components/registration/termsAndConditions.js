@@ -11,7 +11,7 @@ export default function TermsAndConditions (props){
    <Modal
     visible
     onCancel = {handleClose}
-    title = {<h1 className = 'modal-header'>Terms & Conditions</h1>}
+    title = {<div className = 'modal-header'>Terms & Conditions</div>}
     footer = {null}
     width={660}
    >
