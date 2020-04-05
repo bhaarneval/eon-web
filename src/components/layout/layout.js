@@ -4,14 +4,14 @@ import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Login from "../../components/login/login";
-import OrganiserRegistration from "../../containers/registration/OrganiserRegistration";
-import UserRegistration from "../../containers/registration/UserRegistration";
+import OrganiserRegistration from "../../containers/registration/organiserRegistration";
+import UserRegistration from "../../containers/registration/userRegistration";
 import ForgotPassword from "../../components/forgotPassword/forgotPassword";
 import EventDetail from "../../containers/event/eventDetail";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import Dashboard from "../../containers/dashboard/dashboard";
-import CreateEvent from "../../containers/createEvent/CreateEvent";
+import CreateEvent from "../../containers/createEvent/createEvent";
 
 function StyledComp() {
   return (

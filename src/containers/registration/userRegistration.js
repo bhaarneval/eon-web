@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import './registration.css';
 import UserDetails from '../../components/registration/userRegistration/forms';
-import TermsAndConditions from "../../components/registration/TermsAndCondition";
+import TermsAndConditions from "../../components/registration/termsAndConditions";
 import BasicDetailsImg from "../../assets/Basic Details.svg";
 
 class UserRegistration extends Component {
@@ -10,12 +10,7 @@ class UserRegistration extends Component {
     super(props);
     this.state = {
       formData: {},
-      smallLetters: false,
-      capitalLetters: false,
-      numerals: false,
-      passwordLength: false,
       password: "",
-      confirmPassword: false,
       showModal: false,
       isChecked: false
     };
@@ -29,7 +24,6 @@ class UserRegistration extends Component {
 
   handleAccept = () => {
     if (this.state.isChecked) {
-        // this.props.history.push(`/dashboard`);
         localStorage.setItem('loggedIn', true)
       window.location.replace('/dashboard')
       console.log("Accepted");
@@ -43,64 +37,9 @@ class UserRegistration extends Component {
   };
 
   handlePassWordChange = values => {
-    // let {
-    //   smallLetters,
-    //   capitalLetters,
-    //   numerals,
-    //   passwordLength,
-    //   password
-    // } = this.state;
-    // smallLetters = false;
-    // capitalLetters = false;
-    // numerals = false;
-    // passwordLength = false;
-    // password = "";
-    // if (values.target.value !== "") {
-    //   let input = values.target.value;
-    //   let smallAplhabets = /^[a-z]+$/;
-    //   let capitalAlphabets = /^[A-Z]+$/;
-    //   let numbers = /^[0-9]+$/;
-
-    //   password = input;
-    //   if (input.length >= 8 && input.length <= 16) {
-    //     passwordLength = true;
-    //   } else {
-    //     passwordLength = false;
-    //   }
-
-    //   input.split("").map(text => {
-    //     if (text.match(smallAplhabets)) {
-    //       smallLetters = true;
-    //     } else if (text.match(capitalAlphabets)) {
-    //       capitalLetters = true;
-    //     } else if (text.match(numbers)) {
-    //       numerals = true;
-    //     }
-    //   });
-    // }
-    // this.setState({
-    //   smallLetters: smallLetters,
-    //   capitalLetters: capitalLetters,
-    //   numerals: numerals,
-    //   passwordLength: passwordLength,
-    //   password: password
-    // });
     let currentPassword = values.target.value;
     this.setState({
       password: currentPassword
-    });
-  };
-
-  confirmPassword = value => {
-    let { password, confirmPassword } = this.state;
-    let input = value.target.value;
-    if (input === password) {
-      confirmPassword = true;
-    } else {
-      confirmPassword = false;
-    }
-    this.setState({
-      confirmPassword: confirmPassword
     });
   };
 
@@ -117,12 +56,7 @@ class UserRegistration extends Component {
     const {
       showModal,
       formData,
-      // smallLetters,
-      // capitalLetters,
       isChecked,
-      // numerals,
-      // passwordLength,
-      // confirmPassword,
       password
     } = this.state;
     return (
@@ -146,15 +80,7 @@ class UserRegistration extends Component {
             handleSubmit={this.handleSubmit}
             values={formData}
             handlePasswordChange={this.handlePassWordChange}
-            passwordVerification={{
-              // smallLetters,
-              // capitalLetters,
-              // numerals,
-              // passwordLength,
-              // confirmPassword,
-              currentPassword: password
-            }}
-            handleConfirmPassword={this.confirmPassword}
+            currentPassword = {password}
           />
           {showModal ? (
             <TermsAndConditions

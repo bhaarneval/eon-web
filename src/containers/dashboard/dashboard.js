@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./dashboard.css";
-import EventCards from "../../components/eventCards/Eventcards";
+import EventCards from "../../components/eventCards/eventCards";
 
 import { dummyList } from "../../constants/constants";
 import { Row } from "antd";

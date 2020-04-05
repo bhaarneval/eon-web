@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 /* eslint-disable */
-import StyledButtons from '../StyledButtons';
+import StyledButtons from '../styledButtons';
 import '../forms.css';
 import { Form, Input } from "antd";
 import {
@@ -14,7 +14,8 @@ import lockImg from '../../../assets/Password_login.svg';
 import organisationImg from "../../../assets/Organisation Name.svg";
 import phoneImg from "../../../assets/Phone - .svg";
 import emailImg from "../../../assets/Email ID.svg";
-import {ORGANISATION_NAME,ORGANISATION_ADDRESS,EMAIL_REQUIRED,CONTACT_NO,INVALID_CONATCT,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD,} from '../../../constants/messages';
+import {ORGANISATION_NAME,ORGANISATION_ADDRESS,EMAIL_REQUIRED,CONTACT_NO,INVALID_CONATCT,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD, PASSWORD_INFO,} from '../../../constants/messages';
+import { EMAIL_VALIDATION, PHONE_VALIDATION, PASSWORD_VALIDATION} from '../../../constants/constants';
 
 BasicDetails.propTypes = {
   values: PropTypes.object.isRequired,
@@ -54,7 +55,7 @@ export function BasicDetails(props) {
         rules={[
           { required: true, message: EMAIL_REQUIRED },
           {
-            pattern:/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+            pattern:EMAIL_VALIDATION,
             message: EMAIL_REQUIRED
           }
         ]}
@@ -66,7 +67,7 @@ export function BasicDetails(props) {
         rules={[
           { required: true, message: CONTACT_NO },
           {
-            pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+            pattern:PHONE_VALIDATION,
             min: 10,
             message: INVALID_CONATCT
           }
@@ -104,15 +105,14 @@ PasswordDetails.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
   handlePasswordChange: PropTypes.func.isRequired,
-  passwordVerification: PropTypes.object.isRequired,
+  currentPassword: PropTypes.string.isRequired,
   handleConfirmPassword: PropTypes.func.isRequired,
 };
 export function PasswordDetails(props) {
-  const { values, handleSubmit, handleBack, passwordVerification, handlePasswordChange, handleConfirmPassword } = props;
+  const { values, handleSubmit, handleBack, currentPassword, handlePasswordChange, handleConfirmPassword } = props;
   const {
     password = ""
   } = values;
-  const {smallLetters, capitalLetters, numerals, passwordLength, currentPassword } = passwordVerification;
   let passwordPattern = "^"+currentPassword+"$";
   passwordPattern = new RegExp(passwordPattern);
   return (
@@ -136,7 +136,7 @@ export function PasswordDetails(props) {
               
           },
           {
-            pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/,
+            pattern: PASSWORD_VALIDATION,
             min:8,
             message: INVALID_PASSWORD
           }
@@ -165,27 +165,7 @@ export function PasswordDetails(props) {
           onChange = {handleConfirmPassword}
         />
       </Form.Item>
-      {/* <div>Password Must Contain</div>
-      <div
-        className = 'password-style'
-      >
-        <div>
-          {smallLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-          Lower Case
-        </div>
-        <div>
-          {capitalLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-          Upper Case
-        </div>
-        <div>
-          {numerals ? <CheckSquareTwoTone /> : <CheckSquareOutlined />} Numbers
-        </div>
-        <div>
-          {passwordLength ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-          8-16 Characters
-        </div>
-      </div> */}
-      <div style={{fontSize: '12px', paddingBottom:'5px'}}>Password must be of length including capital letter, numeric and special character.</div>
+    <div className="password-info">{PASSWORD_INFO}</div>
       <div
         className = 'two-button-style'
       >
