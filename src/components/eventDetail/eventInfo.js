@@ -52,7 +52,7 @@ class EventInfo extends Component {
             </Menu>
         );
         return (
-            <div>
+            <div className="detail-card">
                 <div className="detail-card-top">
                     <img src={dummyImg} className="detail-img"/>
                     <div className="detail-card-top-descContainer">
