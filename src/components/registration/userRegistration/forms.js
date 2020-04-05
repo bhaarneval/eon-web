@@ -19,13 +19,12 @@ userDetails.propTypes = {
   values: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handlePasswordChange: PropTypes.func.isRequired,
-  passwordVerification: PropTypes.object.isRequired,
-  handleConfirmPassword: PropTypes.func.isRequired
+  currentPassword: PropTypes.string.isRequired,
 };
 export default function userDetails(props) {
-    const { values, handleSubmit, handlePasswordChange, passwordVerification, handleConfirmPassword} = props;
+    const { values, handleSubmit, handlePasswordChange, currentPassword} = props;
     const {name, email, contactNumber, password} = values;
-    const {smallLetters, capitalLetters, numerals, passwordLength, currentPassword} = passwordVerification;
+    
     let passwordPattern = "^"+currentPassword+"$";
     passwordPattern = new RegExp(passwordPattern);
 
@@ -124,29 +123,9 @@ export default function userDetails(props) {
             placeholder="Confirm Password"
             maxLength = {16}
             visibilityToggle = {false}
-            onChange={handleConfirmPassword}
           />
         </Form.Item>
-        {/* <div>Password Must Contains</div>
-        <div className = "password-style">
-          <div>
-            {smallLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-            Lower Case
-          </div>
-          <div>
-            {capitalLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-            Upper Case
-          </div>
-          <div>
-            {numerals ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-            Numbers
-          </div>
-          <div>
-            {passwordLength ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-            8-16 Characters
-          </div>
-        </div> */}
-        <div style={{fontSize: '12px', paddingBottom:'5px'}}>Password must be of length including capital letter, numeric and special character.</div>
+        <div className="password-info">Password must be of length 8-16 characters having one lower case, one upper case and one numeric character.</div>
         <div className ="one-button-style">
           <StyledButtons content={<RightOutlined className="button-arrow" />} />
         </div>

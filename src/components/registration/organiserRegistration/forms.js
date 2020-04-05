@@ -104,15 +104,14 @@ PasswordDetails.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
   handlePasswordChange: PropTypes.func.isRequired,
-  passwordVerification: PropTypes.object.isRequired,
+  currentPassword: PropTypes.string.isRequired,
   handleConfirmPassword: PropTypes.func.isRequired,
 };
 export function PasswordDetails(props) {
-  const { values, handleSubmit, handleBack, passwordVerification, handlePasswordChange, handleConfirmPassword } = props;
+  const { values, handleSubmit, handleBack, currentPassword, handlePasswordChange, handleConfirmPassword } = props;
   const {
     password = ""
   } = values;
-  const {smallLetters, capitalLetters, numerals, passwordLength, currentPassword } = passwordVerification;
   let passwordPattern = "^"+currentPassword+"$";
   passwordPattern = new RegExp(passwordPattern);
   return (
@@ -165,27 +164,7 @@ export function PasswordDetails(props) {
           onChange = {handleConfirmPassword}
         />
       </Form.Item>
-      {/* <div>Password Must Contain</div>
-      <div
-        className = 'password-style'
-      >
-        <div>
-          {smallLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-          Lower Case
-        </div>
-        <div>
-          {capitalLetters ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-          Upper Case
-        </div>
-        <div>
-          {numerals ? <CheckSquareTwoTone /> : <CheckSquareOutlined />} Numbers
-        </div>
-        <div>
-          {passwordLength ? <CheckSquareTwoTone /> : <CheckSquareOutlined />}{" "}
-          8-16 Characters
-        </div>
-      </div> */}
-      <div style={{fontSize: '12px', paddingBottom:'5px'}}>Password must be of length including capital letter, numeric and special character.</div>
+      <div className="password-info">Password must be of length 8-16 characters having one lower case, one upper case and one numeric character.</div>
       <div
         className = 'two-button-style'
       >

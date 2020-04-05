@@ -8,13 +8,9 @@
 .button-arrow {
     font-size: 200%;
 }
-.password-style {
-    margin-top: 2%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-column-gap: 5%;
-    grid-row-gap: 10%;
+.password-info {
+    font-size: 12px;
+    padding-bottom: 5px;
 }
 .two-button-style {
     display: flex;
