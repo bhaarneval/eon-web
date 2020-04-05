@@ -50,7 +50,7 @@ class ForgotPassword extends Component {
   };
 
   goBack = () => {
-    window.replace(`/dashboard`);
+    window.location.replace(`/dashboard`);
   }
   render() {
     let passwordPattern = "^"+this.state.password+"$";
