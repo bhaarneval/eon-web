@@ -8,10 +8,12 @@ import PropTypes from 'prop-types'
 class Profile extends Component {
  state = {}
  handleSubmit = (values) => {
-     let data = new FormData();
-     Object.entries(values).map(entry => {
-        data.append(entry[0],entry[1]);
-     });
+    //  let data = new FormData();
+    //  Object.entries(values).map(entry => {
+    //     data.append(entry[0],entry[1]);
+    //  });
+    console.log(values);
+    this.goBack();
 
  }
 
