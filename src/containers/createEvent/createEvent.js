@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './createEvent.css';
-import BackButton from '../../components/backButton';
+import BackButton from '../../components/commonComponents/backButton';
 import EventForm from '../../components/eventCreation/eventForm';
 
 import PropTypes from 'prop-types'

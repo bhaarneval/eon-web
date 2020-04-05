@@ -6,7 +6,7 @@ import {  Form, Input, Button  } from 'antd';
 
 import { UserOutlined } from '@ant-design/icons';
 import { PASSWORD_VALIDATION, EMAIL_VALIDATION } from "../../constants/constants";
-import BackButton from "../backButton";
+import BackButton from "../commonComponents/backButton";
 
 class ForgotPassword extends Component {
   constructor(props) {
