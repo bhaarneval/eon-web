@@ -12,6 +12,7 @@ import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import Dashboard from "../../containers/dashboard/dashboard";
 import CreateEvent from "../../containers/createEvent/createEvent";
+import Profile from "../../containers/profile/profile";
 
 function StyledComp() {
   return (
@@ -36,6 +37,7 @@ function StyledComp() {
               <Route path="/dashboard" component = {Dashboard}/>
               <Route path="/create" component={CreateEvent}/>
               <Route path="/event-details/1" component = {EventDetail}/>
+              <Route path="/profile/1" component = {Profile}/>
             </Switch>
           </div>
         </div>

@@ -59,9 +59,9 @@ class ForgotPassword extends Component {
       <div className="header-buttons">
       <BackButton handleOnClick={this.goBack} text={"Change Password"}/>
       <div className="changePasswordContainer">
-        <div>
+        <div className="contentCenter">
           <h1>Change Password</h1>
-    <div style={{fontSize: '12px', paddingBottom:'5px'}}>{PASSWORD_INFO}</div>
+          <div style={{fontSize: '12px', paddingBottom:'5px'}}>{PASSWORD_INFO}</div>
           <Form
             name="basic"
             initialValues={{

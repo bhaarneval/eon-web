@@ -94,7 +94,7 @@ class EventInfo extends Component {
                     <Modal
                         visible
                         onCancel = {this.handleClose}
-                        title = {<h1 className = 'modal-header'>Cancel Event</h1>}
+                        title = {<div className = 'modal-header'>Cancel Event</div>}
                         footer = {null}
                         width={660}
                     >
