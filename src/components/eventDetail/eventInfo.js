@@ -25,7 +25,7 @@ class EventInfo extends Component {
               cancelPopup: true
           })
         else if(input.key === "2")
-          window.location.replace(`/create?type=edit`);
+         this.props.history.push(`/create?type=edit`);
     }
     handleClose = () => {
         this.setState({
@@ -121,6 +121,7 @@ class EventInfo extends Component {
 
  EventInfo.propTypes = {
     event: PropTypes.object.isRequired,
+    history: PropTypes.object
 }
 
 export default EventInfo;
