@@ -6,3 +6,7 @@
   font-weight: bold !important;
 }
 
+
+.ant-table-tbody > tr.ant-table-row-selected > td {
+  background: #211d7017 !important;
+}

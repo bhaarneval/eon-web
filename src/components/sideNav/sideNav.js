@@ -15,52 +15,36 @@ class SideNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: constants.CLUSTER
+      active: constants.EVENT
     };
   }
 
   onClick = type => {
     switch (type) {
       case constants.HOME:
-      this.props.history.push("/dashboard");
-        break;
-      case constants.CLUSTER:
         this.setState({
-          active: constants.CLUSTER
+          active: constants.HOME
         });
-        break;
-      case constants.DATABASE:
+        this.props.history.push("/dashboard");
+      break;
+      case constants.EVENT:
         this.setState({
-          active: constants.DATABASE
+          active: constants.EVENT
         });
-        break;
-      case constants.DOWNLOAD:
+        this.props.history.push("/dashboard");
+      break;
+      case constants.TICKET:
         this.setState({
-          active: constants.DOWNLOAD
+          active: constants.TICKET
         });
-        break;
-      case constants.MONITOR:
-        this.setState({
-          active: constants.MONITOR
-        });
-        break;
-      case constants.ADD:
-        this.setState({
-          active: constants.ADD
-        });
-        break;
-      case constants.LOCK:
-        this.setState({
-          active: constants.LOCK
-        });
-        break;
+        this.props.history.push("/ticket");
+      break;
       default:
         break;
     }
   };
 
   render() {
-    const {history} = this.props;
     const {active} = this.state;
     const iconClass = 'vertical-center flex flex-row center iconContainer';
     const themeWiseIconClass = `${iconClass} ${isDark ? 'activeDark' : 'activeLight'}`;
@@ -68,23 +52,22 @@ class SideNav extends Component {
       <div className="sideNav">
         <img style={{ width: '98%' }} src={logo}/>
         <div
-          className={iconClass}
+          className={ active === constants.HOME ? themeWiseIconClass : iconClass}
           onClick={() => this.onClick(constants.HOME)}
         >
           <img src={analytics} style={{ fontSize: '20px' }} />
         </div>
         <div
-          className={ active === constants.CLUSTER ? themeWiseIconClass : iconClass}
-          onClick={() => this.onClick(constants.CLUSTER)}
+          className={ active === constants.EVENT ? themeWiseIconClass : iconClass}
+          onClick={() => this.onClick(constants.EVENT)}
         >
-          <img src={event} sstyle={{ fontSize: '20px' }} />
+          <img src={event} style={{ fontSize: '20px' }} />
         </div>
         <div
-          className={ active === constants.MONITOR ? themeWiseIconClass : "iconContainer"}
+          className={ active === constants.TICKET ? themeWiseIconClass : "iconContainer"}
           onClick={() =>{
-            this.onClick(constants.MONITOR);
-            history.push('/deploy');
-            }}
+            this.onClick(constants.TICKET);
+          }}
         >
           <img src={ticket} sstyle={{ fontSize: '20px' }} />
         </div>
