@@ -3,10 +3,11 @@ import "./nav.css";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import { Dropdown, Menu } from 'antd';
+import { Dropdown, Menu, Button } from 'antd';
 import logo from "../../assets/logo.png";
 import {
-  LogoutOutlined
+  LogoutOutlined,
+  DownOutlined
 } from '@ant-design/icons';
 
 import {
@@ -77,23 +78,22 @@ class Navbar extends Component {
     );
     return (
       <div className="flex flex-row flex-end nav-container">
-        {/* <img className="top-nav" src={logo}/> */}
-        <div className="top-nav" style={{justifyContent:'flex-end'}}>
-        {localStorage.getItem('loggedIn') === "true"?
-          <Dropdown.Button
-            overlay = {menuSidebar}
-            type="primary"
-            variant="contained"
-          />
-        :
-          <Dropdown.Button
-            overlay = {menu}
-            type="primary"
-            variant="contained"
-          >
-            Register
-          </Dropdown.Button>
-        }
+        <div className="top-nav">
+          {localStorage.getItem('loggedIn') === "true"?
+            <Dropdown overlay={menuSidebar}>
+              <div>Priyanka <DownOutlined /></div>
+            </Dropdown>
+            
+          :
+            <Dropdown.Button
+              overlay = {menu}
+              type="primary"
+              variant="contained"
+            >
+              Register
+            </Dropdown.Button>
+          }
+        <div>EON</div>
         </div>
       </div>
     );

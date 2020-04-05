@@ -96,7 +96,7 @@ class EventCount extends Component {
                         <div className = 'send-button-row'>
                             <div className = 'send-button'>
                                 <Button onClick={this.handleClose}>Cancel</Button>
-                                <Button type="primary" onClick={this.send}>Send</Button>
+                                <Button disabled={this.state.message.length < 1} type="primary" onClick={this.send}>Send</Button>
                             </div>
                         </div>
                     </Modal>

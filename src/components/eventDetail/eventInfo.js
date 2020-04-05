@@ -6,6 +6,10 @@ import { Dropdown, Menu, Button, Input } from 'antd';
 const { TextArea } = Input;
 import React, { Component } from "react";
 import {Modal} from 'antd';
+import {
+    MoreOutlined,
+  } from '@ant-design/icons';
+  
 
 class EventInfo extends Component {
     constructor(props) {
@@ -47,8 +51,8 @@ class EventInfo extends Component {
     render() {
         const menuSidebar = (
             <Menu onClick={key => this.takeMenuAction(key)}>
-            <Menu.Item key="1">Cancel</Menu.Item>
-            <Menu.Item key="2">Edit</Menu.Item>
+                <Menu.Item key="1">Cancel</Menu.Item>
+                <Menu.Item key="2">Edit</Menu.Item>
             </Menu>
         );
         return (
@@ -61,11 +65,9 @@ class EventInfo extends Component {
                             description
                         </div>
                     </div>
-                    <Dropdown.Button
-                        overlay = {menuSidebar}
-                        type="primary"
-                        variant="contained"
-                    />
+                    <Dropdown overlay={menuSidebar}>
+                        <MoreOutlined style={{height: '10px'}}/>
+                    </Dropdown>
                 </div>
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
@@ -108,7 +110,7 @@ class EventInfo extends Component {
                         <div className = 'send-button-row'>
                             <div className = 'send-button'>
                                 <Button onClick={this.handleClose}>Cancel</Button>
-                                <Button type="primary" onClick={this.cancel}>Confirm</Button>
+                                <Button disabled={this.state.message.length < 1} type="primary" onClick={this.cancel}>Confirm</Button>
                             </div>
                         </div>
                     </Modal>
