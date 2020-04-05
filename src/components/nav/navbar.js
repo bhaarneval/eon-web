@@ -1,13 +1,14 @@
 import "./nav.css";
 /* eslint-disable */
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import { Dropdown, Menu, Button } from 'antd';
-import logo from "../../assets/logo.png";
+import { Dropdown, Menu } from 'antd';
+import { Button, notification } from 'antd';
+
 import {
   LogoutOutlined,
-  DownOutlined
+  DownOutlined,
+  BellOutlined
 } from '@ant-design/icons';
 
 import {
@@ -17,6 +18,13 @@ import {
   DARK_MODE
 } from "../../constants/constants";
 
+const openNotificationWithIcon = type => {
+  notification[type]({
+    message: 'Updates',
+    description:
+      'Location of techfest has been changed',
+  });
+};
 
 class Navbar extends Component {
   constructor(props) {
@@ -79,6 +87,7 @@ class Navbar extends Component {
     return (
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
+          <BellOutlined style={{fontSize:'20px'}} onClick={() => openNotificationWithIcon('info')}>Info</BellOutlined>
           {localStorage.getItem('loggedIn') === "true"?
             <Dropdown overlay={menuSidebar}>
               <div>Priyanka <DownOutlined /></div>
