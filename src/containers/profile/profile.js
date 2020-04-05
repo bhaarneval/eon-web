@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './profile.css';
-import BackButton from '../../components/backButton';
+import BackButton from '../../components/commonComponents/backButton';
 import ProfileForm from '../../components/profile/profileForm';
 
 import PropTypes from 'prop-types'
@@ -24,8 +24,7 @@ class Profile extends Component {
   return (
     <div className="create-container">
       <div className="header">
-        <BackButton handleOnClick={this.goBack}/>
-        <div className="header-text">Create</div>
+        <BackButton handleOnClick={this.goBack} text={"User Profile"}/>
       </div>
       <div className="form-div">
           <ProfileForm 
