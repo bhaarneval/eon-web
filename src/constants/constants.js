@@ -138,7 +138,7 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Hyderabad",
-        type:"Cukltural"
+        type:"Cultural"
     }
 
 ];
@@ -153,4 +153,4 @@ export const updateEventDummy = {
          description: "dummy data",
          capacity: 1200,
          eventImage: null
-       };
+}
