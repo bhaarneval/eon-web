@@ -17,68 +17,103 @@ export const dummyList = [
     {
         name: "Food Festival",
         attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Bengaluru",
+        type:"Cultural"
     },
     {
         name: "Technex",
         attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Lucknow",
+        type:"Tech"
     },
     {
         name: "AON Fest",
         attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Delhi",
+        type:"Fashion"
+
     },
     {
         name: "Cultural Festival",
         attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Patna",
+        type:"Cultural"
     },
     {
         name: "Finance Festival",
         attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Nagpur",
+        type:"Tech"
     },
     {
         name: "Robotics",
         attendies: "250+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Lucknow",
+        type:"Tech"
     },
     {
         name: "Flee Festival",
         attendies: "400+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Jaipur",
+        type:"Cultural"
     },
     {
         name: "Book Festival",
         attendies: "2000+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Jaipur",
+        type:"Cultural"
     },
     {
         name: "Health and Fitness",
         attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Jalandhar",
+        type:"Fashion"
     },
     {
         name: "Coding",
         attendies: "2500+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Silchar",
+        type:"Tech"
     },
     {
         name: "Marathon",
         attendies: "200+",
-        date: "12-04-2020",
-        eventImage: dummyImg
+        eventDate: "12-04-2020",
+        eventImage: dummyImg,
+        eventLocation:"Hyderabad",
+        type:"Cultural"
     }
 
-]
+];
+export const updateEventDummy = {
+         eventName: "Technnex",
+         url: "www.technex.com",
+         eventLocation: "Bengaluru",
+         eventDate: "24-03-2020",
+         fees: 200,
+         type: "cultural",
+         isChargeable: true,
+         description: "dummy data",
+         capacity: 1200,
+         eventImage: null
+}

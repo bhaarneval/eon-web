@@ -10,7 +10,7 @@ import { URLVALIDATION, NUMBERSVALIDATION, MATCH_ANYTHING } from "../../constant
 import { EVENT_NAME,URL_VALID,ONLY_NUMERIC,EVENT_LOCATION,EVENT_DATE,EVENT_TYPE,EVENT_CAPACITY,EVENT_FEES} from '../../constants/messages';
 
 export default function EventForm(props) {
-  const { values, handleSubmit, handleCancel } = props;
+  const { values, handleSubmit, handleCancel,loadType } = props;
   const {
     eventName,
     url,
@@ -23,9 +23,8 @@ export default function EventForm(props) {
     capacity,
     eventImage
   } = values;
-
   const [isChecked, setSwitch] = isChargeable?useState(isChargeable):useState(false);
-  const [date, setDate] = eventDate? useState(moment(eventDate).format("DD-MM-YYYY")) : useState("");
+  const [date, setDate] = eventDate? useState(moment(eventDate,"DD-MM-YYYY  ")) : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState(eventImage);
 
@@ -41,8 +40,8 @@ export default function EventForm(props) {
     setFile(uploadedFile);
   }
 
-  function stopImageUpload(file) {
-    setImage(file.file);
+  function stopImageUpload(input) {
+    setImage(input.file);
     return false;
   }
 
@@ -223,7 +222,7 @@ export default function EventForm(props) {
               Cancel
             </Button>
             <Button htmlType="submit" type="primary" className="save-button">
-              Save
+              {loadType==="update"?"Update": "Save"}
             </Button>
           </div>
         </Form>
@@ -235,4 +234,5 @@ EventForm.propTypes = {
   values: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
+  loadType: PropTypes.string.isRequired,
 };

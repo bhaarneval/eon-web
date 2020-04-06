@@ -18,7 +18,6 @@ export default function ProfileForm(props) {
   } = values;
 
   function onFinish(data) {
-    console.log(data)
     handleSubmit(data);
   }
 
