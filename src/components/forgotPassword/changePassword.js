@@ -7,7 +7,7 @@ import {  Form, Input, Button  } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { PASSWORD_VALIDATION, EMAIL_VALIDATION } from "../../constants/constants";
 
-class ForgotPassword extends Component {
+class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -126,4 +126,4 @@ class ForgotPassword extends Component {
   }
 }
 
-export default ForgotPassword;
+export default ChangePassword;

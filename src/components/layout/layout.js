@@ -6,7 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import Login from "../../components/login/login";
 import OrganiserRegistration from "../../containers/registration/organiserRegistration";
 import UserRegistration from "../../containers/registration/userRegistration";
-import ForgotPassword from "../../components/forgotPassword/forgotPassword";
+import ChangePassword from "../forgotPassword/changePassword";
 import EventDetail from "../../containers/event/eventDetail";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
@@ -33,7 +33,7 @@ function StyledComp() {
               <Route path="/login" component={Login} />
               <Route path="/register/organiser" component={OrganiserRegistration}/>
               <Route path="/register/subscriber" component={UserRegistration}/>
-              <Route path="/change-password" exact component={ForgotPassword} />
+              <Route path="/change-password" exact component={ChangePassword} />
               <Route path="/dashboard" component = {Dashboard}/>
               <Route path="/create" component={CreateEvent}/>
               <Route path="/event-details/1" component = {EventDetail}/>

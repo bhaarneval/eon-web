@@ -95,15 +95,10 @@ class Navbar extends Component {
             <Dropdown overlay={menuSidebar}>
               <div>Priyanka <DownOutlined /></div>
             </Dropdown>
-            
           :
-            <Dropdown.Button
-              overlay = {menu}
-              type="primary"
-              variant="contained"
-            >
-              Register
-            </Dropdown.Button>
+          <Dropdown overlay={menu} >
+            <div style={{color:"#262C6F"}}>Register <DownOutlined /></div>
+          </Dropdown>
           }
         <div>EON</div>
         </div>
