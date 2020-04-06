@@ -22,3 +22,12 @@
   background-color: white;
   margin-left: 30px;
 }
+.forgot-password-style{
+  color:#262C6F;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  padding-bottom: 2%;
+}
