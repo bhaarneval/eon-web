@@ -6,6 +6,7 @@ import {  Form, Input, Button  } from 'antd';
 
 import { UserOutlined } from '@ant-design/icons';
 import { PASSWORD_VALIDATION, EMAIL_VALIDATION } from "../../constants/constants";
+import BackButton from "../commonComponents/backButton";
 
 class ChangePassword extends Component {
   constructor(props) {
@@ -48,10 +49,15 @@ class ChangePassword extends Component {
     console.log('Failed:', errorInfo);
   };
 
+  goBack = () => {
+    this.props.history.push(`/dashboard`);
+  }
   render() {
     let passwordPattern = "^"+this.state.password+"$";
     passwordPattern = new RegExp(passwordPattern);
     return (
+      <div className="header-buttons">
+      <BackButton handleOnClick={this.goBack} text={"Change Password"}/>
       <div className="changePasswordContainer">
         <div className="contentCenter">
           <h1>Change Password</h1>
@@ -121,6 +127,7 @@ class ChangePassword extends Component {
             </Form.Item>
           </Form>
         </div>
+    </div>
     </div>
     );
   }

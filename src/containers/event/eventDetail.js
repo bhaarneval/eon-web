@@ -76,7 +76,7 @@ search = (event) => {
     return (
       <div className="sub-content">
         <div className="events-heading">Event detail</div>
-        <EventInfo />
+        <EventInfo history={this.props.history}/>
         <EventCount />
         <div className="invitee-row">
             <h2><b>Invitees List</b></h2>

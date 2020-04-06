@@ -9,7 +9,6 @@ import {Modal} from 'antd';
 import {
     MoreOutlined,
   } from '@ant-design/icons';
-  
 
 class EventInfo extends Component {
     constructor(props) {
@@ -26,9 +25,8 @@ class EventInfo extends Component {
               cancelPopup: true
           })
         else if(input.key === "2")
-          this.props.history.push(`/register/subscriber`)
+         this.props.history.push(`/create?type=edit`);
     }
-
     handleClose = () => {
         this.setState({
             cancelPopup: false
@@ -123,7 +121,7 @@ class EventInfo extends Component {
 
  EventInfo.propTypes = {
     event: PropTypes.object.isRequired,
-    history: PropTypes.object,
+    history: PropTypes.object
 }
 
 export default EventInfo;

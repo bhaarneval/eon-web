@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import moment from 'moment';
 import "./dashboard.css";
 import EventCards from "../../components/eventCards/eventCards";
 
 import { dummyList } from "../../constants/constants";
-import { Row } from "antd";
+import { Row, Button } from "antd";
+import SearchBox from '../../components/commonComponents/searchBox';
+import SelectDropDown from "../../components/commonComponents/selectDropdown";
+import StyledRangePicker from "../../components/commonComponents/rangePicker";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventsList: []
+      eventList:dummyList,
+      eventsList: dummyList
     };
   }
 
@@ -31,15 +36,66 @@ class Dashboard extends Component {
       );
     })
   };
+  filterList = (filterType,filterValue) => {
+    let eventList = this.state.eventList;
+    switch (filterType) {
+      case "location":
+        if(filterValue==="")
+          break;
+        eventList = eventList.filter(event => {
+          return event.eventLocation === filterValue;
+        });
+        break;
+        case "type":
+        eventList = eventList.filter(event => {
+          return event.type === filterValue;
+        });
+        break;
+        case "date":
+        eventList = eventList.filter(event => {
+          return event.eventDate >= filterValue.startDate && event.eventDate <= filterValue.endDate;
+        });
+        break;
+      default:
+        console.error("Something wrong in dashboard filter");
+        break;
+    }
+    this.setState({
+      eventsList:eventList
+    })
+  }
+  handleSearchTextChange = (value) => {
+    this.filterList("location",value);
+  }
+  handleFilterChange = (value) => {
+    this.filterList("type",value);
+  }
+  handleDateChange = (date, dateString) => {
+    const startDate=moment(dateString[0]).format("DD-MM-YYYY");
+    const endDate = moment(dateString[1]).format("DD-MM-YYYY");
+    this.filterList("date",{startDate,endDate});
+  }
+  handleCreateEvent =() => {
+    this.props.history.push("create");
+  }
 
   render() {
-    const list = dummyList
+    const optionsList = ["Cultural","Tech","Fashion","Painting"];
     return (
       <div className="sub-content">
         <div className="events-heading"> Event Management </div>
-        <div className="events-container-flex">
-          {this.spliceArray(list)}
+        <div className="dashboard-actions-container">
+          <div className="filters">
+            <SearchBox handleOnChange={this.handleSearchTextChange} />
+            <SelectDropDown handleChange={this.handleFilterChange} optionsList={optionsList} placeholder = {"Event Type"}/>
+            <StyledRangePicker handleChange = {this.handleDateChange} />
+          </div>
+          <Button
+            onClick={this.handleCreateEvent}
+            className="button-create"
+          >Create</Button>
         </div>
+        <div className="events-container-flex">{this.spliceArray(this.state.eventsList)}</div>
       </div>
     );
   }
