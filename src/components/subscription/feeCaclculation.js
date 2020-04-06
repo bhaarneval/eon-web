@@ -38,37 +38,44 @@ class FeeCalculation extends Component {
         })
     }
 
-    onChangeSeats = (event) => {
-        console.log(event)
-    }
-
     render() {
         return (
-            <div className="detail-card">
-                <div className="subscription-container">
-                    <div>
-                        <Button type="primary" onClick={() => this.onIncDecSeats('dec')}>-</Button>
-                            <InputNumber
-                                min={1}
-                                value={this.state.seats}
-                                defaultValue={1}
-                                onChange={event => this.onChangeSeats(event)}
-                            />
-                        <Button type="primary" onClick={() => this.onIncDecSeats('inc')}>+</Button>
-                        <InputNumber
-                            min={1}
-                            disabled
-                            value={this.state.codeApplied ? this.state.totalAmountAfterPromo : this.state.totalAmount}
-                        />
-                        <h3>Promotional offer</h3>
-                        <div>10% discount available <Button disabled={this.state.codeApplied} type="primary" onClick={this.applyCode}>Appl{`${this.state.codeApplied ? 'ied!' : 'y'}`}</Button></div>
+            <div>
+                <div className="detail-card">
+                    <div className="subscription-container">
+                        <div className="subscription-left">
+                            <div className="subscription-seats borderBottom">
+                                <Button type="primary" onClick={() => this.onIncDecSeats('dec')}>-</Button>
+                                    {this.state.seats}
+                                <Button type="primary" onClick={() => this.onIncDecSeats('inc')}>+</Button>
+                                <InputNumber
+                                    min={1}
+                                    disabled
+                                    value={this.state.codeApplied ? this.state.totalAmountAfterPromo : this.state.totalAmount}
+                                />
+                            </div>
+                            <h3>Promotional offer</h3>
+                            <div className="subscription-seats">
+                                10% discount available <Button disabled={this.state.codeApplied} type="primary" onClick={this.applyCode}>Appl{`${this.state.codeApplied ? 'ied!' : 'y'}`}
+                                </Button>
+                            </div>
+                        </div>
+                        <div className="subscription-left">
+                            <h3>Breakdown details</h3>
+                            <div className="breakdown">
+                                <div>Total Amount : ₹{this.state.totalAmount}</div>
+                                <div>Discount : - ₹{this.state.codeApplied && this.state.totalAmount * (this.props.discountPercentage/100)}</div>
+                                <div>Amount payble: ₹{this.state.codeApplied ? this.state.totalAmountAfterPromo : this.state.totalAmount}</div>
+                            </div>
+                            <Button type="primary" onClick={() => this.props.payNow(this.state.seats, this.state.codeApplied ? this.state.totalAmountAfterPromo : this.state.totalAmount)}>Pay Now</Button>
+                        </div>
                     </div>
-                    <div>
-                        <h3>Breakdown details</h3>
-                        <div>Total Amount : ₹{this.state.totalAmount}</div>
-                        <div>Discount : - ₹{this.state.codeApplied && this.state.totalAmount * (this.props.discountPercentage/100)}</div>
-                        <div>Amount payble: ₹{this.state.codeApplied ? this.state.totalAmountAfterPromo : this.state.totalAmount}</div>
-                        <Button type="primary" onClick={() => this.props.payNow(this.state.seats, this.state.codeApplied ? this.state.totalAmountAfterPromo : this.state.totalAmount)}>Pay Now</Button>
+                </div>
+                <div className="update-row">
+                    <Button type="primary">Download</Button>
+                    <div className="cancel-row">
+                        <Button>Cancel</Button>
+                        <Button disabled type="primary">Update</Button>
                     </div>
                 </div>
             </div>

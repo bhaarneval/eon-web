@@ -26,61 +26,66 @@ class Payment extends Component {
     render() {
         return (
             <div className="detail-card">
-                <Form
-                    className="form-main"
-                    name="bankDetails"
-                    onFinish={this.onFinish}
-                    layout="vertical"
-                >
-                    <Form.Item
-                        name="name"
-                        rules={[{ required: true, message: NAME_REQUIRED }]}
-                    >
-                        <Input
-                            prefix={<img src={userImg} />}
-                            placeholder="Name"
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="accountno"
-                        rules={[{
-                            required: true,
-                            message: CONTACT_NO
-                          },
-                          {
-                            pattern: ACCOUNT_VALIDATION,
-                            max: 16,
-                            min:16,
-                            message: INVALID_CONATCT
-                          }]}
-                    >
-                        <Input
-                            prefix={<img src={userImg} />}
-                            placeholder="Account no"
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Input
-                            name="expirydate"
-                            prefix={<img src={userImg} />}
-                            placeholder="Expiry Date (MM/YYYY)"
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button htmlType="submit" type="primary">Pay</Button>
-                    </Form.Item>
-                </Form>
-                <Modal
-                    visible={this.props.showPaymentSuccess}
-                    onCancel = {this.handleClose}
-                    title = {<div className = 'modal-header'>Payment successful</div>}
-                    footer = {null}
-                    width={660}
-                >
-                    <Button onClick={this.handleClose}>
-                        Okay
-                    </Button>
-                </Modal>
+                <div className="subscription-container" style={{justifyContent: 'center'}}>
+                    <div className="subscription-payment">
+                        <h3>Bank details</h3>
+                        <Form
+                            className="form-main"
+                            name="bankDetails"
+                            onFinish={this.onFinish}
+                            layout="vertical"
+                        >
+                            <Form.Item
+                                name="name"
+                                rules={[{ required: true, message: NAME_REQUIRED }]}
+                            >
+                                <Input
+                                    prefix={<img src={userImg} />}
+                                    placeholder="Name"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="accountno"
+                                rules={[{
+                                    required: true,
+                                    message: CONTACT_NO
+                                },
+                                {
+                                    pattern: ACCOUNT_VALIDATION,
+                                    max: 16,
+                                    min:16,
+                                    message: INVALID_CONATCT
+                                }]}
+                            >
+                                <Input
+                                    prefix={<img src={userImg} />}
+                                    placeholder="Account no"
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <Input
+                                    name="expirydate"
+                                    prefix={<img src={userImg} />}
+                                    placeholder="Expiry Date (MM/YYYY)"
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button style={{width: '100%'}} htmlType="submit" type="primary">Pay</Button>
+                            </Form.Item>
+                        </Form>
+                        <Modal
+                            visible={this.props.showPaymentSuccess}
+                            onCancel = {this.handleClose}
+                            title = {<div className = 'modal-header'>Payment successful</div>}
+                            footer = {null}
+                            width={660}
+                        >
+                            <Button onClick={this.handleClose}>
+                                Okay
+                            </Button>
+                        </Modal>
+                    </div>
+                </div>
             </div>
         );
     }
