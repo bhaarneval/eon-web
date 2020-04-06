@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
-import {Button, Input, InputNumber} from 'antd';
+import {Button, Input} from 'antd';
 import EventInfo from "../../components/eventDetail/eventInfo";
 import EventCount from "../../components/eventDetail/eventCount";
 import EventTable from "../../components/eventDetail/inviteeTable";
 import InviteesPopup from "../../components/eventDetail/inviteePopup";
+import FeeCaclculation from "../../components/subscription/feeCaclculation";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -17,10 +18,8 @@ class EventDetail extends Component {
         filteredRows: [],
         discount: '',
         noOfSeats: 1,
-        totalAmount: 500,
-        totalAmountAfterPromo: 0,
-        intialAmount: 500,
         discountPercentage: 10,
+        perHeadAmount: 500,
         // role: 'Organizer'
         role: 'User' //User
     }
@@ -78,33 +77,8 @@ search = (event) => {
     })
 }
 
-onChangeSeats = (event) => {
-    console.log(event)
-}
-
-onIncDecSeats = (type) => {
-    if (type==='inc'){
-        this.setState({
-            noOfSeats : this.state.noOfSeats + 1,
-            totalAmount: (this.state.noOfSeats + 1) * this.state.intialAmount
-        })
-    }
-    else{
-        this.setState({
-            noOfSeats : this.state.noOfSeats - 1,
-            totalAmount: (this.state.noOfSeats - 1) * this.state.intialAmount
-        })
-    }
-}
-
-applyCode = () => {
-    this.setState({
-        totalAmountAfterPromo: this.state.totalAmount * (this.state.discountPercentage/100)
-    })
-}
-
 render() {
-    console.log(this.state.rows)
+    const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
       <div className="sub-content">
         <div className="events-heading">Event detail</div>
@@ -134,27 +108,11 @@ render() {
             </div>
         }
         {this.state.role === 'User' &&
-            <div className="detail-card">
-                <Button type="primary" onClick={() => this.onIncDecSeats('dec')}>-</Button>
-                    <InputNumber
-                        min={1}
-                        defaultValue={1}
-                        onChange={event => this.onChangeSeats(event)}
-                    />
-                <Button type="primary" onClick={() => this.onIncDecSeats('inc')}>+</Button>
-                Updated amount
-                <InputNumber
-                    min={1}
-                    disabled
-                    value={this.state.totalAmount}
-                />
-                <div>
-                    Promotional Offers
-                    <div>10% is available for you <Button type="primary" onClick={this.applyCode}>Apply</Button></div>
-                    Total amount
-                    {this.state.totalAmountAfterPromo}
-                </div>
-            </div>
+            <FeeCaclculation 
+                noOfSeats={noOfSeats}
+                discountPercentage={discountPercentage}
+                perHeadAmount={perHeadAmount}
+            />
         }
       </div>
     );
