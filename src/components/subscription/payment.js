@@ -78,7 +78,7 @@ class Payment extends Component {
                             onCancel = {this.handleClose}
                             title = {<div className = 'modal-header'>Payment successful</div>}
                             footer = {null}
-                            width={660}
+                            width={300}
                         >
                             <Button onClick={this.handleClose}>
                                 Okay
