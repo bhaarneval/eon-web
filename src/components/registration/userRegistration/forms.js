@@ -6,8 +6,6 @@ import '../forms.css';
 import { Form, Input } from "antd";
 import {
     RightOutlined,
-    CheckSquareTwoTone,
-    CheckSquareOutlined
 } from "@ant-design/icons";
 import lockImg from '../../../assets/Password_login.svg';
 import userImg from '../../../assets/user.svg';

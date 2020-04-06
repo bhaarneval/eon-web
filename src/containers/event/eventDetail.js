@@ -7,6 +7,7 @@ import EventCount from "../../components/eventDetail/eventCount";
 import EventTable from "../../components/eventDetail/inviteeTable";
 import InviteesPopup from "../../components/eventDetail/inviteePopup";
 import FeeCaclculation from "../../components/subscription/feeCaclculation";
+import Payment from "../../components/subscription/payment";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -20,6 +21,10 @@ class EventDetail extends Component {
         noOfSeats: 1,
         discountPercentage: 10,
         perHeadAmount: 500,
+        showPayment: false,
+        showPaymentSuccess: false,
+        finalSeats: '',
+        finalAmount: '',
         // role: 'Organizer'
         role: 'User' //User
     }
@@ -77,6 +82,23 @@ search = (event) => {
     })
 }
 
+payNow = (seats, amount) => {
+    console.log(seats, amount)
+    this.setState({
+        showPayment: !this.state.showPayment,
+        finalAmount: amount,
+        finalSeats: seats
+    })
+    //call api for event id and seats
+}
+
+onBankSubmit = (accountNo, expiry, name) => {
+    console.log(accountNo, expiry, name)
+    this.setState({
+        showPaymentSuccess: true
+    })
+}
+
 render() {
     const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
@@ -108,11 +130,24 @@ render() {
             </div>
         }
         {this.state.role === 'User' &&
-            <FeeCaclculation 
-                noOfSeats={noOfSeats}
-                discountPercentage={discountPercentage}
-                perHeadAmount={perHeadAmount}
-            />
+            <div>
+
+                {this.state.showPayment ?
+                    <Payment 
+                        onBankSubmit={this.onBankSubmit}
+                        showPaymentSuccess={this.state.showPaymentSuccess}
+                        history = {this.props.history}
+                    />
+
+                :
+                    <FeeCaclculation 
+                        noOfSeats={noOfSeats}
+                        discountPercentage={discountPercentage}
+                        perHeadAmount={perHeadAmount}
+                        payNow={this.payNow}
+                    />
+                }
+            </div>
         }
       </div>
     );

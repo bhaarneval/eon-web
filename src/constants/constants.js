@@ -11,6 +11,8 @@ export const NUMBERSVALIDATION = /^\d+$/;
 export const MATCH_ANYTHING = /.*?/;
 export const EMAIL_VALIDATION = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 export const PHONE_VALIDATION = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+export const ACCOUNT_VALIDATION = "[0-9]{9,18}"
+
 export const PASSWORD_VALIDATION = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/;
 
 export const dummyList = [
