@@ -10,9 +10,8 @@ import moment from 'moment';
 
 export default function EventCards(props) {
     const {event} = props;
-    const {name, attendies, date, eventImage, eventLocation,fees} = event;
-    let eventDate = moment(date);
-    console.log(eventDate);
+    let {name, attendies, eventDate, eventImage, eventLocation,fees} = event;
+    eventDate = moment(eventDate,"DD-MM-YYYY");
     eventDate = eventDate.format("dddd, DD MMM, hh:mm A");
   return (
     <Card

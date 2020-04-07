@@ -9,7 +9,9 @@ import moment from 'moment';
 
 export default function EventCards(props) {
     const {event} = props;
-    const {name, attendies, date, eventImage} = event;
+    let {name, attendies, eventDate, eventImage} = event;
+    eventDate = moment(eventDate,"DD-MM-YYYY");
+    eventDate = eventDate.format("dddd, DD MMM, hh:mm A");
   return (
     <Card
       bordered={true}
@@ -30,7 +32,7 @@ export default function EventCards(props) {
         <div className="event-name">{name}</div>
         <div className="card-desc-flex">
           <div style={{fontSize: '12px'}}>{attendies} Attendies</div>
-          <div style={{fontSize: '12px'}}><img src={calendarImg} className="calendar-gap"/>{moment(date).format("DD MMM YYYY")}</div>
+          <div style={{fontSize: '12px'}}><img src={calendarImg} className="calendar-gap"/>{eventDate}</div>
         </div>
       </div>
     </Card>
