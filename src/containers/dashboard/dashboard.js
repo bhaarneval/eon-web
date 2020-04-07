@@ -13,9 +13,15 @@ import StyledRangePicker from "../../components/commonComponents/rangePicker";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
+    let eventsList = dummyList;
+    let search = new URLSearchParams(this.props.location.search);
+    let type = search.get("type");
+    if(type == "wishlist"){
+      eventsList = dummyList.splice(3,5);
+    }
     this.state = {
-      eventList:dummyList,
-      eventsList: dummyList,
+      eventList:eventsList,
+      eventsList: eventsList,
       role:"user"
     };
   }
@@ -116,7 +122,8 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  location: PropTypes.object
 };
 
 export default Dashboard;
