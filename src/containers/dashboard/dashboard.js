@@ -13,15 +13,9 @@ import StyledRangePicker from "../../components/commonComponents/rangePicker";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    let eventsList = dummyList;
-    let search = new URLSearchParams(this.props.location.search);
-    let type = search.get("type");
-    if(type == "wishlist"){
-      eventsList = dummyList.splice(3,5);
-    }
     this.state = {
-      eventList:eventsList,
-      eventsList: eventsList,
+      eventList:dummyList,
+      eventsList: dummyList,
       role:"user"
     };
   }
@@ -101,6 +95,15 @@ class Dashboard extends Component {
 
   render() {
     const optionsList = ["Cultural","Tech","Fashion","Painting"];
+    let eventsList = this.state.eventList;
+    let search = new URLSearchParams(this.props.location.search);
+    let type = search.get("type");
+    if(type == "wishlist"){
+      eventsList = dummyList.splice(3,5);
+    }
+    else {
+      eventsList = this.state.eventsList;
+    }
     return (
       <div className="sub-content">
         <div className="events-heading"> Event Management </div>
@@ -115,7 +118,7 @@ class Dashboard extends Component {
             className="button-create"
           >Create</Button>
         </div>
-        <div className="events-container-flex">{this.spliceArray(this.state.eventsList)}</div>
+        <div className="events-container-flex">{this.spliceArray(eventsList)}</div>
       </div>
     );
   }
