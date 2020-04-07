@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
-import {Button, Input, Modal} from 'antd';
+import {Button, Input, Modal, Form} from 'antd';
 import { CheckCircleFilled } from "@ant-design/icons";
 import EventInfo from "../../components/eventDetail/eventInfo";
 import EventCount from "../../components/eventDetail/eventCount";
@@ -10,6 +10,9 @@ import InviteesPopup from "../../components/eventDetail/inviteePopup";
 import FeeCaclculation from "../../components/subscription/feeCaclculation";
 import Payment from "../../components/subscription/payment";
 import BackButton from "../../components/commonComponents/backButton";
+import emailImg from "../../assets/Email ID.svg"
+import {EMAIL_REQUIRED} from "../../constants/messages";
+import {EMAIL_VALIDATION} from "../../constants/constants";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -26,6 +29,7 @@ class EventDetail extends Component {
         showPayment: false,
         showPaymentSuccess: false,
         showCancelModal:false,
+        showShareModal: false,
         finalSeats: '',
         finalAmount: '',
         // role: 'Organizer'
@@ -127,13 +131,22 @@ handleCancel = () => {
 confirmCancel = () => {
     this.props.history.push("/dashboard");
 }
+handleShare = () => {
+    this.setState({
+        showShareModal: !this.state.showShareModal,
+    })
+}
 
 render() {
     const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
-        <EventInfo history={this.props.history} />
+        <EventInfo
+          history={this.props.history}
+          role={this.state.role}
+          handleShare={this.handleShare}
+        />
         {this.state.role === "Organizer" && (
           <div>
             <EventCount />
@@ -212,9 +225,47 @@ render() {
           >
             <div className="cancel-modal">
               <div className="cancel-success">
-                Your subscription for this event will be cancelled. All the money paid will be refunded back to you.
+                Your subscription for this event will be cancelled. All the
+                money paid will be refunded back to you.
               </div>
-              <Button type="primary" onClick={this.confirmCancel}>Confirm</Button>
+              <Button type="primary" onClick={this.confirmCancel}>
+                Confirm
+              </Button>
+            </div>
+          </Modal>
+        )}
+        {this.state.showShareModal && (
+          <Modal visible onCancel={this.handleShare} width={500} footer={null}>
+            <div>
+              <h2 style={{color:"#262C6F"}}><b>Share this event with your friend</b></h2>
+              <Form name="shareEvent" onFinish={this.shareSubmit}>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    { required: true, message: EMAIL_REQUIRED },
+                    {
+                      pattern: EMAIL_VALIDATION,
+                      message: EMAIL_REQUIRED,
+                    },
+                  ]}
+                >
+                  <Input
+                    prefix={<img src={emailImg} />}
+                    placeholder="Email"
+                    className="input-style"
+                  />
+                </Form.Item>
+                <Form.Item name="message">
+                    <Input.TextArea 
+                        placeholder="Enter custom share message"
+                        autoSize={{ minRows: 4, maxRows: 4 }}
+                        onResize={false}
+                    />
+                </Form.Item>
+                <div className="share-confirm">
+                    <Button type="primary">Share</Button>
+                </div>
+              </Form>
             </div>
           </Modal>
         )}

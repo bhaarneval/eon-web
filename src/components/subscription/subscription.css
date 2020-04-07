@@ -103,3 +103,7 @@
     font-size: 120%;
     padding: 10%;
 }
+.share-confirm {
+    display: flex;
+    justify-content: center;
+}
