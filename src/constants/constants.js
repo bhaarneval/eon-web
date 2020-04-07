@@ -24,6 +24,7 @@ export const dummyList = [
         eventLocation:"Bengaluru",
         type:"Cultural",
         fees: 200,
+        ifSubscribed: true
     },
     {
         name: "Technex",
@@ -42,6 +43,7 @@ export const dummyList = [
         eventLocation:"Delhi",
         type:"Fashion",
         fees: 200,
+        ifSubscribed: true
 
     },
     {
@@ -61,6 +63,7 @@ export const dummyList = [
         eventLocation:"Nagpur",
         type:"Tech",
         fees: 200,
+        ifSubscribed: true
     },
     {
         name: "Robotics",
@@ -106,6 +109,7 @@ export const dummyList = [
         eventLocation:"Silchar",
         type:"Tech",
         fees: 200,
+        ifSubscribed: true
     },
     {
         name: "Marathon",
@@ -115,6 +119,7 @@ export const dummyList = [
         eventLocation:"Hyderabad",
         type:"Cultural",
         fees: 200,
+        ifSubscribed: true
     }
 
 ];

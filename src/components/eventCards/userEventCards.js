@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Card} from 'antd';
+import {Card, Button} from 'antd';
 import calendarImg from '../../assets/calendar.svg';
 import locationPin from "../../assets/pin.svg";
 import './eventCards.css';
@@ -10,7 +10,7 @@ import moment from 'moment';
 
 export default function EventCards(props) {
     const {event} = props;
-    let {name, attendies, eventDate, eventImage, eventLocation,fees} = event;
+    let {name, attendies, eventDate, eventImage, eventLocation,fees, ifSubscribed} = event;
     eventDate = moment(eventDate,"DD-MM-YYYY");
     eventDate = eventDate.format("dddd, DD MMM, hh:mm A");
   return (
@@ -26,6 +26,9 @@ export default function EventCards(props) {
             className="cards-cover-style"
             align="center"
           />
+          {ifSubscribed?<Button shape="round" className="status-button">
+            Subscribed
+          </Button>:null}
         </div>
       }
     >

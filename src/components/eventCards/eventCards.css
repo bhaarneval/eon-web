@@ -13,6 +13,13 @@
 .image-status-container {
     display: flex;
 }
+.status-button {
+    cursor: none;
+    margin-left: -112px;
+    margin-top: 3%;
+    background-color: transparent;
+    color: white;
+}
 .card-desc-grid{
     display: grid;
     grid-template-rows: 1fr 1fr;
