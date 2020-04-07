@@ -17,7 +17,5 @@
 
 .contentBody{
   background-color: #8080800f;
-  /* height: 90vh; */
-  /* margin-left: 6%;
-  padding: 0% 2%; */
+  min-height: 95vh;
 }
