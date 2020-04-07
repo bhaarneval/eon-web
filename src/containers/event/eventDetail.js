@@ -25,10 +25,11 @@ class EventDetail extends Component {
         perHeadAmount: 500,
         showPayment: false,
         showPaymentSuccess: false,
+        showCancelModal:false,
         finalSeats: '',
         finalAmount: '',
         // role: 'Organizer'
-        role: 'User' //User
+        role: 'User', //User
     }
   }
 
@@ -118,6 +119,15 @@ handleClose = () => {
     this.props.history.push("/dashboard");
 }
 
+handleCancel = () => {
+    this.setState({
+        showCancelModal:true
+    })
+}
+confirmCancel = () => {
+    this.props.history.push("/dashboard");
+}
+
 render() {
     const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
@@ -172,19 +182,40 @@ render() {
                 perHeadAmount={perHeadAmount}
                 payNow={this.payNow}
                 handleFreeTicket={this.handleFreeTicket}
+                handleCancel={this.handleCancel}
               />
             )}
           </div>
         )}
         {this.state.showPaymentSuccess && (
-          <Modal visible onCancel={this.handleClose} footer={null} width={500} >
-              <div className="payment-success">
-              <CheckCircleFilled  style={{color:"green", fontSize:"600%"}}/>
+          <Modal visible onCancel={this.handleClose} footer={null} width={500}>
+            <div className="payment-success">
+              <CheckCircleFilled style={{ color: "green", fontSize: "600%" }} />
+            </div>
+            <div className="payment-success">
+              You have successfully subscribed for the event
+            </div>
+            <div className="payment-success-button">
+              <Button style={{ color: "green" }} onClick={this.handleClose}>
+                Okay
+              </Button>
+            </div>
+          </Modal>
+        )}
+        {this.state.showCancelModal && (
+          <Modal
+            visible
+            title="Cancel Event Subscription"
+            onCancel={() => this.setState({ showCancelModal: false })}
+            footer={null}
+            width={500}
+          >
+            <div className="cancel-modal">
+              <div className="cancel-success">
+                Your subscription for this event will be cancelled. All the money paid will be refunded back to you.
               </div>
-              <div className="payment-success">
-                You have successfully subscribed for the event
-              </div>
-            <div className="payment-success-button"><Button style={{color:"green"}} onClick={this.handleClose} >Okay</Button></div>
+              <Button type="primary" onClick={this.confirmCancel}>Confirm</Button>
+            </div>
           </Modal>
         )}
       </div>

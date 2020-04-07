@@ -70,7 +70,7 @@ class FeeCalculation extends Component {
                     this.state.seats !== 1 ? this.onIncDecSeats("dec") : null
                   }
                 />
-                {this.state.seats}
+                <div style = {{fontSize:"150%"}}><b>{this.state.seats}</b></div>
                 <PlusCircleOutlined
                   style={{ fontSize: "200%", color: "#262C6F" }}
                   onClick={() => this.onIncDecSeats("inc")}
@@ -78,12 +78,13 @@ class FeeCalculation extends Component {
                 <InputNumber
                   min={1}
                   disabled
-                  value={"₹ " + this.state.totalAmount}
+                  value={this.props.perHeadAmount!==0?"₹ " + this.state.totalAmount:"       -"}
                   style={{
                     color: "#262C6F",
                     backgroundColor: "#ffffff",
                     border: "1px solid #262C6F",
                     fontSize: "15px",
+                    fontWeight:"bold"
                   }}
                 />
               </div>
@@ -165,7 +166,7 @@ class FeeCalculation extends Component {
           <div className="update-row">
             <Button type="primary">{<PDF />}</Button>
             <div className="cancel-row">
-              <Button>Cancel</Button>
+              <Button onClick={this.props.handleCancel}>Cancel</Button>
               <Button type="primary">Update</Button>
             </div>
           </div>
@@ -188,6 +189,7 @@ FeeCalculation.propTypes = {
   perHeadAmount: PropTypes.number,
   payNow: PropTypes.func,
   handleFreeTicket: PropTypes.func,
+  handleCancel: PropTypes.func,
 };
 
 export default FeeCalculation;
