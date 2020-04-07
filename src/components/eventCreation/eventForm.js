@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./eventForm.css";
-import { Upload, Button, Form, Input, Switch, DatePicker } from "antd";
+import { Upload, Button, Form, Input, Switch, DatePicker, Select } from "antd";
 import emptyImg from "../../assets/image.svg";
 import uploadImg from "../../assets/Upload Image.svg";
 import moment from "moment";
@@ -9,6 +9,7 @@ import moment from "moment";
 import { URLVALIDATION, NUMBERSVALIDATION, MATCH_ANYTHING } from "../../constants/constants";
 import { EVENT_NAME,URL_VALID,ONLY_NUMERIC,EVENT_LOCATION,EVENT_DATE,EVENT_TYPE,EVENT_CAPACITY,EVENT_FEES} from '../../constants/messages';
 
+const {Option}=Select;
 export default function EventForm(props) {
   const { values, handleSubmit, handleCancel,loadType } = props;
   const {
@@ -46,7 +47,7 @@ export default function EventForm(props) {
   }
 
   function onFinish(data) {
-    data.eventDate = moment(date).format("DD-MM-YYYY");
+    data.eventDate = moment(date).format("DD-MM-YYYY hh:mm A");
     data.isChargeable = isChecked ? true : false;
     data.file = file;
     handleSubmit(data);
@@ -89,7 +90,7 @@ export default function EventForm(props) {
             fees: fees,
             type: type,
             capacity: capacity,
-            description: description
+            description: description,
           }}
           layout="vertical"
           onFinish={onFinish}
@@ -105,8 +106,8 @@ export default function EventForm(props) {
             rules={[
               {
                 pattern: URLVALIDATION,
-                message: URL_VALID
-              }
+                message: URL_VALID,
+              },
             ]}
           >
             <Input size="large" placeholder="URL" />
@@ -117,8 +118,8 @@ export default function EventForm(props) {
               rules={[
                 {
                   required: true,
-                  message: EVENT_LOCATION
-                }
+                  message: EVENT_LOCATION,
+                },
               ]}
             >
               <Input
@@ -131,18 +132,19 @@ export default function EventForm(props) {
               name="eventDate"
               rules={[
                 {
-                  required: date==="",
-                  message: EVENT_DATE
-                }
+                  required: date === "",
+                  message: EVENT_DATE,
+                },
               ]}
             >
               <DatePicker
                 allowClear={false}
+                showTime
                 placeholder="Select Date"
-                format={"DD-MM-YYYY"}
+                format={"DD-MM-YYYY hh:mm A"}
                 value={date ? moment(date) : null}
                 onChange={handleDateChange}
-                disabledDate={current => {
+                disabledDate={(current) => {
                   return current && current < moment().startOf("day");
                 }}
                 size="large"
@@ -163,13 +165,13 @@ export default function EventForm(props) {
               name="fees"
               rules={[
                 {
-                  pattern:  isChecked?NUMBERSVALIDATION:MATCH_ANYTHING,
-                  message: ONLY_NUMERIC
+                  pattern: isChecked ? NUMBERSVALIDATION : MATCH_ANYTHING,
+                  message: ONLY_NUMERIC,
                 },
                 {
                   required: isChecked,
-                  message: EVENT_FEES
-                }
+                  message: EVENT_FEES,
+                },
               ]}
             >
               <Input
@@ -184,23 +186,43 @@ export default function EventForm(props) {
               rules={[
                 {
                   required: true,
-                  message: EVENT_TYPE
-                }
+                  message: EVENT_TYPE,
+                },
               ]}
             >
-              <Input size="large" placeholder="Type" className="input-style" />
+              <Select
+                placeholder="Type"
+                size="large"
+                onChange={()=>"hello"}
+                showSearch={false}
+                showArrow={true}
+                style={{height:"3em"}}
+              >
+                <Option key="Tech" value="Tech">
+                  Tech
+                </Option>
+                <Option key="Cultural" value="Cultural">
+                Cultural
+                </Option>
+                <Option key="Fashion" value="Fashion">
+                Fashion
+                </Option>
+                <Option key="Exhibition" value="Exhibition">
+                Exhibition
+                </Option>
+              </Select>
             </Form.Item>
             <Form.Item
               name="capacity"
               rules={[
                 {
                   pattern: NUMBERSVALIDATION,
-                  message: ONLY_NUMERIC
+                  message: ONLY_NUMERIC,
                 },
                 {
                   required: true,
-                  message: EVENT_CAPACITY
-                }
+                  message: EVENT_CAPACITY,
+                },
               ]}
             >
               <Input
@@ -222,7 +244,7 @@ export default function EventForm(props) {
               Cancel
             </Button>
             <Button htmlType="submit" type="primary" className="save-button">
-              {loadType==="update"?"Update": "Save"}
+              {loadType === "update" ? "Update" : "Save"}
             </Button>
           </div>
         </Form>
