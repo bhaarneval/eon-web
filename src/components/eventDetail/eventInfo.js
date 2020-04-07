@@ -9,13 +9,17 @@ import {Modal} from 'antd';
 import {
     MoreOutlined,
   } from '@ant-design/icons';
+  import shareImg from "../../assets/share.svg";
+  import AddBookmark from "../../assets/addBookmark.svg";
+  import Bookmarked from "../../assets/bookmarked.svg";
 
 class EventInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             cancelPopup: false,
-            message: ''
+            message: '',
+            bookmarked: false,
         }
       }
 
@@ -45,8 +49,14 @@ class EventInfo extends Component {
             cancelPopup: false,
         })
     }
+    handleBookmark = () => {
+        this.setState({
+            bookmarked:!this.state.bookmarked
+        })
+    }
 
     render() {
+        const bookMarkImg = this.state.bookmarked?Bookmarked:AddBookmark;
         const menuSidebar = (
             <Menu onClick={key => this.takeMenuAction(key)}>
                 <Menu.Item key="1">Cancel</Menu.Item>
@@ -63,9 +73,16 @@ class EventInfo extends Component {
                             description
                         </div>
                     </div>
-                    <Dropdown overlay={menuSidebar}>
-                        <MoreOutlined style={{height: '10px'}}/>
-                    </Dropdown>
+                    {this.props.role !== "User" ? (
+                <Dropdown overlay={menuSidebar}>
+                  <MoreOutlined style={{ height: "10px" }} />
+                </Dropdown>
+              ) : (
+                <div>
+                    <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={this.props.handleShare}/>
+                    <img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/>
+                </div>
+              )}
                 </div>
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
@@ -121,6 +138,8 @@ class EventInfo extends Component {
 
  EventInfo.propTypes = {
     event: PropTypes.object.isRequired,
+    role:PropTypes.string.isRequired,
+    handleShare:PropTypes.func,
     history: PropTypes.object
 }
 
