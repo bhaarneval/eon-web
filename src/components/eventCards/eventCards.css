@@ -28,8 +28,30 @@
 }
 .calendar-gap{
     padding-right: 5px;
+    height: 2em;
+    width: 2em;
+    object-fit: scale-down;
 }
 .user-cards-flex {
     display: flex;
     flex-direction: column;
+    margin-top: -10%;
+}
+.attendies-fees-div{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.fees-div {
+    background-color: yellow;
+    color: black;
+    box-sizing: border-box;
+    padding: 0 5px 0 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.attendies-fees-div{
+    padding: 5px;
+    font-size: 12px;
+    box-sizing: border-box;
 }

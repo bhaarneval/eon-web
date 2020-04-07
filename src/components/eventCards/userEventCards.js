@@ -1,15 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Card} from 'antd';
-// import calendarImg from '../../assets/calendar.svg';
+import calendarImg from '../../assets/calendar.svg';
+import locationPin from "../../assets/pin.svg";
 import './eventCards.css';
-// import moment from 'moment';
+import moment from 'moment';
 
 
 
 export default function EventCards(props) {
     const {event} = props;
     const {name, attendies, date, eventImage, eventLocation,fees} = event;
+    let eventDate = moment(date);
+    console.log(eventDate);
+    eventDate = eventDate.format("dddd, DD MMM, hh:mm A");
   return (
     <Card
       bordered={true}
@@ -27,11 +31,13 @@ export default function EventCards(props) {
       }
     >
       <div className="user-cards-flex">
-        <div>{name}</div>
-        <div>{attendies}</div>
-        <div>{fees}</div>
-        <div>{date}</div>
-        <div>{eventLocation}</div>
+        <div className="event-name">{name}</div>
+        <div className="attendies-fees-div">
+          <div className="attendies-div">{attendies} Attendies</div>
+          <div className="fees-div">{"₹"+fees}</div>
+        </div>
+        <div style={{fontSize: '12px'}}><img src={calendarImg} className="calendar-gap"/>{eventDate}</div>
+        <div style={{fontSize: '12px'}}><img src={locationPin} className="calendar-gap"/>{eventLocation}</div>
       </div>
     </Card>
   );
