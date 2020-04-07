@@ -2,7 +2,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 3% 2% 0% 3%;
+    box-sizing: border-box;
+    padding: 2% 2% 0% 3%;
+}
+.subscription-container-payment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-top: -1%;
 }
 
 .subscription-left{
@@ -46,4 +54,18 @@
     display: flex;
     width: 20%;
     justify-content: space-between;
+}
+
+.payment-success {
+    display: flex;
+    justify-content: center;
+    color:green;
+    font-size: 120%;
+    padding: 5%;
+}
+.payment-success-button{
+    display: flex;
+    justify-content: center;
+    color:green;
+    padding:5%;
 }

@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
-import {Button, Input} from 'antd';
+import {Button, Input, Modal} from 'antd';
+import { CheckCircleFilled } from "@ant-design/icons";
 import EventInfo from "../../components/eventDetail/eventInfo";
 import EventCount from "../../components/eventDetail/eventCount";
 import EventTable from "../../components/eventDetail/inviteeTable";
 import InviteesPopup from "../../components/eventDetail/inviteePopup";
 import FeeCaclculation from "../../components/subscription/feeCaclculation";
 import Payment from "../../components/subscription/payment";
+import BackButton from "../../components/commonComponents/backButton";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -98,57 +100,88 @@ onBankSubmit = (accountNo, expiry, name) => {
         showPaymentSuccess: true
     })
 }
+goBack = () => {
+    this.props.history.goBack();
+}
+handlePaymentsBack = () => {
+    this.setState({
+        showPayment:false
+    })
+}
+
+handleClose = () => {
+    this.props.history.push("/dashboard");
+}
 
 render() {
     const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
       <div className="sub-content">
-        <div className="events-heading">Event detail</div>
-        <EventInfo history={this.props.history}/>
-        {this.state.role === 'Organizer' &&
-            <div>
-                <EventCount />
-                <div className="invitee-row">
-                    <h2><b>Invitees List</b></h2>
-                    <Button type="primary" onClick={this.inviteButtonClick}>
-                        Add Invitees
-                    </Button>
-                </div>
-                <Input
-                    placeholder="input search text"
-                    onChange={event => this.search(event)}
-                    style={{ width: 200, position: 'absolute', zIndex: 1 }}
-                />
-                <EventTable deleteAll={this.deleteAll} data={this.state.searchValue.length > 0 ? this.state.filteredRows : this.state.rows}/>
-                {this.state.showModal &&
-                    <InviteesPopup
-                        handleClose={this.handleModalClose}
-                        handleSend={this.handleSend}
-                        onDiscountChange={this.onDiscountChange}
-                    />
-                }
+        <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
+        <EventInfo history={this.props.history} />
+        {this.state.role === "Organizer" && (
+          <div>
+            <EventCount />
+            <div className="invitee-row">
+              <h2>
+                <b>Invitees List</b>
+              </h2>
+              <Button type="primary" onClick={this.inviteButtonClick}>
+                Add Invitees
+              </Button>
             </div>
-        }
-        {this.state.role === 'User' &&
-            <div>
-
-                {this.state.showPayment ?
-                    <Payment 
-                        onBankSubmit={this.onBankSubmit}
-                        showPaymentSuccess={this.state.showPaymentSuccess}
-                        history = {this.props.history}
-                    />
-
-                :
-                    <FeeCaclculation 
-                        noOfSeats={noOfSeats}
-                        discountPercentage={discountPercentage}
-                        perHeadAmount={perHeadAmount}
-                        payNow={this.payNow}
-                    />
-                }
-            </div>
-        }
+            <Input
+              placeholder="input search text"
+              onChange={(event) => this.search(event)}
+              style={{ width: 200, position: "absolute", zIndex: 1 }}
+            />
+            <EventTable
+              deleteAll={this.deleteAll}
+              data={
+                this.state.searchValue.length > 0
+                  ? this.state.filteredRows
+                  : this.state.rows
+              }
+            />
+            {this.state.showModal && (
+              <InviteesPopup
+                handleClose={this.handleModalClose}
+                handleSend={this.handleSend}
+                onDiscountChange={this.onDiscountChange}
+              />
+            )}
+          </div>
+        )}
+        {this.state.role === "User" && (
+          <div>
+            {this.state.showPayment ? (
+              <Payment
+                onBankSubmit={this.onBankSubmit}
+                showPaymentSuccess={this.state.showPaymentSuccess}
+                history={this.props.history}
+                handleBackClick={this.handlePaymentsBack}
+              />
+            ) : (
+              <FeeCaclculation
+                noOfSeats={noOfSeats}
+                discountPercentage={discountPercentage}
+                perHeadAmount={perHeadAmount}
+                payNow={this.payNow}
+              />
+            )}
+          </div>
+        )}
+        {this.state.showPaymentSuccess && (
+          <Modal visible onCancel={this.handleClose} footer={null} width={500} >
+              <div className="payment-success">
+              <CheckCircleFilled  style={{color:"green", fontSize:"600%"}}/>
+              </div>
+              <div className="payment-success">
+                You have successfully subscribed for the event
+              </div>
+            <div className="payment-success-button"><Button style={{color:"green"}} onClick={this.handleClose} >Okay</Button></div>
+          </Modal>
+        )}
       </div>
     );
   }

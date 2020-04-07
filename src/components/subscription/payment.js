@@ -1,11 +1,13 @@
 
-import { Button, Modal } from 'antd';
+import { Button, } from 'antd';
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import userImg from '../../assets/user.svg';
 import {NAME_REQUIRED, INVALID_CONATCT, CONTACT_NO} from '../../constants/messages';
 import {ACCOUNT_VALIDATION} from '../../constants/constants';
 import { Form, Input } from "antd";
+import "./subscription.css";
+import BackButton from "../commonComponents/backButton";
 
 class Payment extends Component {
     constructor(props) {
@@ -26,7 +28,8 @@ class Payment extends Component {
     render() {
         return (
             <div className="detail-card">
-                <div className="subscription-container" style={{justifyContent: 'center'}}>
+                <BackButton handleOnClick={this.props.handleBackClick} text={"Payments"}/>
+                <div className="subscription-container-payment" style={{justifyContent: 'center'}}>
                     <div className="subscription-payment">
                         <h3>Bank details</h3>
                         <Form
@@ -73,17 +76,6 @@ class Payment extends Component {
                                 <Button style={{width: '100%'}} htmlType="submit" type="primary">Pay</Button>
                             </Form.Item>
                         </Form>
-                        <Modal
-                            visible={this.props.showPaymentSuccess}
-                            onCancel = {this.handleClose}
-                            title = {<div className = 'modal-header'>Payment successful</div>}
-                            footer = {null}
-                            width={300}
-                        >
-                            <Button onClick={this.handleClose}>
-                                Okay
-                            </Button>
-                        </Modal>
                     </div>
                 </div>
             </div>
@@ -97,7 +89,7 @@ class Payment extends Component {
     discountPercentage:PropTypes.number,
     perHeadAmount:PropTypes.number,
     onBankSubmit: PropTypes.func,
-    showPaymentSuccess: PropTypes.Boolean,
+    handleBackClick: PropTypes.func,
     history: PropTypes.object
 }
 
