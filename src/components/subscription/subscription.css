@@ -78,3 +78,17 @@
     padding-bottom: 0%;
     padding: 2%;
 }
+.already-subscibed{
+    background-color: #E5F4F3;
+    width: 50%;
+    height: 11em;
+    border-radius: 10px;
+    padding: 2%;
+    text-align: center;
+}
+.confirm-button{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2%;
+    margin-top:1%;
+}

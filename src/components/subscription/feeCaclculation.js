@@ -87,27 +87,44 @@ class FeeCalculation extends Component {
                   }}
                 />
               </div>
-              <h3>
-                <b>Promotional offer</b>
-              </h3>
-              <div className="subscription-seats subscription-discount">
-                10% discount available{" "}
-                <Button
-                  disabled={this.state.codeApplied}
-                  type="primary"
-                  shape="round"
-                  style={{
-                    backgroundColor: "green",
-                    border: "none",
-                    color: "#ffffff",
-                  }}
-                  onClick={this.applyCode}
-                >
-                  Appl{`${this.state.codeApplied ? "ied!" : "y"}`}
-                </Button>
-              </div>
+              {this.props.perHeadAmount !== 0 && !this.state.isSubscribed ? (
+                <div>
+                  <h3>
+                    <b>Promotional offer</b>
+                  </h3>
+                  <div className="subscription-seats subscription-discount">
+                    10% discount available{" "}
+                    <Button
+                      disabled={this.state.codeApplied}
+                      type="primary"
+                      shape="round"
+                      style={{
+                        backgroundColor: "green",
+                        border: "none",
+                        color: "#ffffff",
+                      }}
+                      onClick={this.applyCode}
+                    >
+                      Appl{`${this.state.codeApplied ? "ied!" : "y"}`}
+                    </Button>
+                  </div>
+                </div>
+              ) : null}
             </div>
-            {!this.state.isSubscribed ? (
+            {this.state.isSubscribed ? (
+              <div className="already-subscibed">
+                <h2 style={{ color: "#57ABA0" }}>
+                  You are already subscribed to this event.
+                </h2>
+                <h4 style={{ color: "#57ABA0" }}>
+                  *If you want to Add/Remove invitees, click on Modify
+                </h4>
+                <h4 style={{ color: "#57ABA0" }}>
+                  *Click on <b>Download</b> for event details and QR Code
+                </h4>
+              </div>
+            ) : !this.props.perHeadAmount ||
+              this.props.perHeadAmount === 0 ? null : (
               <div className="subscription-left">
                 <h3>Breakdown details</h3>
                 <div className="breakdown">
@@ -141,7 +158,7 @@ class FeeCalculation extends Component {
                   Pay Now
                 </Button>
               </div>
-            ) : null}
+            )}
           </div>
         </div>
         {this.state.isSubscribed ? (
@@ -149,10 +166,15 @@ class FeeCalculation extends Component {
             <Button type="primary">{<PDF />}</Button>
             <div className="cancel-row">
               <Button>Cancel</Button>
-              <Button disabled type="primary">
-                Update
-              </Button>
+              <Button type="primary">Update</Button>
             </div>
+          </div>
+        ) : this.props.perHeadAmount === 0 || !this.props.perHeadAmount ? (
+          <div className="confirm-button">
+            {" "}
+            <Button type="primary" onClick={this.props.handleFreeTicket}>
+              Confirm
+            </Button>
           </div>
         ) : null}
       </div>
@@ -165,6 +187,7 @@ FeeCalculation.propTypes = {
   discountPercentage: PropTypes.number,
   perHeadAmount: PropTypes.number,
   payNow: PropTypes.func,
+  handleFreeTicket: PropTypes.func,
 };
 
 export default FeeCalculation;

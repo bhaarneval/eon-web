@@ -100,6 +100,11 @@ onBankSubmit = (accountNo, expiry, name) => {
         showPaymentSuccess: true
     })
 }
+handleFreeTicket = () => {
+    this.setState({
+        showPaymentSuccess:true,
+    })
+}
 goBack = () => {
     this.props.history.goBack();
 }
@@ -157,7 +162,6 @@ render() {
             {this.state.showPayment ? (
               <Payment
                 onBankSubmit={this.onBankSubmit}
-                showPaymentSuccess={this.state.showPaymentSuccess}
                 history={this.props.history}
                 handleBackClick={this.handlePaymentsBack}
               />
@@ -167,6 +171,7 @@ render() {
                 discountPercentage={discountPercentage}
                 perHeadAmount={perHeadAmount}
                 payNow={this.payNow}
+                handleFreeTicket={this.handleFreeTicket}
               />
             )}
           </div>
