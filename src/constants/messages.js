@@ -29,6 +29,8 @@ export const SIGNUP_PASSWORD_REQUIRED = "Please enter a password!";
 export const INVALID_PASSWORD = "Password doesn't meet all the given requirements";
 export const CONFIRM_PASSWORD = "Please confirm your password!";
 export const PASSWORD_DO_NOT_MATCH = "Passwords do not match!";
+export const ENTER_OTP = "A verification code has been sent to the registered email ID";
+export const OTP_REQUIRED = "Verification code cannot be empty";
 
 //create constant messages
 export const EVENT_NAME = "Event name cannot be empty!";

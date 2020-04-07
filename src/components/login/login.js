@@ -61,6 +61,9 @@ class Login extends Component {
     console.log('Failed:', errorInfo);
   };
 
+  handleForgotPassword = () => {
+    this.props.history.push("/forgot-password");
+  }
   render() {
     console.log(this.state)
     return (
@@ -103,6 +106,10 @@ class Login extends Component {
               <Input.Password className="input-style"  placeholder="Password" />
             </Form.Item>
             <Form.Item>
+              <div
+              className="forgot-password-style"
+              onClick = {this.handleForgotPassword}
+              >Forgot Password?</div>
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Login
               </Button>
