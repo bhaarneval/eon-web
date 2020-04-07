@@ -16,7 +16,7 @@ class Dashboard extends Component {
     this.state = {
       eventList:dummyList,
       eventsList: dummyList,
-      role:"user"
+      role:"organiser"
     };
   }
 
