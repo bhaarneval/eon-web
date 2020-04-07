@@ -29,3 +29,7 @@
 .calendar-gap{
     padding-right: 5px;
 }
+.user-cards-flex {
+    display: flex;
+    flex-direction: column;
+}
