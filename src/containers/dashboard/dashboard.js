@@ -109,16 +109,26 @@ class Dashboard extends Component {
         <div className="events-heading"> Event Management </div>
         <div className="dashboard-actions-container">
           <div className="filters">
-            <SearchBox handleOnChange={this.handleSearchTextChange} placeholder={"Event Name / Location"}/>
-            <SelectDropDown handleChange={this.handleFilterChange} optionsList={optionsList} placeholder = {"Event Type"}/>
-            <StyledRangePicker handleChange = {this.handleDateChange} />
+            <SearchBox
+              handleOnChange={this.handleSearchTextChange}
+              placeholder={"Event Name / Location"}
+            />
+            <SelectDropDown
+              handleChange={this.handleFilterChange}
+              optionsList={optionsList}
+              placeholder={"Event Type"}
+            />
+            <StyledRangePicker handleChange={this.handleDateChange} />
           </div>
-          <Button
-            onClick={this.handleCreateEvent}
-            className="button-create"
-          >Create</Button>
+          {this.state.role === "organiser" ? (
+            <Button onClick={this.handleCreateEvent} className="button-create">
+              Create
+            </Button>
+          ) : null}
         </div>
-        <div className="events-container-flex">{this.spliceArray(eventsList)}</div>
+        <div className="events-container-flex">
+          {this.spliceArray(eventsList)}
+        </div>
       </div>
     );
   }
