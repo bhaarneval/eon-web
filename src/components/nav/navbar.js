@@ -70,9 +70,8 @@ class Navbar extends Component {
 
 
   logout = () => {
-    localStorage.setItem('loggedIn', false)
-    // this.props.history.push('login')
-    window.location.replace('/login')
+    localStorage.removeItem('token')
+    this.props.history.push('login')
   }
 
   render() {
@@ -94,7 +93,7 @@ class Navbar extends Component {
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
           <BellOutlined style={{fontSize:'20px'}} onClick={() => openNotificationWithIcon('info')}>Info</BellOutlined>
-          {localStorage.getItem('loggedIn') === "true"?
+          {this.props.isLoggedin ?
             <Dropdown overlay={menuSidebar}>
               <div>Priyanka <DownOutlined /></div>
             </Dropdown>

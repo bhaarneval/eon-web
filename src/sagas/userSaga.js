@@ -7,7 +7,7 @@ import { actionLoginTypes } from "../constants/actionTypes";
 
 const payload = {
   "data":{
-    "access": "access_token",
+    "access": "qwertyuiowertyui",
      "refresh": "refresh_token",
      "user": {
               "user_id": 33,
@@ -50,7 +50,7 @@ export function* getUser(param) {
         payload: payload.data
     });
     callback();
-    localStorage.setItem('token', 'qwertyuioiuytrewqwertyui');
+    localStorage.setItem('token', payload.data.access);
   } catch (e) {
     console.log("error while fetching", e);
     yield put({ 
