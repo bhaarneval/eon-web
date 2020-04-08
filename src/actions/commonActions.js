@@ -7,9 +7,11 @@ export const getClusters = id => {
   };
 };
 
-export const getUser = id => {
+export const getUser = ({email,password,callback}) => {
   return {
     type: actionLoginTypes.GET_USER,
-    id: id
+    email: email,
+    password: password,
+    callback: callback
   };
 };
