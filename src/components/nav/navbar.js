@@ -61,6 +61,8 @@ class Navbar extends Component {
       this.props.history.push(`/change-password`)
     else if(input.key === "4")
       this.props.history.push(`/profile/1`)
+    else if (input.key === "5")
+      this.props.history.push(`/dashboard?type=wishlist`);
     else{
       this.logout()
     }
@@ -84,7 +86,8 @@ class Navbar extends Component {
       <Menu onClick={key => this.takeMenuAction(key)}>
         <Menu.Item key="3">Change Password</Menu.Item>
         <Menu.Item key="4">Profile</Menu.Item>
-        <Menu.Item key="5"><LogoutOutlined/></Menu.Item>
+        <Menu.Item key="5">Wishlist</Menu.Item>
+        <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
     return (

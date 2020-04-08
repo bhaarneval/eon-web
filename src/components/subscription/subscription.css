@@ -2,7 +2,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 3% 2% 0% 3%;
+    box-sizing: border-box;
+    padding: 2% 2% 2% 3%;
+}
+.subscription-container-payment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-top: -1%;
 }
 
 .subscription-left{
@@ -28,6 +36,7 @@
 .breakdown{
     border-top: 1px solid lightgray;
     margin-top: 10px;
+    text-align: right;
     padding-bottom: 10px;
     padding-top: 10px;
 }
@@ -46,4 +55,55 @@
     display: flex;
     width: 20%;
     justify-content: space-between;
+}
+
+.payment-success {
+    display: flex;
+    justify-content: center;
+    color:green;
+    font-size: 120%;
+    padding: 5%;
+}
+.payment-success-button{
+    display: flex;
+    justify-content: center;
+    color:green;
+    padding:5%;
+}
+.subscription-discount{
+    color:green;
+    border: 1px solid #E5E8F0;
+    border-radius: 10px;
+    margin-bottom: 0px;
+    padding-bottom: 0%;
+    padding: 2%;
+}
+.already-subscibed{
+    background-color: #E5F4F3;
+    width: 50%;
+    height: 11em;
+    border-radius: 10px;
+    padding: 2%;
+    text-align: center;
+}
+.confirm-button{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2%;
+    margin-top:1%;
+}
+.cancel-modal{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    height: 150%;
+}
+.cancel-success {
+    text-align: center;
+    font-size: 120%;
+    padding: 10%;
+}
+.share-confirm {
+    display: flex;
+    justify-content: center;
 }

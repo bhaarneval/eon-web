@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import moment from 'moment';
 import "./dashboard.css";
 import EventCards from "../../components/eventCards/eventCards";
+import UserEventcards from "../../components/eventCards/userEventCards";
 
 import { dummyList } from "../../constants/constants";
 import { Row, Button } from "antd";
@@ -14,7 +15,8 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       eventList:dummyList,
-      eventsList: dummyList
+      eventsList: dummyList,
+      role:"organiser"
     };
   }
 
@@ -30,7 +32,19 @@ class Dashboard extends Component {
       return (
         <Row key={index} className="cards-row">
           {list.map((event, index) => {
-            return <EventCards history={this.props.history} key={index} event={event} />;
+            return this.state.role === "organiser" ? (
+              <EventCards
+                history={this.props.history}
+                key={index}
+                event={event}
+              />
+            ) : (
+              <UserEventcards
+                history={this.props.history}
+                key={index}
+                event={event}
+              />
+            );
           })}
         </Row>
       );
@@ -43,7 +57,7 @@ class Dashboard extends Component {
         if(filterValue==="")
           break;
         eventList = eventList.filter(event => {
-          return event.eventLocation === filterValue;
+          return event.eventLocation === filterValue || event.name === filterValue;
         });
         break;
         case "type":
@@ -81,28 +95,48 @@ class Dashboard extends Component {
 
   render() {
     const optionsList = ["Cultural","Tech","Fashion","Painting"];
+    let eventsList = this.state.eventList;
+    let search = new URLSearchParams(this.props.location.search);
+    let type = search.get("type");
+    if(type == "wishlist"){
+      eventsList = dummyList.splice(3,5);
+    }
+    else {
+      eventsList = this.state.eventsList;
+    }
     return (
       <div className="sub-content">
         <div className="events-heading"> Event Management </div>
         <div className="dashboard-actions-container">
           <div className="filters">
-            <SearchBox handleOnChange={this.handleSearchTextChange} />
-            <SelectDropDown handleChange={this.handleFilterChange} optionsList={optionsList} placeholder = {"Event Type"}/>
-            <StyledRangePicker handleChange = {this.handleDateChange} />
+            <SearchBox
+              handleOnChange={this.handleSearchTextChange}
+              placeholder={"Event Name / Location"}
+            />
+            <SelectDropDown
+              handleChange={this.handleFilterChange}
+              optionsList={optionsList}
+              placeholder={"Event Type"}
+            />
+            <StyledRangePicker handleChange={this.handleDateChange} />
           </div>
-          <Button
-            onClick={this.handleCreateEvent}
-            className="button-create"
-          >Create</Button>
+          {this.state.role === "organiser" ? (
+            <Button onClick={this.handleCreateEvent} className="button-create">
+              Create
+            </Button>
+          ) : null}
         </div>
-        <div className="events-container-flex">{this.spliceArray(this.state.eventsList)}</div>
+        <div className="events-container-flex">
+          {this.spliceArray(eventsList)}
+        </div>
       </div>
     );
   }
 }
 
 Dashboard.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  location: PropTypes.object
 };
 
 export default Dashboard;

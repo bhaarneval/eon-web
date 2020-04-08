@@ -11,7 +11,7 @@ export const NUMBERSVALIDATION = /^\d+$/;
 export const MATCH_ANYTHING = /.*?/;
 export const EMAIL_VALIDATION = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 export const PHONE_VALIDATION = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-export const ACCOUNT_VALIDATION = "[0-9]{9,18}"
+export const ACCOUNT_VALIDATION = /[0-9]{9,18}/
 
 export const PASSWORD_VALIDATION = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]/;
 
@@ -22,7 +22,9 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Bengaluru",
-        type:"Cultural"
+        type:"Cultural",
+        fees: 200,
+        ifSubscribed: true
     },
     {
         name: "Technex",
@@ -30,7 +32,8 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Lucknow",
-        type:"Tech"
+        type:"Tech",
+        fees: 200,
     },
     {
         name: "AON Fest",
@@ -38,7 +41,9 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Delhi",
-        type:"Fashion"
+        type:"Fashion",
+        fees: 200,
+        ifSubscribed: true
 
     },
     {
@@ -47,7 +52,8 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Patna",
-        type:"Cultural"
+        type:"Cultural",
+        fees: 200,
     },
     {
         name: "Finance Festival",
@@ -55,7 +61,9 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Nagpur",
-        type:"Tech"
+        type:"Tech",
+        fees: 200,
+        ifSubscribed: true
     },
     {
         name: "Robotics",
@@ -63,7 +71,8 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Lucknow",
-        type:"Tech"
+        type:"Tech",
+        fees: 200,
     },
     {
         name: "Flee Festival",
@@ -71,7 +80,8 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Jaipur",
-        type:"Cultural"
+        type:"Cultural",
+        fees: 200,
     },
     {
         name: "Book Festival",
@@ -79,7 +89,8 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Jaipur",
-        type:"Cultural"
+        type:"Cultural",
+        fees: 200,
     },
     {
         name: "Health and Fitness",
@@ -87,7 +98,8 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Jalandhar",
-        type:"Fashion"
+        type:"Fashion",
+        fees: 200,
     },
     {
         name: "Coding",
@@ -95,7 +107,9 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Silchar",
-        type:"Tech"
+        type:"Tech",
+        fees: 200,
+        ifSubscribed: true
     },
     {
         name: "Marathon",
@@ -103,7 +117,9 @@ export const dummyList = [
         eventDate: "12-04-2020",
         eventImage: dummyImg,
         eventLocation:"Hyderabad",
-        type:"Cultural"
+        type:"Cultural",
+        fees: 200,
+        ifSubscribed: true
     }
 
 ];

@@ -44,9 +44,9 @@
     margin-bottom: 1%;
 }
 
-/* .input-style{
+.input-style{
     padding: 4%;
-} */
+}
 .input-style-switch{
     margin-top: 6%;
     display: flex;
@@ -71,5 +71,5 @@
 }
 .input-style-date {
     width: 100%;
-    padding: 4%;
+    /* padding: 4%; */
 }
