@@ -14,6 +14,7 @@ class FeeCalculation extends Component {
       totalAmount: this.props.noOfSeats * this.props.perHeadAmount,
       codeApplied: false,
       isSubscribed: true,
+      isUpdate: false
     };
   }
 
@@ -57,6 +58,36 @@ class FeeCalculation extends Component {
     });
   };
 
+  handleSeatsUpdate = () => {
+      const {perHeadAmount, handleFreeTicket, handleRefund, noOfSeats}= this.props;
+      let {seats, totalAmount} = this.state;
+      if(perHeadAmount===0){
+          handleFreeTicket(seats);
+          return;
+      }
+      
+      if(seats<noOfSeats){
+          handleRefund(seats);
+      }
+      if(seats>noOfSeats){
+          totalAmount=(seats-noOfSeats)*perHeadAmount;
+          console.log(totalAmount);
+        this.setState({
+            isUpdate: true,
+            totalAmount:totalAmount
+        })
+      }
+  }
+  handleUpdateCancel = () => {
+      this.setState({
+          seats: this.props.noOfSeats,
+          isUpdate: false,
+          totalAmount: this.props.noOfSeats*this.props.perHeadAmount,
+          totalAmountAfterPromo: this.props.noOfSeats * this.props.perHeadAmount,
+          codeApplied: false
+      })
+  }
+
   render() {
     return (
       <div>
@@ -67,16 +98,16 @@ class FeeCalculation extends Component {
                 <MinusCircleOutlined
                   style={{ fontSize: "200%", color: "#262C6F" }}
                   onClick={() =>
-                    this.state.seats !== 1 ? this.onIncDecSeats("dec") : null
+                    !this.state.isUpdate? (this.state.seats !== 1 ? this.onIncDecSeats("dec") : null):null
                   }
                 />
                 <div style = {{fontSize:"150%"}}><b>{this.state.seats}</b></div>
                 <PlusCircleOutlined
                   style={{ fontSize: "200%", color: "#262C6F" }}
-                  onClick={() => this.onIncDecSeats("inc")}
+                  onClick={() => !this.state.isUpdate? this.onIncDecSeats("inc"):null}
                 />
                 <InputNumber
-                  min={1}
+                  min={this.props.noOfSeats}
                   disabled
                   value={this.props.perHeadAmount!==0?"₹ " + this.state.totalAmount:"       -"}
                   style={{
@@ -88,7 +119,7 @@ class FeeCalculation extends Component {
                   }}
                 />
               </div>
-              {this.props.perHeadAmount !== 0 && !this.state.isSubscribed ? (
+              {(this.props.perHeadAmount !== 0 && !this.state.isSubscribed || this.state.isUpdate) ? (
                 <div>
                   <h3>
                     <b>Promotional offer</b>
@@ -112,7 +143,7 @@ class FeeCalculation extends Component {
                 </div>
               ) : null}
             </div>
-            {this.state.isSubscribed ? (
+            {this.state.isSubscribed && !this.state.isUpdate ? (
               <div className="already-subscibed">
                 <h2 style={{ color: "#57ABA0" }}>
                   You are already subscribed to this event.
@@ -145,6 +176,10 @@ class FeeCalculation extends Component {
                       : this.state.totalAmount}
                   </div>
                 </div>
+                <div style={{display:"flex",justifyContent:"flex-end", width:"100%"}}>
+                    {this.state.isUpdate?(
+                        <Button type="primary" onClick={this.handleUpdateCancel} style={{marginRight:"2%"}}>Cancel</Button>
+                    ):null}
                 <Button
                   type="primary"
                   onClick={() =>
@@ -158,16 +193,17 @@ class FeeCalculation extends Component {
                 >
                   Pay Now
                 </Button>
+                </div>
               </div>
             )}
           </div>
         </div>
-        {this.state.isSubscribed ? (
+        {this.state.isSubscribed && !this.state.isUpdate ? (
           <div className="update-row">
             <Button type="primary">{<PDF />}</Button>
             <div className="cancel-row">
               <Button onClick={this.props.handleCancel}>Cancel</Button>
-              <Button type="primary">Update</Button>
+              <Button type="primary" disabled={this.props.noOfSeats===this.state.seats} onClick={this.handleSeatsUpdate}>Update</Button>
             </div>
           </div>
         ) : this.props.perHeadAmount === 0 || !this.props.perHeadAmount ? (
@@ -190,6 +226,7 @@ FeeCalculation.propTypes = {
   payNow: PropTypes.func,
   handleFreeTicket: PropTypes.func,
   handleCancel: PropTypes.func,
+  handleRefund:PropTypes.func,
 };
 
 export default FeeCalculation;
