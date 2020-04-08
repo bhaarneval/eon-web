@@ -30,10 +30,14 @@ class EventDetail extends Component {
         showPaymentSuccess: false,
         showCancelModal:false,
         showShareModal: false,
+        showUpdateSeatsModal: false,
         finalSeats: '',
         finalAmount: '',
         // role: 'Organizer'
-        role: 'User'
+        role: 'User',
+        paidAmount: 0,
+        refundAmount:0,
+        newSeats:0,
     }
   }
 
@@ -105,9 +109,10 @@ onBankSubmit = (accountNo, expiry, name) => {
         showPaymentSuccess: true
     })
 }
-handleFreeTicket = () => {
+handleFreeTicket = (seats) => {
     this.setState({
         showPaymentSuccess:true,
+        noOfSeats:seats?seats:this.state.noOfSeats,
     })
 }
 goBack = () => {
@@ -134,6 +139,35 @@ confirmCancel = () => {
 handleShare = () => {
     this.setState({
         showShareModal: !this.state.showShareModal,
+    })
+}
+shareSubmit = (values) => {
+    console.log(values);
+    this.setState({
+        showShareModal: false,
+    })
+}
+handleRefund = (seats) => {
+    const {noOfSeats, perHeadAmount, discountPercentage} =this.state;
+    let initialPaidAmount = noOfSeats*perHeadAmount;
+    initialPaidAmount = initialPaidAmount - (initialPaidAmount*discountPercentage)/100;
+    console.log(initialPaidAmount);
+    let currentCost = seats * perHeadAmount;
+    currentCost = currentCost-(currentCost*discountPercentage)/100;
+    let refundAmount = initialPaidAmount - currentCost;
+    this.setState({
+        newSeats: seats,
+        paidAmount:initialPaidAmount,
+        refundAmount: refundAmount,
+        showUpdateSeatsModal: true,
+    })
+} 
+
+handleRefundConfirm = () => {
+    this.setState({
+        noOfSeats:this.state.newSeats,
+        showUpdateSeatsModal: false,
+        showPaymentSuccess: true,
     })
 }
 
@@ -196,6 +230,7 @@ render() {
                 payNow={this.payNow}
                 handleFreeTicket={this.handleFreeTicket}
                 handleCancel={this.handleCancel}
+                handleRefund={this.handleRefund}
               />
             )}
           </div>
@@ -237,7 +272,9 @@ render() {
         {this.state.showShareModal && (
           <Modal visible onCancel={this.handleShare} width={500} footer={null}>
             <div>
-              <h2 style={{color:"#262C6F"}}><b>Share this event with your friend</b></h2>
+              <h2 style={{ color: "#262C6F" }}>
+                <b>Share this event with your friend</b>
+              </h2>
               <Form name="shareEvent" onFinish={this.shareSubmit}>
                 <Form.Item
                   name="email"
@@ -256,16 +293,43 @@ render() {
                   />
                 </Form.Item>
                 <Form.Item name="message">
-                    <Input.TextArea 
-                        placeholder="Enter custom share message"
-                        autoSize={{ minRows: 4, maxRows: 4 }}
-                        onResize={false}
-                    />
+                  <Input.TextArea
+                    placeholder="Enter custom share message"
+                    autoSize={{ minRows: 4, maxRows: 4 }}
+                    onResize={false}
+                  />
                 </Form.Item>
                 <div className="share-confirm">
-                    <Button type="primary">Share</Button>
+                  <Button type="primary" htmlType="submit">
+                    Share
+                  </Button>
                 </div>
               </Form>
+            </div>
+          </Modal>
+        )}
+        {this.state.showUpdateSeatsModal && (
+          <Modal
+            visible
+            title={<h3 className="color-text">Update Event Subscription</h3>}
+            onCancel={() => this.setState({ showUpdateSeatsModal: false })}
+            footer={null}
+            width={500}
+          >
+            <div className="refund-modal">
+              <div>
+                Number of Attendies will be updated to <b className="color-text">{this.state.newSeats}</b>
+              </div>
+              <div>
+                Total Amount paid for <b  className="color-text">{this.state.noOfSeats}</b> seats was{" "}
+                <b  className="color-text">₹ {this.state.paidAmount}</b>
+              </div>
+              <div>
+                Total amount refundalble to you is <b  className="color-text">₹ {this.state.refundAmount}</b>
+              </div>
+              <Button type="primary" onClick={this.handleRefundConfirm} className="update-button">
+                Confirm
+              </Button>
             </div>
           </Modal>
         )}

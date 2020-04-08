@@ -2,11 +2,14 @@
     display: grid;
     width: 100%;
     grid-template-columns: 1fr 1fr;
-    column-gap: -30%;
+    column-gap: 2%;
     grid-template-rows: 1fr;   
     margin-top: 1%;
     box-sizing: border-box;
     padding-left: 3%;
+}
+.formCenter {
+    width: 80%;
 }
 .form-main-event{
     width: 70%;
@@ -40,7 +43,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    column-gap: 2%;
     margin-bottom: 1%;
 }
 
@@ -54,6 +56,8 @@
     justify-content: space-around;
 }
 .button-container {
+    margin-right: -130%;
+    margin-top: 10%;
     display: flex;
     justify-content: flex-end;
 }
@@ -72,4 +76,17 @@
 .input-style-date {
     width: 100%;
     padding: 4%;
+}
+.interests-div {
+    /* border: 1px solid #E0E3ED; */
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2%;
+    padding-top: 0%;
+}
+.checkbox-div{
+    border: 1px Solid #E0E3ED;
+    border-radius: 2px;
+    padding: 5px;
+    margin: 5px;
 }

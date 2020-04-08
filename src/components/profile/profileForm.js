@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./profile.css";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Checkbox } from "antd";
 import organisationImg from "../../assets/Organisation Name.svg";
 import emailImg from "../../assets/Email ID.svg";
 import phoneImg from "../../assets/Phone - .svg";
@@ -9,23 +9,76 @@ import {ORGANISATION_NAME,ORGANISATION_ADDRESS, CONTACT_NO, INVALID_CONATCT} fro
 import { PHONE_VALIDATION} from '../../constants/constants';
 
 export default function ProfileForm(props) {
-  const { values, handleSubmit, handleCancel } = props;
-  const {
-    organizationName,
-    contactNumber,
-    email,
-    address
-  } = values;
+  const { values, handleSubmit, handleCancel, role } = props;
 
   function onFinish(data) {
     handleSubmit(data);
   }
+  function handleCheckboxChange (value){
+    console.log(value);
+  }
 
-  return (
+  return role !== "user" ? (
     <div className="changePasswordContainer">
       <div className="contentCenter">
         <h1>Profile</h1>
-        <Form
+        <FormComponent
+          values={values}
+          handleCancel={handleCancel}
+          onFinish={onFinish}
+        />
+      </div>
+    </div>
+  ) : (
+    <div className="event-form-container">
+      <div className="formCenter">
+        <h1>Profile</h1>
+        <FormComponent
+          values={values}
+          handleCancel={handleCancel}
+          onFinish={onFinish}
+        />
+      </div>
+      <div>
+        <div className="formCenter">
+          <h1>Select Interests</h1>
+          <div className="interests-div">
+            {interestsList.map(interest=>{
+              return <Interests key ={name} name={interest} handleCheckboxChange={handleCheckboxChange} isChecked={true}/>
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+ProfileForm.propTypes = {
+  values: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
+  role: PropTypes.string.isRequired,
+};
+
+function Interests(props){
+  const {handleCheckboxChange, isChecked, name} = props;
+  return (
+    <div className="checkbox-div">
+      <Checkbox defaultChecked={isChecked} onChange={handleCheckboxChange} value={name}>{name}</Checkbox>      
+    </div>
+  )
+
+}
+Interests.propTypes = {
+  handleCheckboxChange: PropTypes.func.isRequired,
+  isChecked: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+}
+
+function FormComponent(props) {
+  const { values, onFinish, handleCancel } = props;
+  const {organizationName, contactNumber, email, address} =values;
+  return (
+    <Form
           name="profile"
           initialValues={{
             organizationName: organizationName,
@@ -84,12 +137,13 @@ export default function ProfileForm(props) {
             </Button>
           </div>
         </Form>
-      </div>
-    </div>
   );
 }
-ProfileForm.propTypes = {
+
+FormComponent.propTypes = {
   values: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
-};
+  onFinish: PropTypes.func.isRequired,
+}
+
+const interestsList= ["Festival","Conference", "Ceremonies","Concerts","Seminars","Conventions","Trade Fairs","Formal Parties","Conventions"];

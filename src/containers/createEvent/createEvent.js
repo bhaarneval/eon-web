@@ -27,7 +27,7 @@ class CreateEvent extends Component {
     if(this.state.loadType === "update"){
       this.props.history.push(`/event-details/1`);
     } 
-    else if(event)
+    else if(event === "create")
       this.props.history.push("/event-details/1");
     else
      this.props.history.push("/dashboard");
