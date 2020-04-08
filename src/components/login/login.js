@@ -67,7 +67,6 @@ class Login extends Component {
     }
   }
   render() {
-    console.log(this.props.loginData)
     return (
       <Spin spinning={this.props.fetchingUser} className="spinner">
       <div className="loginContainer">
