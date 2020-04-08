@@ -10,12 +10,18 @@ const userReducer = (state = initialData, action) => {
       return {
         ...state
       };
-      case actionLoginTypes.USER_RECIEVED:
-        console.log('herererere')
-        return {
-          ...state,
-          loginData: action.payload
-        };
+    case actionLoginTypes.USER_RECIEVED:
+      console.log('herererere')
+      return {
+        ...state,
+        loginData: action.payload
+      };
+    case actionLoginTypes.USER_ERROR:
+    console.log('ERROR')
+    return {
+      ...state,
+      loginData: action.error
+    };
     default:
       return state;
   }

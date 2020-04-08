@@ -60,7 +60,7 @@ class LayoutComponent extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    loginData: state && state.userReducer && state.userReducer.loginData
+    loginData: state && state.userReducer && state.userReducer.loginData && state.userReducer.user
   };
 };
 
