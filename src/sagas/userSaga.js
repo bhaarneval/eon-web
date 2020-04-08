@@ -1,6 +1,7 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { browserHistory } from 'react-router';
 // import { APIService } from "../constants/APIConstant";
+// import { push } from 'react-router-redux';
 import { actionLoginTypes } from "../constants/actionTypes";
 
 export function* getUser(param) {

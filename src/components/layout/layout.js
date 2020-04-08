@@ -38,7 +38,7 @@ function StyledComp() {
               <Route path="/register/subscriber" component={UserRegistration}/>
               <Route path="/forgot-password" exact component={ForgotPassword} />
               <Route path="/change-password" exact component={ChangePassword} />
-              <Route path="/dashboard" component = {Dashboard}/>
+              <Route path="/dashboard" exact component = {Dashboard}/>
               <Route path="/create" component={CreateEvent}/>
               <Route path="/event-details/1" component = {EventDetail}/>
               <Route path="/profile/1" component = {Profile}/>
