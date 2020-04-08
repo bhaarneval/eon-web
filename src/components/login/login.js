@@ -35,7 +35,6 @@ class Login extends Component {
     }
 
   onFinish = values => {
-    console.log(values)
     this.props.getUser({...values,
     callback: (error)=> {
         if(!error){

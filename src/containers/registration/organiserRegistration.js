@@ -86,9 +86,7 @@ handlePassWordChange = (values) => {
         })
     }
  }
- handleChange = (value) => {
-     console.log(value);
- }
+ 
  handleBack = () => {
      this.setState({
          activeKey: this.state.activeKey-1
