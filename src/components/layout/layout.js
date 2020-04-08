@@ -17,7 +17,8 @@ import Profile from "../../containers/profile/profile";
 import App from "../../App";
 import { connect } from "react-redux";
 
-function StyledComp() {
+function StyledComp(props) {
+  console.log('sssssssss', props.loginData && props.loginData.role)
   return (
     <div>
       <div className="flex flex-row layoutContainer">
@@ -53,13 +54,13 @@ function StyledComp() {
 class LayoutComponent extends React.Component {
   render() {
     console.log(this.props.loginData)
-    return <StyledComp />;
+    return <StyledComp loginData={this.props.loginData} />
   }
 }
 
 const mapStateToProps = state => {
   return {
-    loginData: state
+    loginData: state && state.userReducer && state.userReducer.loginData
   };
 };
 

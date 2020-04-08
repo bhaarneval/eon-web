@@ -19,7 +19,7 @@ export function* getUser(param) {
     // });
     yield put({ 
         type: actionLoginTypes.USER_RECIEVED, 
-        payload: {'access_token': 'sdfdsfsdf'} 
+        payload: {'access_token': 'sdfdsfsdf', 'role': 'organizer'} 
     });
     browserHistory.push("/dashboard");
   } catch (e) {
