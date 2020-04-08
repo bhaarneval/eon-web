@@ -18,11 +18,10 @@ import App from "../../App";
 import { connect } from "react-redux";
 
 function StyledComp(props) {
-  console.log('sssssssss', props.loginData && props.loginData.role)
   return (
     <div>
       <div className="flex flex-row layoutContainer">
-      {localStorage.getItem('loggedIn') === "true" &&
+      {(localStorage.getItem('loggedIn') === "true" || props.loginData.userData.user_id) &&
         <div className="flex flex-column layoutNavContainer">
           <div>
             <SideNav />
@@ -53,15 +52,31 @@ function StyledComp(props) {
 
 class LayoutComponent extends React.Component {
   render() {
-    console.log(this.props.loginData)
-    return <StyledComp loginData={this.props.loginData} />
+    return (
+      <StyledComp
+        loginData={{
+          userData: this.props.userData,
+          userRole: this.props.userRole,
+          accessToken: this.props.accessToken,
+          refreshToken: this.props.refreshToken
+        }}
+      />
+    );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    loginData: state && state.userReducer && state.userReducer.loginData && state.userReducer.user
-  };
-};
+const mapStateToProps = ({
+  userReducer: {
+    userData,
+    userRole,
+    accessToken,
+    refreshToken,
+  }
+}) => ({
+  userData,
+  userRole,
+  accessToken,
+  refreshToken
+})
 
 export default connect(mapStateToProps)(LayoutComponent);
