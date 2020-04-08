@@ -18,10 +18,12 @@ userDetails.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handlePasswordChange: PropTypes.func.isRequired,
   currentPassword: PropTypes.string.isRequired,
+  hasErrored: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string,
 };
 export default function userDetails(props) {
-    const { values, handleSubmit, handlePasswordChange, currentPassword} = props;
-    const {name, email, contactNumber, password} = values;
+    const { values, handleSubmit, handlePasswordChange, currentPassword, hasErrored, errorMessage} = props;
+    const {name, email, contact, password} = values;
 
     let passwordPattern = "^"+currentPassword+"$";
     passwordPattern = new RegExp(passwordPattern);
@@ -33,9 +35,9 @@ export default function userDetails(props) {
         initialValues={{
           name: name,
           email: email,
-          contactNumber: contactNumber,
+          contact: contact,
           password: currentPassword,
-          confirmPassword: password
+          confirmPassword: password,
         }}
         onFinish={handleSubmit}
         layout="vertical"
@@ -52,10 +54,13 @@ export default function userDetails(props) {
         </Form.Item>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: EMAIL_REQUIRED },{
-            pattern:EMAIL_VALIDATION,
-            message:EMAIL_REQUIRED
-          }]}
+          rules={[
+            { required: true, message: EMAIL_REQUIRED },
+            {
+              pattern: EMAIL_VALIDATION,
+              message: EMAIL_REQUIRED,
+            },
+          ]}
         >
           <Input
             prefix={<img src={emailImg} />}
@@ -64,26 +69,25 @@ export default function userDetails(props) {
           />
         </Form.Item>
         <Form.Item
-          name="contactNumber"
+          name="contact"
           rules={[
             {
               required: true,
-              message: CONTACT_NO
+              message: CONTACT_NO,
             },
             {
               pattern: PHONE_VALIDATION,
               min: 10,
-              message: INVALID_CONATCT
-            }
+              message: INVALID_CONATCT,
+            },
           ]}
         >
           <Input
             prefix={<img src={phoneImg} />}
             placeholder="Contact No."
             className="input-style"
-            minLength = {10}
-            maxLength = {10}
-            type = "number"
+            minLength={10}
+            maxLength={10}
           />
         </Form.Item>
         <Form.Item
@@ -91,20 +95,20 @@ export default function userDetails(props) {
           rules={[
             {
               required: true,
-              message: SIGNUP_PASSWORD_REQUIRED
+              message: SIGNUP_PASSWORD_REQUIRED,
             },
             {
               pattern: PASSWORD_VALIDATION,
               min: 8,
-              message: INVALID_PASSWORD
-            }
+              message: INVALID_PASSWORD,
+            },
           ]}
         >
           <Input.Password
             className="input-style"
             prefix={<img src={lockImg} />}
             placeholder="Enter Password"
-            maxLength = {16}
+            maxLength={16}
             onChange={handlePasswordChange}
           />
         </Form.Item>
@@ -112,19 +116,20 @@ export default function userDetails(props) {
           name="confirmPassword"
           rules={[
             { required: true, message: CONFIRM_PASSWORD },
-            { pattern: passwordPattern, message: PASSWORD_DO_NOT_MATCH }
+            { pattern: passwordPattern, message: PASSWORD_DO_NOT_MATCH },
           ]}
         >
           <Input.Password
             className="input-style"
             prefix={<img src={lockImg} />}
             placeholder="Confirm Password"
-            maxLength = {16}
-            visibilityToggle = {false}
+            maxLength={16}
+            visibilityToggle={false}
           />
         </Form.Item>
+        {hasErrored && <div className="error-message">*{errorMessage}</div>}
         <div className="password-info">{PASSWORD_INFO}</div>
-        <div className ="one-button-style">
+        <div className="one-button-style">
           <StyledButtons content={<RightOutlined className="button-arrow" />} />
         </div>
       </Form>
