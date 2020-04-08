@@ -136,10 +136,32 @@ export function* forgotPassword(param) {
   } 
 }
 
+export function* changePassword(param) {
+  const {data, callback} = param;
+  try{
+    console.log(data);
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+
+    //Make API call here
+
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+    callback();
+  }
+  catch (e) {
+    console.error("Unable to change password", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e
+    });
+    callback(e);
+  }
+}
+
 export function* userActionWatcher() {
   // console.log("Cluster Watcher");
   yield takeLatest(actionLoginTypes.GET_USER, getUser);
   yield takeLatest(actionLoginTypes.POST_USER, postUser);
   yield takeLatest(actionLoginTypes.GET_CODE, getCode);
   yield takeLatest(actionLoginTypes.FORGOT_PASSWORD, forgotPassword);
+  yield takeLatest(actionLoginTypes.CHANGE_PASSWORD,changePassword);
 }
