@@ -34,6 +34,39 @@ export function* getUser(param) {
     
     console.log(email);
     console.log(password);
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+    //make API call  here.
+    // const getUrl = APIService.dev + param.id;
+    // const headers = {
+    //   "Content-Type": "application/json",
+    // };
+    // const json = yield fetch(getUrl, {
+    //   headers: headers,
+    //   method: "GET"
+    // }).then(response => {
+    //   return response.json();
+    // });
+    yield put({ 
+        type: actionLoginTypes.USER_RECIEVED, 
+        payload: payload.data
+    });
+    callback();
+    localStorage.setItem('token', 'qwertyuioiuytrewqwertyui');
+  } catch (e) {
+    console.log("error while fetching", e);
+    yield put({ 
+      type: actionLoginTypes.USER_ERROR, 
+      error: e
+  });
+    callback(e);
+  }
+}
+
+export function* postUser(param) {
+  const {data,callback} = param;
+  try {
+    console.log(data);
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
     //make API call  here.
     // const getUrl = APIService.dev + param.id;
     // const headers = {
@@ -64,4 +97,5 @@ export function* getUser(param) {
 export function* userActionWatcher() {
   // console.log("Cluster Watcher");
   yield takeLatest(actionLoginTypes.GET_USER, getUser);
+  yield takeLatest(actionLoginTypes.POST_USER, postUser);
 }

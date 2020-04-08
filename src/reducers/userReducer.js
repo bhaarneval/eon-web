@@ -10,7 +10,7 @@ const initialData = {
 
 const userReducer = (state = initialData, action) => {
   switch (action.type) {
-    case actionLoginTypes.GET_USER:
+    case actionLoginTypes.SET_USER_FETCHING:
       return {
         ...state,
         fetchingUser: true,

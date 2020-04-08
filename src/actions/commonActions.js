@@ -15,3 +15,11 @@ export const getUser = ({email,password,callback}) => {
     callback: callback
   };
 };
+
+export const postUser = ({data,callback}) => {
+  return {
+    type: actionLoginTypes.POST_USER,
+    data: data,
+    callback: callback
+  }
+}

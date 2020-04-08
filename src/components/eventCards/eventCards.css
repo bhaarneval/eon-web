@@ -31,7 +31,7 @@
 }
 .card-desc-flex{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 }
 .calendar-gap{
     padding-right: 5px;

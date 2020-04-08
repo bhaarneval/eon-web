@@ -7,5 +7,7 @@ export const actionTypes = {
 export const actionLoginTypes = {
     GET_USER: "GET_USER",
     USER_RECIEVED: "USER_RECIEVED",
-    USER_ERROR: "USER_ERROR"
+    USER_ERROR: "USER_ERROR",
+    POST_USER: "POST_USER",
+    SET_USER_FETCHING: "SET_USER_FETCHING",
 };

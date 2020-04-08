@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import './registration.css';
+import { Spin } from "antd";
 import {BasicDetails, PasswordDetails} from '../../components/registration/organiserRegistration/forms';
 import FormSteps from '../../components/registration/formSteps';
 import TermsAndConditions from '../../components/registration/termsAndConditions';
 import  BasicDetailsImg from '../../assets/Basic Details.svg';
 import PasswordImg from '../../assets/Password_Illustration.svg';
+import { postUser } from '../../actions/commonActions';
 
 class OrganiserRegistration extends Component {
     constructor(props) {
@@ -17,6 +20,8 @@ class OrganiserRegistration extends Component {
             password: "",
             showModal: false,
             isChecked: false,
+            hasErrored: false,
+            errorMessage: "Unable to connect to the server!"
         }
     }
 handleModalClose = () => {
@@ -27,12 +32,25 @@ handleModalClose = () => {
 }
 
 handleAccept = () => {
-    if(this.state.isChecked){
-        localStorage.setItem('loggedIn', true)
-        window.location.replace('/dashboard')
+    if (this.state.isChecked) {
+      this.setState({
+        showModal: false,
+      });
+      this.props.postUser({
+        data: this.state.formData,
+        callback: (error) => {
+          if (!error) {
+            localStorage.setItem("loggedIn", true);
+            this.props.history.push("/dashboard");
+          } else {
+            this.setState({
+              hasErrored: true,
+              errorMessage: error,
+            });
+          }
+        },
+      });
     }
-    else
-        console.log("Failed");
 }
 
 handleCheckBoxChange = () => {
@@ -52,8 +70,8 @@ handlePassWordChange = (values) => {
      let formData = {...this.state.formData};
     const activeKey = this.state.activeKey;
     if(activeKey === 0){
-        const { email, organisationName, contactNumber, address} = values;
-        formData = {...formData, email,organisationName,contactNumber,address};
+        const { email, organization, contact, address} = values;
+        formData = {...formData, email,organization,contact,address};
         this.setState({
             formData:formData,
             activeKey:this.state.activeKey+1
@@ -61,7 +79,7 @@ handlePassWordChange = (values) => {
     }
     else {
         const { password } = values;
-        formData = {...formData, password};
+        formData = {...formData, password,role:"organiser"};
         this.setState({
             formData: formData,
             showModal: true
@@ -87,6 +105,7 @@ handlePassWordChange = (values) => {
        password
      } = this.state;
   return (
+    <Spin spinning={this.props.fetchingUser} className="spinner" >
     <div className="registration-main">
       {activeKey === 0 ? (
         <img src={BasicDetailsImg} className="image-style" />
@@ -110,6 +129,8 @@ handlePassWordChange = (values) => {
             handleBack={this.handleBack}
             handlePasswordChange={this.handlePassWordChange}
             currentPassword={password}
+            hasErrored= {this.state.hasErrored}
+            errorMessage = {this.state.errorMessage}
           />
         ) : null}
         {showModal ? (
@@ -122,11 +143,27 @@ handlePassWordChange = (values) => {
         ) : null}
       </div>
     </div>
+    </Spin>
   );
    }
  }
+
  OrganiserRegistration.propTypes = {
     history: PropTypes.object,
+    fetchingUser: PropTypes.bool,
+    postUser: PropTypes.func,
 }
 
-export default OrganiserRegistration;
+const mapStateToProps = ({
+  userReducer:{
+    fetchingUser
+  }
+})=> ({
+  fetchingUser
+});
+
+const mapDispatchToProps = {
+  postUser: postUser
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(OrganiserRegistration);

@@ -23,8 +23,8 @@ export function BasicDetails(props) {
   const { values, handleSubmit } = props;
   const {
     email = "",
-    organisationName = "",
-    contactNumber = "",
+    organization = "",
+    contact = "",
     address = ""
   } = values;
   return (
@@ -33,15 +33,15 @@ export function BasicDetails(props) {
       name="basicDetails"
       initialValues={{
         email: email,
-        organisationName: organisationName,
-        contactNumber: contactNumber,
+        organization: organization,
+        contact: contact,
         address: address
       }}
       layout="vertical"
       onFinish = {handleSubmit}
     >
       <Form.Item
-        name="organisationName"
+        name="organization"
         rules={[
           { required: true, message: ORGANISATION_NAME  }
         ]}
@@ -61,7 +61,7 @@ export function BasicDetails(props) {
         <Input prefix={<img src={emailImg} />} size = "large" placeholder = "Email" className = 'input-style'/>
       </Form.Item>
       <Form.Item
-        name="contactNumber"
+        name="contact"
         rules={[
           { required: true, message: CONTACT_NO },
           {
@@ -104,10 +104,11 @@ PasswordDetails.propTypes = {
   handleBack: PropTypes.func.isRequired,
   handlePasswordChange: PropTypes.func.isRequired,
   currentPassword: PropTypes.string.isRequired,
-  handleConfirmPassword: PropTypes.func.isRequired,
+  hasErrored: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string,
 };
 export function PasswordDetails(props) {
-  const { values, handleSubmit, handleBack, currentPassword, handlePasswordChange, handleConfirmPassword } = props;
+  const { values, handleSubmit, handleBack, currentPassword, handlePasswordChange, handleConfirmPassword, hasErrored, errorMessage } = props;
   const {
     password = ""
   } = values;
@@ -164,6 +165,9 @@ export function PasswordDetails(props) {
         />
       </Form.Item>
     <div className="password-info">{PASSWORD_INFO}</div>
+    {
+      hasErrored && <div className="error-message">*{errorMessage}</div>
+    }
       <div
         className = 'two-button-style'
       >
