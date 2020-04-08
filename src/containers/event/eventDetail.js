@@ -136,6 +136,12 @@ handleShare = () => {
         showShareModal: !this.state.showShareModal,
     })
 }
+shareSubmit = (values) => {
+    console.log(values);
+    this.setState({
+        showShareModal: false,
+    })
+}
 
 render() {
     const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
@@ -263,7 +269,7 @@ render() {
                     />
                 </Form.Item>
                 <div className="share-confirm">
-                    <Button type="primary">Share</Button>
+                    <Button type="primary" htmlType="submit">Share</Button>
                 </div>
               </Form>
             </div>
