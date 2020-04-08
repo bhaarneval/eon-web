@@ -23,3 +23,18 @@ export const postUser = ({data,callback}) => {
     callback: callback
   }
 }
+export const getVerificationCode = ({data,callback}) => {
+  return {
+    type: actionLoginTypes.GET_CODE,
+    data: data,
+    callback: callback
+  }
+}
+
+export const postForgotPassword = ({data, callback}) => {
+  return {
+    type: actionLoginTypes.FORGOT_PASSWORD,
+    data: data,
+    callback: callback
+  }
+}

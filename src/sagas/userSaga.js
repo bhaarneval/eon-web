@@ -53,7 +53,7 @@ export function* getUser(param) {
     callback();
     localStorage.setItem('token', 'qwertyuioiuytrewqwertyui');
   } catch (e) {
-    console.log("error while fetching", e);
+    console.error("error while fetching", e);
     yield put({ 
       type: actionLoginTypes.USER_ERROR, 
       error: e
@@ -78,14 +78,14 @@ export function* postUser(param) {
     // }).then(response => {
     //   return response.json();
     // });
-    yield put({ 
-        type: actionLoginTypes.USER_RECIEVED, 
-        payload: payload.data
-    });
-    callback();
+      yield put({ 
+          type: actionLoginTypes.USER_RECIEVED, 
+          payload: payload.data
+      });
+      callback();
     localStorage.setItem('token', 'qwertyuioiuytrewqwertyui');
   } catch (e) {
-    console.log("error while fetching", e);
+    console.error("error while post", e);
     yield put({ 
       type: actionLoginTypes.USER_ERROR, 
       error: e
@@ -94,8 +94,52 @@ export function* postUser(param) {
   }
 }
 
+export function* getCode(param){
+  const { data, callback } = param;
+  try{
+    console.log(data);
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+
+    //make API call here
+
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+    callback();
+  }
+  catch (e) {
+    console.error("Error while getting verification code",e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e
+    });
+    callback(e);
+  }
+}
+
+export function* forgotPassword(param) {
+  const {data, callback} =param;
+  try{
+    console.log(data);
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+
+    //make API call here
+
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+    callback();
+  }
+  catch (e) {
+    console.error("Error while posting password change",e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e
+    });
+    callback(e);
+  } 
+}
+
 export function* userActionWatcher() {
   // console.log("Cluster Watcher");
   yield takeLatest(actionLoginTypes.GET_USER, getUser);
   yield takeLatest(actionLoginTypes.POST_USER, postUser);
+  yield takeLatest(actionLoginTypes.GET_CODE, getCode);
+  yield takeLatest(actionLoginTypes.FORGOT_PASSWORD, forgotPassword);
 }

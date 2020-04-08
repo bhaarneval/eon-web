@@ -13,7 +13,7 @@ const userReducer = (state = initialData, action) => {
     case actionLoginTypes.SET_USER_FETCHING:
       return {
         ...state,
-        fetchingUser: true,
+        fetchingUser: !state.fetchingUser,
       };
       case actionLoginTypes.USER_RECIEVED:
         return {
