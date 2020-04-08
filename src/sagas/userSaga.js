@@ -1,5 +1,5 @@
 import { put, takeLatest } from "redux-saga/effects";
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 // import { APIService } from "../constants/APIConstant";
 // import { push } from 'react-router-redux';
 import { actionLoginTypes } from "../constants/actionTypes";
@@ -29,7 +29,12 @@ const payload = {
 
 export function* getUser(param) {
   console.log("Fetching users", param);
+  const {email,password,callback} = param;
   try {
+    
+    console.log(email);
+    console.log(password);
+    //make API call  here.
     // const getUrl = APIService.dev + param.id;
     // const headers = {
     //   "Content-Type": "application/json",
@@ -44,7 +49,7 @@ export function* getUser(param) {
         type: actionLoginTypes.USER_RECIEVED, 
         payload: payload.data
     });
-    browserHistory.push("/dashboard");
+    callback();
     localStorage.setItem('token', 'qwertyuioiuytrewqwertyui');
   } catch (e) {
     console.log("error while fetching", e);
@@ -52,6 +57,7 @@ export function* getUser(param) {
       type: actionLoginTypes.USER_ERROR, 
       error: e
   });
+    callback(e);
   }
 }
 
