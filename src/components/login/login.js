@@ -2,7 +2,7 @@
 import "./login.css";
 import { EMAIL_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
-import {  Form, Input, Button  } from 'antd';
+import {  Form, Input, Button, Spin } from 'antd';
 import { Tabs } from 'antd';
 import { getUser } from "../../actions/commonActions";
 import { connect } from "react-redux";
@@ -19,6 +19,8 @@ class Login extends Component {
       userType : 'Organizer',
       email : '',
       password : '',
+      hasErrored: false,
+      errorMessage: "Wrong Username/Password",
     }
   }
 
@@ -32,31 +34,22 @@ class Login extends Component {
       })
     }
 
-    handleEnterEmail = (event) => {
-      this.setState({
-        email : event.target.value
-      });
-    };
-
-    handleEnterPassword = (event) => {
-      this.setState({
-        password : event.target.value
-      });
-    };
-
-    validate (email) {
-      const validEmail = /^[^@]+@[^.]+\.[^.]+/.test(email);
-      this.setState({
-        validationErrorsBadEmail : !validEmail
-      });
-      return (validEmail);
-  }
-
   onFinish = values => {
     console.log(values)
-    this.props.getUser("1");
-    localStorage.setItem('loggedIn', true)
-    this.props.history.push("/dashboard");
+    this.props.getUser({...values,
+    callback: (error)=> {
+        if(!error){
+          localStorage.setItem('loggedIn', true);
+          this.props.history.push("/dashboard");
+        }
+        else{
+          this.setState({
+            hasErrored: true,
+            errorMessage: error,
+          })
+        }
+    }});
+    
   };
 
   onFinishFailed = errorInfo => {
@@ -66,9 +59,17 @@ class Login extends Component {
   handleForgotPassword = () => {
     this.props.history.push("/forgot-password");
   }
+  handleChange = () => {
+    if(this.state.hasErrored){
+      this.setState({
+        hasErrored: false,
+      })
+    }
+  }
   render() {
     console.log(this.props.loginData)
     return (
+      <Spin spinning={this.props.fetchingUser} className="spinner">
       <div className="loginContainer">
         <div className="leftBody">
           <Tabs onChange={this.tabChange}>
@@ -94,7 +95,7 @@ class Login extends Component {
                 message:EMAIL_REQUIRED
               }]}
             >
-              <Input className="input-style" placeholder="Email" prefix={<UserOutlined />} />
+              <Input onChange={this.handleChange} className="input-style" placeholder="Email" prefix={<UserOutlined />} />
             </Form.Item>
             <Form.Item
               name="password"
@@ -105,13 +106,16 @@ class Login extends Component {
                 }
               ]}
             >
-              <Input.Password className="input-style"  placeholder="Password" />
+              <Input.Password onChange={this.handleChange} className="input-style"  placeholder="Password" />
             </Form.Item>
             <Form.Item>
               <div
               className="forgot-password-style"
               onClick = {this.handleForgotPassword}
               >Forgot Password?</div>
+              {this.state.hasErrored && (
+                  <div className="error-message">*{this.state.errorMessage}</div>
+                )}
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Login
               </Button>
@@ -119,15 +123,18 @@ class Login extends Component {
           </Form>
         </div>
     </div>
+    </Spin>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    loginData: state
-  };
-};
+const mapStateToProps = ({
+  userReducer:{
+    fetchingUser
+  }
+})=> ({
+  fetchingUser
+});
 
 const mapDispatchToProps = {
   getUser: getUser
