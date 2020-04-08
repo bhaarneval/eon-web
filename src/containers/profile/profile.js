@@ -6,7 +6,12 @@ import ProfileForm from '../../components/profile/profileForm';
 import PropTypes from 'prop-types'
 
 class Profile extends Component {
- state = {}
+ constructor(props){
+   super(props);
+   this.state={
+    role:"user",
+   }
+ }
  handleSubmit = (values) => {
     //  let data = new FormData();
     //  Object.entries(values).map(entry => {
@@ -35,7 +40,8 @@ class Profile extends Component {
               contactNumber: '1234567890',
               email: 'priyanka.sah@gmail.com',
               address: '1e 405, akme'
-            }} 
+            }}
+            role={this.state.role} 
             handleSubmit={this.handleSubmit} handleCancel={this.goBack}/>
       </div>
     </div>
