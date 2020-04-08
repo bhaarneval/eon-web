@@ -94,6 +94,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    console.log('asdfjkjhgfdsdfghj')
     const optionsList = ["Cultural","Tech","Fashion","Painting"];
     let eventsList = this.state.eventList;
     let search = new URLSearchParams(this.props.location.search);

@@ -4,7 +4,6 @@ import './flex.less';
 import * as serviceWorker from './serviceWorker';
 /* eslint-disable */
 
-import App from './App';
 import Layout from './components/layout/layout';
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -59,6 +59,7 @@ const MyDocument = (
         <View style={newstyles.eventDetails}>
           <Text>Event Name: Technex</Text>
           <Text>Number of seats: 4</Text>
+          <Text>Amount : 2000</Text>
           <Text>Event Date: Thursday, 23 May, 10:00 AM</Text>
           <Text>Location: HashedIn Technologies</Text>
         </View>
@@ -74,7 +75,6 @@ const PDF = () => {
       <div>
         <PDFDownloadLink document={MyDocument} fileName="tickets.pdf">
           <div style = {{color:"#ffffff"}}>Download</div>
-          
         </PDFDownloadLink>
       </div>
     );

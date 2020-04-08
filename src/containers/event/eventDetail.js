@@ -33,7 +33,7 @@ class EventDetail extends Component {
         finalSeats: '',
         finalAmount: '',
         // role: 'Organizer'
-        role: 'User', //User
+        role: 'User'
     }
   }
 

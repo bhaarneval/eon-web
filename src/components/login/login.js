@@ -1,9 +1,11 @@
 /* eslint-disable */
 import "./login.css";
-import { EMAIL_REQUIRED, INVALID_PASSWORD } from "../../constants/messages";
+import { EMAIL_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
 import {  Form, Input, Button  } from 'antd';
 import { Tabs } from 'antd';
+import { getUser } from "../../actions/commonActions";
+import { connect } from "react-redux";
 
 const { TabPane } = Tabs;
 
@@ -52,9 +54,9 @@ class Login extends Component {
 
   onFinish = values => {
     console.log(values)
+    this.props.getUser("1");
     localStorage.setItem('loggedIn', true)
-    // this.props.history.push(`/dashboard`)
-    window.location.replace('/dashboard')
+    this.props.history.push("/dashboard");
   };
 
   onFinishFailed = errorInfo => {
@@ -65,7 +67,7 @@ class Login extends Component {
     this.props.history.push("/forgot-password");
   }
   render() {
-    console.log(this.state)
+    console.log(this.props.loginData)
     return (
       <div className="loginContainer">
         <div className="leftBody">
@@ -121,4 +123,14 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    loginData: state
+  };
+};
+
+const mapDispatchToProps = {
+  getUser: getUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -14,6 +14,8 @@ import SideNav from "../../components/sideNav/sideNav";
 import Dashboard from "../../containers/dashboard/dashboard";
 import CreateEvent from "../../containers/createEvent/createEvent";
 import Profile from "../../containers/profile/profile";
+import App from "../../App";
+import { connect } from "react-redux";
 
 function StyledComp() {
   return (
@@ -30,7 +32,7 @@ function StyledComp() {
           <Navbar />
           <div className="contentBody">
             <Switch>
-              <Route path="/" exact component={Login} />
+              <Route path="/" exact component={App} />
               <Route path="/login" component={Login} />
               <Route path="/register/organiser" component={OrganiserRegistration}/>
               <Route path="/register/subscriber" component={UserRegistration}/>
@@ -50,8 +52,15 @@ function StyledComp() {
 
 class LayoutComponent extends React.Component {
   render() {
+    console.log(this.props.loginData)
     return <StyledComp />;
   }
 }
 
-export default LayoutComponent;
+const mapStateToProps = state => {
+  return {
+    loginData: state
+  };
+};
+
+export default connect(mapStateToProps)(LayoutComponent);

@@ -13,7 +13,7 @@ class FeeCalculation extends Component {
       totalAmountAfterPromo: this.props.noOfSeats * this.props.perHeadAmount,
       totalAmount: this.props.noOfSeats * this.props.perHeadAmount,
       codeApplied: false,
-      isSubscribed: false,
+      isSubscribed: true,
     };
   }
 
