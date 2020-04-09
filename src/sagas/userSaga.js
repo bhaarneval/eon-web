@@ -49,7 +49,6 @@ export function* postUser(param) {
       headers: headers,
       method: "POST",
       body: JSON.stringify(data),
-      mode: "no-cors",
     }).then((response) => {
       return response.json();
     });
@@ -133,12 +132,23 @@ export function* forgotPassword(param) {
 }
 
 export function* changePassword(param) {
-  const { data, callback } = param;
+  const { data, callback, accessToken } = param;
   try {
-    console.log(data);
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
-    //Make API call here
+    const getUrl = APIService.dev + requestURLS.CHANGE_PASSWORD;
+    const headers = {
+      "Content-Type": "application/json",
+      "Bearer": accessToken,
+    };
+
+    yield fetch(getUrl, {
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then((response) => {
+      return response.json();
+    });
 
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
     callback();

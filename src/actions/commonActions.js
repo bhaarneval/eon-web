@@ -38,10 +38,11 @@ export const postForgotPassword = ({data, callback}) => {
     callback: callback
   }
 }
-export const postChangePassword = ({data, callback}) => {
+export const postChangePassword = ({data,accessToken, callback}) => {
   return {
     type: actionLoginTypes.CHANGE_PASSWORD,
     data: data,
+    accessToken: accessToken,
     callback: callback,
   }
 }

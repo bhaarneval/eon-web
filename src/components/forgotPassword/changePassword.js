@@ -27,6 +27,7 @@ class ChangePassword extends Component {
     const data = {email, oldPassword, newPassword};
     this.props.postChangePassword({
       data: data,
+      accessToken: this.props.accessToken,
       callback: (error) => {
         if(!error) {
           this.props.history.push("/dashboard");
@@ -142,10 +143,12 @@ class ChangePassword extends Component {
 
 const mapStateToProps = ({
   userReducer:{
-    fetchingUser
+    fetchingUser,
+    accessToken
   }
 })=> ({
-  fetchingUser
+  fetchingUser,
+  accessToken
 });
 
 const mapDispatchToProps = {

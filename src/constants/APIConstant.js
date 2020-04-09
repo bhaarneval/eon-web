@@ -8,7 +8,8 @@ export const APIService = {
 
 export const requestURLS = {
   LOGIN: "authentication/login",
-  REGISTER: "authentication/register",
+  REGISTER: "authentication/registration",
   GENERATE_CODE: "authentication/generate-code",
   RESET_PASSWORD: "authentication/reset-password",
+  CHANGE_PASSWORD: "authentication/change-password",
 };
