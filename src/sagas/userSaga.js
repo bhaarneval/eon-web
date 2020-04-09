@@ -17,6 +17,7 @@ export function* logOut(param){
 }
 export function* getUser(param) {
   const { email, password, callback } = param;
+  let recievedResponse = {};
   try {
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
@@ -29,8 +30,13 @@ export function* getUser(param) {
       method: "POST",
       body: JSON.stringify({ email, password }),
     }).then((response) => {
+      recievedResponse = response;
       return response.json();
     });
+
+    if(!recievedResponse.ok){
+      throw responseJSON;
+    }
 
     yield put({
       type: actionLoginTypes.USER_RECIEVED,
@@ -52,6 +58,7 @@ export function* getUser(param) {
 export function* postUser(param) {
   const { data, callback } = param;
   try {
+    let recievedResponse = {};
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
     const getUrl = APIService.dev + requestURLS.REGISTER;
@@ -63,8 +70,12 @@ export function* postUser(param) {
       method: "POST",
       body: JSON.stringify(data),
     }).then((response) => {
+      recievedResponse = response;
       return response.json();
     });
+    if(!recievedResponse.ok){
+      throw responseJSON;
+    }
 
     yield put({
       type: actionLoginTypes.USER_RECIEVED,
@@ -85,6 +96,7 @@ export function* postUser(param) {
 export function* getCode(param) {
   const { data, callback } = param;
   try {
+    let recievedResponse = {};
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
     
     //make API call here
@@ -92,14 +104,17 @@ export function* getCode(param) {
     const headers = {
       "Content-Type": "application/json",
     };
-    yield fetch(getUrl, {
+    let responseJSON = yield fetch(getUrl, {
       headers: headers,
       method: "POST",
       body: JSON.stringify(data),
     }).then((response) => {
+      recievedResponse = response;
       return response.json();
     });
-
+    if(!recievedResponse.ok){
+      throw responseJSON;
+    }
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
     callback();
   } catch (e) {
@@ -115,6 +130,7 @@ export function* getCode(param) {
 export function* forgotPassword(param) {
   const { data, callback } = param;
   try {
+    let recievedResponse = {};
     console.log(data);
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
@@ -123,13 +139,18 @@ export function* forgotPassword(param) {
       "Content-Type": "application/json",
     };
 
-    yield fetch(getUrl, {
+    let responseJSON = yield fetch(getUrl, {
       headers: headers,
       method: "POST",
       body: JSON.stringify(data),
     }).then((response) => {
+      recievedResponse = response;
       return response.json();
     });
+
+    if(!recievedResponse.ok){
+      throw responseJSON;
+    }
 
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
     callback();
@@ -146,6 +167,7 @@ export function* forgotPassword(param) {
 export function* changePassword(param) {
   const { data, callback, accessToken } = param;
   try {
+    let recievedResponse = {};
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
     const getUrl = APIService.dev + requestURLS.CHANGE_PASSWORD;
@@ -154,13 +176,18 @@ export function* changePassword(param) {
       "Bearer": accessToken,
     };
 
-    yield fetch(getUrl, {
+    let responseJSON = yield fetch(getUrl, {
       headers: headers,
       method: "POST",
       body: JSON.stringify(data),
     }).then((response) => {
+      recievedResponse = response;
       return response.json();
     });
+
+    if(!recievedResponse.ok){
+      throw responseJSON;
+    }
 
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
     callback();
