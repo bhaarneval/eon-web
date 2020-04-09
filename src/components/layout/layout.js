@@ -14,35 +14,37 @@ import SideNav from "../../components/sideNav/sideNav";
 import Dashboard from "../../containers/dashboard/dashboard";
 import CreateEvent from "../../containers/createEvent/createEvent";
 import Profile from "../../containers/profile/profile";
-import App from "../../App";
 import { connect } from "react-redux";
 
 function StyledComp(props) {
+  const isLoggedin = localStorage.getItem('token') || props.loginData.userData.user_id
   return (
     <div>
       <div className="flex flex-row layoutContainer">
-      {(localStorage.getItem('loggedIn') === "true" || props.loginData.userData.user_id) &&
-        <div className="flex flex-column layoutNavContainer">
-          <div>
+        {isLoggedin &&
+          <div className="flex flex-column layoutNavContainer">
             <SideNav />
           </div>
-      </div>
-      }
+        }
         <div className="mainContentContainer">
           <Route path="/" component={Navbar}/>
           <div className="contentBody">
             <Switch>
-              <Route path="/" exact component={App} />
-              <Route path="/login" component={Login} />
-              <Route path="/register/organiser" component={OrganiserRegistration}/>
-              <Route path="/register/subscriber" component={UserRegistration}/>
+              <Route path="/" exact component={Login} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/register/organiser" exact component={OrganiserRegistration}/>
+              <Route path="/register/subscriber" exact component={UserRegistration}/>
               <Route path="/forgot-password" exact component={ForgotPassword} />
-              <Route path="/change-password" exact component={ChangePassword} />
-              <Route path="/dashboard" exact component = {Dashboard}/>
-              <Route path="/create" component={CreateEvent}/>
-              <Route path="/event-details/1" component = {EventDetail}/>
-              <Route path="/profile/1" component = {Profile}/>
             </Switch>
+            {isLoggedin &&
+              <Switch>
+                <Route path="/change-password" exact component={ChangePassword} />
+                <Route path="/dashboard" exact component = {Dashboard}/>
+                <Route path="/create" exact component={CreateEvent}/>
+                <Route path="/event-details/1" exact component = {EventDetail}/>
+                <Route path="/profile/1" component = {Profile}/>
+              </Switch>
+            }
           </div>
         </div>
       </div>

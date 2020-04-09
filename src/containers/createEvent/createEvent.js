@@ -11,7 +11,7 @@ class CreateEvent extends Component {
    super(props);
    const url = new URLSearchParams(this.props.location.search);
    this.state={
-     loadType:url.get("type")=="edit"?"update":"create",
+     loadType: url.get("type") === "edit" ? "update" : "create",
    }
  }
  handleSubmit = (values) => {
@@ -35,12 +35,13 @@ class CreateEvent extends Component {
 
 
  render() {
-   let {loadType}=this.state;
+   let {loadType} = this.state;
+   console.log(loadType)
   return (
     <div className="create-container">
       <BackButton handleOnClick={this.goBack} text = "Create Event" />
       <div className="form-div">
-          <EventForm values = {loadType==="update"?updateEventDummy:{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} loadType={loadType}/>
+          <EventForm values = {loadType==="update" ? updateEventDummy:{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} loadType={loadType}/>
       </div>
     </div>
   );

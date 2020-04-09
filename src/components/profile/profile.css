@@ -56,8 +56,7 @@
     justify-content: space-around;
 }
 .button-container {
-    margin-right: -130%;
-    margin-top: 10%;
+    margin: 10% 0;
     display: flex;
     justify-content: flex-end;
 }

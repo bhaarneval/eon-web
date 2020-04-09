@@ -59,7 +59,7 @@ class Navbar extends Component {
     else if(input.key === "2")
       this.props.history.push(`/register/subscriber`)
     else if(input.key === "3")
-      this.props.history.push(`/change-password`)
+      window.location.replace.push(`/change-password`)
     else if(input.key === "4")
       this.props.history.push(`/profile/1`)
     else if (input.key === "5")
@@ -71,9 +71,8 @@ class Navbar extends Component {
 
 
   logout = () => {
-    localStorage.setItem('loggedIn', false)
-    // this.props.history.push('login')
-    window.location.replace('/login')
+    localStorage.removeItem('token')
+    this.props.history.push('/login')
   }
 
   render() {
@@ -87,7 +86,7 @@ class Navbar extends Component {
       <Menu onClick={key => this.takeMenuAction(key)}>
         <Menu.Item key="3">Change Password</Menu.Item>
         <Menu.Item key="4">Profile</Menu.Item>
-        <Menu.Item key="5">Wishlist</Menu.Item>
+        {/* <Menu.Item key="5">Wishlist</Menu.Item> */}
         <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );

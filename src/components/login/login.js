@@ -25,7 +25,7 @@ class Login extends Component {
   }
 
   componentWillMount(){
-    localStorage.setItem('loggedIn', false)
+    localStorage.removeItem('token')
   }
 
     tabChange = (key) => {
@@ -38,7 +38,6 @@ class Login extends Component {
     this.props.getUser({...values,
     callback: (error)=> {
         if(!error){
-          localStorage.setItem('loggedIn', true);
           this.props.history.push("/dashboard");
         }
         else{

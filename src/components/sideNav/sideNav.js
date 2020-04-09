@@ -1,7 +1,6 @@
 import "./sideNav.css";
 
 import React, { Component } from "react";
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 
 import {isDark} from '../../util/themeIdentify';
@@ -81,4 +80,4 @@ SideNav.propTypes = {
   classes: PropTypes.object,
 };
 
-export default withRouter(SideNav);
+export default SideNav;
