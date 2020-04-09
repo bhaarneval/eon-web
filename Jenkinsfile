@@ -1,42 +1,23 @@
-node {
-           
+pipeline {
+    agent any
 
-        // Mark the code checkout 'stage'....
-        stage ('Stage Checkout'){
-            
-        // Checkout code from repository and update any submodules
-        checkout scm
-         }
-
-        stage ('Stage Build'){
-
-        //compile the code
-        sh """       
-        npm install 
-        npm run build
-        """
-        }        
-        stage ('S3 Sync'){
-
-        //uploading the the file to s3 bucket
-
-            
-                sh """
-                aws s3 rm s3://${bucket_name}  --recursive
-                aws s3 sync dist/ s3://${bucket_name}  
-                """
-     
-
+    stages {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+				sh 'npm run server'
+            }
         }
-        //Clearing the cache of the cloudfront
-        stage ('CloudFront Invalidation'){
-
-            
-                sh """
-                aws cloudfront create-invalidation  --distribution-id ${cloudfront_distro_id}  --paths "/*"
-                """
-            
+        stage('Pushing to S3') {
+            steps {
+                sh 'aws s3 rm s3://${bucket_name}  --recursive'
+                sh 'aws s3 sync dist/ s3://${bucket_name}'
+            }
         }
-
-    
-}   
+        stage('Cloudfront invalidation') {
+            steps {
+                sh 'aws cloudfront create-invalidation  --distribution-id ${cloudfront_distro_id}  --paths "/*"'
+            }
+        }
+    }
+}
