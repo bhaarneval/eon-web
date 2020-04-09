@@ -1,6 +1,7 @@
 import "./nav.css";
 /* eslint-disable */
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Dropdown, Menu } from 'antd';
 import { Button, notification } from 'antd';
@@ -94,7 +95,7 @@ class Navbar extends Component {
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
           <BellOutlined style={{fontSize:'20px'}} onClick={() => openNotificationWithIcon('info')}>Info</BellOutlined>
-          {localStorage.getItem('loggedIn') === "true"?
+          {localStorage.getItem('loggedIn') === "true" || this.props.accessToken !=""?
             <Dropdown overlay={menuSidebar}>
               <div>Priyanka <DownOutlined /></div>
             </Dropdown>
@@ -110,4 +111,12 @@ class Navbar extends Component {
   }
 }
 
-export default withRouter(Navbar);
+const mapStateToProps = ({
+  userReducer:{
+    accessToken
+  }
+})=> ({
+  accessToken
+});
+
+export default connect(mapStateToProps,null)(Navbar);
