@@ -2,34 +2,44 @@
 import "./forgotPassword.css";
 import { INVALID_PASSWORD, CONFIRM_PASSWORD, PASSWORD_DO_NOT_MATCH, EMAIL_REQUIRED, PASSWORD_INFO } from "../../constants/messages";
 import React, { Component } from "react";
-import {  Form, Input, Button  } from 'antd';
+import {connect} from "react-redux";
+import {  Form, Input, Button, Spin  } from 'antd';
 
 import { UserOutlined } from '@ant-design/icons';
 import { PASSWORD_VALIDATION, EMAIL_VALIDATION } from "../../constants/constants";
 import BackButton from "../commonComponents/backButton";
+import { postChangePassword } from "../../actions/commonActions"; 
 
 class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userType : 'Organizer',
+      oldPassword:"",
       password: '',
+      hasErrored: false,
+      errorMessage: "Unable to connect with server",
     }
   }
 
-    handleEnterEmail = (event) => {
-      this.setState({
-        email : event.target.value
-      });
-    };
-
-    handleEnterPassword = (event) => {
-      this.setState({
-        password : event.target.value
-      });
-    };
-
   onFinish = values => {
-    window.location.replace('/dashboard');
+    const {email, oldPassword, newPassword}= values
+    const data = {email, oldPassword, newPassword};
+    this.props.postChangePassword({
+      data: data,
+      accessToken: this.props.accessToken,
+      callback: (error) => {
+        if(!error) {
+          this.props.history.push("/dashboard");
+        }
+        else{
+          this.setState({
+            hasErrored: true,
+            errorMessage: error,
+          })
+        }
+      }
+    })
   };
 
   handlePasswordChange = (value) => {
@@ -37,10 +47,12 @@ class ChangePassword extends Component {
       password: value.target.value
     })
   }
-
-  onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
-  };
+  handleOldPasswordChange = (value) => {
+    let oldPassword = "^((?!"+value.target.value+").)*$";
+    this.setState({
+      oldPassword: oldPassword
+    })
+  }
 
   goBack = () => {
     this.props.history.push(`/dashboard`);
@@ -49,6 +61,7 @@ class ChangePassword extends Component {
     let passwordPattern = "^"+this.state.password+"$";
     passwordPattern = new RegExp(passwordPattern);
     return (
+      <Spin spinning={this.props.fetchingUser} className="spinner">
       <div className="header-buttons">
       <BackButton handleOnClick={this.goBack} text={"Change Password"}/>
       <div className="changePasswordContainer">
@@ -57,11 +70,7 @@ class ChangePassword extends Component {
           <div style={{fontSize: '12px', paddingBottom:'5px'}}>{PASSWORD_INFO}</div>
           <Form
             name="basic"
-            initialValues={{
-              remember: true,
-            }}
             onFinish={this.onFinish}
-            onFinishFailed={this.onFinishFailed}
           >
             <Form.Item
               name="email"
@@ -73,7 +82,7 @@ class ChangePassword extends Component {
               <Input placeholder="Email" className="input-style"  prefix={<UserOutlined />} />
             </Form.Item>
             <Form.Item
-              name="oldpassword"
+              name="oldPassword"
               rules={[
                 {
                   required: true,
@@ -86,14 +95,18 @@ class ChangePassword extends Component {
                 }
               ]}
             >
-              <Input.Password className="input-style"  placeholder="Old Password" />
+              <Input.Password className="input-style"  placeholder="Old Password" onChange={this.handleOldPasswordChange} />
             </Form.Item>
             <Form.Item
-              name="newpassword"
+              name="newPassword"
               rules={[
                 {
                   required: true,
                   message: 'Please input your password!',
+                },
+                {
+                  pattern: this.state.oldPassword,
+                  message: "New Password cannot be same as old password",
                 },
                 {
                   pattern: PASSWORD_VALIDATION,
@@ -113,6 +126,7 @@ class ChangePassword extends Component {
             >
               <Input.Password className="input-style" placeholder="Confirm Password"/>
             </Form.Item>
+            {this.state.hasErrored && <div className="error-message">*{this.state.errorMessage}</div>}
             <Form.Item>
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Reset Password
@@ -122,8 +136,24 @@ class ChangePassword extends Component {
         </div>
     </div>
     </div>
+    </Spin>
     );
   }
 }
 
-export default ChangePassword;
+const mapStateToProps = ({
+  userReducer:{
+    fetchingUser,
+    accessToken
+  }
+})=> ({
+  fetchingUser,
+  accessToken
+});
+
+const mapDispatchToProps = {
+  postChangePassword: postChangePassword
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);
+

@@ -1,59 +1,12 @@
 import { put, takeLatest } from "redux-saga/effects";
-// import { browserHistory } from 'react-router';
-// import { APIService } from "../constants/APIConstant";
-// import { push } from 'react-router-redux';
+import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionLoginTypes } from "../constants/actionTypes";
 
-
-const organizerPayload = {
-  "data":{
-    "access": "qwertyuiowertyui",
-    "refresh": "refresh_token",
-    "user": {
-          "user_id": 30,
-          "email": "priyanka.sah@hashedin.com",
-          "active_status": true,
-          "name": null,
-          "created_on": "2020-04-06T15:40:47.169999Z",
-          "updated_on": "2020-04-06T15:40:47.171084Z",
-          "contact_number": "9999911111",
-          "organization": "Eventhigh",
-          "address": "Bangalore",
-          "role": {
-            "id": 1,
-            "role": "organizer"
-          }
-      }
-  }
-  }
-
-  const subscriberPayload = {
-    "data":{
-      "access": "qwertyuiowertyui",
-      "refresh": "refresh_token",
-      "user": {
-            "user_id": 33,
-            "email": "mayank.kumar@hashedin.com",
-            "active_status": true,
-            "name": null,
-            "created_on": "2020-04-06T15:40:47.169999Z",
-            "updated_on": "2020-04-06T15:40:47.171084Z",
-            "contact_number": "9999911111",
-            "organization": "Eventhigh",
-            "address": "Bangalore",
-            "role": {
-              "id": 1,
-              "role": "subscriber"
-            }
-        }
-    }
-    }
-export function* logOut(param){
-  try{
-    yield put({type: actionLoginTypes.LOG_OUT});
+export function* logOut(param) {
+  try {
+    yield put({ type: actionLoginTypes.LOG_OUT });
     param.callback();
-  }
-  catch(e){
+  } catch (e) {
     console.error("Unable to logout", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
@@ -61,45 +14,202 @@ export function* logOut(param){
     });
   }
 }
-
 export function* getUser(param) {
-  console.log("Fetching users", param);
-  const {email,password,callback} = param;
-  const payload = email === 'mayank.kumar@hashedin.com' ? subscriberPayload.data : organizerPayload.data
-  console.log(payload)
+  const { email, password, callback } = param;
+  let recievedResponse = {};
   try {
-    
-    console.log(email);
-    console.log(password);
-    //make API call  here.
-    // const getUrl = APIService.dev + param.id;
-    // const headers = {
-    //   "Content-Type": "application/json",
-    // };
-    // const json = yield fetch(getUrl, {
-    //   headers: headers,
-    //   method: "GET"
-    // }).then(response => {
-    //   return response.json();
-    // });
-    yield put({ 
-        type: actionLoginTypes.USER_RECIEVED, 
-        payload: payload
+    yield put({ type: actionLoginTypes.SET_USER_FETCHING });
+
+    const getUrl = APIService.dev + requestURLS.LOGIN;
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const responseJSON = yield fetch(getUrl, {
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    }).then((response) => {
+      recievedResponse = response;
+      return response.json();
+    });
+
+    if (!recievedResponse.ok) {
+      throw responseJSON;
+    }
+
+    yield put({
+      type: actionLoginTypes.USER_RECIEVED,
+      payload: responseJSON.data,
+    });
+
+    callback();
+    localStorage.setItem("token", responseJSON.data.access);
+  } catch (e) {
+    console.error("error while fetching", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+    callback(e.message);
+  }
+}
+
+export function* postUser(param) {
+  const { data, callback } = param;
+  try {
+    let recievedResponse = {};
+    yield put({ type: actionLoginTypes.SET_USER_FETCHING });
+
+    const getUrl = APIService.dev + requestURLS.REGISTER;
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const responseJSON = yield fetch(getUrl, {
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then((response) => {
+      recievedResponse = response;
+      return response.json();
+    });
+    if (!recievedResponse.ok) {
+      throw responseJSON;
+    }
+
+    yield put({
+      type: actionLoginTypes.USER_RECIEVED,
+      payload: responseJSON.data,
     });
     callback();
-    localStorage.setItem('token', organizerPayload.data.access);
+    localStorage.setItem("token", responseJSON.data.access);
   } catch (e) {
-    console.log("error while fetching", e);
-    yield put({ 
-      type: actionLoginTypes.USER_ERROR, 
-      error: e
-  });
-    callback(e);
+    console.error("error while post", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+    callback(e.message);
+  }
+}
+
+export function* getCode(param) {
+  const { data, callback } = param;
+  try {
+    let recievedResponse = {};
+    yield put({ type: actionLoginTypes.SET_USER_FETCHING });
+
+    //make API call here
+    const getUrl = APIService.dev + requestURLS.GENERATE_CODE;
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    let responseJSON = yield fetch(getUrl, {
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then((response) => {
+      recievedResponse = response;
+      return response.json();
+    });
+    if (!recievedResponse.ok) {
+      throw responseJSON;
+    }
+    yield put({ type: actionLoginTypes.SET_USER_FETCHING });
+    callback();
+  } catch (e) {
+    console.error("Error while getting verification code", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+    callback(e.message);
+  }
+}
+
+export function* forgotPassword(param) {
+  const { data, callback } = param;
+  try {
+    let recievedResponse = {};
+    console.log(data);
+    yield put({ type: actionLoginTypes.SET_USER_FETCHING });
+
+    const getUrl = APIService.dev + requestURLS.RESET_PASSWORD;
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    let responseJSON = yield fetch(getUrl, {
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then((response) => {
+      recievedResponse = response;
+      return response.json();
+    });
+
+    if (!recievedResponse.ok) {
+      throw responseJSON;
+    }
+
+    yield put({ type: actionLoginTypes.SET_USER_FETCHING });
+    callback();
+  } catch (e) {
+    console.error("Error while posting password change", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+    callback(e.message);
+  }
+}
+
+export function* changePassword(param) {
+  const { data, callback, accessToken } = param;
+  try {
+    let recievedResponse = {};
+    yield put({ type: actionLoginTypes.SET_USER_FETCHING });
+
+    const getUrl = APIService.dev + requestURLS.CHANGE_PASSWORD;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    let responseJSON = yield fetch(getUrl, {
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify({
+        email: data.email,
+        old_password: data.oldPassword,
+        new_password: data.newPassword,
+      }),
+    }).then((response) => {
+      recievedResponse = response;
+      return response.json();
+    });
+
+    if (!recievedResponse.ok) {
+      throw responseJSON;
+    }
+
+    yield put({ type: actionLoginTypes.SET_USER_FETCHING });
+    callback();
+  } catch (e) {
+    console.error("Unable to change password", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+    callback(e.message);
   }
 }
 
 export function* userActionWatcher() {
   // console.log("Cluster Watcher");
-  yield takeLatest(actionLoginTypes.GET_USER, getUser);
   yield takeLatest(actionLoginTypes.LOGGING_OUT, logOut);
+  yield takeLatest(actionLoginTypes.GET_USER, getUser);
+  yield takeLatest(actionLoginTypes.POST_USER, postUser);
+  yield takeLatest(actionLoginTypes.GET_CODE, getCode);
+  yield takeLatest(actionLoginTypes.FORGOT_PASSWORD, forgotPassword);
+  yield takeLatest(actionLoginTypes.CHANGE_PASSWORD, changePassword);
 }

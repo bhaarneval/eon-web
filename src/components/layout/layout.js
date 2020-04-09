@@ -17,7 +17,7 @@ import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
 
 function StyledComp(props) {
-  const isLoggedin = localStorage.getItem('token') || props.loginData.userData.user_id
+  const isLoggedin = localStorage.getItem('token') || (props.loginData.userData.user_id?true: false);
   return (
     <div>
       <div className="flex flex-row layoutContainer">

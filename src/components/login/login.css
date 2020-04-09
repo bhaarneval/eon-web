@@ -36,7 +36,7 @@
   height: 100%;
 }
 .error-message{
-  text-align: center;
+  text-align: left;
   color: red;
   font-size: 12px;
 }

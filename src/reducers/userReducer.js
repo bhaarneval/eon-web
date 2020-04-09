@@ -10,10 +10,10 @@ const initialData = {
 
 const userReducer = (state = initialData, action) => {
   switch (action.type) {
-    case actionLoginTypes.GET_USER:
+    case actionLoginTypes.SET_USER_FETCHING:
       return {
         ...state,
-        fetchingUser: true,
+        fetchingUser: !state.fetchingUser,
       };
       case actionLoginTypes.USER_RECIEVED:
         return {
@@ -32,6 +32,7 @@ const userReducer = (state = initialData, action) => {
         }
       case actionLoginTypes.LOG_OUT:
         return initialData;
+        
     default:
       return state;
   }

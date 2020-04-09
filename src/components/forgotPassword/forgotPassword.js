@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import FormSteps from "../registration/formSteps";
-import { Form, Input } from "antd";
+import { Form, Input, Spin } from "antd";
 import { RightOutlined,LeftOutlined, KeyOutlined } from "@ant-design/icons";
 import StyledButtons from "../registration/styledButtons";
 import {
@@ -23,6 +24,7 @@ import {
 } from "../../constants/messages";
 import LockImg from "../../assets/Password_login.svg";
 import EmailImg from "../../assets/Email ID.svg";
+import {postForgotPassword, getVerificationCode} from "../../actions/commonActions";
 
 class ForgotPassword extends Component {
   constructor(props) {
@@ -32,22 +34,48 @@ class ForgotPassword extends Component {
       activeKey: 0,
       email: "",
       passwordPattern: "",
-      submitData:{}
+      submitData:{},
+      hasErrored: false,
+      errorMessage: "Unable to connect with the server."
     };
   }
   onFinish = (value) => {
     let { activeKey, submitData } = this.state;
+    let {getVerificationCode, postForgotPassword} = this.props;
     if (activeKey === 0) {
-      this.setState({
-        submitData: value.email,
-        activeKey: activeKey + 1,
+      getVerificationCode({
+        data: value,
+        callback: (error) => {
+          if(!error) {
+            this.setState({
+              submitData: value,
+              activeKey: activeKey + 1,
+            });
+          }
+          else{
+            this.setState({
+              hasErrored: true,
+              errorMessage: error,
+            })
+          }
+        }
       });
     } else {
-        submitData = {...submitData,password:value.password};
-      this.setState({
-          submitData:submitData
-      })
-      this.props.history.push("/login");
+        submitData = {...submitData,password:value.password, code: value.otp};
+      postForgotPassword({
+        data: submitData,
+        callback: (error) => {
+          if(!error){
+            this.props.history.push("/login");
+          }
+          else {
+            this.setState({
+              hasErrored: true,
+              errorMessage: error
+            });
+          }
+        }
+      });
     }
   };
 
@@ -56,16 +84,23 @@ class ForgotPassword extends Component {
     value = "^" + value + "$";
     this.setState({
       passwordPattern: value,
+      hasErrored: false,
     });
   };
+  handleChange = () => {
+    this.setState({
+      hasErrored: false
+    })
+  }
   handleBack = () => {
     this.setState({
       activeKey: this.state.activeKey - 1,
     });
   };
   render() {
-    const { stepList, activeKey, email, passwordPattern } = this.state;
+    const { stepList, activeKey, email, passwordPattern, hasErrored, errorMessage } = this.state;
     return (
+      <Spin spinning={this.props.fetchingUser} className="spinner">
       <div className="forgotPasswordContainer">
           <img src={PasswordImg} style={{width:"60%"}}/>
         <div className="inner-container">
@@ -87,6 +122,7 @@ class ForgotPassword extends Component {
                 }}
                 onFinish={this.onFinish}
               >
+                {hasErrored && <div className="error-message">*{errorMessage}</div>}
                 <Form.Item
                   name="email"
                   rules={[
@@ -100,6 +136,7 @@ class ForgotPassword extends Component {
                   <Input
                     placeholder="Email"
                     className="input-style"
+                    onChange={this.handleChange}
                     prefix={<img src={EmailImg} />}
                   />
                 </Form.Item>
@@ -113,6 +150,7 @@ class ForgotPassword extends Component {
           ) : (
             <div>
               <Form name="password" onFinish={this.onFinish}>
+              {hasErrored && <div className="error-message">*{errorMessage}</div>}
               <Form.Item
                   name="otp"
                   rules={[
@@ -126,6 +164,8 @@ class ForgotPassword extends Component {
                   <Input
                     placeholder="Enter the verification code"
                     className="input-style"
+                    maxLength={4}
+                    onChange={this.handleChange}
                     prefix={<KeyOutlined />}
                   />
                 </Form.Item>
@@ -166,6 +206,7 @@ class ForgotPassword extends Component {
                   <Input.Password
                     className="input-style"
                     placeholder="Confirm Password"
+                    onChange={this.handleChange}
                     prefix={<img src={LockImg} />}
                   />
                 </Form.Item>
@@ -184,11 +225,28 @@ class ForgotPassword extends Component {
           )}
         </div>
       </div>
+      </Spin>
     );
   }
 }
 
 ForgotPassword.propTypes = {
   history: PropTypes.object.isRequired,
+  fetchingUser: PropTypes.bool.isRequired,
+  getVerificationCode: PropTypes.func.isRequired,
+  postForgotPassword: PropTypes.func.isRequired,
 };
-export default ForgotPassword;
+const mapStateToProps = ({
+  userReducer:{
+    fetchingUser
+  }
+})=> ({
+  fetchingUser
+});
+
+const mapDispatchToProps = {
+  getVerificationCode: getVerificationCode,
+  postForgotPassword: postForgotPassword
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(ForgotPassword);

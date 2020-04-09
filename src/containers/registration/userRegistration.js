@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import './registration.css';
+import { Spin } from "antd";
 import UserDetails from '../../components/registration/userRegistration/forms';
 import TermsAndConditions from "../../components/registration/termsAndConditions";
 import BasicDetailsImg from "../../assets/Basic Details.svg";
+import {postUser} from "../../actions/commonActions";
 
 class UserRegistration extends Component {
   constructor(props) {
@@ -12,7 +15,9 @@ class UserRegistration extends Component {
       formData: {},
       password: "",
       showModal: false,
-      isChecked: false
+      isChecked: false,
+      hasErrored: false,
+      errorMessage: "Unable to connect with the server.",
     };
   }
   handleModalClose = () => {
@@ -24,10 +29,25 @@ class UserRegistration extends Component {
 
   handleAccept = () => {
     if (this.state.isChecked) {
-        localStorage.setItem('token', 'sdfsdfsdfsd')
-      this.props.history.push('/dashboard')
-      console.log("Accepted");
-    } else console.log("Failed");
+      this.setState({
+        showModal: false,
+      });
+      this.props.postUser({
+        data: this.state.formData,
+        callback: (error)=> {
+          if(!error){
+            localStorage.setItem('loggedIn', true);
+          this.props.history.push("/dashboard");
+          }
+          else{
+            this.setState({
+              hasErrored:true,
+              errorMessage:error,
+            })
+          }
+        }
+      })
+    }
   };
 
   handleCheckBoxChange = () => {
@@ -44,8 +64,8 @@ class UserRegistration extends Component {
   };
 
   handleSubmit = values => {
-    const { email, name, contactNumber, password } = values || {};
-    const formData = { email, name, contactNumber, password };
+    const { email, name, contact, password } = values || {};
+    const formData = { email, name, contact, password, role:"subscriber",organization:"",address:"" };
     this.setState({
       formData: formData,
       showModal: true
@@ -60,6 +80,7 @@ class UserRegistration extends Component {
       password
     } = this.state;
     return (
+      <Spin spinning={this.props.fetchingUser} className="spinner">
       <div
         className = 'registration-main'
       >
@@ -81,6 +102,8 @@ class UserRegistration extends Component {
             values={formData}
             handlePasswordChange={this.handlePassWordChange}
             currentPassword = {password}
+            hasErrored={this.state.hasErrored}
+            errorMessage= {this.state.errorMessage}
           />
           {showModal ? (
             <TermsAndConditions
@@ -92,10 +115,25 @@ class UserRegistration extends Component {
           ) : null}
         </div>
       </div>
+      </Spin>
     );
   }
 }
 UserRegistration.propTypes = {
     history: PropTypes.object,
+    fetchingUser: PropTypes.bool.isRequired,
+    postUser: PropTypes.func,
 }
-export default UserRegistration;
+const mapStateToProps = ({
+  userReducer:{
+    fetchingUser
+  }
+})=> ({
+  fetchingUser
+});
+
+const mapDispatchToProps = {
+  postUser: postUser
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(UserRegistration);
