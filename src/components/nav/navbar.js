@@ -1,6 +1,7 @@
 import "./nav.css";
 /* eslint-disable */
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Dropdown, Menu } from 'antd';
 import { Button, notification } from 'antd';
@@ -17,6 +18,7 @@ import {
   LIGHT_MODE,
   DARK_MODE
 } from "../../constants/constants";
+import { logOutUser } from "../../actions/commonActions";
 
 const openNotificationWithIcon = type => {
   notification[type]({
@@ -70,8 +72,14 @@ class Navbar extends Component {
 
 
   logout = () => {
-    localStorage.removeItem('token')
-    this.props.history.push('/login')
+    this.props.logOutUser({
+      callback: ()=> {
+        localStorage.removeItem('token');
+        localStorage.removeItem("loggedIn");
+        if(!localStorage.getItem("token"))
+          this.props.history.push('/login')
+      }
+    });
   }
 
   render() {
@@ -93,7 +101,7 @@ class Navbar extends Component {
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
           <BellOutlined style={{fontSize:'20px'}} onClick={() => openNotificationWithIcon('info')}>Info</BellOutlined>
-          {this.props.isLoggedin ?
+          {this.props.accessToken!=="" ?
             <Dropdown overlay={menuSidebar}>
               <div>Priyanka <DownOutlined /></div>
             </Dropdown>
@@ -109,4 +117,16 @@ class Navbar extends Component {
   }
 }
 
-export default withRouter(Navbar);
+const mapStateToProps = ({
+  userReducer:{
+    accessToken
+  }
+})=> ({
+  accessToken
+});
+
+const mapDispatchToProps = {
+  logOutUser: logOutUser
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Navbar);
