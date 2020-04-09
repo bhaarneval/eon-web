@@ -29,7 +29,7 @@ class EventInfo extends Component {
               cancelPopup: true
           })
         else if(input.key === "2")
-         this.props.history.push(`/create?type=edit`);
+            this.props.history.push(`/create?type=edit`);
     }
     handleClose = () => {
         this.setState({
@@ -48,6 +48,7 @@ class EventInfo extends Component {
         this.setState({
             cancelPopup: false,
         })
+        this.props.history.push(`/dashboard`);
     }
     handleBookmark = () => {
         this.setState({

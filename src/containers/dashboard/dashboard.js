@@ -34,7 +34,7 @@ class Dashboard extends Component {
       return (
         <Row key={index} className="cards-row">
           {list.map((event, index) => {
-            return this.props.isOrganizer ? (
+            return this.state.isOrganizer ? (
               <EventCards
                 history={this.props.history}
                 key={index}
@@ -96,6 +96,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    console.log(this.props.userRole, 'ddd', this.state)
     const {isOrganizer} = this.state;
     const optionsList = ["Cultural","Tech","Fashion","Painting"];
     let eventsList = this.state.eventList;

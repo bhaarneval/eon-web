@@ -3,6 +3,7 @@ import './eventDetail.css'
 import fb from '../../assets/fb.png';
 import feedback from '../../assets/feedback.png';
 import reminder from '../../assets/reminder.png';
+import update from '../../assets/update.png';
 import user from '../../assets/user.png';
 import {Modal, Input, Button} from 'antd';
 const { TextArea } = Input;
@@ -76,7 +77,7 @@ class EventCount extends Component {
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={reminder}/>Send reminder</span>
                     </div>
                     <div onClick={() => this.sendUpdate('update')} className="detail-card-container reminder-row">
-                        <span className="detail-card-tile-row"><img className="subscriber-image" src={reminder}/>Send updates</span>
+                        <span className="detail-card-tile-row"><img className="subscriber-image" src={update}/>Send updates</span>
                     </div>
                 </div>
                 {this.state.updatePopup &&

@@ -30,6 +30,7 @@ function StyledComp(props) {
           <Navbar isLoggedin={isLoggedin}/>
           <div className="contentBody">
             <Switch>
+              <Route path="/" exact component={Login} />
               <Route path="/login" exact component={Login} />
               <Route path="/register/organiser" exact component={OrganiserRegistration}/>
               <Route path="/register/subscriber" exact component={UserRegistration}/>
