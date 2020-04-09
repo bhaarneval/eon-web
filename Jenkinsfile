@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm install'
-				sh 'npm run server'
+		sh 'npm run build'
             }
         }
         stage('Pushing to S3') {
