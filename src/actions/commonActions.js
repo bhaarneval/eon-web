@@ -15,3 +15,9 @@ export const getUser = ({email,password,callback}) => {
     callback: callback
   };
 };
+export const logOutUser = ({callback}) => {
+  return {
+    type: actionLoginTypes.LOGGING_OUT,
+    callback: callback
+  }
+} 

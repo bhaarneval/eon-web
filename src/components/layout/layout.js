@@ -27,7 +27,7 @@ function StyledComp(props) {
           </div>
         }
         <div className="mainContentContainer">
-          <Navbar isLoggedin={isLoggedin}/>
+          <Route path="/" component={Navbar}/>
           <div className="contentBody">
             <Switch>
               <Route path="/" exact component={Login} />

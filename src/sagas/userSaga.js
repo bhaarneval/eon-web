@@ -48,6 +48,19 @@ const organizerPayload = {
         }
     }
     }
+export function* logOut(param){
+  try{
+    yield put({type: actionLoginTypes.LOG_OUT});
+    param.callback();
+  }
+  catch(e){
+    console.error("Unable to logout", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+  }
+}
 
 export function* getUser(param) {
   console.log("Fetching users", param);
@@ -88,4 +101,5 @@ export function* getUser(param) {
 export function* userActionWatcher() {
   // console.log("Cluster Watcher");
   yield takeLatest(actionLoginTypes.GET_USER, getUser);
+  yield takeLatest(actionLoginTypes.LOGGING_OUT, logOut);
 }
