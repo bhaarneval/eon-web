@@ -2,12 +2,11 @@ import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionLoginTypes } from "../constants/actionTypes";
 
-export function* logOut(param){
-  try{
-    yield put({type: actionLoginTypes.LOG_OUT});
+export function* logOut(param) {
+  try {
+    yield put({ type: actionLoginTypes.LOG_OUT });
     param.callback();
-  }
-  catch(e){
+  } catch (e) {
     console.error("Unable to logout", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
@@ -34,7 +33,7 @@ export function* getUser(param) {
       return response.json();
     });
 
-    if(!recievedResponse.ok){
+    if (!recievedResponse.ok) {
       throw responseJSON;
     }
 
@@ -73,7 +72,7 @@ export function* postUser(param) {
       recievedResponse = response;
       return response.json();
     });
-    if(!recievedResponse.ok){
+    if (!recievedResponse.ok) {
       throw responseJSON;
     }
 
@@ -98,7 +97,7 @@ export function* getCode(param) {
   try {
     let recievedResponse = {};
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
-    
+
     //make API call here
     const getUrl = APIService.dev + requestURLS.GENERATE_CODE;
     const headers = {
@@ -112,7 +111,7 @@ export function* getCode(param) {
       recievedResponse = response;
       return response.json();
     });
-    if(!recievedResponse.ok){
+    if (!recievedResponse.ok) {
       throw responseJSON;
     }
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
@@ -148,7 +147,7 @@ export function* forgotPassword(param) {
       return response.json();
     });
 
-    if(!recievedResponse.ok){
+    if (!recievedResponse.ok) {
       throw responseJSON;
     }
 
@@ -173,19 +172,23 @@ export function* changePassword(param) {
     const getUrl = APIService.dev + requestURLS.CHANGE_PASSWORD;
     const headers = {
       "Content-Type": "application/json",
-      "Bearer": accessToken,
+      Authorization: `Bearer ${accessToken}`,
     };
 
     let responseJSON = yield fetch(getUrl, {
       headers: headers,
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        email: data.email,
+        old_password: data.oldPassword,
+        new_password: data.newPassword,
+      }),
     }).then((response) => {
       recievedResponse = response;
       return response.json();
     });
 
-    if(!recievedResponse.ok){
+    if (!recievedResponse.ok) {
       throw responseJSON;
     }
 
