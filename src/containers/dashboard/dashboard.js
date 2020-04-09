@@ -18,7 +18,6 @@ class Dashboard extends Component {
     this.state = {
       eventList:dummyList,
       eventsList: dummyList,
-      isOrganizer: this.props.userRole === 'organizer',
     };
   }
 
@@ -34,7 +33,7 @@ class Dashboard extends Component {
       return (
         <Row key={index} className="cards-row">
           {list.map((event, index) => {
-            return this.state.isOrganizer ? (
+            return this.props.userRole === 'organiser' ? (
               <EventCards
                 history={this.props.history}
                 key={index}
@@ -97,7 +96,6 @@ class Dashboard extends Component {
 
   render() {
     console.log(this.props.userRole, 'ddd', this.state)
-    const {isOrganizer} = this.state;
     const optionsList = ["Cultural","Tech","Fashion","Painting"];
     let eventsList = this.state.eventList;
     let search = new URLSearchParams(this.props.location.search);
@@ -124,7 +122,7 @@ class Dashboard extends Component {
             />
             <StyledRangePicker handleChange={this.handleDateChange} />
           </div>
-          {isOrganizer ? (
+          {this.props.userRole === 'organiser' ? (
             <Button onClick={this.handleCreateEvent} className="button-create">
               Create
             </Button>
@@ -142,8 +140,6 @@ Dashboard.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   userRole: PropTypes.string,
-  isSubscriber: PropTypes.Boolean,
-  isOrganizer: PropTypes.Boolean,
 };
 
 const mapStateToProps = ({

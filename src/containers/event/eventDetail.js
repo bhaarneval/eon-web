@@ -34,7 +34,7 @@ class EventDetail extends Component {
         showUpdateSeatsModal: false,
         finalSeats: '',
         finalAmount: '',
-        isOrganizer: this.props.userRole === 'organizer',
+        isOrganizer: this.props.userRole === 'organiser',
         isSubscriber: this.props.userRole === 'subscriber',
         paidAmount: 0,
         refundAmount:0,
