@@ -86,7 +86,7 @@ export function* getCode(param) {
   const { data, callback } = param;
   try {
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
-
+    
     //make API call here
     const getUrl = APIService.dev + requestURLS.GENERATE_CODE;
     const headers = {

@@ -80,7 +80,6 @@ class Navbar extends Component {
           this.props.history.push('/login')
       }
     });
-    
   }
 
   render() {

@@ -93,19 +93,19 @@ class EventInfo extends Component {
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>No. of Tickets</b></div>
-                        <div>3000</div>
+                        <div>1000</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>Event Date & Time</b></div>
-                        <div>24th march</div>
+                        <div>24th march, 9 am</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>Subsription Fee</b></div>
-                        <div>Technical</div>
+                        <div>500</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>URL</b></div>
-                        <div>Technical</div>
+                        <div><a rel="noopener noreferrer" href="https://www.google.com" target="_blank">Google</a></div>
                     </div>
                 </div>
 

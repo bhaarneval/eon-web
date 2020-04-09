@@ -2,9 +2,7 @@
 import { Button, } from 'antd';
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import userImg from '../../assets/user.svg';
-import {NAME_REQUIRED, INVALID_CONATCT, CONTACT_NO} from '../../constants/messages';
-import {ACCOUNT_VALIDATION} from '../../constants/constants';
+import {NAME_REQUIRED, INVALID_BANK, BANK_REQUIRED, EXPIRY_REQUIRED} from '../../constants/messages';
 import { Form, Input } from "antd";
 import "./subscription.css";
 import BackButton from "../commonComponents/backButton";
@@ -43,32 +41,32 @@ class Payment extends Component {
                                 rules={[{ required: true, message: NAME_REQUIRED }]}
                             >
                                 <Input
-                                    prefix={<img src={userImg} />}
-                                    placeholder="Name"
+                                    placeholder="Full Name"
                                 />
                             </Form.Item>
                             <Form.Item
                                 name="accountno"
                                 rules={[{
                                     required: true,
-                                    message: CONTACT_NO
+                                    message: BANK_REQUIRED
                                 },
                                 {
-                                    pattern: ACCOUNT_VALIDATION,
                                     max: 16,
                                     min:16,
-                                    message: INVALID_CONATCT
+                                    message: INVALID_BANK
                                 }]}
                             >
                                 <Input
-                                    prefix={<img src={userImg} />}
-                                    placeholder="Account no"
+                                    placeholder="Account Number"
                                 />
                             </Form.Item>
-                            <Form.Item>
+                            <Form.Item name="expirydate"
+                                rules={[{
+                                    required: true,
+                                    message: EXPIRY_REQUIRED
+                                }]}
+                            >
                                 <Input
-                                    name="expirydate"
-                                    prefix={<img src={userImg} />}
                                     placeholder="Expiry Date (MM/YYYY)"
                                 />
                             </Form.Item>
