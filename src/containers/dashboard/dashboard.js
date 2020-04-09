@@ -10,13 +10,15 @@ import { Row, Button } from "antd";
 import SearchBox from '../../components/commonComponents/searchBox';
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import StyledRangePicker from "../../components/commonComponents/rangePicker";
+import { connect } from "react-redux";
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       eventList:dummyList,
       eventsList: dummyList,
-      role:"organiser"
+      isOrganizer: this.props.userRole === 'organizer',
     };
   }
 
@@ -32,7 +34,7 @@ class Dashboard extends Component {
       return (
         <Row key={index} className="cards-row">
           {list.map((event, index) => {
-            return this.state.role === "organiser" ? (
+            return this.props.isOrganizer ? (
               <EventCards
                 history={this.props.history}
                 key={index}
@@ -94,7 +96,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    console.log('asdfjkjhgfdsdfghj')
+    const {isOrganizer} = this.state;
     const optionsList = ["Cultural","Tech","Fashion","Painting"];
     let eventsList = this.state.eventList;
     let search = new URLSearchParams(this.props.location.search);
@@ -121,7 +123,7 @@ class Dashboard extends Component {
             />
             <StyledRangePicker handleChange={this.handleDateChange} />
           </div>
-          {this.state.role === "organiser" ? (
+          {isOrganizer ? (
             <Button onClick={this.handleCreateEvent} className="button-create">
               Create
             </Button>
@@ -137,7 +139,19 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   history: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  userRole: PropTypes.string,
+  isSubscriber: PropTypes.Boolean,
+  isOrganizer: PropTypes.Boolean,
 };
 
-export default Dashboard;
+const mapStateToProps = ({
+  userReducer: {
+    userRole,
+  }
+}) => ({
+  userRole,
+})
+
+export default connect(mapStateToProps)(Dashboard);
+
