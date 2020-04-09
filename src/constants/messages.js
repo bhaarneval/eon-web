@@ -25,12 +25,15 @@ export const NAME_REQUIRED = "Please enter your full name!";
 export const EMAIL_REQUIRED = "Please enter a valid email!";
 export const CONTACT_NO = "Please enter your contact information!";
 export const INVALID_CONATCT = "Contact number that should contain only digits";
+export const INVALID_BANK = "Account number should contain only digits";
 export const SIGNUP_PASSWORD_REQUIRED = "Please enter a password!";
 export const INVALID_PASSWORD = "Password doesn't meet all the given requirements";
 export const CONFIRM_PASSWORD = "Please confirm your password!";
 export const PASSWORD_DO_NOT_MATCH = "Passwords do not match!";
 export const ENTER_OTP = "A verification code has been sent to the registered email ID";
 export const OTP_REQUIRED = "Verification code cannot be empty";
+export const BANK_REQUIRED = "Please enter your bank account no.";
+export const EXPIRY_REQUIRED = "Please enter expiry date";
 
 //create constant messages
 export const EVENT_NAME = "Event name cannot be empty!";
