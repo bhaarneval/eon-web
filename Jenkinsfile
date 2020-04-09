@@ -11,7 +11,7 @@ pipeline {
         stage('Pushing to S3') {
             steps {
                 sh 'aws s3 rm s3://${bucket_name}  --recursive'
-                sh 'aws s3 sync dist/ s3://${bucket_name}'
+                sh 'aws s3 sync build/ s3://${bucket_name}'
             }
         }
         stage('Cloudfront invalidation') {
