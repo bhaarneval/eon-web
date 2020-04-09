@@ -13,6 +13,7 @@ import BackButton from "../../components/commonComponents/backButton";
 import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
+import { connect } from "react-redux";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -33,8 +34,8 @@ class EventDetail extends Component {
         showUpdateSeatsModal: false,
         finalSeats: '',
         finalAmount: '',
-        // role: 'Organizer'
-        role: 'User',
+        isOrganizer: this.props.userRole === 'organizer',
+        isSubscriber: this.props.userRole === 'subscriber',
         paidAmount: 0,
         refundAmount:0,
         newSeats:0,
@@ -172,16 +173,18 @@ handleRefundConfirm = () => {
 }
 
 render() {
-    const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
+    const {noOfSeats, perHeadAmount, discountPercentage, isOrganizer, isSubscriber} = this.state;
+    console.log(isOrganizer, isSubscriber)
     return (
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         <EventInfo
           history={this.props.history}
-          role={this.state.role}
+          isSubscriber={isSubscriber}
+          isOrganizer={isOrganizer}
           handleShare={this.handleShare}
         />
-        {this.state.role === "Organizer" && (
+        {isOrganizer && (
           <div>
             <EventCount />
             <div className="invitee-row">
@@ -214,7 +217,7 @@ render() {
             )}
           </div>
         )}
-        {this.state.role === "User" && (
+        {isSubscriber && (
           <div>
             {this.state.showPayment ? (
               <Payment
@@ -339,7 +342,16 @@ render() {
 }
 
 EventDetail.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  userRole: PropTypes.string
 };
 
-export default EventDetail;
+const mapStateToProps = ({
+  userReducer: {
+    userRole,
+  }
+}) => ({
+  userRole,
+})
+
+export default connect(mapStateToProps)(EventDetail);

@@ -56,6 +56,7 @@ class EventInfo extends Component {
     }
 
     render() {
+        console.log(this.props.isOrganizer)
         const bookMarkImg = this.state.bookmarked?Bookmarked:AddBookmark;
         const menuSidebar = (
             <Menu onClick={key => this.takeMenuAction(key)}>
@@ -73,16 +74,16 @@ class EventInfo extends Component {
                             description
                         </div>
                     </div>
-                    {this.props.role !== "User" ? (
-                <Dropdown overlay={menuSidebar}>
-                  <MoreOutlined style={{ height: "10px" }} />
-                </Dropdown>
-              ) : (
-                <div>
-                    <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={this.props.handleShare}/>
-                    <img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/>
-                </div>
-              )}
+                    {this.props.isOrganizer ? (
+                        <Dropdown overlay={menuSidebar}>
+                        <MoreOutlined style={{ height: "10px" }} />
+                        </Dropdown>
+                    ) : (
+                        <div>
+                            <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={this.props.handleShare}/>
+                            <img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/>
+                        </div>
+                    )}
                 </div>
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
@@ -138,8 +139,9 @@ class EventInfo extends Component {
 
  EventInfo.propTypes = {
     event: PropTypes.object.isRequired,
-    role:PropTypes.string.isRequired,
-    handleShare:PropTypes.func,
+    isSubscriber: PropTypes.Boolean,
+    isOrganizer: PropTypes.Boolean,
+    handleShare: PropTypes.func,
     history: PropTypes.object
 }
 

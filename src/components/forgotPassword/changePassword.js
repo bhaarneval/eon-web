@@ -12,16 +12,9 @@ class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userType : 'Organizer',
       password: '',
     }
   }
-
-    tabChange = (key) => {
-      this.setState({
-        userType : key
-      })
-    }
 
     handleEnterEmail = (event) => {
       this.setState({
