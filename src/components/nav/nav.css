@@ -11,3 +11,9 @@
     justify-content: space-between;
     font-weight: 600;
 }
+
+.logo-text{
+    font-size: 15px;
+    color: #211d70;
+    font-weight: bold;
+}

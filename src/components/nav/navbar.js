@@ -60,7 +60,7 @@ class Navbar extends Component {
     else if(input.key === "2")
       this.props.history.push(`/register/subscriber`)
     else if(input.key === "3")
-      window.location.replace.push(`/change-password`)
+      this.props.history.push(`/change-password`)
     else if(input.key === "4")
       this.props.history.push(`/profile/1`)
     else if (input.key === "5")
@@ -75,7 +75,6 @@ class Navbar extends Component {
     this.props.logOutUser({
       callback: ()=> {
         localStorage.removeItem('token');
-        localStorage.removeItem("loggedIn");
         if(!localStorage.getItem("token"))
           this.props.history.push('/login')
       }
@@ -93,7 +92,7 @@ class Navbar extends Component {
       <Menu onClick={key => this.takeMenuAction(key)}>
         <Menu.Item key="3">Change Password</Menu.Item>
         <Menu.Item key="4">Profile</Menu.Item>
-        {/* <Menu.Item key="5">Wishlist</Menu.Item> */}
+        <Menu.Item key="5">Wishlist</Menu.Item>
         <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
@@ -101,7 +100,7 @@ class Navbar extends Component {
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
           <BellOutlined style={{fontSize:'20px'}} onClick={() => openNotificationWithIcon('info')}>Info</BellOutlined>
-          {localStorage.getItem('loggedIn') === "true" || this.props.accessToken !=""?
+          {this.props.accessToken !== "" ?
             <Dropdown overlay={menuSidebar}>
               <div>Priyanka <DownOutlined /></div>
             </Dropdown>
@@ -110,7 +109,7 @@ class Navbar extends Component {
             <div style={{color:"#262C6F"}}>Register <DownOutlined /></div>
           </Dropdown>
           }
-        <div>EON</div>
+        <div className="logo-text">EOn</div>
         </div>
       </div>
     );
