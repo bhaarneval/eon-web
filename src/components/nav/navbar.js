@@ -18,6 +18,7 @@ import {
   LIGHT_MODE,
   DARK_MODE
 } from "../../constants/constants";
+import { logOutUser } from "../../actions/commonActions";
 
 const openNotificationWithIcon = type => {
   notification[type]({
@@ -71,8 +72,15 @@ class Navbar extends Component {
 
 
   logout = () => {
-    localStorage.removeItem('token')
-    this.props.history.push('/login')
+    this.props.logOutUser({
+      callback: ()=> {
+        localStorage.removeItem('token');
+        localStorage.removeItem("loggedIn");
+        if(!localStorage.getItem("token"))
+          this.props.history.push('/login')
+      }
+    });
+    
   }
 
   render() {
@@ -118,4 +126,8 @@ const mapStateToProps = ({
   accessToken
 });
 
-export default connect(mapStateToProps,null)(Navbar);
+const mapDispatchToProps = {
+  logOutUser: logOutUser
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Navbar);

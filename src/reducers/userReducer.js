@@ -31,7 +31,8 @@ const userReducer = (state = initialData, action) => {
           
         }
       case actionLoginTypes.LOG_OUT:
-        return state;
+        return initialData;
+
     default:
       return state;
   }

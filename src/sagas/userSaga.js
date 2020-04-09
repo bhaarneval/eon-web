@@ -2,6 +2,19 @@ import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionLoginTypes } from "../constants/actionTypes";
 
+export function* logOut(param){
+  try{
+    yield put({type: actionLoginTypes.LOG_OUT});
+    param.callback();
+  }
+  catch(e){
+    console.error("Unable to logout", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+  }
+}
 export function* getUser(param) {
   const { email, password, callback } = param;
   try {
@@ -163,6 +176,7 @@ export function* changePassword(param) {
 
 export function* userActionWatcher() {
   // console.log("Cluster Watcher");
+  yield takeLatest(actionLoginTypes.LOGGING_OUT, logOut);
   yield takeLatest(actionLoginTypes.GET_USER, getUser);
   yield takeLatest(actionLoginTypes.POST_USER, postUser);
   yield takeLatest(actionLoginTypes.GET_CODE, getCode);

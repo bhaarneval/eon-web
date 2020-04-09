@@ -46,3 +46,10 @@ export const postChangePassword = ({data,accessToken, callback}) => {
     callback: callback,
   }
 }
+
+export const logOutUser = ({callback}) => {
+  return {
+    type: actionLoginTypes.LOGGING_OUT,
+    callback: callback
+  }
+}
