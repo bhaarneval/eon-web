@@ -10,6 +10,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from "react-router-dom";
 import { applyMiddleware, compose, createStore } from "redux";
 import rootReducer from "./reducers/rootReducer";
+import { persistStore, persistReducer} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import rootSaga from "./sagas";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
@@ -23,15 +25,23 @@ const middlewares = [sagaMiddleware];
 function* initSaga() {
   console.log("Redux-Saga initialized");
 }
+const persistConfig = {
+  key: 'userReducer',
+  storage: storage,
+  whitelist: ['userReducer'] // which reducer want to store
+};
+const pReducer = persistReducer(persistConfig, rootReducer);
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
-  rootReducer,
+  pReducer,
   composeEnhancer(applyMiddleware(...middlewares))
 );
 sagaMiddleware.run(initSaga);
 sagaMiddleware.run(rootSaga);
+
+const persistor = persistStore(store);
 
 
 const routing = (
