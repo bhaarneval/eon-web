@@ -83,7 +83,6 @@ export function* getCode(param) {
       headers: headers,
       method: "POST",
       body: JSON.stringify(data),
-      mode: "no-cors",
     }).then((response) => {
       return response.json();
     });
