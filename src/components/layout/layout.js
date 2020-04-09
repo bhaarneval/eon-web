@@ -29,7 +29,7 @@ function StyledComp(props) {
       </div>
       }
         <div className="mainContentContainer">
-          <Navbar />
+          <Route path="/" component={Navbar}/>
           <div className="contentBody">
             <Switch>
               <Route path="/" exact component={App} />
