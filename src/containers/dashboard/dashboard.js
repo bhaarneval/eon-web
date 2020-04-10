@@ -22,12 +22,12 @@ class Dashboard extends Component {
       role: this.props.userRole,
     };
   }
+  componentDidMount(){
+    const {fetchEvents, userData} = this.props;
+    fetchEvents(userData);
+  }
 
   componentDidUpdate(prevProps){
-    if(this.props.userData !== prevProps.userData){
-      const {fetchEvents, userData} = this.props;
-      fetchEvents(userData);
-    }
     if(this.props.eventList !== prevProps.eventList){
       this.setState({
         eventList: this.props.eventList,
