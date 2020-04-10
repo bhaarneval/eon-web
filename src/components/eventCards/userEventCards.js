@@ -35,13 +35,13 @@ export default function EventCards(props) {
       }
     >
       <div className="user-cards-flex">
-        <div className="event-name">{name}</div>
+        <div className="event-name ellipsis-style">{name}</div>
         <div className="attendies-fees-div">
-          <div className="attendies-div">{sold_tickets} Attendies</div>
-          <div className="fees-div">{"₹"+subscription_fee}</div>
+          <div className="attendies-div ellipsis-style">{sold_tickets} Attendies</div>
+          <div className="fees-div ellipsis-style">{subscription_fee === 0? "Free":"₹"+subscription_fee}</div>
         </div>
-        <div style={{fontSize: '12px'}}><img src={calendarImg} className="calendar-gap"/>{eventDate}</div>
-        <div style={{fontSize: '12px'}}><img src={locationPin} className="calendar-gap"/>{location}</div>
+        <div className="address-div ellipsis-style"><img src={calendarImg} className="calendar-gap"/>{eventDate}</div>
+        <div className="address-div ellipsis-style"><img src={locationPin} className="calendar-gap"/>{location}</div>
       </div>
     </Card>
   );

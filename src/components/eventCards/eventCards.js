@@ -31,10 +31,10 @@ export default function EventCards(props) {
       }
     >
       <div className="card-desc-grid">
-        <div className="event-name">{name}</div>
+        <div className="event-name ellipsis-style">{name}</div>
         <div className="card-desc-flex">
-          <div style={{fontSize: '12px'}}>{sold_tickets} Attendies</div>
-          <div style={{fontSize: '12px'}}><img src={calendarImg} className="calendar-gap"/>{eventDate}</div>
+          <div className="address-div ellipsis-style">{sold_tickets} Attendies</div>
+          <div className="address-div ellipsis-style"><img src={calendarImg} className="calendar-gap"/>{eventDate}</div>
         </div>
       </div>
     </Card>

@@ -22,15 +22,19 @@
 }
 .card-desc-grid{
     display: grid;
+    width: 100%;
     grid-template-rows: 1fr 1fr;
     margin-top: -5%;
+    box-sizing: content-box;
 }
 .event-name{
     font-weight: bold;
     font-size: 18px;
+    width: 100%;  
 }
 .card-desc-flex{
     display: flex;
+    width: 80%;
     flex-direction: column;
 }
 .calendar-gap{
@@ -61,4 +65,13 @@
     padding: 5px;
     font-size: 12px;
     box-sizing: border-box;
+}
+.address-div{
+    font-size: 12px;
+    width: 100%; 
+}
+.ellipsis-style {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
