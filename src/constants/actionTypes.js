@@ -18,6 +18,8 @@ export const actionLoginTypes = {
 };
 
 export const actionEventTypes = {
+    EVENT_ERROR:"EVENT_ERROR",
+    RECEIVED_EVENT_DATA:"RECEIVED_EVENT_DATA",
     SET_EVENT_FETCHING: "SET_EVENT_FETCHING",
     CREATE_EVENT: "CREATE_EVENT",
 }

@@ -11,7 +11,7 @@ import { EVENT_NAME,URL_VALID,ONLY_NUMERIC,EVENT_LOCATION,EVENT_DATE,EVENT_TYPE,
 
 const {Option}=Select;
 export default function EventForm(props) {
-  const { values, handleSubmit, handleCancel,loadType } = props;
+  const { values, handleSubmit, handleCancel,loadType, hasErrored, errorMessage } = props;
   const {
     name,
     external_links,
@@ -19,7 +19,7 @@ export default function EventForm(props) {
     date,
     time,
     subscription_fee=0,
-    event_type,
+    type,
     description,
     no_of_tickets,
     images
@@ -52,9 +52,9 @@ export default function EventForm(props) {
   }
 
   function onFinish(data) {
-    data.date = moment(date).format("DD-MM-YYYY");
-    data.time = moment(time).format("hh:mm A");
-    data.image = file.name;
+    data.date = moment(eventDate).format("YYYY-MM-DD");
+    data.time = moment(eventDate).format("hh:mm A");
+    data.images = file;
     handleSubmit(data);
   }
 
@@ -63,7 +63,13 @@ export default function EventForm(props) {
       <div>
         <div className="event-image">
           <img
-            src={currentImg.name ? URL.createObjectURL(currentImg) : images && images!==""?images:emptyImg}
+            src={
+              currentImg.name
+                ? URL.createObjectURL(currentImg)
+                : images && images !== ""
+                ? images
+                : emptyImg
+            }
             className="image-div"
           />
           <div className="upload-button-container">
@@ -92,7 +98,7 @@ export default function EventForm(props) {
             location: location,
             date: date,
             subscription_fee: subscription_fee,
-            event_type: event_type,
+            type: type,
             no_of_tickets: no_of_tickets,
             description: description,
           }}
@@ -186,7 +192,7 @@ export default function EventForm(props) {
               />
             </Form.Item>
             <Form.Item
-              name="event_type"
+              name="type"
               rules={[
                 {
                   required: true,
@@ -197,22 +203,21 @@ export default function EventForm(props) {
               <Select
                 placeholder="Type"
                 size="large"
-                onChange={()=>"hello"}
                 showSearch={false}
                 showArrow={true}
-                style={{height:"3em"}}
+                style={{ height: "3em" }}
               >
                 <Option key="Tech" value={1}>
                   Tech
                 </Option>
                 <Option key="Cultural" value={2}>
-                Cultural
+                  Cultural
                 </Option>
                 <Option key="Fashion" value={3}>
-                Fashion
+                  Fashion
                 </Option>
                 <Option key="Exhibition" value={4}>
-                Exhibition
+                  Exhibition
                 </Option>
               </Select>
             </Form.Item>
@@ -243,6 +248,7 @@ export default function EventForm(props) {
               onResize={false}
             />
           </Form.Item>
+          {hasErrored && <div className="error-message">*{errorMessage}</div>}
           <div className="button-container">
             <Button className="cancel-button" onClick={handleCancel}>
               Cancel
@@ -261,4 +267,6 @@ EventForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
   loadType: PropTypes.string.isRequired,
+  hasErrored: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
