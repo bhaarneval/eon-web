@@ -16,3 +16,8 @@ export const actionLoginTypes = {
     FORGOT_PASSWORD: "FORGOT_PASSWORD",
     CHANGE_PASSWORD: "CHANGE_PASSWORD",
 };
+
+export const actionEventTypes = {
+    SET_EVENT_FETCHING: "SET_EVENT_FETCHING",
+    CREATE_EVENT: "CREATE_EVENT",
+}
