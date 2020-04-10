@@ -17,7 +17,7 @@ import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
 
 function StyledComp(props) {
-  const isLoggedin = localStorage.getItem('token') || (props.loginData.userData.user_id?true: false);
+  const isLoggedin = props.userData.user_id;
   return (
     <div>
       <div className="flex flex-row layoutContainer">
@@ -56,12 +56,7 @@ class LayoutComponent extends React.Component {
   render() {
     return (
       <StyledComp
-        loginData={{
-          userData: this.props.userData,
-          userRole: this.props.userRole,
-          accessToken: this.props.accessToken,
-          refreshToken: this.props.refreshToken
-        }}
+        userData={this.props.userData}
       />
     );
   }
@@ -69,16 +64,10 @@ class LayoutComponent extends React.Component {
 
 const mapStateToProps = ({
   userReducer: {
-    userData,
-    userRole,
-    accessToken,
-    refreshToken,
+    userData
   }
 }) => ({
-  userData,
-  userRole,
-  accessToken,
-  refreshToken
+  userData
 })
 
 export default connect(mapStateToProps)(LayoutComponent);
