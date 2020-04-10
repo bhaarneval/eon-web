@@ -7,7 +7,7 @@ import EventForm from '../../components/eventCreation/eventForm';
 
 import PropTypes from 'prop-types'
 import {updateEventDummy} from "../../constants/constants";
-import {createNewEvent} from "../../actions/eventActions";
+import {createNewEvent, updateEvent} from "../../actions/eventActions";
 
 class CreateEvent extends Component {
  constructor(props){
@@ -19,29 +19,53 @@ class CreateEvent extends Component {
      errorMessage: "Something went Wrong",
    }
  }
- handleSubmit = (values) => {
-   const {userData, accessToken, createNewEvent} =this.props;
-    values.event_created_by = userData.user_id;
-    createNewEvent({
-      formData: values,
-      accessToken: accessToken,
-      callback: ({error,id})=>{
-        if(!error){
-          this.goBack("create",id);
-        }
-        else{
-          this.setState({
-            hasErrored:true,
-            errorMessage:error,
-          })
-        }
-      }
-    })
 
+ componentDidMount() {
+   if(this.state.loadType !== "create" && !this.props.eventData.id){
+     this.goBack();
+   }
+ }
+ handleSubmit = (values) => {
+   const { userData, accessToken, createNewEvent, updateEvent, eventData } = this.props;
+   if (this.state.loadType === "create") {
+     values.event_created_by = userData.user_id;
+     createNewEvent({
+       formData: values,
+       accessToken: accessToken,
+       callback: ({ error, id }) => {
+         if (!error) {
+           this.goBack("create", id);
+         } else {
+           this.setState({
+             hasErrored: true,
+             errorMessage: error,
+           });
+         }
+       },
+     });
+   }
+   else{
+    updateEvent({
+      formData: values,
+       accessToken,
+       eventId: eventData.id,
+       callback: ({ error, id }) => {
+         if (!error) {
+           this.goBack("update", id);
+         } else {
+           this.setState({
+             hasErrored: true,
+             errorMessage: error,
+           });
+         }
+       },
+
+    })
+   }
  }
 
  goBack = (event,id) => {
-    if(this.state.loadType === "update" || event === "create"){
+    if(this.state.loadType === "update" && (event === "create" || event === "update")){
       this.props.history.push(`/event-details/${id}`);
     }
     else
@@ -74,11 +98,14 @@ CreateEvent.propTypes = {
     accessToken: PropTypes.string,
     createNewEvent: PropTypes.func,
     userData: PropTypes.object,
+    eventData: PropTypes.object,
+    updateEvent: PropTypes.func,
 }
 
 const mapStateToProps = ({
   eventReducer:{
-    fetchingEvent
+    fetchingEvent,
+    eventData,
   },
   userReducer: {
     accessToken,
@@ -86,12 +113,14 @@ const mapStateToProps = ({
   }
 })=> ({
   fetchingEvent,
+  eventData,
   accessToken,
   userData
 });
 
 const mapDispatchToProps = {
-  createNewEvent: createNewEvent
+  createNewEvent: createNewEvent,
+  updateEvent: updateEvent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

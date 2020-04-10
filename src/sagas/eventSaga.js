@@ -10,9 +10,10 @@ function checkResponse(response,responseJson) {
 const accessToken = localStorage.getItem("token");
 
 export function* createNewEvent(param) {
-  let { data, callback, accessToken } = param;
+  let { data, callback, eventId,accessToken } = param;
   try {
     yield put({ type: actionEventTypes.SET_EVENT_FETCHING });
+    const method = eventId?"PATCH":"POST";
     const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
@@ -48,13 +49,18 @@ export function* createNewEvent(param) {
 
     //   checkResponse(responseImage, responseJson);
     // }
-
-    let postURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
+    
+    let postURL = "";
+    if(!eventId){
+        postURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
+    }
+    else
+        postURL = APIService.dev + requestURLS.EVENT_OPERATIONS+`${eventId}/`
     data.images = imageUploadResponse.image_name || "undefined";
     let recievedResponse = {};
     const responseJson = yield fetch(postURL, {
       headers: headers,
-      method: "POST",
+      method: method,
       body: JSON.stringify(data),
     }).then((response) => {
       recievedResponse = response;
