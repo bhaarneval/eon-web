@@ -124,14 +124,14 @@ export const dummyList = [
 
 ];
 export const updateEventDummy = {
-         eventName: "Technnex",
-         url: "www.technex.com",
-         eventLocation: "Bengaluru",
-         eventDate: "24-03-2020",
-         fees: 200,
-         type: "cultural",
-         isChargeable: true,
+         name: "Technnex",
+         external_links: "www.technex.com",
+         location: "Bengaluru",
+         date: "24-03-2020",
+         time:"12:05 AM",
+         subscription_fee: 200,
+         event_type: 2,
          description: "dummy data",
-         capacity: 1200,
-         eventImage: null
+         no_of_tickets: 1200,
+         images: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
 }

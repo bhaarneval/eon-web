@@ -13,21 +13,25 @@ const {Option}=Select;
 export default function EventForm(props) {
   const { values, handleSubmit, handleCancel,loadType } = props;
   const {
-    eventName,
-    url,
-    eventLocation,
-    eventDate,
-    fees,
-    type,
-    isChargeable,
+    name,
+    external_links,
+    location,
+    date,
+    time,
+    subscription_fee=0,
+    event_type,
     description,
-    capacity,
-    eventImage
+    no_of_tickets,
+    images
   } = values;
-  const [isChecked, setSwitch] = isChargeable?useState(isChargeable):useState(false);
-  const [date, setDate] = eventDate? useState(moment(eventDate,"DD-MM-YYYY  ")) : useState("");
+  let dateTime ="";
+  if(date && time){
+    dateTime =  date+" "+time;
+  }
+  const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
+  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"DD-MM-YYYY hh:mm A")) : useState("");
   const [file, setFile] = useState({});
-  const [currentImg, setImage] = useState(eventImage);
+  const [currentImg, setImage] = useState({});
 
   function handleSwitchChange(input) {
     setSwitch(input);
@@ -39,6 +43,7 @@ export default function EventForm(props) {
 
   function handleUploadFileChange(uploadedFile) {
     setFile(uploadedFile);
+    console.log("laddu",uploadedFile);
   }
 
   function stopImageUpload(input) {
@@ -47,9 +52,9 @@ export default function EventForm(props) {
   }
 
   function onFinish(data) {
-    data.eventDate = moment(date).format("DD-MM-YYYY hh:mm A");
-    data.isChargeable = isChecked ? true : false;
-    data.file = file;
+    data.date = moment(date).format("DD-MM-YYYY");
+    data.time = moment(time).format("hh:mm A");
+    data.image = file.name;
     handleSubmit(data);
   }
 
@@ -58,7 +63,7 @@ export default function EventForm(props) {
       <div>
         <div className="event-image">
           <img
-            src={currentImg ? URL.createObjectURL(currentImg) : emptyImg}
+            src={currentImg.name ? URL.createObjectURL(currentImg) : images && images!==""?images:emptyImg}
             className="image-div"
           />
           <div className="upload-button-container">
@@ -82,27 +87,26 @@ export default function EventForm(props) {
           className="form-main-event"
           name="basicDetails"
           initialValues={{
-            eventName: eventName,
-            url: url,
-            eventLocation: eventLocation,
-            eventDate: eventDate,
-            isChargeable: isChargeable,
-            fees: fees,
-            type: type,
-            capacity: capacity,
+            name: name,
+            external_links: external_links,
+            location: location,
+            date: date,
+            subscription_fee: subscription_fee,
+            event_type: event_type,
+            no_of_tickets: no_of_tickets,
             description: description,
           }}
           layout="vertical"
           onFinish={onFinish}
         >
           <Form.Item
-            name="eventName"
+            name="name"
             rules={[{ required: true, message: EVENT_NAME }]}
           >
             <Input size="large" placeholder="Event Name" />
           </Form.Item>
           <Form.Item
-            name="url"
+            name="external_links"
             rules={[
               {
                 pattern: URLVALIDATION,
@@ -114,7 +118,7 @@ export default function EventForm(props) {
           </Form.Item>
           <div className="form-middle-grid">
             <Form.Item
-              name="eventLocation"
+              name="location"
               rules={[
                 {
                   required: true,
@@ -129,7 +133,7 @@ export default function EventForm(props) {
               />
             </Form.Item>
             <Form.Item
-              name="eventDate"
+              name="date"
               rules={[
                 {
                   required: date === "",
@@ -140,9 +144,9 @@ export default function EventForm(props) {
               <DatePicker
                 allowClear={false}
                 showTime
-                placeholder="Select Date"
+                placeholder="Select Date & Time"
                 format={"DD-MM-YYYY hh:mm A"}
-                value={date ? moment(date) : null}
+                value={eventDate ? moment(eventDate) : null}
                 onChange={handleDateChange}
                 disabledDate={(current) => {
                   return current && current < moment().startOf("day");
@@ -162,7 +166,7 @@ export default function EventForm(props) {
               <pre>{isChecked ? "Yes" : "No "}</pre>
             </div>
             <Form.Item
-              name="fees"
+              name="subscription_fee"
               rules={[
                 {
                   pattern: isChecked ? NUMBERSVALIDATION : MATCH_ANYTHING,
@@ -182,7 +186,7 @@ export default function EventForm(props) {
               />
             </Form.Item>
             <Form.Item
-              name="type"
+              name="event_type"
               rules={[
                 {
                   required: true,
@@ -198,22 +202,22 @@ export default function EventForm(props) {
                 showArrow={true}
                 style={{height:"3em"}}
               >
-                <Option key="Tech" value="Tech">
+                <Option key="Tech" value={1}>
                   Tech
                 </Option>
-                <Option key="Cultural" value="Cultural">
+                <Option key="Cultural" value={2}>
                 Cultural
                 </Option>
-                <Option key="Fashion" value="Fashion">
+                <Option key="Fashion" value={3}>
                 Fashion
                 </Option>
-                <Option key="Exhibition" value="Exhibition">
+                <Option key="Exhibition" value={4}>
                 Exhibition
                 </Option>
               </Select>
             </Form.Item>
             <Form.Item
-              name="capacity"
+              name="no_of_tickets"
               rules={[
                 {
                   pattern: NUMBERSVALIDATION,
