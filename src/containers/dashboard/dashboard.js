@@ -5,20 +5,35 @@ import "./dashboard.css";
 import EventCards from "../../components/eventCards/eventCards";
 import UserEventcards from "../../components/eventCards/userEventCards";
 
-import { dummyList } from "../../constants/constants";
-import { Row, Button } from "antd";
+import { Row, Button, Spin } from "antd";
 import SearchBox from '../../components/commonComponents/searchBox';
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import StyledRangePicker from "../../components/commonComponents/rangePicker";
 import { connect } from "react-redux";
+import { fetchEvents } from "../../actions/eventActions";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventList:dummyList,
-      eventsList: dummyList,
+      eventList:[],
+      eventsList: [],
+      spinning: true,
+      role: this.props.userRole,
     };
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.userData !== prevProps.userData){
+      const {fetchEvents, userData} = this.props;
+      fetchEvents(userData);
+    }
+    if(this.props.eventList !== prevProps.eventList){
+      this.setState({
+        eventList: this.props.eventList,
+        eventsList: this.props.eventList,
+      })
+    }
   }
 
   spliceArray = list => {
@@ -98,15 +113,8 @@ class Dashboard extends Component {
     console.log(this.props.userRole, 'ddd', this.state)
     const optionsList = ["Cultural","Tech","Fashion","Painting"];
     let eventsList = this.state.eventList;
-    let search = new URLSearchParams(this.props.location.search);
-    let type = search.get("type");
-    if(type == "wishlist"){
-      eventsList = dummyList.splice(3,5);
-    }
-    else {
-      eventsList = this.state.eventsList;
-    }
     return (
+      <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
       <div className="sub-content">
         <div className="events-heading"> Event Management </div>
         <div className="dashboard-actions-container">
@@ -132,6 +140,7 @@ class Dashboard extends Component {
           {this.spliceArray(eventsList)}
         </div>
       </div>
+      </Spin>
     );
   }
 }
@@ -140,15 +149,33 @@ Dashboard.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   userRole: PropTypes.string,
+  userData: PropTypes.object,
+  eventList: PropTypes.array,
+  accessToken: PropTypes.string,
+  fetchEvents: PropTypes.func,
+  fetchingEvent: PropTypes.bool,
 };
 
 const mapStateToProps = ({
   userReducer: {
     userRole,
+    userData,
+    accessToken
+  },
+  eventReducer: {
+    eventList,
+    fetchingEvent
   }
 }) => ({
   userRole,
+  userData,
+  accessToken,
+  eventList,
+  fetchingEvent
 })
+const mapDispatchToProps = {
+  fetchEvents: fetchEvents
+};
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 

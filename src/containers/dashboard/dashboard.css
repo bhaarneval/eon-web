@@ -39,3 +39,9 @@
     background-color: #262C6F;
     color: #ffffff;
 }
+.spinner-dashboard{
+    width: 100%;
+    height: 95vh !important;
+    max-height: 95vh !important;
+    position: absolute !important;
+}
