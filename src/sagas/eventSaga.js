@@ -7,6 +7,7 @@ function checkResponse(response,responseJson) {
     throw responseJson;
   } else return;
 }
+const accessToken = localStorage.getItem("token");
 
 export function* createNewEvent(param) {
   let { data, callback, accessToken } = param;
@@ -48,7 +49,7 @@ export function* createNewEvent(param) {
     //   checkResponse(responseImage, responseJson);
     // }
 
-    let postURL = APIService.dev + requestURLS.CREATE_EVENT;
+    let postURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
     data.images = imageUploadResponse.image_name || "undefined";
     let recievedResponse = {};
     const responseJson = yield fetch(postURL, {
@@ -76,6 +77,39 @@ export function* createNewEvent(param) {
   }
 }
 
+export function* fetchEventsList(param){
+    const {userData} = param;
+    const headers = {
+        Authorization:`Bearer ${accessToken}`,
+    }
+    let queryParam="";
+    if(userData.role.role === "subscriber"){
+        queryParam = `?user_id=${userData.user_id}`;
+    }
+        
+    try{
+        yield put({type:actionEventTypes.SET_EVENT_FETCHING});
+        const getURL = APIService.dev+requestURLS.EVENT_OPERATIONS+queryParam;
+        let responseObject = {};
+        const responseJson = yield fetch(getURL, {
+            headers: headers,
+            method: "GET",
+        }).then(response => {
+            responseObject = response;
+            return response.json();
+        });
+
+        checkResponse(responseObject,responseJson);
+
+        yield put({type:actionEventTypes.RECEIVED_EVENT_LIST, payload:responseJson.data});
+    } catch (e) {
+        console.error(e);
+        yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    }
+
+}
+
 export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.CREATE_EVENT, createNewEvent);
+  yield takeLatest(actionEventTypes.GET_EVENT_LIST, fetchEventsList);
 }

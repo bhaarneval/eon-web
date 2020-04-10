@@ -8,3 +8,10 @@ export const createNewEvent = ({formData,callback,accessToken,}) => {
       accessToken,
     };
 }
+
+export const fetchEvents = (userData) => {
+    return {
+        type: actionEventTypes.GET_EVENT_LIST,
+        userData: userData
+    }
+}

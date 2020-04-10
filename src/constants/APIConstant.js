@@ -12,6 +12,6 @@ export const requestURLS = {
   GENERATE_CODE: "authentication/generate-code",
   RESET_PASSWORD: "authentication/reset-password",
   CHANGE_PASSWORD: "authentication/change-password",
-  CREATE_EVENT: "core/event/",
+  EVENT_OPERATIONS: "core/event/",
   UPLOAD_IMAGE: "core/presigned-url",
 };

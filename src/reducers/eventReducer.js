@@ -3,6 +3,7 @@ import { actionEventTypes } from "../constants/actionTypes";
 const initialData = {
   fetchingEvent: false,
   eventData: {},
+  eventList: [],
 };
 
 const eventReducer = (state = initialData, action) => {
@@ -12,6 +13,12 @@ const eventReducer = (state = initialData, action) => {
         ...state,
         fetchingEvent: !state.fetchingEvent,
       };
+    case actionEventTypes.RECEIVED_EVENT_LIST:
+        return {
+            ...state,
+            eventList:action.payload,
+            fetchingEvent: false
+        }
     case actionEventTypes.RECEIVED_EVENT_DATA:
       return {
         ...state,
