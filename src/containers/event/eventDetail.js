@@ -34,8 +34,6 @@ class EventDetail extends Component {
         showUpdateSeatsModal: false,
         finalSeats: '',
         finalAmount: '',
-        isOrganizer: this.props.userRole === 'organizer',
-        isSubscriber: this.props.userRole === 'subscriber',
         paidAmount: 0,
         refundAmount:0,
         newSeats:0,
@@ -173,18 +171,18 @@ handleRefundConfirm = () => {
 }
 
 render() {
-    const {noOfSeats, perHeadAmount, discountPercentage, isOrganizer, isSubscriber} = this.state;
-    console.log(isOrganizer, isSubscriber)
+    const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         <EventInfo
           history={this.props.history}
-          isSubscriber={isSubscriber}
-          isOrganizer={isOrganizer}
+          isSubscriber={this.props.userRole === 'subscriber'}
+          isOrganizer={this.props.userRole === 'organiser'}
           handleShare={this.handleShare}
         />
-        {isOrganizer && (
+       {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
+        {this.props.userRole === 'organiser' && (
           <div>
             <EventCount />
             <div className="invitee-row">
@@ -217,7 +215,7 @@ render() {
             )}
           </div>
         )}
-        {isSubscriber && (
+        {this.props.userRole === 'subscriber' && (
           <div>
             {this.state.showPayment ? (
               <Payment
