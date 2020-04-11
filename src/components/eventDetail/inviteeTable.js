@@ -48,16 +48,16 @@ class EventTable extends React.Component {
     const hasSelected = selectedRowKeys.length > 0;
 
     let tableData = [];
-    const data= this.props.data;
-    for( let i=0;i<Object.keys(data).length!=0;i++){
-      let newData = {
-        email: data[i].email,
-        name: data[i].user.name,
-        contact: data[i].user.contact_number,
-        discount: data[i].event.discount_percentage,
-      };
-      tableData = [...tableData,newData]
-    }
+    // const data= this.props.data;
+    // for( let i=0;i<Object.keys(data).length;i++){
+    //   let newData = {
+    //     email: data[i].email,
+    //     name: data[i].user.name,
+    //     contact: data[i].user.contact_number,
+    //     discount: data[i].event.discount_percentage,
+    //   };
+    //   tableData = [...tableData,newData]
+    // }
     return (
       <div style={{marginTop: !hasSelected ? '50px' : '10px', marginBottom: '50px'}}>
         {/* <div>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</div> */}
