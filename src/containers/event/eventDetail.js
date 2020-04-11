@@ -14,7 +14,7 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
-import { updateInviteeList } from "../../actions/eventActions";
+import { updateInviteeList, setEventUpdate } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -128,7 +128,7 @@ handleFreeTicket = (seats) => {
     })
 }
 goBack = () => {
-    this.props.history.goBack();
+    this.props.history.push("/dashboard");
 }
 handlePaymentsBack = () => {
     this.setState({
@@ -194,6 +194,7 @@ render() {
           history={this.props.history}
           isOrganizer={this.props.userRole === 'organiser'}
           handleShare={this.handleShare}
+          setEventUpdate={this.props.setEventUpdate}
         />
        {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
         {this.props.userRole === 'organiser' && (
@@ -363,6 +364,7 @@ EventDetail.propTypes = {
   fetchingEvent: PropTypes.bool,
   updateInviteeList: PropTypes.func,
   accessToken: PropTypes.string,
+  setEventUpdate: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -382,7 +384,8 @@ const mapStateToProps = ({
   fetchingEvent
 })
 const mapDispatchToProps = ({
-  updateInviteeList: updateInviteeList
+  updateInviteeList: updateInviteeList,
+  setEventUpdate: setEventUpdate,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

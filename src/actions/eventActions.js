@@ -45,3 +45,10 @@ export const updateInviteeList = ({accessToken,data, updateType}) => {
         updateType: updateType,
     }
 }
+
+export const setEventUpdate = (payload) => {
+    return {
+        type: actionEventTypes.SET_EVENT_UPDATE,
+        payload: payload
+    }
+}

@@ -4,6 +4,7 @@ const initialData = {
   fetchingEvent: false,
   eventData: {},
   eventList: [],
+  updateEvent: false,
 };
 
 const eventReducer = (state = initialData, action) => {
@@ -30,6 +31,11 @@ const eventReducer = (state = initialData, action) => {
         ...state,
         fetchingEvent: false,
       };
+    case actionEventTypes.SET_EVENT_UPDATE:
+        return {
+            ...state,
+            updateEvent: action.payload,
+        }
 
     default:
       return state;

@@ -30,8 +30,11 @@ class EventInfo extends Component {
           this.setState({
               cancelPopup: true
           })
-        else if(input.key === "2")
-            this.props.history.push(`/create?type=edit`);
+        else if(input.key === "2") {
+            this.props.setEventUpdate(true);
+            this.props.history.push(`/create?type=edit&id=${this.props.eventData.id}`);
+        }
+            
     }
     handleClose = () => {
         this.setState({
@@ -148,7 +151,8 @@ class EventInfo extends Component {
     eventData: PropTypes.object.isRequired,
     isOrganizer: PropTypes.bool,
     handleShare: PropTypes.func,
-    history: PropTypes.object
+    history: PropTypes.object,
+    setEventUpdate: PropTypes.func,
 }
 
 export default EventInfo;

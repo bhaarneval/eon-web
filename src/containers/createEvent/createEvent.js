@@ -6,15 +6,13 @@ import BackButton from '../../components/commonComponents/backButton';
 import EventForm from '../../components/eventCreation/eventForm';
 
 import PropTypes from 'prop-types'
-import {updateEventDummy} from "../../constants/constants";
 import {createNewEvent, updateEvent} from "../../actions/eventActions";
 
 class CreateEvent extends Component {
  constructor(props){
    super(props);
-   const url = new URLSearchParams(this.props.location.search);
    this.state={
-     loadType: url.get("type") === "edit" ? "update" : "create",
+     updateType: this.props.updateEvent,
      hasErrored: false,
      errorMessage: "Something went Wrong",
    }
@@ -24,13 +22,13 @@ class CreateEvent extends Component {
    if(this.props.userRole!== "organiser"){
      this.props.history.push("/dashboard");
    }
-   if(this.state.loadType !== "create" && !this.props.eventData.id){
+   if(this.state.updateType && !this.props.eventData.id){
      this.goBack();
    }
  }
  handleSubmit = (values) => {
    const { userData, accessToken, createNewEvent, updateEvent, eventData } = this.props;
-   if (this.state.loadType === "create") {
+   if (!this.state.updateType) {
      values.event_created_by = userData.user_id;
      createNewEvent({
        formData: values,
@@ -68,8 +66,8 @@ class CreateEvent extends Component {
  }
 
  goBack = (event,id) => {
-    if(this.state.loadType === "update" && (event === "create" || event === "update")){
-      this.props.history.push(`/event-details/${id}`);
+    if(this.state.updateType || event!=="goBack"){
+      this.props.history.replace(`/event-details/${id}`);
     }
     else
      this.props.history.push("/dashboard");
@@ -77,14 +75,13 @@ class CreateEvent extends Component {
 
 
  render() {
-   let {loadType, hasErrored,errorMessage} = this.state;
-   console.log(loadType)
+   let {updateType, hasErrored,errorMessage} = this.state;
   return (
     <Spin spinning={this.props.fetchingEvent} className="spinner">
     <div className="create-container">
-      <BackButton handleOnClick={this.goBack} text = "Create Event" />
+      <BackButton handleOnClick={()=>this.goBack("goBack", this.props.eventData.id)} text = {updateType?"Update Event":"Create Event"} />
       <div className="form-div">
-          <EventForm values = {loadType==="update" ? updateEventDummy:{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} loadType={loadType}
+          <EventForm values = {updateType ? this.props.eventData:{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} updateType={updateType}
           hasErrored={hasErrored} errorMessage = {errorMessage}/>
       </div>
     </div>
@@ -104,12 +101,14 @@ CreateEvent.propTypes = {
     eventData: PropTypes.object,
     updateEvent: PropTypes.func,
     userRole: PropTypes.string,
+    eventUpdate: PropTypes.bool,
 }
 
 const mapStateToProps = ({
   eventReducer:{
     fetchingEvent,
     eventData,
+    eventUpdate,
   },
   userReducer: {
     accessToken,
@@ -119,6 +118,7 @@ const mapStateToProps = ({
 })=> ({
   fetchingEvent,
   eventData,
+  eventUpdate,
   accessToken,
   userData,
   userRole,

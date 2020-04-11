@@ -11,7 +11,7 @@ import { EVENT_NAME,URL_VALID,ONLY_NUMERIC,EVENT_LOCATION,EVENT_DATE,EVENT_TYPE,
 
 const {Option}=Select;
 export default function EventForm(props) {
-  const { values, handleSubmit, handleCancel,loadType, hasErrored, errorMessage } = props;
+  const { values, handleSubmit, handleCancel,updateType, hasErrored, errorMessage } = props;
   const {
     name,
     external_links,
@@ -254,7 +254,7 @@ export default function EventForm(props) {
               Cancel
             </Button>
             <Button htmlType="submit" type="primary" className="save-button">
-              {loadType === "update" ? "Update" : "Save"}
+              {updateType? "Update" : "Save"}
             </Button>
           </div>
         </Form>
@@ -266,7 +266,7 @@ EventForm.propTypes = {
   values: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
-  loadType: PropTypes.string.isRequired,
+  updateType: PropTypes.bool.isRequired,
   hasErrored: PropTypes.bool,
   errorMessage: PropTypes.string,
 };

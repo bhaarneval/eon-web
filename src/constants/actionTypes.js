@@ -19,6 +19,7 @@ export const actionLoginTypes = {
 
 export const actionEventTypes = {
     EVENT_ERROR:"EVENT_ERROR",
+    SET_EVENT_UPDATE: "SET_EVENT_UPDATE",
     GET_EVENT_LIST: "GET_EVENT_LIST",
     RECEIVED_EVENT_LIST:"RECEIVED_EVENT_LIST",
     GET_EVENT_DATA: "GET_EVENT_DATA",
