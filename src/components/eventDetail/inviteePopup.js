@@ -135,7 +135,7 @@ class InviteesPopup extends Component {
     handleClose: PropTypes.func.isRequired,
     onDiscountChange: PropTypes.func.isRequired,
     eventData: PropTypes.object,
-    discountPercentage: PropTypes.number,
+    discountPercentage: PropTypes.string,
 }
 
 export default InviteesPopup;
