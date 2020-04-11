@@ -37,10 +37,11 @@ export const getEventData = ({id,accessToken,userRole,callback}) => {
     }
 }
 
-export const saveInviteeList = ({accessToken,data}) => {
+export const updateInviteeList = ({accessToken,data, updateType}) => {
     return {
         type: actionEventTypes.SAVE_INVITEE,
         accessToken: accessToken,
         data: data,
+        updateType: updateType,
     }
 }

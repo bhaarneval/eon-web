@@ -14,7 +14,7 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
-import { saveInviteeList } from "../../actions/eventActions";
+import { updateInviteeList } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -62,12 +62,13 @@ class EventDetail extends Component {
 
 
 deleteAll = (list) => {
-    const deletedList = []
-    const data = this.state.rows;
-    {list.map((no) => {
-        return deletedList.push(data[no]);
-    })}
-    console.log(deletedList)
+  console.log(list);
+    const {updateInviteeList, accessToken, eventData} = this.props;
+    updateInviteeList({
+      data:{invitation_ids:list, event: eventData.id},
+      accessToken: accessToken,
+      updateType: "delete",
+    })
 }
 
 onDiscountChange = (value) => {
@@ -79,7 +80,7 @@ onDiscountChange = (value) => {
 
 handleSend = (inviteeList) => {
   console.log(inviteeList[0]);
-  const {saveInviteeList, eventData, accessToken} = this.props;
+  const {updateInviteeList, eventData, accessToken} = this.props;
   let invitees=[];
   for (let i = 0; i < Object.keys(inviteeList).length; i++) {
     invitees=[...invitees,inviteeList[i]] ;
@@ -90,7 +91,7 @@ handleSend = (inviteeList) => {
       invitee_list:invitees,
 
     };
-    saveInviteeList({accessToken: accessToken, data: data});
+    updateInviteeList({accessToken: accessToken, data: data, updateType:"save"});
     this.setState({
         showModal: false,
         discount:this.state.discountPercentage
@@ -225,7 +226,7 @@ render() {
                 handleSend={this.handleSend}
                 onDiscountChange={this.onDiscountChange}
                 eventData = {this.props.eventData}
-                discountPercentage = {this.state.discountPercentage}
+                discountPercentage = {discountPercentage}
               />
             )}
           </div>
@@ -360,7 +361,7 @@ EventDetail.propTypes = {
   userRole: PropTypes.string,
   eventData: PropTypes.object,
   fetchingEvent: PropTypes.bool,
-  saveInviteeList: PropTypes.func,
+  updateInviteeList: PropTypes.func,
   accessToken: PropTypes.string,
 };
 
@@ -381,7 +382,7 @@ const mapStateToProps = ({
   fetchingEvent
 })
 const mapDispatchToProps = ({
-  saveInviteeList: saveInviteeList
+  updateInviteeList: updateInviteeList
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

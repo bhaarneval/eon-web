@@ -145,27 +145,41 @@ export function* fetchEventData(param) {
 }
 
 export function* saveInvitees(param) {
-    const {accessToken, data} = param;
+    const {accessToken, data, updateType} = param;
+    const eventId = data.event;
     const headers = {
         "Content-Type": "application/json",
         Authorization:`Bearer ${accessToken}`,
     } 
-    try{
+    try{   
         yield put({type:actionEventTypes.SET_EVENT_FETCHING});
         let getURL = APIService.dev+requestURLS.INVITEE_LIST;
         let responseObject = {};
-        let responseJson = yield fetch(getURL, {
-            headers: headers,
-            method: "POST",
-            body: JSON.stringify(data),
-        }).then(response => {
-            responseObject = response;
-            return response.json();
-        });
+        let responseJson={};
+        if(updateType === "save"){
+            responseJson = yield fetch(getURL, {
+                headers: headers,
+                method: "POST",
+                body: JSON.stringify(data),
+            }).then(response => {
+                responseObject = response;
+                return response.json();
+            });
+            checkResponse(responseObject,responseJson);
+        }
+        else{
+            getURL = getURL + `/${eventId}/`
+            yield fetch(getURL, {
+                headers: headers,
+                method: "DELETE",
+                body: JSON.stringify(data),
+            }).then(response => {
+                responseObject = response;
+            });
+            checkResponse(responseObject,{message:"Something went wrong"});
+        }
 
-        checkResponse(responseObject,responseJson);
-        yield put({type:actionEventTypes.SET_EVENT_FETCHING});
-        getURL = APIService.dev+requestURLS.EVENT_OPERATIONS+`${data.event}/`;
+        getURL = APIService.dev+requestURLS.EVENT_OPERATIONS+`${eventId}/`;
         responseJson = yield fetch(getURL, {
             headers: headers,
             method: "GET",
