@@ -146,8 +146,7 @@ class EventInfo extends Component {
 
  EventInfo.propTypes = {
     eventData: PropTypes.object.isRequired,
-    isSubscriber: PropTypes.Boolean,
-    isOrganizer: PropTypes.Boolean,
+    isOrganizer: PropTypes.bool,
     handleShare: PropTypes.func,
     history: PropTypes.object
 }

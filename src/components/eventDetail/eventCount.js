@@ -110,7 +110,6 @@ class EventCount extends Component {
 
 
  EventCount.propTypes = {
-    event: PropTypes.object.isRequired,
     history: PropTypes.object,
     eventData: PropTypes.object,
 }

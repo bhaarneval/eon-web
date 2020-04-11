@@ -125,7 +125,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    console.log(this.props.userRole, 'ddd', this.state)
     const optionsList = ["Cultural","Tech","Fashion","Painting"];
     let eventsList = this.state.eventList;
     return (

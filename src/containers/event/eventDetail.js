@@ -84,7 +84,6 @@ handleSend = (inviteeList) => {
   for (let i = 0; i < Object.keys(inviteeList).length; i++) {
     invitees=[...invitees,inviteeList[i]] ;
 }
-console.log(invitees);
     const data = {
       event: eventData.id,
       discount_percentage: this.state.discountPercentage,
@@ -192,7 +191,6 @@ render() {
         <EventInfo
           eventData = {this.props.eventData}
           history={this.props.history}
-          isSubscriber={this.props.userRole === 'subscriber'}
           isOrganizer={this.props.userRole === 'organiser'}
           handleShare={this.handleShare}
         />
