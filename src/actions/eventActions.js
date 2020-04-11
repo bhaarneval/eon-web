@@ -19,11 +19,12 @@ export const updateEventData = ({formData, callback, accessToken, eventId}) => {
       };
 }
 
-export const fetchEvents = ({userData,accessToken}) => {
+export const fetchEvents = ({userData,accessToken, filterData}) => {
     return {
         type: actionEventTypes.GET_EVENT_LIST,
         userData,
-        accessToken
+        accessToken,
+        filterData: filterData||{},
     }
 }
 

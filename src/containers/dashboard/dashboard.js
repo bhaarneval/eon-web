@@ -81,48 +81,34 @@ class Dashboard extends Component {
       );
     })
   };
-  filterList = (filterType,filterValue) => {
-    let eventList = this.state.eventList;
-    switch (filterType) {
-      case "location":
-        if(filterValue==="")
-          break;
-        eventList = eventList.filter(event => {
-          return event.eventLocation === filterValue || event.name === filterValue;
-        });
-        break;
-        case "type":
-        eventList = eventList.filter(event => {
-          return event.type === filterValue;
-        });
-        break;
-        case "date":
-        eventList = eventList.filter(event => {
-          return event.eventDate >= filterValue.startDate && event.eventDate <= filterValue.endDate;
-        });
-        break;
-      default:
-        console.error("Something wrong in dashboard filter");
-        break;
-    }
-    this.setState({
-      eventsList:eventList
-    })
-  }
-  handleSearchTextChange = (value) => {
-    this.filterList("location",value);
-  }
+
   handleFilterChange = (value) => {
-    this.filterList("type",value);
+    const {fetchEvents, userData,accessToken} = this.props;
+    fetchEvents({userData,accessToken, filterData:{type:value}});
   }
   handleDateChange = (date, dateString) => {
-    const startDate=moment(dateString[0]).format("DD-MM-YYYY");
-    const endDate = moment(dateString[1]).format("DD-MM-YYYY");
-    this.filterList("date",{startDate,endDate});
+    const {fetchEvents, userData,accessToken} = this.props;
+    if(dateString[0]!== "" && dateString[1]!=""){
+
+    const startDate=moment(dateString[0],"DD-MM-YYYY").format("YYYY-MM-DD");
+    const endDate = moment(dateString[1], "DD-MM-YYYY").format("YYYY-MM-DD");
+      fetchEvents({userData,accessToken, filterData:{startDate:startDate,endDate:endDate}});
+    }
+    else 
+      fetchEvents({userData,accessToken});
   }
   handleCreateEvent =() => {
     this.props.history.push("create");
   }
+
+  handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+        event.preventDefault();
+        const searchText = event.target.value;
+        const {fetchEvents, userData,accessToken} = this.props;
+        fetchEvents({userData,accessToken, filterData:{search:searchText}});
+    }
+}
 
   render() {
     let eventsList = this.state.eventList;
@@ -135,6 +121,7 @@ class Dashboard extends Component {
             <SearchBox
               handleOnChange={this.handleSearchTextChange}
               placeholder={"Event Name / Location"}
+              handleKeyPress = {this.handleKeyPress}
             />
             <SelectDropDown
               handleChange={this.handleFilterChange}

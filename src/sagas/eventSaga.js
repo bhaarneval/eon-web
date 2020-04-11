@@ -101,18 +101,29 @@ export function* createNewEvent(param) {
 }
 
 export function* fetchEventsList(param) {
-  const { userData, accessToken } = param;
+  const { userData, accessToken,filterData } = param;
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
-  let queryParam = "";
-  if (userData.role.role === "subscriber") {
-    queryParam = `?user_id=${userData.user_id}`;
-  }
+  
+let params = {};
+if(userData.role.role === "subscriber")
+  params = {...params,user_id:userData.user_id}
+if(filterData.type){
+  params = {...params, event_type:filterData.type}
+}
+if(filterData.startDate && filterData.endDate)
+  params = {...params, start_date:filterData.startDate,end_date:filterData.endDate}
+if(filterData.search)
+  params = {...params, location: filterData.search}
 
   try {
     yield put({ type: actionEventTypes.SET_EVENT_FETCHING });
-    const getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + queryParam;
+    let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
+    getURL = Object.keys(params).reduce((accu, current, index) => {
+      const prefix = index === 0 ? '?' : '&';
+      return accu + prefix + current + '=' + params[current];
+  }, getURL);
     let responseObject = {};
     const responseJson = yield fetch(getURL, {
       headers: headers,
