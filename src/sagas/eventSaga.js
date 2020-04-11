@@ -164,8 +164,19 @@ export function* saveInvitees(param) {
         });
 
         checkResponse(responseObject,responseJson);
-        
-        yield put({type: actionEventTypes.UPDATE_INVITEE, payload:responseJson.data.invitee_list})
+        yield put({type:actionEventTypes.SET_EVENT_FETCHING});
+        getURL = APIService.dev+requestURLS.EVENT_OPERATIONS+`${data.event}/`;
+        responseJson = yield fetch(getURL, {
+            headers: headers,
+            method: "GET",
+        }).then(response => {
+            responseObject = response;
+            return response.json();
+        });
+
+        checkResponse(responseObject,responseJson);
+
+        yield put({type:actionEventTypes.RECEIVED_EVENT_DATA, payload:responseJson.data[0]});
     } catch (e) {
         console.error(e);
         yield put({type: actionEventTypes.EVENT_ERROR, error: e});
