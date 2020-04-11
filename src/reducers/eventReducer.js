@@ -30,6 +30,14 @@ const eventReducer = (state = initialData, action) => {
         ...state,
         fetchingEvent: false,
       };
+    case actionEventTypes.UPDATE_INVITEE:
+        return {
+            ...state,
+            eventData:{...state.eventData,
+                invitee_list:action.payload,
+            },
+            fetchingEvent: false,
+        }
 
     default:
       return state;

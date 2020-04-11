@@ -21,6 +21,9 @@ class CreateEvent extends Component {
  }
 
  componentDidMount() {
+   if(this.props.userRole!== "organiser"){
+     this.props.history.push("/dashboard");
+   }
    if(this.state.loadType !== "create" && !this.props.eventData.id){
      this.goBack();
    }
@@ -100,6 +103,7 @@ CreateEvent.propTypes = {
     userData: PropTypes.object,
     eventData: PropTypes.object,
     updateEvent: PropTypes.func,
+    userRole: PropTypes.string,
 }
 
 const mapStateToProps = ({
@@ -110,12 +114,14 @@ const mapStateToProps = ({
   userReducer: {
     accessToken,
     userData,
+    userRole,
   }
 })=> ({
   fetchingEvent,
   eventData,
   accessToken,
-  userData
+  userData,
+  userRole,
 });
 
 const mapDispatchToProps = {

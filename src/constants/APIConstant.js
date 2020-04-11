@@ -14,4 +14,5 @@ export const requestURLS = {
   CHANGE_PASSWORD: "authentication/change-password",
   EVENT_OPERATIONS: "core/event/",
   UPLOAD_IMAGE: "core/presigned-url",
+  INVITEE_LIST: "core/event/invitee",
 };

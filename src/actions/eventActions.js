@@ -19,9 +19,28 @@ export const updateEvent = ({formData, callback, accessToken, eventId}) => {
       };
 }
 
-export const fetchEvents = (userData) => {
+export const fetchEvents = ({userData,accessToken}) => {
     return {
         type: actionEventTypes.GET_EVENT_LIST,
-        userData: userData
+        userData,
+        accessToken
+    }
+}
+
+export const getEventData = ({id,accessToken,userRole,callback}) => {
+    return {
+        type: actionEventTypes.GET_EVENT_DATA,
+        eventId:id,
+        userRole: userRole,
+        accessToken: accessToken,
+        callback: callback
+    }
+}
+
+export const saveInviteeList = ({accessToken,data}) => {
+    return {
+        type: actionEventTypes.SAVE_INVITEE,
+        accessToken: accessToken,
+        data: data,
     }
 }

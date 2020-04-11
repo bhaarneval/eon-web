@@ -46,11 +46,12 @@ class EventCount extends Component {
     }
 
     render () {
+        const {eventData} = this.props;
         return (
             <div className="detail-card-count">
                 <div className="detail-card-tile detail-card-container">
                     <div>
-                        <span className="detail-card-tile-row"><img className="subscriber-image" src={user}/><div className="detail-card-tile-text">200</div></span>
+        <span className="detail-card-tile-row"><img className="subscriber-image" src={user}/><div className="detail-card-tile-text">{eventData.sold_tickets}</div></span>
                         <div>
                             No of Subscribers
                         </div>
@@ -111,6 +112,7 @@ class EventCount extends Component {
  EventCount.propTypes = {
     event: PropTypes.object.isRequired,
     history: PropTypes.object,
+    eventData: PropTypes.object,
 }
 
 export default EventCount;

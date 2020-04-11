@@ -7,7 +7,6 @@ function checkResponse(response,responseJson) {
     throw responseJson;
   } else return;
 }
-const accessToken = localStorage.getItem("token");
 
 export function* createNewEvent(param) {
   let { data, callback, eventId,accessToken } = param;
@@ -84,7 +83,7 @@ export function* createNewEvent(param) {
 }
 
 export function* fetchEventsList(param){
-    const {userData} = param;
+    const {userData, accessToken} = param;
     const headers = {
         Authorization:`Bearer ${accessToken}`,
     }
@@ -115,7 +114,67 @@ export function* fetchEventsList(param){
 
 }
 
+export function* fetchEventData(param) {
+    const {eventId, accessToken, userRole, callback} = param;
+    const headers = {
+        Authorization:`Bearer ${accessToken}`,
+    }
+    try{
+        yield put({type:actionEventTypes.SET_EVENT_FETCHING});
+        const getURL = APIService.dev+requestURLS.EVENT_OPERATIONS+`${eventId}/`;
+        let responseObject = {};
+        const responseJson = yield fetch(getURL, {
+            headers: headers,
+            method: "GET",
+        }).then(response => {
+            responseObject = response;
+            return response.json();
+        });
+
+        checkResponse(responseObject,responseJson);
+
+        yield put({type:actionEventTypes.RECEIVED_EVENT_DATA, payload:userRole==="organiser"?responseJson.data[0]
+        :responseJson.data});
+        callback();
+    } catch (e) {
+        console.error(e);
+        yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+        callback(e.message);
+    }
+
+}
+
+export function* saveInvitees(param) {
+    const {accessToken, data} = param;
+    const headers = {
+        "Content-Type": "application/json",
+        Authorization:`Bearer ${accessToken}`,
+    } 
+    try{
+        yield put({type:actionEventTypes.SET_EVENT_FETCHING});
+        let getURL = APIService.dev+requestURLS.INVITEE_LIST;
+        let responseObject = {};
+        let responseJson = yield fetch(getURL, {
+            headers: headers,
+            method: "POST",
+            body: JSON.stringify(data),
+        }).then(response => {
+            responseObject = response;
+            return response.json();
+        });
+
+        checkResponse(responseObject,responseJson);
+        
+        yield put({type: actionEventTypes.UPDATE_INVITEE, payload:responseJson.data.invitee_list})
+    } catch (e) {
+        console.error(e);
+        yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    }
+}
+
 export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.CREATE_EVENT, createNewEvent);
   yield takeLatest(actionEventTypes.GET_EVENT_LIST, fetchEventsList);
+  yield takeLatest(actionEventTypes.GET_EVENT_DATA, fetchEventData);
+  yield takeLatest(actionEventTypes.SAVE_INVITEE, saveInvitees);
 }

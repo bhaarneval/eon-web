@@ -10,15 +10,15 @@ const columns = [
   },
   {
     title: 'Name',
-    dataIndex: 'name',
+    dataIndex: 'user',
   },
   {
     title: 'Contact',
-    dataIndex: 'contact',
+    dataIndex: 'user.contact_number',
   },
   {
     title: 'Discount',
-    dataIndex: 'discount',
+    dataIndex: 'event.discount_percentage',
   },
 ];
 
@@ -36,7 +36,6 @@ class EventTable extends React.Component {
   };
 
   onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
 
@@ -47,6 +46,18 @@ class EventTable extends React.Component {
       onChange: this.onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
+
+    let tableData = [];
+    const data= this.props.data;
+    for( let i=0;i<Object.keys(data).length!=0;i++){
+      let newData = {
+        email: data[i].email,
+        name: data[i].user.name,
+        contact: data[i].user.contact_number,
+        discount: data[i].event.discount_percentage,
+      };
+      tableData = [...tableData,newData]
+    }
     return (
       <div style={{marginTop: !hasSelected ? '50px' : '10px', marginBottom: '50px'}}>
         {/* <div>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</div> */}
@@ -54,7 +65,7 @@ class EventTable extends React.Component {
             <Button type="primary" className="deleteButton" onClick={() => this.props.deleteAll(this.state.selectedRowKeys)}>
                 Delete Selected
             </Button>}
-        <Table pagination={false} rowSelection={rowSelection} columns={columns} dataSource={this.props.data} />
+        <Table pagination={false} rowSelection={rowSelection} columns={columns} dataSource={tableData} />
       </div>
     );
   }

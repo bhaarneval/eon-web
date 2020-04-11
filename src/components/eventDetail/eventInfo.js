@@ -9,9 +9,11 @@ import {Modal} from 'antd';
 import {
     MoreOutlined,
   } from '@ant-design/icons';
+  import URLIMage from "../../assets/URL.svg";
   import shareImg from "../../assets/share.svg";
   import AddBookmark from "../../assets/addBookmark.svg";
   import Bookmarked from "../../assets/bookmarked.svg";
+import moment from 'moment';
 
 class EventInfo extends Component {
     constructor(props) {
@@ -57,7 +59,7 @@ class EventInfo extends Component {
     }
 
     render() {
-        console.log(this.props.isOrganizer)
+
         const bookMarkImg = this.state.bookmarked?Bookmarked:AddBookmark;
         const menuSidebar = (
             <Menu onClick={key => this.takeMenuAction(key)}>
@@ -65,14 +67,18 @@ class EventInfo extends Component {
                 <Menu.Item key="2">Edit</Menu.Item>
             </Menu>
         );
+        const {eventData} = this.props;
+        let eventDate = eventData.date + " "+ eventData.time;
+        eventDate = moment(eventDate,"DD-MMMM hh:mm A");
+        eventDate = eventDate.format("DD MMMM, hh:mm A");
         return (
             <div className="detail-card">
                 <div className="detail-card-top">
                     <img src={dummyImg} className="detail-img"/>
                     <div className="detail-card-top-descContainer">
-                        <h2>Technex</h2>
+                        <h2>{eventData.name}</h2>
                         <div className="detail-card-top-desc">
-                            description
+                            {eventData.description}
                         </div>
                     </div>
                     {this.props.isOrganizer ? (
@@ -89,23 +95,23 @@ class EventInfo extends Component {
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
                         <div><b>Type of event</b></div>
-                        <div>Technical</div>
+                    <div>{eventData.type}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>No. of Tickets</b></div>
-                        <div>1000</div>
+                    <div>{eventData.no_of_tickets}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>Event Date & Time</b></div>
-                        <div>24th march, 9 am</div>
+                        <div>{eventDate}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>Subsription Fee</b></div>
-                        <div>500</div>
+                    <div>{eventData.subscription_fee===0?"FREE":eventData.subscription_fee}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>URL</b></div>
-                        <div><a rel="noopener noreferrer" href="https://www.google.com" target="_blank">Google</a></div>
+                        <div><a rel="noopener noreferrer" href={eventData.external_links} target="_blank"><img src={URLIMage}/></a></div>
                     </div>
                 </div>
 
@@ -139,7 +145,7 @@ class EventInfo extends Component {
 
 
  EventInfo.propTypes = {
-    event: PropTypes.object.isRequired,
+    eventData: PropTypes.object.isRequired,
     isSubscriber: PropTypes.Boolean,
     isOrganizer: PropTypes.Boolean,
     handleShare: PropTypes.func,

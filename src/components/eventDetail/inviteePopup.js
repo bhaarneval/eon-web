@@ -9,11 +9,13 @@ const { TextArea } = Input;
 class InviteesPopup extends Component {
     constructor(props) {
         super(props);
+        const {eventData} =this.props;
         this.state = {
             inviteeList: {},
             count: 0,
             message:'',
-            emailError:''
+            emailError:'',
+            amount: eventData.subscription_fee,
         }
     }
 
@@ -66,7 +68,8 @@ class InviteesPopup extends Component {
     }
 
     render(){
-        const { handleSend, handleClose, onDiscountChange } = this.props;
+        const { handleSend, handleClose, onDiscountChange, discountPercentage } = this.props;
+        let amount = this.state.amount-((this.state.amount*discountPercentage)/100);
         return(
             <Modal
                 visible
@@ -101,6 +104,7 @@ class InviteesPopup extends Component {
                                 min={0}
                                 size="large"
                                 max={100}
+                                value={discountPercentage}
                                 formatter={value => `${value}%`}
                                 parser={value => value.replace('%', '')}
                                 onChange={onDiscountChange}
@@ -110,7 +114,7 @@ class InviteesPopup extends Component {
                             <div>Updated Fee:</div>
                             <InputNumber
                                 size="large"
-                                value={200}
+                                value={amount}
                                 disabled={true}
                             />
                         </div>
@@ -130,6 +134,8 @@ class InviteesPopup extends Component {
     handleSend: PropTypes.func.isRequired,
     handleClose: PropTypes.func.isRequired,
     onDiscountChange: PropTypes.func.isRequired,
+    eventData: PropTypes.object,
+    discountPercentage: PropTypes.number,
 }
 
 export default InviteesPopup;
