@@ -10,7 +10,7 @@ import emptyImg from "../../assets/image.svg";
 
 
 export default function EventCards(props) {
-    const {event} = props;
+    const {event,onClick} = props;
     let {id,name, sold_tickets, date,time, images, location,subscription_fee, is_subscribed} = event;
     let eventDate = date+" "+time;
     eventDate = moment(eventDate,"DD-MM-YYYY hh:mm A");
@@ -19,7 +19,7 @@ export default function EventCards(props) {
     <Card
       bordered={true}
       className="cards-style"
-      onClick={() => props.history.push(`/event-details/${id}`)}
+      onClick={() => onClick(id)}
       cover={
         <div className="image-status-container">
           <img
@@ -51,4 +51,5 @@ export default function EventCards(props) {
 EventCards.propTypes = {
     event: PropTypes.object.isRequired,
     history: PropTypes.object,
+    onClick: PropTypes.func,
 }

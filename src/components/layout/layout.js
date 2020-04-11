@@ -41,7 +41,7 @@ function StyledComp(props) {
                 <Route path="/change-password" exact component={ChangePassword} />
                 <Route path="/dashboard" exact component = {Dashboard}/>
                 <Route path="/create" exact component={CreateEvent}/>
-                <Route path="/event-details/1" exact component = {EventDetail}/>
+                <Route path="/event-details/" component = {EventDetail}/>
                 <Route path="/profile/1" component = {Profile}/>
               </Switch>
             }

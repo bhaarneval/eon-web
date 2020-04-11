@@ -5,12 +5,12 @@ import "./dashboard.css";
 import EventCards from "../../components/eventCards/eventCards";
 import UserEventcards from "../../components/eventCards/userEventCards";
 
-import { Row, Button, Spin } from "antd";
+import { Row, Button, Spin, message } from "antd";
 import SearchBox from '../../components/commonComponents/searchBox';
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import StyledRangePicker from "../../components/commonComponents/rangePicker";
 import { connect } from "react-redux";
-import { fetchEvents } from "../../actions/eventActions";
+import { fetchEvents, getEventData } from "../../actions/eventActions";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -23,8 +23,8 @@ class Dashboard extends Component {
     };
   }
   componentDidMount(){
-    const {fetchEvents, userData} = this.props;
-    fetchEvents(userData);
+    const {fetchEvents, userData,accessToken} = this.props;
+    fetchEvents({userData,accessToken});
   }
 
   componentDidUpdate(prevProps){
@@ -34,6 +34,19 @@ class Dashboard extends Component {
         eventsList: this.props.eventList,
       })
     }
+  }
+  handleEventClick = (id) =>{
+    const {getEventData,accessToken,history, userRole} = this.props;
+    getEventData({id,accessToken,userRole,
+    callback: (error)=>{
+      if(!error){
+        history.push(`/event-details/${id}`);
+      }
+      else{
+        message.error(error);
+      }
+    } });
+    
   }
 
   spliceArray = list => {
@@ -53,12 +66,14 @@ class Dashboard extends Component {
                 history={this.props.history}
                 key={index}
                 event={event}
+                onClick={this.handleEventClick}
               />
             ) : (
               <UserEventcards
                 history={this.props.history}
                 key={index}
                 event={event}
+                onClick={this.handleEventClick}
               />
             );
           })}
@@ -154,6 +169,7 @@ Dashboard.propTypes = {
   accessToken: PropTypes.string,
   fetchEvents: PropTypes.func,
   fetchingEvent: PropTypes.bool,
+  getEventData: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -174,7 +190,8 @@ const mapStateToProps = ({
   fetchingEvent
 })
 const mapDispatchToProps = {
-  fetchEvents: fetchEvents
+  fetchEvents: fetchEvents,
+  getEventData: getEventData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
