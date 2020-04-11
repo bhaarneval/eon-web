@@ -9,7 +9,7 @@ export const createNewEvent = ({formData,callback,accessToken,}) => {
     };
 }
 
-export const updateEvent = ({formData, callback, accessToken, eventId}) => {
+export const updateEventData = ({formData, callback, accessToken, eventId}) => {
     return {
         type: actionEventTypes.CREATE_EVENT,
         data: formData,

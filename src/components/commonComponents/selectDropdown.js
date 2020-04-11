@@ -17,7 +17,7 @@ export default function SelectDropDown (props) {
             {
                 optionsList?optionsList.map(option => {
                     return (
-                    <Option key={option} value = {option}>{option}</Option>
+                    <Option key={option.id} value = {option.id}>{option.type}</Option>
                     )
                 }):null
             }

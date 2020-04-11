@@ -70,7 +70,7 @@ class EventInfo extends Component {
                 <Menu.Item key="2">Edit</Menu.Item>
             </Menu>
         );
-        const {eventData} = this.props;
+        const {eventData, eventType} = this.props;
         let eventDate = eventData.date + " "+ eventData.time;
         eventDate = moment(eventDate,"DD-MMMM hh:mm A");
         eventDate = eventDate.format("DD MMMM, hh:mm A");
@@ -98,7 +98,7 @@ class EventInfo extends Component {
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
                         <div><b>Type of event</b></div>
-                    <div>{eventData.type}</div>
+                    <div>{eventType.length>0 && eventData.type?eventType.find(option => eventData.type===option.id).type.toUpperCase():""}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>No. of Tickets</b></div>
@@ -153,6 +153,7 @@ class EventInfo extends Component {
     handleShare: PropTypes.func,
     history: PropTypes.object,
     setEventUpdate: PropTypes.func,
+    eventType: PropTypes.array,
 }
 
 export default EventInfo;

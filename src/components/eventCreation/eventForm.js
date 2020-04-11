@@ -11,7 +11,7 @@ import { EVENT_NAME,URL_VALID,ONLY_NUMERIC,EVENT_LOCATION,EVENT_DATE,EVENT_TYPE,
 
 const {Option}=Select;
 export default function EventForm(props) {
-  const { values, handleSubmit, handleCancel,updateType, hasErrored, errorMessage } = props;
+  const { values, handleSubmit, handleCancel,updateType, hasErrored, errorMessage, eventType } = props;
   const {
     name,
     external_links,
@@ -57,6 +57,8 @@ export default function EventForm(props) {
     data.images = file;
     handleSubmit(data);
   }
+
+  console.log
 
   return (
     <div className="event-form-container">
@@ -207,18 +209,11 @@ export default function EventForm(props) {
                 showArrow={true}
                 style={{ height: "3em" }}
               >
-                <Option key="Tech" value={1}>
-                  Tech
-                </Option>
-                <Option key="Cultural" value={2}>
-                  Cultural
-                </Option>
-                <Option key="Fashion" value={3}>
-                  Fashion
-                </Option>
-                <Option key="Exhibition" value={4}>
-                  Exhibition
-                </Option>
+                {eventType?eventType.map(typeObject => {
+                    return (
+                    <Option key={typeObject.id} value = {typeObject.id}>{typeObject.type}</Option>
+                    )
+                }):null}
               </Select>
             </Form.Item>
             <Form.Item
@@ -269,4 +264,5 @@ EventForm.propTypes = {
   updateType: PropTypes.bool.isRequired,
   hasErrored: PropTypes.bool,
   errorMessage: PropTypes.string,
+  eventType: PropTypes.array,
 };

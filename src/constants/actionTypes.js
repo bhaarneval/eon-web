@@ -15,6 +15,7 @@ export const actionLoginTypes = {
     GET_CODE: "GET_CODE",
     FORGOT_PASSWORD: "FORGOT_PASSWORD",
     CHANGE_PASSWORD: "CHANGE_PASSWORD",
+    GET_EVENT_TYPE: "GET_EVENT_TYPE",
 };
 
 export const actionEventTypes = {

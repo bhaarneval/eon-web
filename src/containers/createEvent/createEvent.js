@@ -6,7 +6,7 @@ import BackButton from '../../components/commonComponents/backButton';
 import EventForm from '../../components/eventCreation/eventForm';
 
 import PropTypes from 'prop-types'
-import {createNewEvent, updateEvent} from "../../actions/eventActions";
+import {createNewEvent, updateEventData} from "../../actions/eventActions";
 
 class CreateEvent extends Component {
  constructor(props){
@@ -22,12 +22,16 @@ class CreateEvent extends Component {
    if(this.props.userRole!== "organiser"){
      this.props.history.push("/dashboard");
    }
-   if(this.state.updateType && !this.props.eventData.id){
-     this.goBack();
+   let searchParam = new URLSearchParams(this.props.location.search);
+   let type = searchParam.get("type");
+   console.log(type);
+   if(type==="edit" && !this.props.eventData.id){
+     this.props.history.push("/dashboard");
    }
+
  }
  handleSubmit = (values) => {
-   const { userData, accessToken, createNewEvent, updateEvent, eventData } = this.props;
+   const { userData, accessToken, createNewEvent, updateEventData, eventData } = this.props;
    if (!this.state.updateType) {
      values.event_created_by = userData.user_id;
      createNewEvent({
@@ -46,7 +50,7 @@ class CreateEvent extends Component {
      });
    }
    else{
-    updateEvent({
+    updateEventData({
       formData: values,
        accessToken,
        eventId: eventData.id,
@@ -81,8 +85,8 @@ class CreateEvent extends Component {
     <div className="create-container">
       <BackButton handleOnClick={()=>this.goBack("goBack", this.props.eventData.id)} text = {updateType?"Update Event":"Create Event"} />
       <div className="form-div">
-          <EventForm values = {updateType ? this.props.eventData:{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} updateType={updateType}
-          hasErrored={hasErrored} errorMessage = {errorMessage}/>
+          <EventForm values = {updateType? this.props.eventData:{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} updateType={updateType}
+          hasErrored={hasErrored} errorMessage = {errorMessage} eventType = {this.props.eventType}/>
       </div>
     </div>
     </Spin>
@@ -99,34 +103,37 @@ CreateEvent.propTypes = {
     createNewEvent: PropTypes.func,
     userData: PropTypes.object,
     eventData: PropTypes.object,
-    updateEvent: PropTypes.func,
+    updateEventData: PropTypes.func,
+    updateEvent: PropTypes.bool,
     userRole: PropTypes.string,
-    eventUpdate: PropTypes.bool,
+    eventType: PropTypes.array,
 }
 
 const mapStateToProps = ({
   eventReducer:{
     fetchingEvent,
     eventData,
-    eventUpdate,
+    updateEvent,
   },
   userReducer: {
     accessToken,
     userData,
     userRole,
+    eventType,
   }
 })=> ({
   fetchingEvent,
   eventData,
-  eventUpdate,
+  updateEvent,
   accessToken,
   userData,
   userRole,
+  eventType,
 });
 
 const mapDispatchToProps = {
   createNewEvent: createNewEvent,
-  updateEvent: updateEvent,
+  updateEventData: updateEventData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

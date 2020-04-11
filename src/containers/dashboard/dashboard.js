@@ -125,7 +125,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    const optionsList = ["Cultural","Tech","Fashion","Painting"];
     let eventsList = this.state.eventList;
     return (
       <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
@@ -139,7 +138,7 @@ class Dashboard extends Component {
             />
             <SelectDropDown
               handleChange={this.handleFilterChange}
-              optionsList={optionsList}
+              optionsList={this.props.eventType}
               placeholder={"Event Type"}
             />
             <StyledRangePicker handleChange={this.handleDateChange} />
@@ -169,13 +168,15 @@ Dashboard.propTypes = {
   fetchEvents: PropTypes.func,
   fetchingEvent: PropTypes.bool,
   getEventData: PropTypes.func,
+  eventType: PropTypes.array,
 };
 
 const mapStateToProps = ({
   userReducer: {
     userRole,
     userData,
-    accessToken
+    accessToken,
+    eventType,
   },
   eventReducer: {
     eventList,
@@ -185,6 +186,7 @@ const mapStateToProps = ({
   userRole,
   userData,
   accessToken,
+  eventType,
   eventList,
   fetchingEvent
 })

@@ -21,7 +21,7 @@ export function* getUser(param) {
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
     const getUrl = APIService.dev + requestURLS.LOGIN;
-    const headers = {
+    let headers = {
       "Content-Type": "application/json",
     };
     const responseJSON = yield fetch(getUrl, {
@@ -36,6 +36,23 @@ export function* getUser(param) {
     if (!recievedResponse.ok) {
       throw responseJSON;
     }
+
+    let getEventTypeURL = APIService.dev+requestURLS.GET_EVENT_TYPES;
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer${responseJSON.data.access}`
+    };
+    let eventType = yield fetch (getEventTypeURL,{
+      headers: headers,
+      method: "GET",
+    }).then(response=>{
+      recievedResponse = response;
+      return response.json();
+    });
+    if(!recievedResponse.ok){
+      throw responseJSON;
+    }
+    yield put({type:actionLoginTypes.GET_EVENT_TYPE, payload: eventType.data});
 
     yield put({
       type: actionLoginTypes.USER_RECIEVED,
@@ -61,7 +78,7 @@ export function* postUser(param) {
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
     const getUrl = APIService.dev + requestURLS.REGISTER;
-    const headers = {
+    let headers = {
       "Content-Type": "application/json",
     };
     const responseJSON = yield fetch(getUrl, {
@@ -75,6 +92,23 @@ export function* postUser(param) {
     if (!recievedResponse.ok) {
       throw responseJSON;
     }
+
+    let getEventTypeURL = APIService.dev+requestURLS.GET_EVENT_TYPES;
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer${responseJSON.data.access}`
+    };
+    let eventType = yield fetch (getEventTypeURL,{
+      headers: headers,
+      method: "GET",
+    }).then(response=>{
+      recievedResponse = response;
+      return response.json();
+    });
+    if(!recievedResponse.ok){
+      throw responseJSON;
+    }
+    yield put({type:actionLoginTypes.GET_EVENT_TYPE, payload: eventType.data});
 
     yield put({
       type: actionLoginTypes.USER_RECIEVED,

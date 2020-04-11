@@ -191,6 +191,7 @@ render() {
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         <EventInfo
           eventData = {this.props.eventData}
+          eventType = {this.props.eventType}
           history={this.props.history}
           isOrganizer={this.props.userRole === 'organiser'}
           handleShare={this.handleShare}
@@ -365,12 +366,14 @@ EventDetail.propTypes = {
   updateInviteeList: PropTypes.func,
   accessToken: PropTypes.string,
   setEventUpdate: PropTypes.func,
+  eventType: PropTypes.array,
 };
 
 const mapStateToProps = ({
   userReducer: {
     userRole,
     accessToken,
+    eventType,
   },
   eventReducer: {
     eventData,
@@ -380,6 +383,7 @@ const mapStateToProps = ({
 }) => ({
   userRole,
   accessToken,
+  eventType,
   eventData,
   fetchingEvent
 })
