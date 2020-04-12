@@ -69,7 +69,12 @@ class EventTable extends React.Component {
       <div style={{marginTop: !hasSelected ? '50px' : '10px', marginBottom: '50px'}}>
         {/* <div>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</div> */}
         {hasSelected && 
-            <Button type="primary" className="deleteButton" onClick={() => this.props.deleteAll(this.state.selectedRowKeys)}>
+            <Button type="primary" className="deleteButton" onClick={() => {
+              this.setState({
+                selectedRowKeys:[],
+              });
+              this.props.deleteAll(this.state.selectedRowKeys);
+            }}>
                 Delete Selected
             </Button>}
         <Table pagination={false} rowSelection={{
