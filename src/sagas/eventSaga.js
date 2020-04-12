@@ -1,4 +1,5 @@
 import { put, takeLatest } from "redux-saga/effects";
+
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionEventTypes } from "../constants/actionTypes";
 
@@ -115,7 +116,7 @@ if(filterData.type){
 if(filterData.startDate && filterData.endDate)
   params = {...params, start_date:filterData.startDate,end_date:filterData.endDate}
 if(filterData.search)
-  params = {...params, location: filterData.search}
+  params = {...params, search: filterData.search}
 
   try {
     yield put({ type: actionEventTypes.SET_EVENT_FETCHING });
