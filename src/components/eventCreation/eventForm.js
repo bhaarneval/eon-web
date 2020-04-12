@@ -19,7 +19,7 @@ export default function EventForm(props) {
     date,
     time,
     subscription_fee=0,
-    type,
+    event_type,
     description,
     no_of_tickets,
     images
@@ -100,7 +100,7 @@ export default function EventForm(props) {
             location: location,
             date: date,
             subscription_fee: subscription_fee,
-            type: type,
+            event_type: event_type,
             no_of_tickets: no_of_tickets,
             description: description,
           }}
@@ -194,7 +194,7 @@ export default function EventForm(props) {
               />
             </Form.Item>
             <Form.Item
-              name="type"
+              name="event_type"
               rules={[
                 {
                   required: true,
@@ -203,7 +203,7 @@ export default function EventForm(props) {
               ]}
             >
               <Select
-                placeholder="Type"
+                placeholder="Event Type"
                 size="large"
                 showSearch={false}
                 showArrow={true}

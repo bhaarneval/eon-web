@@ -98,7 +98,7 @@ class EventInfo extends Component {
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
                         <div><b>Type of event</b></div>
-                    <div>{eventType.length>0 && eventData.type?eventType.find(option => eventData.type===option.id).type.toUpperCase():""}</div>
+                    <div>{eventType.length>0 && eventData.event_type?eventType.find(option => eventData.event_type===option.id).type.toUpperCase():""}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>No. of Tickets</b></div>
