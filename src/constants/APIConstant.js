@@ -15,5 +15,5 @@ export const requestURLS = {
   GET_EVENT_TYPES: "core/event-type",
   EVENT_OPERATIONS: "core/event/",
   UPLOAD_IMAGE: "core/presigned-url",
-  INVITEE_LIST: "core/event/invitee",
+  INVITEE_LIST: "core/invite/",
 };

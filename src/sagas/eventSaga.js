@@ -201,7 +201,8 @@ export function* saveInvitees(param) {
       });
       checkResponse(responseObject, responseJson);
     } else {
-      getURL = getURL + `/${eventId}/`;
+      data.event_id = data.event;
+      delete data.event;
       yield fetch(getURL, {
         headers: headers,
         method: "DELETE",
