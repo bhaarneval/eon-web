@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
-import {Button, Input, Modal, Form, Spin} from 'antd';
+import {Button, Input, Modal, Form, Spin, message} from 'antd';
 import { CheckCircleFilled } from "@ant-design/icons";
 import EventInfo from "../../components/eventDetail/eventInfo";
 import EventCount from "../../components/eventDetail/eventCount";
@@ -14,7 +14,7 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
-import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification } from "../../actions/eventActions";
+import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -41,9 +41,20 @@ class EventDetail extends Component {
     }
   }
   componentDidMount(){
-    const {eventData, history} = this.props;
+    const {eventData, location:{search}, getEventData,accessToken, userRole} = this.props;
     if(!eventData.id){
-      history.push("/dashboard");
+      let searchParam = new URLSearchParams(search);
+      let id = searchParam.get("id");
+      getEventData({
+        id,
+        accessToken,
+        userRole,
+        callback: (error) => {
+          if (error) {
+            message.error(error);
+          }
+        },
+      }); 
     }
   }
 
@@ -99,11 +110,13 @@ handleSend = (inviteeList) => {
 }
 
 search = (event) => {
+  let searchText = event.target.value.toLowerCase();
     this.setState({
         searchValue: event.target.value,
         filteredRows: this.props.eventData.invitee_list.filter((data) => {
-          let name = data.user? data.user.name: "";
-          return name.includes(event.target.value)|| data.email.includes(event.target.value)})
+          let name = data.user? data.user.name.toLowerCase(): "";
+          let email = data.email.toLowerCase();
+          return name.includes(searchText)|| email.includes(searchText)})
     })
 }
 
@@ -387,6 +400,8 @@ EventDetail.propTypes = {
   eventType: PropTypes.array,
   cancelEvent: PropTypes.func,
   sendNotification: PropTypes.func,
+  location: PropTypes.object,
+  getEventData: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -412,6 +427,7 @@ const mapDispatchToProps = ({
   setEventUpdate: setEventUpdate,
   cancelEvent: cancelEvent,
   sendNotification: sendNotification,
+  getEventData: getEventData,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);
