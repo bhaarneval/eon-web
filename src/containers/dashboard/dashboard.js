@@ -40,7 +40,7 @@ class Dashboard extends Component {
     getEventData({id,accessToken,userRole,
     callback: (error)=>{
       if(!error){
-        history.push(`/event-details/${id}`);
+        history.push(`/event-details?id=${id}`);
       }
       else{
         message.error(error);
