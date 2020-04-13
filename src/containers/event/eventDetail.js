@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
-import {Button, Input, Modal, Form} from 'antd';
+import {Button, Input, Modal, Form, Spin} from 'antd';
 import { CheckCircleFilled } from "@ant-design/icons";
 import EventInfo from "../../components/eventDetail/eventInfo";
 import EventCount from "../../components/eventDetail/eventCount";
@@ -14,18 +14,19 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
+import { updateInviteeList, setEventUpdate } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
     super(props);
+    // const {eventData}=this.props;
     this.state = {
         showModal: false,
-        rows: [],
         searchValue: '',
         filteredRows: [],
-        discount: '',
+        discount: 0,
         noOfSeats: 1,
-        discountPercentage: 10,
+        discountPercentage: this.props.eventData.discount_percentage?this.props.eventData.discount_percentage:0,
         perHeadAmount: 500,
         showPayment: false,
         showPaymentSuccess: false,
@@ -39,6 +40,12 @@ class EventDetail extends Component {
         newSeats:0,
     }
   }
+  componentDidMount(){
+    const {eventData, history} = this.props;
+    if(!eventData.id){
+      history.push("/dashboard");
+    }
+  }
 
   inviteButtonClick = () => {
     this.setState({
@@ -48,47 +55,53 @@ class EventDetail extends Component {
 
   handleModalClose = () => {
     this.setState({
-        showModal: false
+        showModal: false,
+        discountPercentage: this.state.discount
     });
 }
 
 
 deleteAll = (list) => {
-    const deletedList = []
-    const data = this.state.rows;
-    {list.map((no) => {
-        return deletedList.push(data[no]);
-    })}
-    console.log(deletedList)
+  console.log(list);
+    const {updateInviteeList, accessToken, eventData} = this.props;
+    updateInviteeList({
+      data:{invitation_ids:list, event: eventData.id},
+      accessToken: accessToken,
+      updateType: "delete",
+    })
 }
 
 onDiscountChange = (value) => {
+  console.log(value);
     this.setState({
-        discount: value
+        discountPercentage: value
     })
 }
 
 handleSend = (inviteeList) => {
-    let data = [];
-    for (let i = 0; i < Object.keys(inviteeList).length; i++) {
-        data.push({
-            key: i,
-            email: inviteeList[Object.keys(inviteeList)[i]],
-            name: inviteeList[Object.keys(inviteeList)[i]],
-            contact: '1234567890',
-            discount: this.state.discount
-        });
-    }
+  console.log(inviteeList[0]);
+  const {updateInviteeList, eventData, accessToken} = this.props;
+  let invitees=[];
+  for (let i = 0; i < Object.keys(inviteeList).length; i++) {
+    invitees=[...invitees,inviteeList[i]] ;
+}
+    const data = {
+      event: eventData.id,
+      discount_percentage: this.state.discountPercentage,
+      invitee_list:invitees,
+
+    };
+    updateInviteeList({accessToken: accessToken, data: data, updateType:"save"});
     this.setState({
         showModal: false,
-        rows: data
+        discount:this.state.discountPercentage
     })
 }
 
 search = (event) => {
     this.setState({
         searchValue: event.target.value,
-        filteredRows: this.state.rows.filter((data) => {return data['name'].includes(event.target.value)})
+        filteredRows: this.props.eventData.invitee_list.filter((data) => {return data['name'].includes(event.target.value)})
     })
 }
 
@@ -115,7 +128,7 @@ handleFreeTicket = (seats) => {
     })
 }
 goBack = () => {
-    this.props.history.goBack();
+    this.props.history.push("/dashboard");
 }
 handlePaymentsBack = () => {
     this.setState({
@@ -173,18 +186,21 @@ handleRefundConfirm = () => {
 render() {
     const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
+      <Spin spinning={this.props.fetchingEvent} className="spinner">
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         <EventInfo
+          eventData = {this.props.eventData}
+          eventType = {this.props.eventType}
           history={this.props.history}
-          isSubscriber={this.props.userRole === 'subscriber'}
           isOrganizer={this.props.userRole === 'organiser'}
           handleShare={this.handleShare}
+          setEventUpdate={this.props.setEventUpdate}
         />
        {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
         {this.props.userRole === 'organiser' && (
           <div>
-            <EventCount />
+            <EventCount eventData = {this.props.eventData}/>
             <div className="invitee-row">
               <h2>
                 <b>Invitees List</b>
@@ -203,7 +219,7 @@ render() {
               data={
                 this.state.searchValue.length > 0
                   ? this.state.filteredRows
-                  : this.state.rows
+                  : this.props.eventData.invitee_list
               }
             />
             {this.state.showModal && (
@@ -211,6 +227,8 @@ render() {
                 handleClose={this.handleModalClose}
                 handleSend={this.handleSend}
                 onDiscountChange={this.onDiscountChange}
+                eventData = {this.props.eventData}
+                discountPercentage = {discountPercentage}
               />
             )}
           </div>
@@ -335,21 +353,43 @@ render() {
           </Modal>
         )}
       </div>
+      </Spin>
     );
   }
 }
 
 EventDetail.propTypes = {
   history: PropTypes.object,
-  userRole: PropTypes.string
+  userRole: PropTypes.string,
+  eventData: PropTypes.object,
+  fetchingEvent: PropTypes.bool,
+  updateInviteeList: PropTypes.func,
+  accessToken: PropTypes.string,
+  setEventUpdate: PropTypes.func,
+  eventType: PropTypes.array,
 };
 
 const mapStateToProps = ({
   userReducer: {
     userRole,
-  }
+    accessToken,
+    eventType,
+  },
+  eventReducer: {
+    eventData,
+    fetchingEvent
+  },
+
 }) => ({
   userRole,
+  accessToken,
+  eventType,
+  eventData,
+  fetchingEvent
+})
+const mapDispatchToProps = ({
+  updateInviteeList: updateInviteeList,
+  setEventUpdate: setEventUpdate,
 })
 
-export default connect(mapStateToProps)(EventDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

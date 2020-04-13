@@ -37,7 +37,7 @@ export const EXPIRY_REQUIRED = "Please enter expiry date";
 
 //create constant messages
 export const EVENT_NAME = "Event name cannot be empty!";
-export const URL_VALID = "Please enter a valid URL!";
+export const URL_VALID = "Please enter a valid URL! e.g. https://www.eon.com";
 export const EVENT_LOCATION = "location cannot be empty!";
 export const EVENT_DATE = "Event date cannot be empty!";
 export const EVENT_TYPE = "Event type cannot be empty!";

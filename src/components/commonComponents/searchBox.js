@@ -5,7 +5,7 @@ import {Select} from "antd";
 import searchImg from '../../assets/Search.svg';
 
 export default function SearchBox (props) {
-    const {handleOnChange, placeholder} = props;
+    const {handleKeyPress, placeholder} = props;
     return (
       <Select
         mode="multiple"
@@ -14,12 +14,13 @@ export default function SearchBox (props) {
         notFoundContent={null}
         placeholder={placeholder}
         suffixIcon={<img src={searchImg}/>}
-        onSearch={handleOnChange}
+        // onSearch={handleOnChange}
+        onKeyPress = {handleKeyPress}
       />
     );
 
 }
 SearchBox.propTypes = {
-    handleOnChange: Proptypes.func.isRequired,
+    handleKeyPress: Proptypes.func.isRequired,
     placeholder: Proptypes.string.isRequired,
 }

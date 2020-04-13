@@ -5,20 +5,48 @@ import "./dashboard.css";
 import EventCards from "../../components/eventCards/eventCards";
 import UserEventcards from "../../components/eventCards/userEventCards";
 
-import { dummyList } from "../../constants/constants";
-import { Row, Button } from "antd";
+import { Row, Button, Spin, message } from "antd";
 import SearchBox from '../../components/commonComponents/searchBox';
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import StyledRangePicker from "../../components/commonComponents/rangePicker";
 import { connect } from "react-redux";
+import { fetchEvents, getEventData } from "../../actions/eventActions";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventList:dummyList,
-      eventsList: dummyList,
+      eventList:[],
+      eventsList: [],
+      spinning: true,
+      role: this.props.userRole,
     };
+  }
+  componentDidMount(){
+    const {fetchEvents, userData,accessToken} = this.props;
+    fetchEvents({userData,accessToken});
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.eventList !== prevProps.eventList){
+      this.setState({
+        eventList: this.props.eventList,
+        eventsList: this.props.eventList,
+      })
+    }
+  }
+  handleEventClick = (id) =>{
+    const {getEventData,accessToken,history, userRole} = this.props;
+    getEventData({id,accessToken,userRole,
+    callback: (error)=>{
+      if(!error){
+        history.push(`/event-details/${id}`);
+      }
+      else{
+        message.error(error);
+      }
+    } });
+    
   }
 
   spliceArray = list => {
@@ -38,12 +66,14 @@ class Dashboard extends Component {
                 history={this.props.history}
                 key={index}
                 event={event}
+                onClick={this.handleEventClick}
               />
             ) : (
               <UserEventcards
                 history={this.props.history}
                 key={index}
                 event={event}
+                onClick={this.handleEventClick}
               />
             );
           })}
@@ -51,62 +81,39 @@ class Dashboard extends Component {
       );
     })
   };
-  filterList = (filterType,filterValue) => {
-    let eventList = this.state.eventList;
-    switch (filterType) {
-      case "location":
-        if(filterValue==="")
-          break;
-        eventList = eventList.filter(event => {
-          return event.eventLocation === filterValue || event.name === filterValue;
-        });
-        break;
-        case "type":
-        eventList = eventList.filter(event => {
-          return event.type === filterValue;
-        });
-        break;
-        case "date":
-        eventList = eventList.filter(event => {
-          return event.eventDate >= filterValue.startDate && event.eventDate <= filterValue.endDate;
-        });
-        break;
-      default:
-        console.error("Something wrong in dashboard filter");
-        break;
-    }
-    this.setState({
-      eventsList:eventList
-    })
-  }
-  handleSearchTextChange = (value) => {
-    this.filterList("location",value);
-  }
+
   handleFilterChange = (value) => {
-    this.filterList("type",value);
+    const {fetchEvents, userData,accessToken} = this.props;
+    fetchEvents({userData,accessToken, filterData:{type:value}});
   }
   handleDateChange = (date, dateString) => {
-    const startDate=moment(dateString[0]).format("DD-MM-YYYY");
-    const endDate = moment(dateString[1]).format("DD-MM-YYYY");
-    this.filterList("date",{startDate,endDate});
+    const {fetchEvents, userData,accessToken} = this.props;
+    if(dateString[0]!== "" && dateString[1]!=""){
+
+    const startDate=moment(dateString[0],"DD-MM-YYYY").format("YYYY-MM-DD");
+    const endDate = moment(dateString[1], "DD-MM-YYYY").format("YYYY-MM-DD");
+      fetchEvents({userData,accessToken, filterData:{startDate:startDate,endDate:endDate}});
+    }
+    else 
+      fetchEvents({userData,accessToken});
   }
   handleCreateEvent =() => {
     this.props.history.push("create");
   }
 
+  handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+        event.preventDefault();
+        const searchText = event.target.value;
+        const {fetchEvents, userData,accessToken} = this.props;
+        fetchEvents({userData,accessToken, filterData:{search:searchText}});
+    }
+}
+
   render() {
-    console.log(this.props.userRole, 'ddd', this.state)
-    const optionsList = ["Cultural","Tech","Fashion","Painting"];
     let eventsList = this.state.eventList;
-    let search = new URLSearchParams(this.props.location.search);
-    let type = search.get("type");
-    if(type == "wishlist"){
-      eventsList = dummyList.splice(3,5);
-    }
-    else {
-      eventsList = this.state.eventsList;
-    }
     return (
+      <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
       <div className="sub-content">
         <div className="events-heading"> Event Management </div>
         <div className="dashboard-actions-container">
@@ -114,10 +121,11 @@ class Dashboard extends Component {
             <SearchBox
               handleOnChange={this.handleSearchTextChange}
               placeholder={"Event Name / Location"}
+              handleKeyPress = {this.handleKeyPress}
             />
             <SelectDropDown
               handleChange={this.handleFilterChange}
-              optionsList={optionsList}
+              optionsList={this.props.eventType}
               placeholder={"Event Type"}
             />
             <StyledRangePicker handleChange={this.handleDateChange} />
@@ -132,6 +140,7 @@ class Dashboard extends Component {
           {this.spliceArray(eventsList)}
         </div>
       </div>
+      </Spin>
     );
   }
 }
@@ -140,15 +149,38 @@ Dashboard.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   userRole: PropTypes.string,
+  userData: PropTypes.object,
+  eventList: PropTypes.array,
+  accessToken: PropTypes.string,
+  fetchEvents: PropTypes.func,
+  fetchingEvent: PropTypes.bool,
+  getEventData: PropTypes.func,
+  eventType: PropTypes.array,
 };
 
 const mapStateToProps = ({
   userReducer: {
     userRole,
+    userData,
+    accessToken,
+    eventType,
+  },
+  eventReducer: {
+    eventList,
+    fetchingEvent
   }
 }) => ({
   userRole,
+  userData,
+  accessToken,
+  eventType,
+  eventList,
+  fetchingEvent
 })
+const mapDispatchToProps = {
+  fetchEvents: fetchEvents,
+  getEventData: getEventData,
+};
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 

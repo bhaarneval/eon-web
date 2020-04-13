@@ -35,33 +35,59 @@ class EventTable extends React.Component {
     }, 1000);
   };
 
-  onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
-    this.setState({ selectedRowKeys });
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({selectedRowKeys});
+
   };
+
+  getTableData = () => {
+    let tableData = [];
+    const data= this.props.data || [];
+    for( let i=0;i<data.length;i++){
+      let newData = {
+        key: data[i].invitation_id,
+        email: data[i].email,
+        name: data[i].user.name,
+        contact: data[i].user.contact_number,
+        discount: data[i].discount_percentage,
+      };
+      tableData = [...tableData,newData]
+    }
+    return tableData;
+  }
 
   render() {
     const { selectedRowKeys } = this.state;
     const rowSelection = {
-      selectedRowKeys,
       onChange: this.onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
+
+    let tableData = this.getTableData();
+
     return (
       <div style={{marginTop: !hasSelected ? '50px' : '10px', marginBottom: '50px'}}>
         {/* <div>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</div> */}
         {hasSelected && 
-            <Button type="primary" className="deleteButton" onClick={() => this.props.deleteAll(this.state.selectedRowKeys)}>
+            <Button type="primary" className="deleteButton" onClick={() => {
+              this.setState({
+                selectedRowKeys:[],
+              });
+              this.props.deleteAll(this.state.selectedRowKeys);
+            }}>
                 Delete Selected
             </Button>}
-        <Table pagination={false} rowSelection={rowSelection} columns={columns} dataSource={this.props.data} />
+        <Table pagination={false} rowSelection={{
+          type: 'checkbox',
+          ...rowSelection,
+        }} columns={columns} dataSource={tableData} />
       </div>
     );
   }
 }
 
 EventTable.propTypes = {
-    data: PropTypes.object,
+    data: PropTypes.array,
     deleteAll: PropTypes.func,
 };
 

@@ -6,6 +6,7 @@ const initialData = {
   refreshToken: "",
   userData: {},
   userRole: "",
+  eventType: [],
 };
 
 const userReducer = (state = initialData, action) => {
@@ -24,6 +25,11 @@ const userReducer = (state = initialData, action) => {
           userRole: action.payload.user.role.role,
           fetchingUser: false,
         };
+      case actionLoginTypes.GET_EVENT_TYPE:
+        return {
+          ...state,
+          eventType: action.payload
+        }
       case actionLoginTypes.USER_ERROR:
         return {
           ...state,
