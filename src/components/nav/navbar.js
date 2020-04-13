@@ -103,7 +103,7 @@ class Navbar extends Component {
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
           {this.props.userRole === 'subscriber' &&
-            <BellOutlined style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
+            <BellOutlined className="nav-items" style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
           }
           {this.state.openNotification &&
             <div className="notification">
@@ -122,11 +122,11 @@ class Navbar extends Component {
           }
           {this.props.accessToken !== "" ?
             <Dropdown overlay={menuSidebar}>
-              <div>{this.props.userData.name} <DownOutlined /></div>
+              <div className="nav-items">{this.props.userData.name ? this.props.userData.name : this.props.userData.email} <DownOutlined /></div>
             </Dropdown>
           :
           <Dropdown overlay={menu} >
-            <div style={{color:"#262C6F"}}>Register <DownOutlined /></div>
+            <div className="nav-items">Register <DownOutlined /></div>
           </Dropdown>
           }
         <div className="logo-text">EOn</div>

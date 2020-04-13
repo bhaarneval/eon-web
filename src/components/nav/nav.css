@@ -6,7 +6,6 @@
 .top-nav {
     display: flex;
     float: right;
-    width: 15%;
     align-items: center;
     justify-content: space-between;
     font-weight: 600;
@@ -54,4 +53,9 @@
     float: right;
     padding: 10px;
     margin-bottom: 20px;
+}
+
+.nav-items{
+    color: #262C6F;
+    margin-right: 20px;
 }
