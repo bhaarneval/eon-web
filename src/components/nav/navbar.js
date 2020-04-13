@@ -65,7 +65,7 @@ class Navbar extends Component {
       this.props.history.push(`/profile/1`)
     else if (input.key === "5"){
       const {accessToken, userData, fetchEvents} = this.props;
-      fetchEvents({userData: userData, accessToken: accessToken, filter:{is_wishlisted: true}});
+      fetchEvents({userData: userData, accessToken: accessToken, filterData:{is_wishlisted: "True"}});
       this.props.history.push(`/dashboard?type=wishlist`);
     }  
     else{

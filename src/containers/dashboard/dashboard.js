@@ -35,7 +35,7 @@ class Dashboard extends Component {
       fetchEvents({ userData, accessToken });
     }
     else if(type === "wishlist"){
-      fetchEvents({userData, accessToken, filterData:{is_wishlisted: true}})
+      fetchEvents({userData, accessToken, filterData:{is_wishlisted: "True"}})
     }
   }
 
@@ -136,7 +136,7 @@ class Dashboard extends Component {
       fetchEvents({
         userData,
         accessToken,
-        filterData: { event_created_by: true },
+        filterData: { event_created_by: "True" },
       });
     } else {
       fetchEvents({ userData, accessToken });
