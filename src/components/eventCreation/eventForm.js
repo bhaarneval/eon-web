@@ -29,7 +29,7 @@ export function EventForm(props) {
     dateTime =  date+" "+time;
   }
   const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
-  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"DD-MM-YYYY hh:mm A")) : useState("");
+  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm A")) : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState({});
 
@@ -285,7 +285,7 @@ export function UpdateEventForm(props) {
     dateTime =  date+" "+time;
   }
   const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
-  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"DD-MM-YYYY hh:mm A")) : useState("");
+  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm A hh:mm A")) : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState({});
 
