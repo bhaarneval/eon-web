@@ -28,13 +28,14 @@ export const fetchEvents = ({userData,accessToken, filterData}) => {
     }
 }
 
-export const getEventData = ({id,accessToken,userRole,callback}) => {
+export const getEventData = ({id,accessToken,userRole,callback, ifUpdate}) => {
     return {
         type: actionEventTypes.GET_EVENT_DATA,
         eventId:id,
         userRole: userRole,
         accessToken: accessToken,
-        callback: callback
+        callback: callback,
+        ifUpdate: ifUpdate
     }
 }
 
@@ -51,5 +52,23 @@ export const setEventUpdate = (payload) => {
     return {
         type: actionEventTypes.SET_EVENT_UPDATE,
         payload: payload
+    }
+}
+
+export const cancelEvent = ({message, accessToken, eventId, callback}) => {
+    return {
+        type: actionEventTypes.CANCEL_EVENT,
+        message: message,
+        accessToken: accessToken,
+        eventId: eventId,
+        callback: callback,
+    }
+}
+
+export const sendNotification = ({data, accessToken}) => {
+    return {
+        type: actionEventTypes.NOTIFY_SUBSCRIBER,
+        data:data,
+        accessToken: accessToken,
     }
 }

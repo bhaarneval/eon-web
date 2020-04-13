@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
-import {Button, Input, Modal, Form, Spin} from 'antd';
+import {Button, Input, Modal, Form, Spin, message} from 'antd';
 import { CheckCircleFilled } from "@ant-design/icons";
 import EventInfo from "../../components/eventDetail/eventInfo";
 import EventCount from "../../components/eventDetail/eventCount";
@@ -14,7 +14,7 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
-import { updateInviteeList, setEventUpdate } from "../../actions/eventActions";
+import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -41,9 +41,20 @@ class EventDetail extends Component {
     }
   }
   componentDidMount(){
-    const {eventData, history} = this.props;
+    const {eventData, location:{search}, getEventData,accessToken, userRole} = this.props;
     if(!eventData.id){
-      history.push("/dashboard");
+      let searchParam = new URLSearchParams(search);
+      let id = searchParam.get("id");
+      getEventData({
+        id,
+        accessToken,
+        userRole,
+        callback: (error) => {
+          if (error) {
+            message.error(error);
+          }
+        },
+      }); 
     }
   }
 
@@ -99,9 +110,13 @@ handleSend = (inviteeList) => {
 }
 
 search = (event) => {
+  let searchText = event.target.value.toLowerCase();
     this.setState({
         searchValue: event.target.value,
-        filteredRows: this.props.eventData.invitee_list.filter((data) => {return data['name'].includes(event.target.value)})
+        filteredRows: this.props.eventData.invitee_list.filter((data) => {
+          let name = data.user? data.user.name.toLowerCase(): "";
+          let email = data.email.toLowerCase();
+          return name.includes(searchText)|| email.includes(searchText)})
     })
 }
 
@@ -183,6 +198,20 @@ handleRefundConfirm = () => {
     })
 }
 
+handleNotifySubscriber = (message, type) => {
+  const {accessToken, sendNotification, eventData } = this.props;
+  const data = {
+    event_id:eventData.id,
+    message: message,
+    type: type,
+  };
+
+sendNotification({
+    data: data,
+    accessToken: accessToken
+  });
+}
+
 render() {
     const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
@@ -196,11 +225,13 @@ render() {
           isOrganizer={this.props.userRole === 'organiser'}
           handleShare={this.handleShare}
           setEventUpdate={this.props.setEventUpdate}
+          cancelEvent = {this.props.cancelEvent}
+          accessToken = {this.props.accessToken}
         />
        {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
         {this.props.userRole === 'organiser' && (
           <div>
-            <EventCount eventData = {this.props.eventData}/>
+            <EventCount eventData = {this.props.eventData} notifySubscriber = {this.handleNotifySubscriber}/>
             <div className="invitee-row">
               <h2>
                 <b>Invitees List</b>
@@ -210,7 +241,7 @@ render() {
               </Button>
             </div>
             <Input
-              placeholder="input search text"
+              placeholder="Name / Email"
               onChange={(event) => this.search(event)}
               style={{ width: 200, position: "absolute", zIndex: 1 }}
             />
@@ -367,6 +398,10 @@ EventDetail.propTypes = {
   accessToken: PropTypes.string,
   setEventUpdate: PropTypes.func,
   eventType: PropTypes.array,
+  cancelEvent: PropTypes.func,
+  sendNotification: PropTypes.func,
+  location: PropTypes.object,
+  getEventData: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -390,6 +425,9 @@ const mapStateToProps = ({
 const mapDispatchToProps = ({
   updateInviteeList: updateInviteeList,
   setEventUpdate: setEventUpdate,
+  cancelEvent: cancelEvent,
+  sendNotification: sendNotification,
+  getEventData: getEventData,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

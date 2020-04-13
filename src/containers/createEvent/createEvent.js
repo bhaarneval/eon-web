@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import {connect } from "react-redux";
 import './createEvent.css';
-import {Spin} from "antd";
+import {Spin, message} from "antd";
 import BackButton from '../../components/commonComponents/backButton';
-import EventForm from '../../components/eventCreation/eventForm';
+import {EventForm, UpdateEventForm} from '../../components/eventCreation/eventForm';
 
 import PropTypes from 'prop-types'
-import {createNewEvent, updateEventData} from "../../actions/eventActions";
+import {createNewEvent, updateEventData, getEventData} from "../../actions/eventActions";
 
 class CreateEvent extends Component {
  constructor(props){
    super(props);
    this.state={
+     formData: {},
      updateType: this.props.updateEvent,
      hasErrored: false,
      errorMessage: "Something went Wrong",
@@ -19,16 +20,41 @@ class CreateEvent extends Component {
  }
 
  componentDidMount() {
-   if(this.props.userRole!== "organiser"){
-     this.props.history.push("/dashboard");
-   }
-   let searchParam = new URLSearchParams(this.props.location.search);
-   let type = searchParam.get("type");
-   console.log(type);
-   if(type==="edit" && !this.props.eventData.id){
+   if (this.props.userRole !== "organiser") {
      this.props.history.push("/dashboard");
    }
 
+   let searchParam = new URLSearchParams(this.props.location.search);
+   let type = searchParam.get("type");
+   let id = searchParam.get("id");
+   if (type === "edit" && !this.props.eventData.id) {
+     const { getEventData, accessToken, userRole } = this.props;
+     getEventData({
+       id,
+       accessToken,
+       userRole,
+       callback: (error) => {
+         if (error) {
+           message.error(error);
+         }
+       },
+       ifUpdate:true,
+     });
+   }
+   else if(type === "edit" && this.props.eventData.id){
+     this.setState({
+       updateType: true
+     })
+   }
+ }
+
+ componentDidUpdate(prevProps){
+   if(this.props.eventData !== prevProps.eventData){
+     this.setState({
+       updateType:true,
+
+     })
+   }
  }
  handleSubmit = (values) => {
    const { userData, accessToken, createNewEvent, updateEventData, eventData } = this.props;
@@ -71,7 +97,7 @@ class CreateEvent extends Component {
 
  goBack = (event,id) => {
     if(this.state.updateType || event!=="goBack"){
-      this.props.history.replace(`/event-details/${id}`);
+      this.props.history.replace(`/event-details?id=${id}`);
     }
     else
      this.props.history.push("/dashboard");
@@ -80,13 +106,18 @@ class CreateEvent extends Component {
 
  render() {
    let {updateType, hasErrored,errorMessage} = this.state;
+   let {eventData} = this.props;
   return (
-    <Spin spinning={this.props.fetchingEvent} className="spinner">
+    <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
     <div className="create-container">
       <BackButton handleOnClick={()=>this.goBack("goBack", this.props.eventData.id)} text = {updateType?"Update Event":"Create Event"} />
       <div className="form-div">
-          <EventForm values = {updateType? this.props.eventData:{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} updateType={updateType}
+          { updateType && eventData.id?
+          <UpdateEventForm values = { eventData } handleSubmit={this.handleSubmit} handleCancel={this.goBack} updateType={updateType}
+          hasErrored={hasErrored} errorMessage = {errorMessage} eventType = {this.props.eventType}/>:
+          <EventForm values = {{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} updateType={updateType}
           hasErrored={hasErrored} errorMessage = {errorMessage} eventType = {this.props.eventType}/>
+        }
       </div>
     </div>
     </Spin>
@@ -107,6 +138,7 @@ CreateEvent.propTypes = {
     updateEvent: PropTypes.bool,
     userRole: PropTypes.string,
     eventType: PropTypes.array,
+    getEventData: PropTypes.func,
 }
 
 const mapStateToProps = ({
@@ -134,6 +166,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   createNewEvent: createNewEvent,
   updateEventData: updateEventData,
+  getEventData: getEventData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

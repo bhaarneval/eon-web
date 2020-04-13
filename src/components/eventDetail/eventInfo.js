@@ -53,7 +53,20 @@ class EventInfo extends Component {
         this.setState({
             cancelPopup: false,
         })
-        this.props.history.push(`/dashboard`);
+        const {eventData, cancelEvent,history, accessToken} = this.props;
+        cancelEvent({
+            message: this.state.message,
+            accessToken: accessToken,
+            eventId: eventData.id,
+            callback: (error) => {
+                if(!error){
+                    history.push("/dashboard");
+                }
+                else{
+                    console.error(error);
+                }
+            }
+        });
     }
     handleBookmark = () => {
         this.setState({
@@ -72,7 +85,7 @@ class EventInfo extends Component {
         );
         const {eventData, eventType} = this.props;
         let eventDate = eventData.date + " "+ eventData.time;
-        eventDate = moment(eventDate,"DD-MMMM hh:mm A");
+        eventDate = moment(eventDate,"YYYY-MM-DD hh:mm A");
         eventDate = eventDate.format("DD MMMM, hh:mm A");
         return (
             <div className="detail-card">
@@ -98,7 +111,7 @@ class EventInfo extends Component {
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
                         <div><b>Type of event</b></div>
-                    <div>{eventType.length>0 && eventData.event_type?eventType.find(option => eventData.event_type===option.id).type.toUpperCase():""}</div>
+                    <div>{eventType.length>0 && (eventData.event_type||eventData.type)?eventType.find(option => (eventData.event_type===option.id)||(eventData.type===option.id)).type.toUpperCase():""}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>No. of Tickets</b></div>
@@ -154,6 +167,8 @@ class EventInfo extends Component {
     history: PropTypes.object,
     setEventUpdate: PropTypes.func,
     eventType: PropTypes.array,
+    cancelEvent: PropTypes.func,
+    accessToken: PropTypes.string,
 }
 
 export default EventInfo;
