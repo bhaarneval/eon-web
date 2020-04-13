@@ -15,6 +15,8 @@ import Dashboard from "../../containers/dashboard/dashboard";
 import CreateEvent from "../../containers/createEvent/createEvent";
 import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
+import * as jwt from 'jsonwebtoken';
+
 
 function StyledComp(props) {
   const isLoggedin = props.userData.user_id;
@@ -53,6 +55,17 @@ function StyledComp(props) {
 }
 
 class LayoutComponent extends React.Component {
+
+  componentWillMount = () => {
+    const token = localStorage.getItem('token');
+    var decoded = jwt.decode(token, {complete: true});
+    const currentTime = Math.floor(new Date().getTime()/1000);
+    if (decoded && currentTime > decoded.payload.exp){
+      localStorage.clear();
+      window.location.replace('/login');
+    }
+  }
+
   render() {
     return (
       <StyledComp

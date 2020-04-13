@@ -24,7 +24,6 @@ export const getNotifications = (access) => {
 };
 
 export const readNotifications = ({list, access, callback}) => {
-  console.log(list, callback, access)
   return {
     type: actionNotificationsTypes.READ_NOTIFICATIONS,
     list: list,

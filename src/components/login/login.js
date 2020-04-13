@@ -38,7 +38,6 @@ class Login extends Component {
     this.props.getUser({...values,
     callback: (res, data)=> {
         if(res === 'success'){
-          console.log(res, data)
           this.props.history.push("/dashboard");
           this.props.getNotifications(data.access)
         }

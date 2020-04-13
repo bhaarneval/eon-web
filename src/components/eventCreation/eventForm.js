@@ -314,8 +314,6 @@ export function UpdateEventForm(props) {
     handleSubmit(data);
   }
 
-  console.log
-
   return (
     <div className="event-form-container">
       <div>

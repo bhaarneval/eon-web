@@ -2,9 +2,7 @@ import "./nav.css";
 /* eslint-disable */
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
 import { Dropdown, Menu } from 'antd';
-import { Button, notification } from 'antd';
 
 import {
   LogoutOutlined,
@@ -12,12 +10,6 @@ import {
   BellOutlined
 } from '@ant-design/icons';
 
-import {
-  LOGOUT,
-  MY_ACCOUNT,
-  LIGHT_MODE,
-  DARK_MODE
-} from "../../constants/constants";
 import { logOutUser, readNotifications } from "../../actions/commonActions";
 
 class Navbar extends Component {
@@ -81,7 +73,6 @@ class Navbar extends Component {
   }
 
   clearAll = () => {
-    console.log('sadasd')
     this.props.readNotifications({
       list: {"notification_ids" : [2,4]}, //get all notification ids
       access: this.props.accessToken,
@@ -108,27 +99,27 @@ class Navbar extends Component {
         <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
-    console.log(this.props)
-    console.log(this.props.notifications)
     return (
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
-          <BellOutlined style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
-            {this.state.openNotification &&
-              <div className="notification">
-                <div className="notification-header">
-                  <div>Notifications</div>
-                  <div onClick={this.openNotificationWithIcon}>X</div>
-                </div>
-                <div className="notification-clear" onClick={this.clearAll}>Clear All</div>
-                <div className="notification-body">
-                  {this.props.notifications && this.props.notifications.map(data => {
-                    return (<div className="li-item" key={data.notification_id} value = {data.notification_id}>{data.message}</div>)
-                    })
-                  }
-                </div>
+          {this.props.userRole === 'subscriber' &&
+            <BellOutlined style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
+          }
+          {this.state.openNotification &&
+            <div className="notification">
+              <div className="notification-header">
+                <div>Notifications</div>
+                <div onClick={this.openNotificationWithIcon}>X</div>
               </div>
-            }
+              <div className="notification-clear" onClick={this.clearAll}>Clear All</div>
+              <div className="notification-body">
+                {this.props.notifications && this.props.notifications.map(data => {
+                  return (<div className="li-item" key={data.notification_id} value = {data.notification_id}>{data.message}</div>)
+                  })
+                }
+              </div>
+            </div>
+          }
           {this.props.accessToken !== "" ?
             <Dropdown overlay={menuSidebar}>
               <div>{this.props.userData.name} <DownOutlined /></div>
@@ -148,7 +139,8 @@ class Navbar extends Component {
 const mapStateToProps = ({
   userReducer:{
     accessToken,
-    userData
+    userData,
+    userRole
   },
   notificationReducer:{
     notifications
@@ -156,6 +148,7 @@ const mapStateToProps = ({
 })=> ({
   accessToken,
   userData,
+  userRole,
   notifications
 });
 
