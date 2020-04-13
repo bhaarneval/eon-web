@@ -101,7 +101,9 @@ handleSend = (inviteeList) => {
 search = (event) => {
     this.setState({
         searchValue: event.target.value,
-        filteredRows: this.props.eventData.invitee_list.filter((data) => {return data['name'].includes(event.target.value)})
+        filteredRows: this.props.eventData.invitee_list.filter((data) => {
+          let name = data.user? data.user.name: "";
+          return name.includes(event.target.value)|| data.email.includes(event.target.value)})
     })
 }
 
@@ -226,7 +228,7 @@ render() {
               </Button>
             </div>
             <Input
-              placeholder="input search text"
+              placeholder="Name / Email"
               onChange={(event) => this.search(event)}
               style={{ width: 200, position: "absolute", zIndex: 1 }}
             />
