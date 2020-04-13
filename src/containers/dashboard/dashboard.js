@@ -28,8 +28,15 @@ class Dashboard extends Component {
     };
   }
   componentDidMount() {
-    const { fetchEvents, userData, accessToken } = this.props;
-    fetchEvents({ userData, accessToken });
+    const { fetchEvents, userData, accessToken, location:{search} } = this.props;
+    let searchParam = new URLSearchParams(search);
+    let type = searchParam.get("type");
+    if(type !== "wishlist"){
+      fetchEvents({ userData, accessToken });
+    }
+    else if(type === "wishlist"){
+      fetchEvents({userData, accessToken, filterData:{is_wishlisted: true}})
+    }
   }
 
   componentDidUpdate(prevProps) {

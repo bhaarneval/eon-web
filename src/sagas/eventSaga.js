@@ -119,7 +119,8 @@ if(filterData.search)
   params = {...params, search: filterData.search}
 if(filterData.event_created_by)
   params = {...params, event_created_by: filterData.event_created_by}
-
+if(filterData.is_wishlisted)
+  params = {...params, is_wishlisted:filterData.is_wishlisted}
   try {
     yield put({ type: actionEventTypes.SET_EVENT_FETCHING });
     let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS;

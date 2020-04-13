@@ -19,6 +19,7 @@ import {
   DARK_MODE
 } from "../../constants/constants";
 import { logOutUser } from "../../actions/commonActions";
+import {fetchEvents} from "../../actions/eventActions";
 
 class Navbar extends Component {
   constructor(props) {
@@ -62,8 +63,11 @@ class Navbar extends Component {
       this.props.history.push(`/change-password`)
     else if(input.key === "4")
       this.props.history.push(`/profile/1`)
-    else if (input.key === "5")
+    else if (input.key === "5"){
+      const {accessToken, userData, fetchEvents} = this.props;
+      fetchEvents({userData: userData, accessToken: accessToken, filter:{is_wishlisted: true}});
       this.props.history.push(`/dashboard?type=wishlist`);
+    }  
     else{
       this.logout()
     }
@@ -95,8 +99,6 @@ class Navbar extends Component {
         <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
-    console.log(this.props)
-    console.log(this.props.notifications)
     return (
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
@@ -141,7 +143,8 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = {
-  logOutUser: logOutUser
+  logOutUser: logOutUser,
+  fetchEvents: fetchEvents,
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Navbar);
