@@ -1,0 +1,4 @@
+<svg id="feedback-line" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <path id="Path_500" data-name="Path 500" d="M0,0H40V40H0Z" fill="none"/>
+  <path id="Path_501" data-name="Path 501" d="M10.019,32.128,2,38.5V4.821A1.81,1.81,0,0,1,3.8,3H36.2A1.81,1.81,0,0,1,38,4.821V30.308a1.81,1.81,0,0,1-1.8,1.821ZM5.6,31.009l3.173-2.521H34.4V6.641H5.6Zm12.6-9.8h3.6v3.641H18.2Zm0-10.923h3.6v9.1H18.2Z" transform="translate(0 0)" fill="#66bb6a"/>
+</svg>
