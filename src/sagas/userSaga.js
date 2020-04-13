@@ -40,7 +40,7 @@ export function* getUser(param) {
     let getEventTypeURL = APIService.dev+requestURLS.GET_EVENT_TYPES;
     headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer${responseJSON.data.access}`
+      Authorization: `Bearer ${responseJSON.data.access}`
     };
     let eventType = yield fetch (getEventTypeURL,{
       headers: headers,
@@ -96,7 +96,7 @@ export function* postUser(param) {
     let getEventTypeURL = APIService.dev+requestURLS.GET_EVENT_TYPES;
     headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer${responseJSON.data.access}`
+      Authorization: `Bearer ${responseJSON.data.access}`
     };
     let eventType = yield fetch (getEventTypeURL,{
       headers: headers,
