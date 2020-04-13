@@ -28,13 +28,14 @@ export const fetchEvents = ({userData,accessToken, filterData}) => {
     }
 }
 
-export const getEventData = ({id,accessToken,userRole,callback}) => {
+export const getEventData = ({id,accessToken,userRole,callback, ifUpdate}) => {
     return {
         type: actionEventTypes.GET_EVENT_DATA,
         eventId:id,
         userRole: userRole,
         accessToken: accessToken,
-        callback: callback
+        callback: callback,
+        ifUpdate: ifUpdate
     }
 }
 
