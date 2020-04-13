@@ -4,7 +4,7 @@ import { EMAIL_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
 import {  Form, Input, Button, Spin } from 'antd';
 import { Tabs } from 'antd';
-import { getUser } from "../../actions/commonActions";
+import { getUser, getNotifications } from "../../actions/commonActions";
 import { connect } from "react-redux";
 
 const { TabPane } = Tabs;
@@ -39,6 +39,7 @@ class Login extends Component {
     callback: (error)=> {
         if(!error){
           this.props.history.push("/dashboard");
+          this.props.getNotifications('3', 'sdsds')
         }
         else{
           this.setState({
@@ -47,7 +48,6 @@ class Login extends Component {
           })
         }
     }});
-    
   };
 
   onFinishFailed = errorInfo => {
@@ -134,7 +134,8 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = {
-  getUser: getUser
+  getUser: getUser,
+  getNotifications: getNotifications
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

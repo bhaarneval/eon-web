@@ -17,3 +17,19 @@
     color: #211d70;
     font-weight: bold;
 }
+
+.notification{
+    background: white;
+    position: absolute;
+    top: 40px;
+    border: 1px solid #80808026;
+    z-index: 1;
+    padding: 20px;
+    right: 30px;
+    flex-wrap: wrap;
+    width: 30%;
+}
+
+.li-item{
+    word-break: break-all
+}

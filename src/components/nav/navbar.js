@@ -20,25 +20,24 @@ import {
 } from "../../constants/constants";
 import { logOutUser } from "../../actions/commonActions";
 
-const openNotificationWithIcon = type => {
-  notification[type]({
-    message: 'Updates',
-    description:
-      'Location of techfest has been changed',
-  });
-};
-
 class Navbar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      openMenu: false
+      openMenu: false,
+      openNotification: false
     };
   }
 
   handleChange = () => {
     window.location.reload();
+  };
+
+  openNotificationWithIcon = () => {
+    this.setState({
+      openNotification : !this.state.openNotification
+    })
   };
 
   handleClick = () => {
@@ -96,13 +95,24 @@ class Navbar extends Component {
         <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
+    console.log(this.props)
+    console.log(this.props.notifications)
     return (
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
-          <BellOutlined style={{fontSize:'20px'}} onClick={() => openNotificationWithIcon('info')}>Info</BellOutlined>
+          <BellOutlined style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
+            {this.state.openNotification &&
+              <div className="notification">
+                <div onClick={this.openNotificationWithIcon}>Clear All</div>
+                {this.props.notifications.map(data => {
+                  return (<li className="li-item" key={data.notification_id} value = {data.notification_id}>{data.message}</li>)
+                  })
+                }
+              </div>
+            }
           {this.props.accessToken !== "" ?
             <Dropdown overlay={menuSidebar}>
-              <div>Priyanka <DownOutlined /></div>
+              <div>{this.props.userData.name} <DownOutlined /></div>
             </Dropdown>
           :
           <Dropdown overlay={menu} >
@@ -118,10 +128,16 @@ class Navbar extends Component {
 
 const mapStateToProps = ({
   userReducer:{
-    accessToken
+    accessToken,
+    userData
+  },
+  notificationReducer:{
+    notifications
   }
 })=> ({
-  accessToken
+  accessToken,
+  userData,
+  notifications
 });
 
 const mapDispatchToProps = {
