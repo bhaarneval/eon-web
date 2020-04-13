@@ -53,3 +53,13 @@ export const setEventUpdate = (payload) => {
         payload: payload
     }
 }
+
+export const cancelEvent = ({message, accessToken, eventId, callback}) => {
+    return {
+        type: actionEventTypes.CANCEL_EVENT,
+        message: message,
+        accessToken: accessToken,
+        eventId: eventId,
+        callback: callback,
+    }
+}

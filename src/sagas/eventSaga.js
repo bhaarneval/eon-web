@@ -179,6 +179,37 @@ export function* fetchEventData(param) {
   }
 }
 
+export function* deleteEvent(param) {
+  const {message, accessToken, eventId, callback} = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  try{
+    yield put({type:actionEventTypes.SET_EVENT_FETCHING});
+
+    const deleteURL = APIService.dev+requestURLS.EVENT_OPERATIONS+`${eventId}/`;
+    let responseObject = {};
+    let responseJSON = yield fetch(deleteURL,{
+      headers: headers,
+      method: "DELETE",
+      body: JSON.stringify({message:message})
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject,responseJSON);
+
+    callback();
+  }catch(e) {
+    console.error(e);
+    yield put({ type: actionEventTypes.EVENT_ERROR, error: e });
+    callback(e.message);
+  }
+}
+
 export function* saveInvitees(param) {
   const { accessToken, data, updateType } = param;
   const eventId = data.event;
@@ -240,4 +271,5 @@ export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.GET_EVENT_LIST, fetchEventsList);
   yield takeLatest(actionEventTypes.GET_EVENT_DATA, fetchEventData);
   yield takeLatest(actionEventTypes.SAVE_INVITEE, saveInvitees);
+  yield takeLatest(actionEventTypes.CANCEL_EVENT, deleteEvent);
 }
