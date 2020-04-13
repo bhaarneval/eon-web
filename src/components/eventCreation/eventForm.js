@@ -43,7 +43,6 @@ export function EventForm(props) {
 
   function handleUploadFileChange(uploadedFile) {
     setFile(uploadedFile);
-    console.log("laddu",uploadedFile);
   }
 
   function stopImageUpload(input) {
@@ -54,7 +53,7 @@ export function EventForm(props) {
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("hh:mm A");
-    data.images = file;
+    data = {...data, imageFile:file};
     handleSubmit(data);
   }
 
@@ -299,7 +298,6 @@ export function UpdateEventForm(props) {
 
   function handleUploadFileChange(uploadedFile) {
     setFile(uploadedFile);
-    console.log("laddu",uploadedFile);
   }
 
   function stopImageUpload(input) {
@@ -310,11 +308,9 @@ export function UpdateEventForm(props) {
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("hh:mm A");
-    data.images = file;
+    data = {...data, imageFile:file};
     handleSubmit(data);
   }
-
-  console.log
 
   return (
     <div className="event-form-container">

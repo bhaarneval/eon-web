@@ -20,15 +20,15 @@ export function* createNewEvent(param) {
     };
     let imageUploadResponse = {};
     // to upload image
-    // if (data.images.file && data.images.file.name) {
+    // if (data.imageFile && data.imageFile.name) {
     //   let responseImage = {};
-    //   let getPresignedUrl = APIService + requestURLS.UPLOAD_IMAGE;
+    //   let getPresignedUrl = APIService.dev + requestURLS.UPLOAD_IMAGE;
 
     //   imageUploadResponse = yield fetch(getPresignedUrl, {
     //     headers: headers,
     //     method: "POST",
     //     body: JSON.stringify({
-    //       name: data.image.file.name,
+    //       path_name: data.imageFile.name,
     //     }),
     //   }).then((response) => {
     //     responseImage = response;
@@ -40,7 +40,7 @@ export function* createNewEvent(param) {
     //   let responseJson = yield fetch(imageUploadResponse.data.presigned, {
     //     method: "POST",
     //     body: JSON.stringify({
-    //       name: data.image.file.name,
+    //       name: data.imageFile,
     //     }),
     //   }).then((response) => {
     //     responseImage = response;
@@ -55,12 +55,14 @@ export function* createNewEvent(param) {
       postURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
     } else
       postURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${eventId}/`;
-    data.images = imageUploadResponse.image_name || "undefined";
+      let sendData = data;
+      sendData.images = imageUploadResponse.image_name||"undefined";
+    
     let recievedResponse = {};
     let responseJson = yield fetch(postURL, {
       headers: headers,
       method: method,
-      body: JSON.stringify(data),
+      body: JSON.stringify(sendData),
     }).then((response) => {
       recievedResponse = response;
       return response.json();
