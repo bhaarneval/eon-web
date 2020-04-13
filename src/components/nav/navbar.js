@@ -83,10 +83,12 @@ class Navbar extends Component {
   clearAll = () => {
     console.log('sadasd')
     this.props.readNotifications({
-      list: {"notification_ids" : [2,4]},
+      list: {"notification_ids" : [2,4]}, //get all notification ids
       access: this.props.accessToken,
       callback: (error) => {
-        console.log(error)
+        this.setState({
+          openNotification: false
+        })
       }
     });
   }
@@ -114,11 +116,17 @@ class Navbar extends Component {
           <BellOutlined style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
             {this.state.openNotification &&
               <div className="notification">
-                <div onClick={this.clearAll}>Clear All</div>
-                {this.props.notifications && this.props.notifications.map(data => {
-                  return (<li className="li-item" key={data.notification_id} value = {data.notification_id}>{data.message}</li>)
-                  })
-                }
+                <div className="notification-header">
+                  <div>Notifications</div>
+                  <div onClick={this.openNotificationWithIcon}>X</div>
+                </div>
+                <div className="notification-clear" onClick={this.clearAll}>Clear All</div>
+                <div className="notification-body">
+                  {this.props.notifications && this.props.notifications.map(data => {
+                    return (<div className="li-item" key={data.notification_id} value = {data.notification_id}>{data.message}</div>)
+                    })
+                  }
+                </div>
               </div>
             }
           {this.props.accessToken !== "" ?
