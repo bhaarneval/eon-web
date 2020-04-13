@@ -77,7 +77,7 @@ class EventCount extends Component {
                     <div onClick={() => this.sendUpdate('reminder')}  className="detail-card-container reminder-row">
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={reminder}/>Send reminder</span>
                     </div>
-                    <div onClick={() => this.sendUpdate('update')} className="detail-card-container reminder-row">
+                    <div onClick={() => this.sendUpdate('updates')} className="detail-card-container reminder-row">
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={update}/>Send updates</span>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ class EventCount extends Component {
                     <Modal
                         visible
                         onCancel = {this.handleClose}
-                        title = {<div className = 'modal-header'>{this.state.reminderType === 'update' ? 'Send an update' : 'Send reminder'}</div>}
+                        title = {<div className = 'modal-header'>{this.state.reminderType === 'updates' ? 'Send an update' : 'Send reminder'}</div>}
                         footer = {null}
                         width={660}
                     >
@@ -98,7 +98,11 @@ class EventCount extends Component {
                         <div className = 'send-button-row'>
                             <div className = 'send-button'>
                                 <Button onClick={this.handleClose}>Cancel</Button>
-                                <Button disabled={this.state.message.length < 1} type="primary" onClick={this.send}>Send</Button>
+                                <Button disabled={this.state.message.length < 1} type="primary" onClick={()=>{
+                                    this.setState({
+                                        updatePopup: false
+                                    })
+                                    this.props.notifySubscriber(this.state.message, this.state.reminderType)}}>Send</Button>
                             </div>
                         </div>
                     </Modal>
@@ -112,6 +116,7 @@ class EventCount extends Component {
  EventCount.propTypes = {
     history: PropTypes.object,
     eventData: PropTypes.object,
+    notifySubscriber: PropTypes.func,
 }
 
 export default EventCount;

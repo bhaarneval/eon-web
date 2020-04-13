@@ -14,7 +14,7 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
-import { updateInviteeList, setEventUpdate, cancelEvent } from "../../actions/eventActions";
+import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -183,6 +183,20 @@ handleRefundConfirm = () => {
     })
 }
 
+handleNotifySubscriber = (message, type) => {
+  const {accessToken, sendNotification, eventData } = this.props;
+  const data = {
+    event_id:eventData.id,
+    message: message,
+    type: type,
+  };
+
+sendNotification({
+    data: data,
+    accessToken: accessToken
+  });
+}
+
 render() {
     const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
     return (
@@ -202,7 +216,7 @@ render() {
        {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
         {this.props.userRole === 'organiser' && (
           <div>
-            <EventCount eventData = {this.props.eventData}/>
+            <EventCount eventData = {this.props.eventData} notifySubscriber = {this.handleNotifySubscriber}/>
             <div className="invitee-row">
               <h2>
                 <b>Invitees List</b>
@@ -370,6 +384,7 @@ EventDetail.propTypes = {
   setEventUpdate: PropTypes.func,
   eventType: PropTypes.array,
   cancelEvent: PropTypes.func,
+  sendNotification: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -394,6 +409,7 @@ const mapDispatchToProps = ({
   updateInviteeList: updateInviteeList,
   setEventUpdate: setEventUpdate,
   cancelEvent: cancelEvent,
+  sendNotification: sendNotification,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

@@ -266,10 +266,40 @@ export function* saveInvitees(param) {
   }
 }
 
+export function* notifyUsers(param){
+  const {data, accessToken} =param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  };
+  try{
+    yield put({type:actionEventTypes.SET_EVENT_FETCHING});
+
+    const postURL = APIService.dev+requestURLS.NOTIFY_SUBSCRIBER;
+    let responseObject = {};
+    let responseJSON = yield fetch(postURL,{
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify(data),
+    }).then(response=> {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject,responseJSON);
+
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+  } catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+  }
+}
+
 export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.CREATE_EVENT, createNewEvent);
   yield takeLatest(actionEventTypes.GET_EVENT_LIST, fetchEventsList);
   yield takeLatest(actionEventTypes.GET_EVENT_DATA, fetchEventData);
   yield takeLatest(actionEventTypes.SAVE_INVITEE, saveInvitees);
   yield takeLatest(actionEventTypes.CANCEL_EVENT, deleteEvent);
+  yield takeLatest(actionEventTypes.NOTIFY_SUBSCRIBER, notifyUsers);
 }

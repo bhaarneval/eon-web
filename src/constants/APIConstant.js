@@ -16,4 +16,5 @@ export const requestURLS = {
   EVENT_OPERATIONS: "core/event/",
   UPLOAD_IMAGE: "core/presigned-url",
   INVITEE_LIST: "core/invite/",
+  NOTIFY_SUBSCRIBER: "core/notify-subscriber/",
 };

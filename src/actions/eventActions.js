@@ -63,3 +63,11 @@ export const cancelEvent = ({message, accessToken, eventId, callback}) => {
         callback: callback,
     }
 }
+
+export const sendNotification = ({data, accessToken}) => {
+    return {
+        type: actionEventTypes.NOTIFY_SUBSCRIBER,
+        data:data,
+        accessToken: accessToken,
+    }
+}
