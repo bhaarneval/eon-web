@@ -94,6 +94,7 @@ class InviteesPopup extends Component {
                         onChange={this.onChange}
                         onKeyPress={this.handleKeyPress} 
                     />
+                    <div className="error-message">*Please hit enter to add the email to the invitee list</div>
                     {this.state.emailError.length > 0 &&
                         <div className="error">{this.state.emailError}</div>
                     }
