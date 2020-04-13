@@ -14,3 +14,7 @@
 .ant-table{
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
+
+.ant-card-body {
+  padding: 15px !important;
+}
