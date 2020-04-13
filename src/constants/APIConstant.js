@@ -8,6 +8,7 @@ export const APIService = {
 
 export const requestURLS = {
   LOGIN: "authentication/login",
+  GET_NOTIFICATIONS_URL: "core/notification/?user_id=3",
   REGISTER: "authentication/registration",
   GENERATE_CODE: "authentication/generate-code",
   RESET_PASSWORD: "authentication/reset-password",

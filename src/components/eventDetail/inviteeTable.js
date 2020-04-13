@@ -47,8 +47,8 @@ class EventTable extends React.Component {
       let newData = {
         key: data[i].invitation_id,
         email: data[i].email,
-        name: data[i].user?data[i].user.name:"",
-        contact: data[i].user?data[i].user.contact_number:"",
+        name: data[i].user ? data[i].user.name : '',
+        contact: data[i].user ? data[i].user.contact_number : '',
         discount: data[i].discount_percentage,
       };
       tableData = [...tableData,newData]

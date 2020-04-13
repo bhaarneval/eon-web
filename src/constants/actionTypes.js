@@ -3,6 +3,12 @@ export const actionTypes = {
     CLUSTERS_RECIEVED: "CLUSTERS_RECIEVED"
 };
 
+export const actionNotificationsTypes = {
+    GET_NOTIFICATIONS: "GET_NOTIFICATIONS",
+    NOTIFICATIONS_RECIEVED: "NOTIFICATIONS_RECIEVED",
+    NOTIFICATIONS_ERROR: "NOTIFICATIONS_ERROR",
+};
+
 
 export const actionLoginTypes = {
     LOGGING_OUT:"LOGGING_OUT",
