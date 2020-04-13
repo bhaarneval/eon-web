@@ -14,7 +14,7 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
-import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData } from "../../actions/eventActions";
+import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -137,10 +137,31 @@ onBankSubmit = (accountNo, expiry, name) => {
     })
 }
 handleFreeTicket = (seats) => {
-    this.setState({
-        showPaymentSuccess:true,
-        noOfSeats:seats?seats:this.state.noOfSeats,
-    })
+  if (seats >= 1) {
+    const {
+      eventData,
+      userData,
+      accessToken,
+      subscriptionFreeEvent,
+    } = this.props;
+    let data = {
+      event_id: eventData.id,
+      user_id: userData.user_id,
+      no_of_tickets: seats,
+    };
+    subscriptionFreeEvent({
+      data,
+      accessToken,
+      subscriptionType: "subscribe-new",
+      callback: (error) => {
+        if (!error) {
+          this.setState({
+            showPaymentSuccess: true,
+          });
+        }
+      },
+    });
+  }
 }
 goBack = () => {
     this.props.history.push("/dashboard");
@@ -213,9 +234,10 @@ sendNotification({
 }
 
 render() {
-    const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
+    const { discountPercentage} = this.state;
+    const { eventData } = this.props;
     return (
-      <Spin spinning={this.props.fetchingEvent} className="spinner">
+      <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         <EventInfo
@@ -266,22 +288,24 @@ render() {
         )}
         {this.props.userRole === 'subscriber' && (
           <div>
-            {this.state.showPayment ? (
+            {this.state.showPayment? (
               <Payment
                 onBankSubmit={this.onBankSubmit}
                 history={this.props.history}
                 handleBackClick={this.handlePaymentsBack}
               />
             ) : (
+              eventData.subscription_details?
               <FeeCaclculation
-                noOfSeats={noOfSeats}
-                discountPercentage={discountPercentage}
-                perHeadAmount={perHeadAmount}
+                eventData={this.props.eventData}
+                noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
+                discountPercentage={eventData.discount_percentage}
+                perHeadAmount={eventData.subscription_fee}
                 payNow={this.payNow}
                 handleFreeTicket={this.handleFreeTicket}
                 handleCancel={this.handleCancel}
                 handleRefund={this.handleRefund}
-              />
+              />:null
             )}
           </div>
         )}
@@ -402,11 +426,14 @@ EventDetail.propTypes = {
   sendNotification: PropTypes.func,
   location: PropTypes.object,
   getEventData: PropTypes.func,
+  subscriptionFreeEvent: PropTypes.func,
+  userData: PropTypes.object,
 };
 
 const mapStateToProps = ({
   userReducer: {
     userRole,
+    userData,
     accessToken,
     eventType,
   },
@@ -417,6 +444,7 @@ const mapStateToProps = ({
 
 }) => ({
   userRole,
+  userData,
   accessToken,
   eventType,
   eventData,
@@ -428,6 +456,7 @@ const mapDispatchToProps = ({
   cancelEvent: cancelEvent,
   sendNotification: sendNotification,
   getEventData: getEventData,
+  subscriptionFreeEvent: subscriptionFreeEvent,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

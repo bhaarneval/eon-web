@@ -1,7 +1,7 @@
 import { put, takeLatest } from "redux-saga/effects";
 
 import { APIService, requestURLS } from "../constants/APIConstant";
-import { actionEventTypes } from "../constants/actionTypes";
+import { actionEventTypes, actionSubscription } from "../constants/actionTypes";
 
 function checkResponse(response, responseJson) {
   if (!response.ok) {
@@ -304,6 +304,36 @@ export function* notifyUsers(param){
   }
 }
 
+export function* subscribeFreeEvent(param){
+  const {data, accessToken, callback } = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+    let postUrl  = APIService.dev+requestURLS.SUBSCRIPTION;
+    let responseObject = {};
+    let responseJson = yield fetch(postUrl,{
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    })
+
+    checkResponse(responseObject,responseJson);
+
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+    
+    callback();
+  }catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    callback(e.message);
+  }
+}
 export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.CREATE_EVENT, createNewEvent);
   yield takeLatest(actionEventTypes.GET_EVENT_LIST, fetchEventsList);
@@ -311,4 +341,5 @@ export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.SAVE_INVITEE, saveInvitees);
   yield takeLatest(actionEventTypes.CANCEL_EVENT, deleteEvent);
   yield takeLatest(actionEventTypes.NOTIFY_SUBSCRIBER, notifyUsers);
+  yield takeLatest(actionSubscription.SUBSCRIBE_FREE, subscribeFreeEvent)
 }

@@ -18,4 +18,5 @@ export const requestURLS = {
   UPLOAD_IMAGE: "core/presigned-url",
   INVITEE_LIST: "core/invite/",
   NOTIFY_SUBSCRIBER: "core/notify-subscriber/",
+  SUBSCRIPTION:"core/subscription/",
 };

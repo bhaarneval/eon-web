@@ -38,3 +38,7 @@ export const actionEventTypes = {
     DELETE_INVITEE: "DELETE_INVITEE",
     NOTIFY_SUBSCRIBER: "NOTIFY_SUBSCRIBER", 
 }
+export const actionSubscription = {
+    SUBSCRIBE_PAID: "SUBSCRIBE_PAID",
+    SUBSCRIBE_FREE: "SUBSCRIBE_FREE",
+}

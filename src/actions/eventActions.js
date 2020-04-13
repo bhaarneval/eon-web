@@ -1,4 +1,4 @@
-import { actionEventTypes } from "../constants/actionTypes";
+import { actionEventTypes, actionSubscription } from "../constants/actionTypes";
 
 export const createNewEvent = ({formData,callback,accessToken,}) => {
     return {
@@ -70,5 +70,23 @@ export const sendNotification = ({data, accessToken}) => {
         type: actionEventTypes.NOTIFY_SUBSCRIBER,
         data:data,
         accessToken: accessToken,
+    }
+}
+
+export const subscriptionFreeEvent = ({data, accessToken, subscriptionType, callback}) => {
+    return {
+        type: actionSubscription.SUBSCRIBE_FREE,
+        data: data,
+        accessToken: accessToken,
+        subscriptionType: subscriptionType,
+        callback: callback,
+    }
+}
+export const subscriptionPaidEvent = ({data, accessToken, subscriptionType}) => {
+    return {
+        type: actionSubscription.SUBSCRIBE_PAID,
+        data: data,
+        accessToken: accessToken,
+        subscriptionType: subscriptionType
     }
 }
