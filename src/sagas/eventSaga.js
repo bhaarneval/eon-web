@@ -117,6 +117,8 @@ if(filterData.startDate && filterData.endDate)
   params = {...params, start_date:filterData.startDate,end_date:filterData.endDate}
 if(filterData.search)
   params = {...params, search: filterData.search}
+if(filterData.event_created_by)
+  params = {...params, event_created_by: filterData.event_created_by}
 
   try {
     yield put({ type: actionEventTypes.SET_EVENT_FETCHING });
@@ -140,6 +142,8 @@ if(filterData.search)
       type: actionEventTypes.RECEIVED_EVENT_LIST,
       payload: responseJson.data,
     });
+
+    yield put({type: actionEventTypes.SET_EVENT_UPDATE, payload: false});
   } catch (e) {
     console.error(e);
     yield put({ type: actionEventTypes.EVENT_ERROR, error: e });
@@ -147,7 +151,7 @@ if(filterData.search)
 }
 
 export function* fetchEventData(param) {
-  const { eventId, accessToken, userRole, callback } = param;
+  const { eventId, accessToken, userRole, callback, ifUpdate } = param;
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
@@ -171,6 +175,10 @@ export function* fetchEventData(param) {
       payload:
         userRole === "organiser" ? responseJson.data[0] : responseJson.data,
     });
+
+    if(ifUpdate){
+      yield put({type: actionEventTypes.SET_EVENT_UPDATE, payload:true})
+    }
     callback();
   } catch (e) {
     console.error(e);

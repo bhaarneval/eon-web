@@ -5,12 +5,12 @@ import "./dashboard.css";
 import EventCards from "../../components/eventCards/eventCards";
 import UserEventcards from "../../components/eventCards/userEventCards";
 
-import { Row, Button, Spin, message } from "antd";
+import { Row, Button, Spin, message, Checkbox } from "antd";
 import SearchBox from '../../components/commonComponents/searchBox';
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import StyledRangePicker from "../../components/commonComponents/rangePicker";
 import { connect } from "react-redux";
-import { fetchEvents, getEventData } from "../../actions/eventActions";
+import { fetchEvents, getEventData, setEventUpdate } from "../../actions/eventActions";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class Dashboard extends Component {
       eventList:[],
       eventsList: [],
       spinning: true,
+      isChecked: false,
       role: this.props.userRole,
     };
   }
@@ -109,6 +110,19 @@ class Dashboard extends Component {
         fetchEvents({userData,accessToken, filterData:{search:searchText}});
     }
 }
+handleCheckChange = () => {
+  const {fetchEvents, userData,accessToken} = this.props;
+  if(!this.state.isChecked){
+        fetchEvents({userData,accessToken, filterData:{event_created_by:true}});
+  }
+  else {
+    fetchEvents({userData,accessToken});
+  }
+  this.setState({
+    isChecked: !this.state.isChecked
+  })
+  
+}
 
   render() {
     let eventsList = this.state.eventList;
@@ -129,6 +143,13 @@ class Dashboard extends Component {
               placeholder={"Event Type"}
             />
             <StyledRangePicker handleChange={this.handleDateChange} />
+            <div className="checkbox-style">
+            {
+              this.props.userRole === "organiser"?(
+                <Checkbox checked = {this.state.isChecked} onChange={this.handleCheckChange} size="large" >Created By Me</Checkbox>
+              ):null
+            }
+            </div>
           </div>
           {this.props.userRole === 'organiser' ? (
             <Button onClick={this.handleCreateEvent} className="button-create">
@@ -156,6 +177,7 @@ Dashboard.propTypes = {
   fetchingEvent: PropTypes.bool,
   getEventData: PropTypes.func,
   eventType: PropTypes.array,
+  setEventUpdate: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -180,6 +202,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = {
   fetchEvents: fetchEvents,
   getEventData: getEventData,
+  setEventUpdate:setEventUpdate,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
