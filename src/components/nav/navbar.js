@@ -2,9 +2,7 @@ import "./nav.css";
 /* eslint-disable */
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
 import { Dropdown, Menu } from 'antd';
-import { Button, notification } from 'antd';
 
 import {
   LogoutOutlined,
@@ -18,7 +16,7 @@ import {
   LIGHT_MODE,
   DARK_MODE
 } from "../../constants/constants";
-import { logOutUser } from "../../actions/commonActions";
+import { logOutUser, readNotifications } from "../../actions/commonActions";
 import {fetchEvents} from "../../actions/eventActions";
 
 class Navbar extends Component {
@@ -84,6 +82,18 @@ class Navbar extends Component {
     });
   }
 
+  clearAll = () => {
+    this.props.readNotifications({
+      list: {"notification_ids" : [2,4]}, //get all notification ids
+      access: this.props.accessToken,
+      callback: (error) => {
+        this.setState({
+          openNotification: false
+        })
+      }
+    });
+  }
+
   render() {
     const menu = (
       <Menu onClick={key => this.takeMenuAction(key)}>
@@ -102,23 +112,31 @@ class Navbar extends Component {
     return (
       <div className="flex flex-row flex-end nav-container">
         <div className="top-nav">
-          <BellOutlined style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
-            {this.state.openNotification &&
-              <div className="notification">
-                <div onClick={this.openNotificationWithIcon}>Clear All</div>
-                {this.props.notifications.map(data => {
-                  return (<li className="li-item" key={data.notification_id} value = {data.notification_id}>{data.message}</li>)
+          {this.props.userRole === 'subscriber' &&
+            <BellOutlined className="nav-items" style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
+          }
+          {this.state.openNotification &&
+            <div className="notification">
+              <div className="notification-header">
+                <div>Notifications</div>
+                <div onClick={this.openNotificationWithIcon}>X</div>
+              </div>
+              <div className="notification-clear" onClick={this.clearAll}>Clear All</div>
+              <div className="notification-body">
+                {this.props.notifications && this.props.notifications.map(data => {
+                  return (<div className="li-item" key={data.notification_id} value = {data.notification_id}>{data.message}</div>)
                   })
                 }
               </div>
-            }
+            </div>
+          }
           {this.props.accessToken !== "" ?
             <Dropdown overlay={menuSidebar}>
-              <div>{this.props.userData.name} <DownOutlined /></div>
+              <div className="nav-items">{this.props.userData.name ? this.props.userData.name : this.props.userData.email} <DownOutlined /></div>
             </Dropdown>
           :
           <Dropdown overlay={menu} >
-            <div style={{color:"#262C6F"}}>Register <DownOutlined /></div>
+            <div className="nav-items">Register <DownOutlined /></div>
           </Dropdown>
           }
         <div className="logo-text">EOn</div>
@@ -131,7 +149,8 @@ class Navbar extends Component {
 const mapStateToProps = ({
   userReducer:{
     accessToken,
-    userData
+    userData,
+    userRole
   },
   notificationReducer:{
     notifications
@@ -139,12 +158,14 @@ const mapStateToProps = ({
 })=> ({
   accessToken,
   userData,
+  userRole,
   notifications
 });
 
 const mapDispatchToProps = {
   logOutUser: logOutUser,
   fetchEvents: fetchEvents,
+  readNotifications: readNotifications,
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Navbar);

@@ -16,11 +16,19 @@ export const getUser = ({email,password,callback}) => {
   };
 };
 
-export const getNotifications = ({id, access}) => {
+export const getNotifications = (access) => {
   return {
     type: actionNotificationsTypes.GET_NOTIFICATIONS,
-    id: id,
     access: access
+  };
+};
+
+export const readNotifications = ({list, access, callback}) => {
+  return {
+    type: actionNotificationsTypes.READ_NOTIFICATIONS,
+    list: list,
+    access: access,
+    callback: callback
   };
 };
 

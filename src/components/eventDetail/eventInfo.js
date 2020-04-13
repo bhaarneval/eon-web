@@ -49,7 +49,6 @@ class EventInfo extends Component {
     }
 
     cancel = () => {
-        console.log(this.state.message)
         this.setState({
             cancelPopup: false,
         })

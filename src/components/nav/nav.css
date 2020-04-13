@@ -6,7 +6,6 @@
 .top-nav {
     display: flex;
     float: right;
-    width: 15%;
     align-items: center;
     justify-content: space-between;
     font-weight: 600;
@@ -21,15 +20,42 @@
 .notification{
     background: white;
     position: absolute;
-    top: 40px;
+    top: -1px;
+    right: 0px;
     border: 1px solid #80808026;
     z-index: 1;
-    padding: 20px;
-    right: 30px;
+    height: 100vh;
     flex-wrap: wrap;
-    width: 30%;
+    width: 25%;
 }
 
 .li-item{
-    word-break: break-all
+    word-break: break-all;
+    border-bottom: 1px solid #80808026;
+    padding: 20px;
+}
+
+.notification-header{
+    background: #211d70;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.notification-body{
+    margin-top: 20px;
+}
+
+.notification-clear{
+    float: right;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.nav-items{
+    color: #262C6F;
+    margin-right: 20px;
 }

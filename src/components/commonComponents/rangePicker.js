@@ -12,7 +12,7 @@ export default function StyledRangePicker (props) {
          size="small"
          format = "DD-MM-YY"
          onChange={handleChange}
-         style={{width:"25%"}}
+        //  style={{width:"25%"}}
          disabledDate={current => {
             return current && current < moment().startOf("day");
           }}
