@@ -36,15 +36,16 @@ class Login extends Component {
 
   onFinish = values => {
     this.props.getUser({...values,
-    callback: (error)=> {
-        if(!error){
+    callback: (res, data)=> {
+        if(res === 'success'){
+          console.log(res, data)
           this.props.history.push("/dashboard");
-          this.props.getNotifications('3', 'sdsds')
+          this.props.getNotifications(data.access)
         }
         else{
           this.setState({
             hasErrored: true,
-            errorMessage: error,
+            errorMessage: data,
           })
         }
     }});

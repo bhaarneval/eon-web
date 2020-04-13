@@ -59,7 +59,7 @@ export function* getUser(param) {
       payload: responseJSON.data,
     });
 
-    callback();
+    callback('success', responseJSON.data);
     localStorage.setItem("token", responseJSON.data.access);
   } catch (e) {
     console.error("error while fetching", e);
@@ -67,7 +67,7 @@ export function* getUser(param) {
       type: actionLoginTypes.USER_ERROR,
       error: e,
     });
-    callback(e.message);
+    callback('error', e.message);
   }
 }
 
@@ -140,7 +140,7 @@ export function* getCode(param) {
     let responseJSON = yield fetch(getUrl, {
       headers: headers,
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({"notification_id" : data}),
     }).then((response) => {
       recievedResponse = response;
       return response.json();

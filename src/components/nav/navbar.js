@@ -18,7 +18,7 @@ import {
   LIGHT_MODE,
   DARK_MODE
 } from "../../constants/constants";
-import { logOutUser } from "../../actions/commonActions";
+import { logOutUser, readNotifications } from "../../actions/commonActions";
 
 class Navbar extends Component {
   constructor(props) {
@@ -80,6 +80,17 @@ class Navbar extends Component {
     });
   }
 
+  clearAll = () => {
+    console.log('sadasd')
+    this.props.readNotifications({
+      list: {"notification_ids" : [2,4]},
+      access: this.props.accessToken,
+      callback: (error) => {
+        console.log(error)
+      }
+    });
+  }
+
   render() {
     const menu = (
       <Menu onClick={key => this.takeMenuAction(key)}>
@@ -103,8 +114,8 @@ class Navbar extends Component {
           <BellOutlined style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
             {this.state.openNotification &&
               <div className="notification">
-                <div onClick={this.openNotificationWithIcon}>Clear All</div>
-                {this.props.notifications.map(data => {
+                <div onClick={this.clearAll}>Clear All</div>
+                {this.props.notifications && this.props.notifications.map(data => {
                   return (<li className="li-item" key={data.notification_id} value = {data.notification_id}>{data.message}</li>)
                   })
                 }
@@ -141,7 +152,8 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = {
-  logOutUser: logOutUser
+  logOutUser: logOutUser,
+  readNotifications: readNotifications
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Navbar);
