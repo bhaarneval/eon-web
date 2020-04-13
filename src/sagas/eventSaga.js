@@ -102,14 +102,12 @@ export function* createNewEvent(param) {
 }
 
 export function* fetchEventsList(param) {
-  const { userData, accessToken,filterData } = param;
+  const {  accessToken,filterData } = param;
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
   
 let params = {};
-if(userData.role.role === "subscriber")
-  params = {...params,user_id:userData.user_id}
 if(filterData.type){
   params = {...params, event_type:filterData.type}
 }
