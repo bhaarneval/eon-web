@@ -235,15 +235,11 @@ shareSubmit = (values) => {
 }
 handleRefund = (seats) => {
     const {eventData} = this.props;
-    const {amount_paid, discount_percentage} = eventData.subscription_details;
-    let initialPaidAmount = amount_paid;
-    let currentCost = seats * eventData.subscription_fee;
-    currentCost = currentCost-(currentCost*discount_percentage)/100;
-    let refundAmount = initialPaidAmount - currentCost;
+    const {amount_paid, no_of_tickets_bought} = eventData.subscription_details;
     this.setState({
         newSeats: seats,
-        paidAmount:initialPaidAmount,
-        refundAmount: refundAmount,
+        paidAmount:amount_paid,
+        refundAmount: seats*(amount_paid/no_of_tickets_bought),
         showUpdateSeatsModal: true,
     })
 } 
@@ -496,7 +492,7 @@ render() {
                       <b className="color-text">₹ {this.state.paidAmount}</b>
                     </div>
                     <div>
-                      Total amount refundalble to you is{" "}
+                      Total amount refundable to you is{" "}
                       <b className="color-text">₹ {this.state.refundAmount}</b>
                     </div>
                   </div>

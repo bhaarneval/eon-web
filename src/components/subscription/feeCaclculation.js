@@ -185,9 +185,6 @@ class FeeCalculation extends Component {
                   </h4>
                 }
                 <h4 style={{ color: "#57ABA0" }}>
-                  *If you want to Add/Remove invitees, click on Modify
-                </h4>
-                <h4 style={{ color: "#57ABA0" }}>
                   *Click on <b>Download</b> for event details and QR Code
                 </h4>
               </div>
