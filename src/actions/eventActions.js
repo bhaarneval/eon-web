@@ -105,3 +105,12 @@ export const shareWithFriend = ({data, accessToken}) => {
         accessToken: accessToken
     }
 }
+export const updateWishList = ({data, accessToken, updateType, callback}) => {
+        return {
+          type: actionEventTypes.WISHLIST_UPDATE,
+          data: data,
+          accessToken,
+          updateType,
+          callback
+        };
+}

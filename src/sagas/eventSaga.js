@@ -478,6 +478,55 @@ export function* shareWithFriendPost(param) {
     message.error(e.message);
   }
 }
+
+export function* updateWishlistUser(param){
+  const {data, accessToken, updateType, callback} = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+    if(updateType === "add"){
+      let postUrl = APIService.dev + requestURLS.WISHLIST;
+      let responseObject = {};
+      let responseJSON = yield fetch(postUrl,{
+        headers: headers,
+        method: "POST",
+        body: JSON.stringify(data)
+      }).then(response => {
+        responseObject = response;
+        return response.json();
+      });
+
+      checkResponse(responseObject, responseJSON);
+
+      yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+      message.success(responseJSON.message);
+    }
+    else{
+      let deleteUrl = APIService.dev + requestURLS.WISHLIST+`${data.event_id}/`;
+      let responseObject = {};
+      let responseJSON = yield fetch(deleteUrl, {
+        headers: headers,
+        method: "DELETE",
+      }).then(response => {
+        responseObject = response;
+        return response.json();
+      });
+
+      checkResponse(responseObject, responseJSON);
+
+      yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+      message.success(responseJSON.message);
+    }
+    callback();
+  } catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    message.error(e.message);
+  }
+}
 export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.CREATE_EVENT, createNewEvent);
   yield takeLatest(actionEventTypes.GET_EVENT_LIST, fetchEventsList);
@@ -489,4 +538,5 @@ export function* eventActionWatcher() {
   yield takeLatest(actionSubscription.SUBSCRIBE_PAID, paidSubscription);
   yield takeLatest(actionEventTypes.SHARE_WITH_FRIEND, shareWithFriendPost);
   yield takeLatest(actionSubscription.CANCEL_SUBSCRIPTION, cancelSubscription);
+  yield takeLatest(actionEventTypes.WISHLIST_UPDATE, updateWishlistUser);
 }

@@ -15,7 +15,7 @@ import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
 import moment from "moment";
-import { cancelSubscription, updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent,subscriptionPaidEvent, shareWithFriend } from "../../actions/eventActions";
+import { cancelSubscription, updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent,subscriptionPaidEvent, shareWithFriend, updateWishList } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -263,6 +263,9 @@ handleRefundConfirm = () => {
       amount: eventData.subscription_details.amount_paid,
       discount_amount: eventData.subscription_details.discount_given,
     }
+    this.setState({
+      showUpdateSeatsModal: false,
+    })
   
     subscriptionPaidEvent({
       data: data,
@@ -271,7 +274,6 @@ handleRefundConfirm = () => {
         if(!error){
           this.setState({
             noOfSeats:this.state.newSeats,
-            showUpdateSeatsModal: false,
             showPaymentSuccess: true,
         })
         }
@@ -323,6 +325,7 @@ render() {
       <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
+        {this.props.eventData.id && 
         <EventInfo
           eventData = {this.props.eventData}
           eventType = {this.props.eventType}
@@ -332,7 +335,8 @@ render() {
           setEventUpdate={this.props.setEventUpdate}
           cancelEvent = {this.props.cancelEvent}
           accessToken = {this.props.accessToken}
-        />
+          handleWishlist = {this.props.updateWishList}
+        />}
        {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
         {this.props.userRole === 'organiser' && (
           <div>
@@ -531,6 +535,7 @@ EventDetail.propTypes = {
   subscriptionPaidEvent: PropTypes.func,
   shareWithFriend: PropTypes.func,
   cancelSubscription: PropTypes.func,
+  updateWishList: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -563,6 +568,7 @@ const mapDispatchToProps = ({
   subscriptionPaidEvent: subscriptionPaidEvent,
   shareWithFriend: shareWithFriend,
   cancelSubscription: cancelSubscription,
+  updateWishList: updateWishList,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

@@ -41,6 +41,7 @@ export const actionEventTypes = {
     DELETE_INVITEE: "DELETE_INVITEE",
     NOTIFY_SUBSCRIBER: "NOTIFY_SUBSCRIBER", 
     SHARE_WITH_FRIEND: "SHARE_WITH_FRIEND",
+    WISHLIST_UPDATE: "WISHLIST_UPDATE",
 }
 export const actionSubscription = {
     SUBSCRIBE_PAID: "SUBSCRIBE_PAID",
