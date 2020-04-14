@@ -20,34 +20,31 @@ class InviteesPopup extends Component {
     }
 
     validateEmail(email){      
-    var emailPattern = EMAIL_VALIDATION;
-    return emailPattern.test(email); 
+        var emailPattern = EMAIL_VALIDATION;
+        return emailPattern.test(email); 
     } 
 
     handleKeyPress = (event) => {
         if(event.key === 'Enter'){
+            const count = this.state.count;
             event.preventDefault();
-            if(this.validateEmail(event.target.value)){
-                let a = this.state.inviteeList
-                a[this.state.count] = event.target.value
-                if (new Set(Object.values(a)).size !== Object.values(a).length){
-                    delete a[`${this.state.count}`];
+            const emailList = event.target.value.split(',')
+            for (var i = 0; i < emailList.length; i++){
+                if(this.validateEmail(emailList[i].trim())){
+                    let a = this.state.inviteeList
+                    a[count === 0 ? i : parseInt(Object.keys(this.state.inviteeList)[Object.keys(this.state.inviteeList).length - 1]) + 1 + i] = emailList[i].trim()
                     this.setState({
-                        emailError: 'Email already exists in the list',
+                        count: count + 1,
                         inviteeList: a,
+                        message: ''
                     })
-                    return
                 }
-                this.setState({
-                    count: this.state.count + 1,
-                    inviteeList: a,
-                    message: ''
-                })
-            }
-            else{
-                this.setState({
-                    emailError: 'Please enter a valid email address'
-                })
+                else{
+                    this.setState({
+                        emailError: 'Please enter a valid email address'
+                    })
+                    break;
+                }
             }
         }
     }
