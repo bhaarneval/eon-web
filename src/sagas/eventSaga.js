@@ -299,9 +299,12 @@ export function* notifyUsers(param){
     checkResponse(responseObject,responseJSON);
 
     yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+
+    message.success(responseJSON.message);
   } catch (e) {
     console.error(e);
     yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    message.error(e.message);
   }
 }
 
@@ -326,6 +329,8 @@ export function* subscribeFreeEvent(param){
 
     checkResponse(responseObject,responseJson);
 
+    let responseMessage = responseJson.message;
+
     let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${data.event_id}/`;
     responseJson = yield fetch(getURL, {
       headers: headers,
@@ -343,6 +348,7 @@ export function* subscribeFreeEvent(param){
     });
 
     callback();
+    message.success(responseMessage);
   }catch (e) {
     console.error(e);
     yield put({type: actionEventTypes.EVENT_ERROR, error: e});
@@ -371,6 +377,7 @@ export function* paidSubscription(param){
     });
 
     checkResponse(responseObject, responseJson);
+    let responseMessage = responseJson.message;
 
     let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${data.event_id}/`;
     responseJson = yield fetch(getURL, {
@@ -389,11 +396,56 @@ export function* paidSubscription(param){
     });
 
     callback();
+    message.success(responseMessage);
 
   } catch (e) {
     console.error(e);
     yield put({type: actionEventTypes.EVENT_ERROR, error: e});
     callback(e.message);
+    message.error(e.message);
+  }
+}
+
+export function* cancelSubscription(param) {
+  const {eventId, accessToken} =param;
+  const headers = {
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+
+    let deleteURL = APIService.dev + requestURLS.SUBSCRIPTION+`${eventId}`;
+    let responseObject = {};
+    let responseJSON = yield fetch(deleteURL, {
+      headers: headers,
+      method: "DELETE",
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    })
+    checkResponse(responseObject, responseJSON);
+    let responseMessage = responseJSON.message;
+
+    let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${eventId}/`;
+    responseJSON = yield fetch(getURL, {
+      headers: headers,
+      method: "GET",
+    }).then((response) => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject, responseJSON);
+
+    yield put({
+      type: actionEventTypes.RECEIVED_EVENT_DATA,
+      payload: responseJSON.data,
+    });
+    message.success(responseMessage);
+  } catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    message.error(e.message);
   }
 }
 
@@ -438,4 +490,5 @@ export function* eventActionWatcher() {
   yield takeLatest(actionSubscription.SUBSCRIBE_FREE, subscribeFreeEvent);
   yield takeLatest(actionSubscription.SUBSCRIBE_PAID, paidSubscription);
   yield takeLatest(actionEventTypes.SHARE_WITH_FRIEND, shareWithFriendPost);
+  yield takeLatest(actionSubscription.CANCEL_SUBSCRIPTION, cancelSubscription);
 }

@@ -13,7 +13,7 @@ class FeeCalculation extends Component {
       totalAmountAfterPromo: this.props.noOfSeats * this.props.perHeadAmount,
       totalAmount: this.props.noOfSeats * this.props.perHeadAmount,
       codeApplied: false,
-      isSubscribed: this.props.eventData.subscription_details.is_subscribed||false,
+      isSubscribed: this.props.eventData.is_subscribed||false,
       isUpdate: false,
     };
   }
@@ -68,7 +68,12 @@ class FeeCalculation extends Component {
     } = this.props;
     let { seats, totalAmount } = this.state;
     if (perHeadAmount === 0) {
-      handleFreeTicket(seats);
+      if(seats< noOfSeats){
+        handleFreeTicket(seats-noOfSeats);
+      }
+      else if(seats> noOfSeats)
+        handleFreeTicket(seats-noOfSeats);
+
       return;
     }
 

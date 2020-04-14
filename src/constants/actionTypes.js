@@ -45,4 +45,5 @@ export const actionEventTypes = {
 export const actionSubscription = {
     SUBSCRIBE_PAID: "SUBSCRIBE_PAID",
     SUBSCRIBE_FREE: "SUBSCRIBE_FREE",
+    CANCEL_SUBSCRIPTION: "CANCEL_SUBSCRIPTION",
 }

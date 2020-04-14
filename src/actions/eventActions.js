@@ -90,6 +90,14 @@ export const subscriptionPaidEvent = ({data, accessToken,callback}) => {
         callback: callback,
     }
 }
+
+export const cancelSubscription = ({eventId, accessToken}) => {
+    return {
+        type: actionSubscription.CANCEL_SUBSCRIPTION,
+        eventId,
+        accessToken
+    }
+}
 export const shareWithFriend = ({data, accessToken}) => {
     return {
         type: actionEventTypes.SHARE_WITH_FRIEND,
