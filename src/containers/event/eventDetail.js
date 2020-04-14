@@ -381,8 +381,8 @@ render() {
               eventData.subscription_details?
               <FeeCaclculation
                 eventData={this.props.eventData}
-                noOfSeats={eventData.subscription_details?eventData.subscription_details.no_of_tickets_bought:1}
-                discountPercentage={eventData.discount_percentage||(eventData.subscription_details?eventData.subscription_details.discount_percentage:0)||0}
+                noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
+                discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
                 perHeadAmount={eventData.subscription_fee}
                 payNow={this.payNow}
                 handleFreeTicket={this.handleFreeTicket}

@@ -2,7 +2,7 @@ import { Button, InputNumber } from "antd";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./subscription.css";
-import PDF from "../commonComponents/ticketPdf";
+// import PDF from "../commonComponents/ticketPdf";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
 class FeeCalculation extends Component {
@@ -143,7 +143,7 @@ class FeeCalculation extends Component {
               </div>
               {(this.props.perHeadAmount !== 0 &&
                 this.props.discountPercentage !== 0 &&
-                !this.state.isSubscribed) ||
+                !(this.props.eventData.is_subscribed)) ||
               (this.state.isUpdate && this.props.discountPercentage !== 0) ? (
                 <div>
                   <h3>
@@ -168,7 +168,7 @@ class FeeCalculation extends Component {
                 </div>
               ) : null}
             </div>
-            {this.state.isSubscribed && !this.state.isUpdate ? (
+            {(this.props.eventData.is_subscribed) && !this.state.isUpdate ? (
               <div className="already-subscibed">
                 <h2 style={{ color: "#57ABA0" }}>
                   You are already subscribed to this event.
@@ -234,9 +234,9 @@ class FeeCalculation extends Component {
             )}
           </div>
         </div>
-        {this.state.isSubscribed && !this.state.isUpdate ? (
+        {(this.props.eventData.is_subscribed) && !this.state.isUpdate ? (
           <div className="update-row">
-            <Button type="primary">{<PDF />}</Button>
+            <Button type="primary">Download</Button>
             <div className="cancel-row">
               <Button onClick={this.props.handleCancel}>Cancel</Button>
               <Button
