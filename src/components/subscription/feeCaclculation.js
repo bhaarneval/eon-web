@@ -19,30 +19,31 @@ class FeeCalculation extends Component {
   }
 
   onIncDecSeats = (type) => {
-    console.log(this.state.seats, this.props.perHeadAmount);
+    let {seats, totalAmount,codeApplied} = this.state;
+    const {perHeadAmount, discountPercentage} =this. props;
     if (type === "inc") {
-      let totalAmount = (this.state.seats + 1) * this.props.perHeadAmount;
-      if (this.state.codeApplied) {
+      totalAmount = (seats + 1) * perHeadAmount;
+      if (codeApplied) {
         totalAmount =
-          totalAmount - totalAmount * (this.props.discountPercentage / 100);
+          totalAmount - totalAmount * (discountPercentage / 100);
       }
       this.setState({
-        seats: this.state.seats + 1,
-        totalAmount: (this.state.seats + 1) * this.props.perHeadAmount,
-        totalAmountAfterPromo: this.state.codeApplied
+        seats: seats + 1,
+        totalAmount: (seats + 1) * perHeadAmount,
+        totalAmountAfterPromo: codeApplied
           ? totalAmount
           : this.state.totalAmountAfterPromo,
       });
     } else {
-      let totalAmount = (this.state.seats + 1) * this.props.perHeadAmount;
-      if (this.state.codeApplied) {
+      let totalAmount = (seats - 1) * perHeadAmount;
+      if (codeApplied) {
         totalAmount =
-          totalAmount - totalAmount * (this.props.discountPercentage / 100);
+          totalAmount - totalAmount * (discountPercentage / 100);
       }
       this.setState({
-        seats: this.state.seats - 1,
-        totalAmount: (this.state.seats - 1) * this.props.perHeadAmount,
-        totalAmountAfterPromo: this.state.codeApplied
+        seats: seats - 1,
+        totalAmount: (seats - 1) * perHeadAmount,
+        totalAmountAfterPromo: codeApplied
           ? totalAmount
           : this.state.totalAmountAfterPromo,
       });
@@ -76,7 +77,6 @@ class FeeCalculation extends Component {
     }
     if (seats > noOfSeats) {
       totalAmount = (seats - noOfSeats) * perHeadAmount;
-      console.log(totalAmount);
       this.setState({
         isUpdate: true,
         totalAmount: totalAmount,
@@ -136,8 +136,10 @@ class FeeCalculation extends Component {
                   }}
                 />
               </div>
-              {(this.props.perHeadAmount !== 0 && this.props.discountPercentage!==0 && !this.state.isSubscribed) ||
-              this.state.isUpdate && this.props.discountPercentage!==0 ? (
+              {(this.props.perHeadAmount !== 0 &&
+                this.props.discountPercentage !== 0 &&
+                !this.state.isSubscribed) ||
+              (this.state.isUpdate && this.props.discountPercentage !== 0) ? (
                 <div>
                   <h3>
                     <b>Promotional offer</b>
@@ -215,9 +217,8 @@ class FeeCalculation extends Component {
                     onClick={() =>
                       this.props.payNow(
                         this.state.seats,
-                        this.state.codeApplied
-                          ? this.state.totalAmountAfterPromo
-                          : this.state.totalAmount
+                        this.state.codeApplied ? this.state.totalAmountAfterPromo : this.state.totalAmount,
+                        this.state.totalAmount
                       )
                     }
                   >
@@ -245,7 +246,10 @@ class FeeCalculation extends Component {
         ) : this.props.perHeadAmount === 0 || !this.props.perHeadAmount ? (
           <div className="confirm-button">
             {" "}
-            <Button type="primary" onClick={()=>this.props.handleFreeTicket(this.state.seats)}>
+            <Button
+              type="primary"
+              onClick={() => this.props.handleFreeTicket(this.state.seats)}
+            >
               Confirm
             </Button>
           </div>

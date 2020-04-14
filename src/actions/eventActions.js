@@ -82,11 +82,11 @@ export const subscriptionFreeEvent = ({data, accessToken, subscriptionType, call
         callback: callback,
     }
 }
-export const subscriptionPaidEvent = ({data, accessToken, subscriptionType}) => {
+export const subscriptionPaidEvent = ({data, accessToken,callback}) => {
     return {
         type: actionSubscription.SUBSCRIBE_PAID,
         data: data,
         accessToken: accessToken,
-        subscriptionType: subscriptionType
+        callback: callback,
     }
 }

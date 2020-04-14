@@ -14,31 +14,33 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
-import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent } from "../../actions/eventActions";
+import moment from "moment";
+import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent,subscriptionPaidEvent } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
     super(props);
     // const {eventData}=this.props;
     this.state = {
-        showModal: false,
-        searchValue: '',
-        filteredRows: [],
-        discount: 0,
-        noOfSeats: 1,
-        discountPercentage: this.props.eventData.discount_percentage?this.props.eventData.discount_percentage:0,
-        perHeadAmount: 500,
-        showPayment: false,
-        showPaymentSuccess: false,
-        showCancelModal:false,
-        showShareModal: false,
-        showUpdateSeatsModal: false,
-        finalSeats: '',
-        finalAmount: '',
-        paidAmount: 0,
-        refundAmount:0,
-        newSeats:0,
-    }
+      showModal: false,
+      searchValue: "",
+      filteredRows: [],
+      discount: 0,
+      noOfSeats: 1,
+      discountPercentage: 0,
+      perHeadAmount: 500,
+      showPayment: false,
+      showPaymentSuccess: false,
+      showCancelModal: false,
+      showShareModal: false,
+      showUpdateSeatsModal: false,
+      totalAmount: "",
+      finalSeats: "",
+      finalAmount: "",
+      paidAmount: 0,
+      refundAmount: 0,
+      newSeats: 0,
+    };
   }
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole} = this.props;
@@ -120,21 +122,46 @@ search = (event) => {
     })
 }
 
-payNow = (seats, amount) => {
-    console.log(seats, amount)
+payNow = (seats, amount,totalAmount) => {
+  if(this.props.eventData.subscription_details.no_of_tickets_bought){
+    seats = seats - this.props.eventData.subscription_details.no_of_tickets_bought;
+  }
     this.setState({
         showPayment: !this.state.showPayment,
         finalAmount: amount,
-        finalSeats: seats
+        finalSeats: seats,
+        totalAmount: totalAmount,
     })
-    //call api for event id and seats
 }
 
-onBankSubmit = (accountNo, expiry, name) => {
-    console.log(accountNo, expiry, name)
-    this.setState({
-        showPaymentSuccess: true
-    })
+onBankSubmit = (accountNo, expiry) => {
+    let expMonth = moment(expiry,"MM-YYYY").format("MM");
+    let exp = moment(expiry, "MM-YYYY").format("YYYY");
+    const { finalAmount, finalSeats, totalAmount } =this.state;
+    const {eventData, userData, accessToken,subscriptionPaidEvent} =this.props;
+
+    let data = {
+      event_id: eventData.id,
+      user_id: userData.user_id,
+      no_of_tickets: finalSeats,
+      card_number: parseInt(accountNo),
+      expiry_year: parseInt(exp),
+      expiry_month: parseInt(expMonth),
+      amount: totalAmount,
+      discount_amount: totalAmount-finalAmount,
+    }
+    subscriptionPaidEvent({
+      data: data,
+      accessToken: accessToken,
+      callback: (error) => {
+        if(!error){
+          this.setState({
+            showPayment: false,
+            showPaymentSuccess: true,
+          });
+        }
+      }
+    });  
 }
 handleFreeTicket = (seats) => {
   if (seats >= 1) {
@@ -173,7 +200,9 @@ handlePaymentsBack = () => {
 }
 
 handleClose = () => {
-    this.props.history.push("/dashboard");
+    this.setState({
+      showPaymentSuccess: false
+    })
 }
 
 handleCancel = () => {
@@ -196,12 +225,11 @@ shareSubmit = (values) => {
     })
 }
 handleRefund = (seats) => {
-    const {noOfSeats, perHeadAmount, discountPercentage} =this.state;
-    let initialPaidAmount = noOfSeats*perHeadAmount;
-    initialPaidAmount = initialPaidAmount - (initialPaidAmount*discountPercentage)/100;
-    console.log(initialPaidAmount);
-    let currentCost = seats * perHeadAmount;
-    currentCost = currentCost-(currentCost*discountPercentage)/100;
+    const {eventData} = this.props;
+    const {amount_paid, discount_percentage} = eventData.subscription_details;
+    let initialPaidAmount = amount_paid;
+    let currentCost = seats * eventData.subscription_fee;
+    currentCost = currentCost-(currentCost*discount_percentage)/100;
     let refundAmount = initialPaidAmount - currentCost;
     this.setState({
         newSeats: seats,
@@ -212,11 +240,29 @@ handleRefund = (seats) => {
 } 
 
 handleRefundConfirm = () => {
-    this.setState({
-        noOfSeats:this.state.newSeats,
-        showUpdateSeatsModal: false,
-        showPaymentSuccess: true,
-    })
+  const { userData, eventData, subscriptionPaidEvent, accessToken} = this.props;
+  let data = {
+    event_id: eventData.id,
+    user_id: userData.user_id,
+    no_of_tickets: this.state.newSeats - eventData.subscription_details.no_of_tickets_bought,
+    amount: eventData.subscription_details.amount_paid,
+    discount_amount: eventData.subscription_details.discount_given,
+  }
+  console.log(data);
+
+  subscriptionPaidEvent({
+    data: data,
+    accessToken,
+    callback: (error) => {
+      if(!error){
+        this.setState({
+          noOfSeats:this.state.newSeats,
+          showUpdateSeatsModal: false,
+          showPaymentSuccess: true,
+      })
+      }
+    }
+  })   
 }
 
 handleNotifySubscriber = (message, type) => {
@@ -299,7 +345,7 @@ render() {
               <FeeCaclculation
                 eventData={this.props.eventData}
                 noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
-                discountPercentage={eventData.discount_percentage}
+                discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
                 perHeadAmount={eventData.subscription_fee}
                 payNow={this.payNow}
                 handleFreeTicket={this.handleFreeTicket}
@@ -395,7 +441,7 @@ render() {
                 Number of Attendies will be updated to <b className="color-text">{this.state.newSeats}</b>
               </div>
               <div>
-                Total Amount paid for <b  className="color-text">{this.state.noOfSeats}</b> seats was{" "}
+                Total Amount paid for <b  className="color-text">{this.props.eventData.subscription_details.no_of_tickets_bought}</b> seats was{" "}
                 <b  className="color-text">₹ {this.state.paidAmount}</b>
               </div>
               <div>
@@ -428,6 +474,7 @@ EventDetail.propTypes = {
   getEventData: PropTypes.func,
   subscriptionFreeEvent: PropTypes.func,
   userData: PropTypes.object,
+  subscriptionPaidEvent: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -457,6 +504,7 @@ const mapDispatchToProps = ({
   sendNotification: sendNotification,
   getEventData: getEventData,
   subscriptionFreeEvent: subscriptionFreeEvent,
+  subscriptionPaidEvent: subscriptionPaidEvent,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

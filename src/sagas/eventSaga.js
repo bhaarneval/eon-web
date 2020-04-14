@@ -325,10 +325,71 @@ export function* subscribeFreeEvent(param){
 
     checkResponse(responseObject,responseJson);
 
-    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
-    
+    let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${data.event_id}/`;
+    responseJson = yield fetch(getURL, {
+      headers: headers,
+      method: "GET",
+    }).then((response) => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject, responseJson);
+
+    yield put({
+      type: actionEventTypes.RECEIVED_EVENT_DATA,
+      payload: responseJson.data,
+    });
+
     callback();
   }catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    callback(e.message);
+  }
+}
+
+export function* paidSubscription(param){
+  const {data, accessToken, callback} = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+
+    let postURL = APIService.dev+requestURLS.SUBSCRIPTION;
+    let responseObject = {};
+    let responseJson = yield fetch(postURL, {
+      headers : headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject, responseJson);
+
+    let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${data.event_id}/`;
+    responseJson = yield fetch(getURL, {
+      headers: headers,
+      method: "GET",
+    }).then((response) => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject, responseJson);
+
+    yield put({
+      type: actionEventTypes.RECEIVED_EVENT_DATA,
+      payload: responseJson.data,
+    });
+
+    callback();
+
+  } catch (e) {
     console.error(e);
     yield put({type: actionEventTypes.EVENT_ERROR, error: e});
     callback(e.message);
@@ -341,5 +402,6 @@ export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.SAVE_INVITEE, saveInvitees);
   yield takeLatest(actionEventTypes.CANCEL_EVENT, deleteEvent);
   yield takeLatest(actionEventTypes.NOTIFY_SUBSCRIBER, notifyUsers);
-  yield takeLatest(actionSubscription.SUBSCRIBE_FREE, subscribeFreeEvent)
+  yield takeLatest(actionSubscription.SUBSCRIBE_FREE, subscribeFreeEvent);
+  yield takeLatest(actionSubscription.SUBSCRIBE_PAID, paidSubscription);
 }
