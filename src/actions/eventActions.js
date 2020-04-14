@@ -1,4 +1,4 @@
-import { actionEventTypes } from "../constants/actionTypes";
+import { actionEventTypes, actionSubscription } from "../constants/actionTypes";
 
 export const createNewEvent = ({formData,callback,accessToken,}) => {
     return {
@@ -71,4 +71,46 @@ export const sendNotification = ({data, accessToken}) => {
         data:data,
         accessToken: accessToken,
     }
+}
+
+export const subscriptionFreeEvent = ({data, accessToken, subscriptionType, callback}) => {
+    return {
+        type: actionSubscription.SUBSCRIBE_FREE,
+        data: data,
+        accessToken: accessToken,
+        subscriptionType: subscriptionType,
+        callback: callback,
+    }
+}
+export const subscriptionPaidEvent = ({data, accessToken,callback}) => {
+    return {
+        type: actionSubscription.SUBSCRIBE_PAID,
+        data: data,
+        accessToken: accessToken,
+        callback: callback,
+    }
+}
+
+export const cancelSubscription = ({eventId, accessToken}) => {
+    return {
+        type: actionSubscription.CANCEL_SUBSCRIPTION,
+        eventId,
+        accessToken
+    }
+}
+export const shareWithFriend = ({data, accessToken}) => {
+    return {
+        type: actionEventTypes.SHARE_WITH_FRIEND,
+        data: data,
+        accessToken: accessToken
+    }
+}
+export const updateWishList = ({data, accessToken, updateType, callback}) => {
+        return {
+          type: actionEventTypes.WISHLIST_UPDATE,
+          data: data,
+          accessToken,
+          updateType,
+          callback
+        };
 }

@@ -10,7 +10,14 @@ import {
   BellOutlined
 } from '@ant-design/icons';
 
+import {
+  LOGOUT,
+  MY_ACCOUNT,
+  LIGHT_MODE,
+  DARK_MODE
+} from "../../constants/constants";
 import { logOutUser, readNotifications } from "../../actions/commonActions";
+import {fetchEvents} from "../../actions/eventActions";
 
 class Navbar extends Component {
   constructor(props) {
@@ -54,8 +61,11 @@ class Navbar extends Component {
       this.props.history.push(`/change-password`)
     else if(input.key === "4")
       this.props.history.push(`/profile/1`)
-    else if (input.key === "5")
+    else if (input.key === "5"){
+      const {accessToken, userData, fetchEvents} = this.props;
+      fetchEvents({userData: userData, accessToken: accessToken, filterData:{is_wishlisted: "True"}});
       this.props.history.push(`/dashboard?type=wishlist`);
+    }  
     else{
       this.logout()
     }
@@ -156,7 +166,8 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   logOutUser: logOutUser,
-  readNotifications: readNotifications
+  fetchEvents: fetchEvents,
+  readNotifications: readNotifications,
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Navbar);

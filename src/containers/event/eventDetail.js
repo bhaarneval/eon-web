@@ -14,31 +14,33 @@ import emailImg from "../../assets/Email ID.svg"
 import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
-import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData } from "../../actions/eventActions";
+import moment from "moment";
+import { cancelSubscription, updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent,subscriptionPaidEvent, shareWithFriend, updateWishList } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
     super(props);
     // const {eventData}=this.props;
     this.state = {
-        showModal: false,
-        searchValue: '',
-        filteredRows: [],
-        discount: 0,
-        noOfSeats: 1,
-        discountPercentage: this.props.eventData.discount_percentage?this.props.eventData.discount_percentage:0,
-        perHeadAmount: 500,
-        showPayment: false,
-        showPaymentSuccess: false,
-        showCancelModal:false,
-        showShareModal: false,
-        showUpdateSeatsModal: false,
-        finalSeats: '',
-        finalAmount: '',
-        paidAmount: 0,
-        refundAmount:0,
-        newSeats:0,
-    }
+      showModal: false,
+      searchValue: "",
+      filteredRows: [],
+      discount: 0,
+      noOfSeats: 1,
+      discountPercentage: 0,
+      perHeadAmount: 500,
+      showPayment: false,
+      showPaymentSuccess: false,
+      showCancelModal: false,
+      showShareModal: false,
+      showUpdateSeatsModal: false,
+      totalAmount: "",
+      finalSeats: "",
+      finalAmount: "",
+      paidAmount: 0,
+      refundAmount: 0,
+      newSeats: 0,
+    };
   }
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole} = this.props;
@@ -115,27 +117,79 @@ search = (event) => {
     })
 }
 
-payNow = (seats, amount) => {
-    console.log(seats, amount)
+payNow = (seats, amount,totalAmount) => {
+  if(this.props.eventData.subscription_details.no_of_tickets_bought){
+    seats = seats - this.props.eventData.subscription_details.no_of_tickets_bought;
+  }
     this.setState({
         showPayment: !this.state.showPayment,
         finalAmount: amount,
-        finalSeats: seats
+        finalSeats: seats,
+        totalAmount: totalAmount,
     })
-    //call api for event id and seats
 }
 
-onBankSubmit = (accountNo, expiry, name) => {
-    console.log(accountNo, expiry, name)
-    this.setState({
-        showPaymentSuccess: true
-    })
+onBankSubmit = (accountNo, expiry) => {
+    let expMonth = moment(expiry,"MM-YYYY").format("MM");
+    let exp = moment(expiry, "MM-YYYY").format("YYYY");
+    const { finalAmount, finalSeats, totalAmount } =this.state;
+    const {eventData, userData, accessToken,subscriptionPaidEvent} =this.props;
+
+    let data = {
+      event_id: eventData.id,
+      user_id: userData.user_id,
+      no_of_tickets: finalSeats,
+      card_number: parseInt(accountNo),
+      expiry_year: parseInt(exp),
+      expiry_month: parseInt(expMonth),
+      amount: totalAmount,
+      discount_amount: totalAmount-finalAmount,
+    }
+    subscriptionPaidEvent({
+      data: data,
+      accessToken: accessToken,
+      callback: (error) => {
+        if(!error){
+          this.setState({
+            showPayment: false,
+            showPaymentSuccess: true,
+          });
+        }
+      }
+    });  
 }
 handleFreeTicket = (seats) => {
+  if (seats >= 1 && seats> 0) {
+    const {
+      eventData,
+      userData,
+      accessToken,
+      subscriptionFreeEvent,
+    } = this.props;
+    let data = {
+      event_id: eventData.id,
+      user_id: userData.user_id,
+      no_of_tickets: seats,
+    };
+    subscriptionFreeEvent({
+      data,
+      accessToken,
+      subscriptionType: "subscribe-new",
+      callback: (error) => {
+        if (!error) {
+          this.setState({
+            showPaymentSuccess: true,
+          });
+        }
+      },
+    });
+  }
+  else if(seats<0){
     this.setState({
-        showPaymentSuccess:true,
-        noOfSeats:seats?seats:this.state.noOfSeats,
+      showUpdateSeatsModal: true,
+      newSeats: this.props.eventData.subscription_details.no_of_tickets_bought + seats,
     })
+  }
 }
 goBack = () => {
     this.props.history.push("/dashboard");
@@ -147,7 +201,9 @@ handlePaymentsBack = () => {
 }
 
 handleClose = () => {
-    this.props.history.push("/dashboard");
+    this.setState({
+      showPaymentSuccess: false
+    })
 }
 
 handleCancel = () => {
@@ -156,7 +212,11 @@ handleCancel = () => {
     })
 }
 confirmCancel = () => {
-    this.props.history.push("/dashboard");
+    const {eventData, accessToken, cancelSubscription} = this.props;
+    cancelSubscription({eventId: eventData.id, accessToken});
+    this.setState({
+      showCancelModal: false
+    })
 }
 handleShare = () => {
     this.setState({
@@ -164,18 +224,21 @@ handleShare = () => {
     })
 }
 shareSubmit = (values) => {
-    console.log(values);
+  const {accessToken, shareWithFriend} = this.props;
+  shareWithFriend({
+    accessToken,
+    data: { email_id: values.email, message: values.message },
+  });
     this.setState({
         showShareModal: false,
     })
 }
 handleRefund = (seats) => {
-    const {noOfSeats, perHeadAmount, discountPercentage} =this.state;
-    let initialPaidAmount = noOfSeats*perHeadAmount;
-    initialPaidAmount = initialPaidAmount - (initialPaidAmount*discountPercentage)/100;
-    console.log(initialPaidAmount);
-    let currentCost = seats * perHeadAmount;
-    currentCost = currentCost-(currentCost*discountPercentage)/100;
+    const {eventData} = this.props;
+    const {amount_paid, discount_percentage} = eventData.subscription_details;
+    let initialPaidAmount = amount_paid;
+    let currentCost = seats * eventData.subscription_fee;
+    currentCost = currentCost-(currentCost*discount_percentage)/100;
     let refundAmount = initialPaidAmount - currentCost;
     this.setState({
         newSeats: seats,
@@ -186,11 +249,54 @@ handleRefund = (seats) => {
 } 
 
 handleRefundConfirm = () => {
+  const { userData, eventData, subscriptionPaidEvent, subscriptionFreeEvent,accessToken} = this.props;
+  if(eventData.subscription_fee!==0){
+    let data = {
+      event_id: eventData.id,
+      user_id: userData.user_id,
+      no_of_tickets: this.state.newSeats - eventData.subscription_details.no_of_tickets_bought,
+      amount: eventData.subscription_details.amount_paid,
+      discount_amount: eventData.subscription_details.discount_given,
+    }
     this.setState({
-        noOfSeats:this.state.newSeats,
-        showUpdateSeatsModal: false,
-        showPaymentSuccess: true,
+      showUpdateSeatsModal: false,
     })
+  
+    subscriptionPaidEvent({
+      data: data,
+      accessToken,
+      callback: (error) => {
+        if(!error){
+          this.setState({
+            noOfSeats:this.state.newSeats,
+            showPaymentSuccess: true,
+        })
+        }
+      }
+    })
+  }
+  else {
+    let data = {
+      event_id: eventData.id,
+      user_id: userData.user_id,
+      no_of_tickets:
+        this.state.newSeats -
+        eventData.subscription_details.no_of_tickets_bought,
+    };
+    subscriptionFreeEvent({
+      data,
+      accessToken,
+      callback: (error) => {
+        if (!error) {
+          this.setState({
+            noOfSeats: this.state.newSeats,
+            showUpdateSeatsModal: false,
+            showPaymentSuccess: true,
+          });
+        }
+      },
+    });
+  }   
 }
 
 handleNotifySubscriber = (message, type) => {
@@ -208,11 +314,13 @@ sendNotification({
 }
 
 render() {
-    const {noOfSeats, perHeadAmount, discountPercentage} = this.state;
+    const { discountPercentage} = this.state;
+    const { eventData } = this.props;
     return (
-      <Spin spinning={this.props.fetchingEvent} className="spinner">
+      <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
+        {this.props.eventData.id && 
         <EventInfo
           eventData = {this.props.eventData}
           eventType = {this.props.eventType}
@@ -222,7 +330,8 @@ render() {
           setEventUpdate={this.props.setEventUpdate}
           cancelEvent = {this.props.cancelEvent}
           accessToken = {this.props.accessToken}
-        />
+          handleWishlist = {this.props.updateWishList}
+        />}
        {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
         {this.props.userRole === 'organiser' && (
           <div>
@@ -261,22 +370,24 @@ render() {
         )}
         {this.props.userRole === 'subscriber' && (
           <div>
-            {this.state.showPayment ? (
+            {this.state.showPayment? (
               <Payment
                 onBankSubmit={this.onBankSubmit}
                 history={this.props.history}
                 handleBackClick={this.handlePaymentsBack}
               />
             ) : (
+              eventData.subscription_details?
               <FeeCaclculation
-                noOfSeats={noOfSeats}
-                discountPercentage={discountPercentage}
-                perHeadAmount={perHeadAmount}
+                eventData={this.props.eventData}
+                noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
+                discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
+                perHeadAmount={eventData.subscription_fee}
                 payNow={this.payNow}
                 handleFreeTicket={this.handleFreeTicket}
                 handleCancel={this.handleCancel}
                 handleRefund={this.handleRefund}
-              />
+              />:null
             )}
           </div>
         )}
@@ -305,10 +416,14 @@ render() {
           >
             <div className="cancel-modal">
               <div className="cancel-success">
-                Your subscription for this event will be cancelled. All the
-                money paid will be refunded back to you.
+                Your subscription for this event will be cancelled. 
               </div>
-              <Button type="primary" onClick={this.confirmCancel}>
+              {
+                eventData.subscription_fee!==0 && 
+                <div className = "cancel-success cancel-success-paid">All the
+                money paid will be refunded back to you.</div>
+              }
+              <Button type="primary" onClick={this.confirmCancel} style={{marginTop:"10%"}}>
                 Confirm
               </Button>
             </div>
@@ -337,7 +452,8 @@ render() {
                     className="input-style"
                   />
                 </Form.Item>
-                <Form.Item name="message">
+                <Form.Item name="message" rules={[
+                    { required: true, message: "Message cannot be empty!" }]}>
                   <Input.TextArea
                     placeholder="Enter custom share message"
                     autoSize={{ minRows: 4, maxRows: 4 }}
@@ -365,13 +481,25 @@ render() {
               <div>
                 Number of Attendies will be updated to <b className="color-text">{this.state.newSeats}</b>
               </div>
-              <div>
-                Total Amount paid for <b  className="color-text">{this.state.noOfSeats}</b> seats was{" "}
-                <b  className="color-text">₹ {this.state.paidAmount}</b>
-              </div>
-              <div>
-                Total amount refundalble to you is <b  className="color-text">₹ {this.state.refundAmount}</b>
-              </div>
+              {eventData.subscription_fee !== 0 && (
+                  <div>
+                    <div>
+                      Total Amount paid for{" "}
+                      <b className="color-text">
+                        {
+                          this.props.eventData.subscription_details
+                            .no_of_tickets_bought
+                        }
+                      </b>{" "}
+                      seats was{" "}
+                      <b className="color-text">₹ {this.state.paidAmount}</b>
+                    </div>
+                    <div>
+                      Total amount refundalble to you is{" "}
+                      <b className="color-text">₹ {this.state.refundAmount}</b>
+                    </div>
+                  </div>
+                )}
               <Button type="primary" onClick={this.handleRefundConfirm} className="update-button">
                 Confirm
               </Button>
@@ -397,11 +525,18 @@ EventDetail.propTypes = {
   sendNotification: PropTypes.func,
   location: PropTypes.object,
   getEventData: PropTypes.func,
+  subscriptionFreeEvent: PropTypes.func,
+  userData: PropTypes.object,
+  subscriptionPaidEvent: PropTypes.func,
+  shareWithFriend: PropTypes.func,
+  cancelSubscription: PropTypes.func,
+  updateWishList: PropTypes.func,
 };
 
 const mapStateToProps = ({
   userReducer: {
     userRole,
+    userData,
     accessToken,
     eventType,
   },
@@ -412,6 +547,7 @@ const mapStateToProps = ({
 
 }) => ({
   userRole,
+  userData,
   accessToken,
   eventType,
   eventData,
@@ -423,6 +559,11 @@ const mapDispatchToProps = ({
   cancelEvent: cancelEvent,
   sendNotification: sendNotification,
   getEventData: getEventData,
+  subscriptionFreeEvent: subscriptionFreeEvent,
+  subscriptionPaidEvent: subscriptionPaidEvent,
+  shareWithFriend: shareWithFriend,
+  cancelSubscription: cancelSubscription,
+  updateWishList: updateWishList,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

@@ -29,7 +29,7 @@ export function EventForm(props) {
     dateTime =  date+" "+time;
   }
   const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
-  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"DD-MM-YYYY hh:mm A")) : useState("");
+  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm A")) : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState({});
 
@@ -43,7 +43,6 @@ export function EventForm(props) {
 
   function handleUploadFileChange(uploadedFile) {
     setFile(uploadedFile);
-    console.log("laddu",uploadedFile);
   }
 
   function stopImageUpload(input) {
@@ -54,7 +53,7 @@ export function EventForm(props) {
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("hh:mm A");
-    data.images = file;
+    data = {...data, imageFile:file};
     handleSubmit(data);
   }
 
@@ -285,7 +284,7 @@ export function UpdateEventForm(props) {
     dateTime =  date+" "+time;
   }
   const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
-  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"DD-MM-YYYY hh:mm A")) : useState("");
+  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm A hh:mm A")) : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState({});
 
@@ -299,7 +298,6 @@ export function UpdateEventForm(props) {
 
   function handleUploadFileChange(uploadedFile) {
     setFile(uploadedFile);
-    console.log("laddu",uploadedFile);
   }
 
   function stopImageUpload(input) {
@@ -310,7 +308,10 @@ export function UpdateEventForm(props) {
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("hh:mm A");
-    data.images = file;
+    data = {...data, imageFile:file};
+    if(images && images!=""){
+      data.images = images;
+    }
     handleSubmit(data);
   }
 

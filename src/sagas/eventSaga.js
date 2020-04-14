@@ -1,7 +1,8 @@
 import { put, takeLatest } from "redux-saga/effects";
 
 import { APIService, requestURLS } from "../constants/APIConstant";
-import { actionEventTypes } from "../constants/actionTypes";
+import {message} from "antd";
+import { actionEventTypes, actionSubscription } from "../constants/actionTypes";
 
 function checkResponse(response, responseJson) {
   if (!response.ok) {
@@ -20,47 +21,47 @@ export function* createNewEvent(param) {
     };
     let imageUploadResponse = {};
     // to upload image
-    // if (data.images.file && data.images.file.name) {
-    //   let responseImage = {};
-    //   let getPresignedUrl = APIService + requestURLS.UPLOAD_IMAGE;
+    if (data.imageFile && data.imageFile.name) {
+      let responseImage = {};
+      let getPresignedUrl = APIService.dev + requestURLS.UPLOAD_IMAGE;
 
-    //   imageUploadResponse = yield fetch(getPresignedUrl, {
-    //     headers: headers,
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       name: data.image.file.name,
-    //     }),
-    //   }).then((response) => {
-    //     responseImage = response;
-    //     return response.json();
-    //   });
+      imageUploadResponse = yield fetch(getPresignedUrl, {
+        headers: headers,
+        method: "POST",
+        body: JSON.stringify({
+          path_name: data.imageFile.name,
+        }),
+      }).then((response) => {
+        responseImage = response;
+        return response.json();
+      });
 
-    //   checkResponse(responseImage, imageUploadResponse);
+      checkResponse(responseImage, imageUploadResponse);
+      
+      yield fetch(imageUploadResponse.data.presigned_url, {
+        method: "PUT",
+        body: data.imageFile,
+      }).then((response) => {
+        responseImage = response;
+      });
 
-    //   let responseJson = yield fetch(imageUploadResponse.data.presigned, {
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       name: data.image.file.name,
-    //     }),
-    //   }).then((response) => {
-    //     responseImage = response;
-    //     return response.json();
-    //   });
-
-    //   checkResponse(responseImage, responseJson);
-    // }
+      checkResponse(responseImage,{message:"Something went wrong"});
+    }
 
     let postURL = "";
     if (!eventId) {
       postURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
     } else
       postURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${eventId}/`;
-    data.images = imageUploadResponse.image_name || "undefined";
+      let {name, external_links, location, date, time, subscription_fee, event_type, no_of_tickets, description, images} =data;
+      let sendData = {name, external_links, location, date, time, subscription_fee, event_type, no_of_tickets, description, images};
+      sendData.images = imageUploadResponse.data?imageUploadResponse.data.image_name:data.images||"";
+    
     let recievedResponse = {};
     let responseJson = yield fetch(postURL, {
       headers: headers,
       method: method,
-      body: JSON.stringify(data),
+      body: JSON.stringify(sendData),
     }).then((response) => {
       recievedResponse = response;
       return response.json();
@@ -102,14 +103,12 @@ export function* createNewEvent(param) {
 }
 
 export function* fetchEventsList(param) {
-  const { userData, accessToken,filterData } = param;
+  const {  accessToken,filterData } = param;
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
   
 let params = {};
-if(userData.role.role === "subscriber")
-  params = {...params,user_id:userData.user_id}
 if(filterData.type){
   params = {...params, event_type:filterData.type}
 }
@@ -119,7 +118,8 @@ if(filterData.search)
   params = {...params, search: filterData.search}
 if(filterData.event_created_by)
   params = {...params, event_created_by: filterData.event_created_by}
-
+if(filterData.is_wishlisted)
+  params = {...params, is_wishlisted:filterData.is_wishlisted}
   try {
     yield put({ type: actionEventTypes.SET_EVENT_FETCHING });
     let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
@@ -297,12 +297,236 @@ export function* notifyUsers(param){
     checkResponse(responseObject,responseJSON);
 
     yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+
+    message.success(responseJSON.message);
   } catch (e) {
     console.error(e);
     yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    message.error(e.message);
   }
 }
 
+export function* subscribeFreeEvent(param){
+  const {data, accessToken, callback } = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+    let postUrl  = APIService.dev+requestURLS.SUBSCRIPTION;
+    let responseObject = {};
+    let responseJson = yield fetch(postUrl,{
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    })
+
+    checkResponse(responseObject,responseJson);
+
+    let responseMessage = responseJson.message;
+
+    let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${data.event_id}/`;
+    responseJson = yield fetch(getURL, {
+      headers: headers,
+      method: "GET",
+    }).then((response) => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject, responseJson);
+
+    yield put({
+      type: actionEventTypes.RECEIVED_EVENT_DATA,
+      payload: responseJson.data,
+    });
+
+    callback();
+    message.success(responseMessage);
+  }catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    callback(e.message);
+  }
+}
+
+export function* paidSubscription(param){
+  const {data, accessToken, callback} = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+
+    let postURL = APIService.dev+requestURLS.SUBSCRIPTION;
+    let responseObject = {};
+    let responseJson = yield fetch(postURL, {
+      headers : headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject, responseJson);
+    let responseMessage = responseJson.message;
+
+    let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${data.event_id}/`;
+    responseJson = yield fetch(getURL, {
+      headers: headers,
+      method: "GET",
+    }).then((response) => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject, responseJson);
+
+    yield put({
+      type: actionEventTypes.RECEIVED_EVENT_DATA,
+      payload: responseJson.data,
+    });
+
+    callback();
+    message.success(responseMessage);
+
+  } catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    callback(e.message);
+    message.error(e.message);
+  }
+}
+
+export function* cancelSubscription(param) {
+  const {eventId, accessToken} =param;
+  const headers = {
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+
+    let deleteURL = APIService.dev + requestURLS.SUBSCRIPTION+`${eventId}`;
+    let responseObject = {};
+    let responseJSON = yield fetch(deleteURL, {
+      headers: headers,
+      method: "DELETE",
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    })
+    checkResponse(responseObject, responseJSON);
+    let responseMessage = responseJSON.message;
+
+    let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${eventId}/`;
+    responseJSON = yield fetch(getURL, {
+      headers: headers,
+      method: "GET",
+    }).then((response) => {
+      responseObject = response;
+      return response.json();
+    });
+
+    checkResponse(responseObject, responseJSON);
+
+    yield put({
+      type: actionEventTypes.RECEIVED_EVENT_DATA,
+      payload: responseJSON.data,
+    });
+    message.success(responseMessage);
+  } catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    message.error(e.message);
+  }
+}
+
+export function* shareWithFriendPost(param) {
+  const {data, accessToken } = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+
+    let postURL = APIService.dev+requestURLS.SHARE_FRIEND;
+    let responseObject = {};
+    let responseJSON = yield fetch(postURL,{
+      headers: headers,
+      method: "POST",
+      body: JSON.stringify(data)
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    })
+
+    checkResponse(responseObject, responseJSON);
+
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+    message.success(responseJSON.message);
+
+  } catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    message.error(e.message);
+  }
+}
+
+export function* updateWishlistUser(param){
+  const {data, accessToken, updateType, callback} = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`
+  }
+  try{
+    yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+    if(updateType === "add"){
+      let postUrl = APIService.dev + requestURLS.WISHLIST;
+      let responseObject = {};
+      let responseJSON = yield fetch(postUrl,{
+        headers: headers,
+        method: "POST",
+        body: JSON.stringify(data)
+      }).then(response => {
+        responseObject = response;
+        return response.json();
+      });
+
+      checkResponse(responseObject, responseJSON);
+
+      yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+      message.success(responseJSON.message);
+    }
+    else{
+      let deleteUrl = APIService.dev + requestURLS.WISHLIST+`${data.event_id}/`;
+      let responseObject = {};
+      let responseJSON = yield fetch(deleteUrl, {
+        headers: headers,
+        method: "DELETE",
+      }).then(response => {
+        responseObject = response;
+        return response.json();
+      });
+
+      checkResponse(responseObject, responseJSON);
+
+      yield put({type: actionEventTypes.SET_EVENT_FETCHING});
+      message.success(responseJSON.message);
+    }
+    callback();
+  } catch (e) {
+    console.error(e);
+    yield put({type: actionEventTypes.EVENT_ERROR, error: e});
+    message.error(e.message);
+  }
+}
 export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.CREATE_EVENT, createNewEvent);
   yield takeLatest(actionEventTypes.GET_EVENT_LIST, fetchEventsList);
@@ -310,4 +534,9 @@ export function* eventActionWatcher() {
   yield takeLatest(actionEventTypes.SAVE_INVITEE, saveInvitees);
   yield takeLatest(actionEventTypes.CANCEL_EVENT, deleteEvent);
   yield takeLatest(actionEventTypes.NOTIFY_SUBSCRIBER, notifyUsers);
+  yield takeLatest(actionSubscription.SUBSCRIBE_FREE, subscribeFreeEvent);
+  yield takeLatest(actionSubscription.SUBSCRIBE_PAID, paidSubscription);
+  yield takeLatest(actionEventTypes.SHARE_WITH_FRIEND, shareWithFriendPost);
+  yield takeLatest(actionSubscription.CANCEL_SUBSCRIPTION, cancelSubscription);
+  yield takeLatest(actionEventTypes.WISHLIST_UPDATE, updateWishlistUser);
 }

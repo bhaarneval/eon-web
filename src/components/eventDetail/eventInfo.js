@@ -20,7 +20,7 @@ class EventInfo extends Component {
         this.state = {
             cancelPopup: false,
             message: '',
-            bookmarked: false,
+            bookmarked: this.props.eventData.is_wishlisted||false,
         }
       }
 
@@ -67,9 +67,19 @@ class EventInfo extends Component {
         });
     }
     handleBookmark = () => {
-        this.setState({
-            bookmarked:!this.state.bookmarked
-        })
+        let currentState = this.state.bookmarked;
+
+        const {eventData, handleWishlist, accessToken} = this.props;
+        handleWishlist({
+            data: {event_id:eventData.id},
+            accessToken,
+            updateType: !currentState?"add":"delete",
+            callback: () => {
+                this.setState({
+                    bookmarked:!this.state.bookmarked
+                })
+            }
+        }); 
     }
 
     render() {
@@ -167,6 +177,7 @@ class EventInfo extends Component {
     eventType: PropTypes.array,
     cancelEvent: PropTypes.func,
     accessToken: PropTypes.string,
+    handleWishlist: PropTypes.func,
 }
 
 export default EventInfo;
