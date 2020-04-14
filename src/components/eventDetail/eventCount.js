@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import './eventDetail.css'
-import fb from '../../assets/fb.svg';
+// import fb from '../../assets/fb.svg';
 import feedback from '../../assets/feedback.svg';
 import reminder from '../../assets/reminder.svg';
 import update from '../../assets/update.svg';
@@ -67,8 +67,7 @@ class EventCount extends Component {
                 </div>
                 <div className="detail-card-tile detail-card-container">
                     <div>
-                        <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="large"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore"><span className="detail-card-tile-row">
-                            <img className="subscriber-image" src={fb}/></span></a>
+                        <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="large"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">sad</a>
                         </div>
                         <div>
                             Share on social media

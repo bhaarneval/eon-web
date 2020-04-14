@@ -121,7 +121,7 @@ class EventInfo extends Component {
                         <div>{eventDate}</div>
                     </div>
                     <div className="detail-card-top-other-box">
-                        <div><b>Subsription Fee</b></div>
+                        <div><b>Subscription Fee</b></div>
                     <div>{eventData.subscription_fee===0?"FREE":eventData.subscription_fee}</div>
                     </div>
                     <div className="detail-card-top-other-box">
