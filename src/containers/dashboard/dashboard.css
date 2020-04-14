@@ -45,6 +45,8 @@
     position: absolute !important;
 }
 .checkbox-style{
+    display: flex;
+    width: 40%;
     margin-left: 1%;
     padding-left: 1%;
     padding-top: 0.5%;
