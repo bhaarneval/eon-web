@@ -122,7 +122,7 @@ class Navbar extends Component {
               </div>
             </div>
           }
-          {this.props.accessToken !== "" ?
+          {localStorage.getItem("token") && this.props.accessToken !== "" ?
             <Dropdown overlay={menuSidebar}>
               <div className="nav-items">{this.props.userData.name ? this.props.userData.name : this.props.userData.email} <DownOutlined /></div>
             </Dropdown>
