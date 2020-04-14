@@ -103,7 +103,7 @@ class ForgotPassword extends Component {
       <Spin spinning={this.props.fetchingUser} className="spinner">
       <div className="forgotPasswordContainer">
           <img src={PasswordImg} style={{width:"60%"}}/>
-        <div className="inner-container">
+        <div className="form-container">
           <div className="form-header">
             <h1>
               <b>Forgot Password</b>
@@ -122,7 +122,7 @@ class ForgotPassword extends Component {
                 }}
                 onFinish={this.onFinish}
               >
-                {hasErrored && <div className="error-message">*{errorMessage}</div>}
+                {hasErrored && <div className="error-message">{errorMessage}</div>}
                 <Form.Item
                   name="email"
                   rules={[
@@ -150,7 +150,7 @@ class ForgotPassword extends Component {
           ) : (
             <div>
               <Form name="password" onFinish={this.onFinish}>
-              {hasErrored && <div className="error-message">*{errorMessage}</div>}
+              {hasErrored && <div className="error-message">{errorMessage}</div>}
               <Form.Item
                   name="otp"
                   rules={[

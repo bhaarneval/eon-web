@@ -166,7 +166,7 @@ export function PasswordDetails(props) {
       </Form.Item>
     <div className="password-info">{PASSWORD_INFO}</div>
     {
-      hasErrored && <div className="error-message">*{errorMessage}</div>
+      hasErrored && <div className="error-message">{errorMessage}</div>
     }
       <div
         className = 'two-button-style'

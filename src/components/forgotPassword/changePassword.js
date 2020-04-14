@@ -126,7 +126,7 @@ class ChangePassword extends Component {
             >
               <Input.Password className="input-style" placeholder="Confirm Password"/>
             </Form.Item>
-            {this.state.hasErrored && <div className="error-message">*{this.state.errorMessage}</div>}
+            {this.state.hasErrored && <div className="error-message">{this.state.errorMessage}</div>}
             <Form.Item>
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Reset Password

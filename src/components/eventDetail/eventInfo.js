@@ -1,7 +1,6 @@
 
 import PropTypes from 'prop-types'
 import './eventDetail.css'
-import dummyImg from '../../assets/concert.jpg';
 import { Dropdown, Menu, Button, Input } from 'antd';
 const { TextArea } = Input;
 import React, { Component } from "react";
@@ -89,7 +88,7 @@ class EventInfo extends Component {
         return (
             <div className="detail-card">
                 <div className="detail-card-top">
-                    <img src={dummyImg} className="detail-img"/>
+                    <img src={eventData.images} className="detail-img"/>
                     <div className="detail-card-top-descContainer">
                         <h2>{eventData.name}</h2>
                         <div className="detail-card-top-desc">
