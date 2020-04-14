@@ -20,4 +20,5 @@ export const requestURLS = {
   INVITEE_LIST: "core/invite/",
   NOTIFY_SUBSCRIBER: "core/notify-subscriber/",
   SUBSCRIPTION:"core/subscription/",
+  SHARE_FRIEND: "core/share-with-friend/"
 };

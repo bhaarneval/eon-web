@@ -15,7 +15,7 @@ import {EMAIL_REQUIRED} from "../../constants/messages";
 import {EMAIL_VALIDATION} from "../../constants/constants";
 import { connect } from "react-redux";
 import moment from "moment";
-import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent,subscriptionPaidEvent } from "../../actions/eventActions";
+import { updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent,subscriptionPaidEvent, shareWithFriend } from "../../actions/eventActions";
 
 class EventDetail extends Component {
   constructor(props) {
@@ -219,7 +219,11 @@ handleShare = () => {
     })
 }
 shareSubmit = (values) => {
-    console.log(values);
+  const {accessToken, shareWithFriend} = this.props;
+  shareWithFriend({
+    accessToken,
+    data: { email_id: values.email, message: values.message },
+  });
     this.setState({
         showShareModal: false,
     })
@@ -412,7 +416,8 @@ render() {
                     className="input-style"
                   />
                 </Form.Item>
-                <Form.Item name="message">
+                <Form.Item name="message" rules={[
+                    { required: true, message: "Message cannot be empty!" }]}>
                   <Input.TextArea
                     placeholder="Enter custom share message"
                     autoSize={{ minRows: 4, maxRows: 4 }}
@@ -475,6 +480,7 @@ EventDetail.propTypes = {
   subscriptionFreeEvent: PropTypes.func,
   userData: PropTypes.object,
   subscriptionPaidEvent: PropTypes.func,
+  shareWithFriend: PropTypes.func,
 };
 
 const mapStateToProps = ({
@@ -505,6 +511,7 @@ const mapDispatchToProps = ({
   getEventData: getEventData,
   subscriptionFreeEvent: subscriptionFreeEvent,
   subscriptionPaidEvent: subscriptionPaidEvent,
+  shareWithFriend: shareWithFriend,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

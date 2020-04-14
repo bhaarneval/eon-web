@@ -90,3 +90,10 @@ export const subscriptionPaidEvent = ({data, accessToken,callback}) => {
         callback: callback,
     }
 }
+export const shareWithFriend = ({data, accessToken}) => {
+    return {
+        type: actionEventTypes.SHARE_WITH_FRIEND,
+        data: data,
+        accessToken: accessToken
+    }
+}
