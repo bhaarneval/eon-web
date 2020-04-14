@@ -98,7 +98,7 @@ class EventInfo extends Component {
         return (
             <div className="detail-card">
                 <div className="detail-card-top">
-                    <img src={this.props.eventData.images} className="detail-img"/>
+                    <img src={eventData.images} className="detail-img"/>
                     <div className="detail-card-top-descContainer">
                         <h2>{eventData.name}</h2>
                         <div className="detail-card-top-desc">
@@ -130,7 +130,7 @@ class EventInfo extends Component {
                         <div>{eventDate}</div>
                     </div>
                     <div className="detail-card-top-other-box">
-                        <div><b>Subsription Fee</b></div>
+                        <div><b>Subscription Fee</b></div>
                     <div>{eventData.subscription_fee===0?"FREE":eventData.subscription_fee}</div>
                     </div>
                     <div className="detail-card-top-other-box">

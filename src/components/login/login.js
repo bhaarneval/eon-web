@@ -111,7 +111,7 @@ class Login extends Component {
               onClick = {this.handleForgotPassword}
               >Forgot Password?</div>
               {this.state.hasErrored && (
-                  <div className="error-message">*{this.state.errorMessage}</div>
+                  <div className="error-message">{this.state.errorMessage}</div>
                 )}
               <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                 Login

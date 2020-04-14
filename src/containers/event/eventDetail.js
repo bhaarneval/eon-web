@@ -92,23 +92,18 @@ onDiscountChange = (value) => {
 }
 
 handleSend = (inviteeList) => {
-  console.log(inviteeList[0]);
   const {updateInviteeList, eventData, accessToken} = this.props;
-  let invitees=[];
-  for (let i = 0; i < Object.keys(inviteeList).length; i++) {
-    invitees=[...invitees,inviteeList[i]] ;
-}
-    const data = {
-      event: eventData.id,
-      discount_percentage: this.state.discountPercentage,
-      invitee_list:invitees,
+  const data = {
+    event: eventData.id,
+    discount_percentage: this.state.discountPercentage,
+    invitee_list:[...new Set(Object.values(inviteeList))],
 
-    };
-    updateInviteeList({accessToken: accessToken, data: data, updateType:"save"});
-    this.setState({
-        showModal: false,
-        discount:this.state.discountPercentage
-    })
+  };
+  updateInviteeList({accessToken: accessToken, data: data, updateType:"save"});
+  this.setState({
+      showModal: false,
+      discount:this.state.discountPercentage
+  })
 }
 
 search = (event) => {

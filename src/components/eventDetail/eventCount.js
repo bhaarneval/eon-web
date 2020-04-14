@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import './eventDetail.css'
-import fb from '../../assets/fb.png';
-import feedback from '../../assets/feedback.png';
-import reminder from '../../assets/reminder.png';
-import update from '../../assets/update.png';
-import user from '../../assets/user.png';
+// import fb from '../../assets/fb.svg';
+import feedback from '../../assets/feedback.svg';
+import reminder from '../../assets/reminder.svg';
+import update from '../../assets/update.svg';
+import user from '../../assets/user_yellow.svg';
 import {Modal, Input, Button} from 'antd';
 const { TextArea } = Input;
 import React, { Component } from "react";
@@ -67,7 +67,8 @@ class EventCount extends Component {
                 </div>
                 <div className="detail-card-tile detail-card-container">
                     <div>
-                    <span className="detail-card-tile-row"><img className="subscriber-image" src={fb}/></span>
+                        <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="large"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">sad</a>
+                        </div>
                         <div>
                             Share on social media
                         </div>

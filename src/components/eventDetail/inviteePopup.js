@@ -20,34 +20,37 @@ class InviteesPopup extends Component {
     }
 
     validateEmail(email){      
-    var emailPattern = EMAIL_VALIDATION;
-    return emailPattern.test(email); 
+        var emailPattern = EMAIL_VALIDATION;
+        return emailPattern.test(email); 
     } 
 
     handleKeyPress = (event) => {
         if(event.key === 'Enter'){
+            const count = this.state.count;
             event.preventDefault();
-            if(this.validateEmail(event.target.value)){
-                let a = this.state.inviteeList
-                a[this.state.count] = event.target.value
-                if (new Set(Object.values(a)).size !== Object.values(a).length){
-                    delete a[`${this.state.count}`];
-                    this.setState({
-                        emailError: 'Email already exists in the list',
-                        inviteeList: a,
-                    })
-                    return
-                }
+            const emailList = event.target.value.split(',')
+            if ((emailList.length + Object.keys(this.state.inviteeList).length) > 10){
                 this.setState({
-                    count: this.state.count + 1,
-                    inviteeList: a,
-                    message: ''
+                    emailError: 'Please enter 10 email ids only at a time.'
                 })
+                return;
             }
-            else{
-                this.setState({
-                    emailError: 'Please enter a valid email address'
-                })
+            for (var i = 0; i < emailList.length; i++){
+                if(this.validateEmail(emailList[i].trim())){
+                    let a = this.state.inviteeList
+                    a[count === 0 ? i : parseInt(Object.keys(this.state.inviteeList)[Object.keys(this.state.inviteeList).length - 1]) + 1 + i] = emailList[i].trim()
+                    this.setState({
+                        count: count + 1,
+                        inviteeList: a,
+                        message: ''
+                    })
+                }
+                else{
+                    this.setState({
+                        emailError: 'Please enter a valid email address'
+                    })
+                    break;
+                }
             }
         }
     }
@@ -79,6 +82,8 @@ class InviteesPopup extends Component {
                 width={660}
             >
                 <div>
+                    <div className="warning">Max 10 email ids at a time.</div>
+                    <div className="warning">Please hit enter to add the email to the invitee list.</div>
                     <div className="email-row">
                         {Object.keys(this.state.inviteeList).map((key) => {
                             return <span className="email" id={key} key={key}>  {this.state.inviteeList[key]} 
@@ -90,13 +95,13 @@ class InviteesPopup extends Component {
                     <TextArea 
                         value={this.state.message.length > 0 && this.state.message} 
                         rows={1} 
+                        disabled={Object.keys(this.state.inviteeList).length > 10}
                         placeholder="Press Enter to add email id"
                         onChange={this.onChange}
                         onKeyPress={this.handleKeyPress} 
                     />
-                    <div className="error-message">*Please hit enter to add the email to the invitee list</div>
                     {this.state.emailError.length > 0 &&
-                        <div className="error">{this.state.emailError}</div>
+                        <div className="error-message">{this.state.emailError}</div>
                     }
                     <div className='discount-row'>
                         <div className='discount-box'>

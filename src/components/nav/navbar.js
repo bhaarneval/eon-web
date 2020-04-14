@@ -105,7 +105,9 @@ class Navbar extends Component {
       <Menu onClick={key => this.takeMenuAction(key)}>
         <Menu.Item key="3">Change Password</Menu.Item>
         <Menu.Item key="4">Profile</Menu.Item>
-        <Menu.Item key="5">Wishlist</Menu.Item>
+        {this.props.userRole === 'subscriber' &&
+           <Menu.Item key="5">Wishlist</Menu.Item>
+        }
         <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
@@ -130,7 +132,7 @@ class Navbar extends Component {
               </div>
             </div>
           }
-          {this.props.accessToken !== "" ?
+          {localStorage.getItem("token") && this.props.accessToken !== "" ?
             <Dropdown overlay={menuSidebar}>
               <div className="nav-items">{this.props.userData.name ? this.props.userData.name : this.props.userData.email} <DownOutlined /></div>
             </Dropdown>

@@ -127,7 +127,7 @@ export default function userDetails(props) {
             visibilityToggle={false}
           />
         </Form.Item>
-        {hasErrored && <div className="error-message">*{errorMessage}</div>}
+        {hasErrored && <div className="error-message">{errorMessage}</div>}
         <div className="password-info">{PASSWORD_INFO}</div>
         <div className="one-button-style">
           <StyledButtons content={<RightOutlined className="button-arrow" />} />
