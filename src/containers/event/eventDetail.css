@@ -21,8 +21,13 @@
     font-size: 12px;
     font-weight: 600;
     color: #8e8d8d;
-    padding: 6px;
+    padding: 3px;
     margin-right: 10px;
+}
+
+.warning{
+    color: red;
+    font-size: 12px
 }
 
 .email-row{
