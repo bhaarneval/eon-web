@@ -418,7 +418,7 @@ render() {
               {
                 eventData.subscription_fee!==0 && 
                 <div className = "cancel-success cancel-success-paid">All the
-                money paid will be refunded back to you.</div>
+                money paid will be refunded to you.</div>
               }
               <Button type="primary" onClick={this.confirmCancel} style={{marginTop:"10%"}}>
                 Confirm
