@@ -21,43 +21,41 @@ export function* createNewEvent(param) {
     };
     let imageUploadResponse = {};
     // to upload image
-    // if (data.imageFile && data.imageFile.name) {
-    //   let responseImage = {};
-    //   let getPresignedUrl = APIService.dev + requestURLS.UPLOAD_IMAGE;
+    if (data.imageFile && data.imageFile.name) {
+      let responseImage = {};
+      let getPresignedUrl = APIService.dev + requestURLS.UPLOAD_IMAGE;
 
-    //   imageUploadResponse = yield fetch(getPresignedUrl, {
-    //     headers: headers,
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       path_name: data.imageFile.name,
-    //     }),
-    //   }).then((response) => {
-    //     responseImage = response;
-    //     return response.json();
-    //   });
+      imageUploadResponse = yield fetch(getPresignedUrl, {
+        headers: headers,
+        method: "POST",
+        body: JSON.stringify({
+          path_name: data.imageFile.name,
+        }),
+      }).then((response) => {
+        responseImage = response;
+        return response.json();
+      });
 
-    //   checkResponse(responseImage, imageUploadResponse);
+      checkResponse(responseImage, imageUploadResponse);
+      
+      yield fetch(imageUploadResponse.data.presigned_url, {
+        method: "PUT",
+        body: data.imageFile,
+      }).then((response) => {
+        responseImage = response;
+      });
 
-    //   let responseJson = yield fetch(imageUploadResponse.data.presigned, {
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       name: data.imageFile,
-    //     }),
-    //   }).then((response) => {
-    //     responseImage = response;
-    //     return response.json();
-    //   });
-
-    //   checkResponse(responseImage, responseJson);
-    // }
+      checkResponse(responseImage,{message:"Something went wrong"});
+    }
 
     let postURL = "";
     if (!eventId) {
       postURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
     } else
       postURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${eventId}/`;
-      let sendData = data;
-      sendData.images = imageUploadResponse.image_name||"undefined";
+      let {name, external_links, location, date, time, subscription_fee, event_type, no_of_tickets, description, images} =data;
+      let sendData = {name, external_links, location, date, time, subscription_fee, event_type, no_of_tickets, description, images};
+      sendData.images = imageUploadResponse.data?imageUploadResponse.data.image_name:data.images||"";
     
     let recievedResponse = {};
     let responseJson = yield fetch(postURL, {

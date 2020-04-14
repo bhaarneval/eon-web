@@ -309,6 +309,9 @@ export function UpdateEventForm(props) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("hh:mm A");
     data = {...data, imageFile:file};
+    if(images && images!=""){
+      data.images = images;
+    }
     handleSubmit(data);
   }
 
