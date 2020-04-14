@@ -61,14 +61,13 @@
     display: flex;
     justify-content: center;
     color:green;
-    font-size: 120%;
-    padding: 5%;
+    padding: 3%;
 }
 .payment-success-button{
     display: flex;
     justify-content: center;
     color:green;
-    padding:5%;
+    padding:3%;
 }
 .subscription-discount{
     color:green;
@@ -100,8 +99,7 @@
 }
 .cancel-success {
     text-align: center;
-    font-size: 120%;
-    padding: 10%;
+    padding: 5%;
     padding-bottom: 0%;
     color: green;
 }
@@ -119,8 +117,6 @@
     align-items: center;
     padding-left: 10%;
     padding-right: 10%;
-    font-size: 120%;
-    height: 10em;
 }
 .color-text{
     color: #262C6F;

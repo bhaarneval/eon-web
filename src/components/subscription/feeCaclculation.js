@@ -10,6 +10,8 @@ class FeeCalculation extends Component {
     super(props);
     this.state = {
       seats: this.props.noOfSeats,
+      boughtSeats: this.props.noOfSeats,
+      amountPaid: this.props.amountPaid,
       totalAmountAfterPromo: this.props.noOfSeats * this.props.perHeadAmount,
       totalAmount: this.props.noOfSeats * this.props.perHeadAmount,
       codeApplied: false,
@@ -104,6 +106,9 @@ class FeeCalculation extends Component {
         <div className="detail-card">
           <div className="subscription-container">
             <div className="subscription-left">
+            {this.state.isUpdate ?
+              <h2>Newly added seats : {this.state.seats - this.state.boughtSeats}</h2>
+              :
               <div className="subscription-seats borderBottom">
                 <MinusCircleOutlined
                   style={{ fontSize: "200%", color: "#262C6F" }}
@@ -141,6 +146,7 @@ class FeeCalculation extends Component {
                   }}
                 />
               </div>
+              }
               {(this.props.perHeadAmount !== 0 &&
                 this.props.discountPercentage !== 0 &&
                 !(this.props.eventData.is_subscribed)) ||
@@ -171,8 +177,13 @@ class FeeCalculation extends Component {
             {(this.props.eventData.is_subscribed) && !this.state.isUpdate ? (
               <div className="already-subscibed">
                 <h2 style={{ color: "#57ABA0" }}>
-                  You are already subscribed to this event.
+                  You have already bought {this.state.boughtSeats} seats for this event.
                 </h2>
+                {this.state.amountPaid > 0 &&
+                   <h4 style={{ color: "#57ABA0" }}>
+                    Total amount paid : ₹ {this.state.amountPaid}
+                  </h4>
+                }
                 <h4 style={{ color: "#57ABA0" }}>
                   *If you want to Add/Remove invitees, click on Modify
                 </h4>
@@ -273,6 +284,7 @@ FeeCalculation.propTypes = {
   handleCancel: PropTypes.func,
   handleRefund: PropTypes.func,
   eventData: PropTypes.object,
+  amountPaid: PropTypes.number
 };
 
 export default FeeCalculation;

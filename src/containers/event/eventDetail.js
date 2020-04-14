@@ -381,6 +381,7 @@ render() {
               <FeeCaclculation
                 eventData={this.props.eventData}
                 noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
+                amountPaid={eventData.subscription_details.amount_paid}
                 discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
                 perHeadAmount={eventData.subscription_fee}
                 payNow={this.payNow}
@@ -392,7 +393,7 @@ render() {
           </div>
         )}
         {this.state.showPaymentSuccess && (
-          <Modal visible onCancel={this.handleClose} footer={null} width={500}>
+          <Modal visible onCancel={this.handleClose} footer={null} width={400}>
             <div className="payment-success">
               <CheckCircleFilled style={{ color: "green", fontSize: "600%" }} />
             </div>
