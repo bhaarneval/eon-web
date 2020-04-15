@@ -1,31 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./profile.css";
 import { Button, Form, Input, Checkbox } from "antd";
 import organisationImg from "../../assets/Organisation Name.svg";
 import emailImg from "../../assets/Email ID.svg";
 import phoneImg from "../../assets/Phone - .svg";
+import userImg from "../../assets/user.svg";
 import {ORGANISATION_NAME,ORGANISATION_ADDRESS, CONTACT_NO, INVALID_CONATCT} from '../../constants/messages';
 import { PHONE_VALIDATION} from '../../constants/constants';
 
 export default function ProfileForm(props) {
-  const { values, handleSubmit, handleCancel, role } = props;
+  const { values, handleSubmit, handleCancel, role, interestList, disableButton } = props;
+  let [interestsList,setInterest] = useState(values.interest);
+  let [ifUpdate, setUpdate] = useState(disableButton);
+  
 
+  function handleChange(){
+    setUpdate(true);
+  }
   function onFinish(data) {
+    delete data.email;
+    if(role === "subscriber")
+      data.interest = interestsList;
+
     handleSubmit(data);
   }
+
   function handleCheckboxChange (value){
-    console.log(value);
+
+    if(interestsList.includes(value)){
+      setInterest(interestsList.filter(key => value !== key));
+    }
+    else{
+      interestsList.push(value);
+      setInterest(interestsList);
+    }
+    setUpdate(true);
   }
 
-  return role !== "user" ? (
+  return role !== "subscriber" ? (
     <div className="changePasswordContainer">
       <div className="contentCenter">
         <h1>Profile</h1>
         <FormComponent
           values={values}
+          ifUpdate = {ifUpdate}
+          handleChange = {handleChange}
           handleCancel={handleCancel}
           onFinish={onFinish}
+          role={role}
         />
       </div>
     </div>
@@ -35,16 +58,19 @@ export default function ProfileForm(props) {
         <h1>Profile</h1>
         <FormComponent
           values={values}
+          ifUpdate = {ifUpdate}
+          handleChange = {handleChange}
           handleCancel={handleCancel}
           onFinish={onFinish}
+          role={role}
         />
       </div>
       <div>
         <div className="formCenter">
           <h1>Select Interests</h1>
           <div className="interests-div">
-            {interestsList.map(interest=>{
-              return <Interests key ={name} name={interest} handleCheckboxChange={handleCheckboxChange} isChecked={true}/>
+            {interestList.map(interest=>{
+              return <Interests key ={interest.id} value={interest.id} name = {interest.type} handleCheckboxChange={handleCheckboxChange} isChecked={values.interest.includes(interest.id)}/>
             })}
           </div>
         </div>
@@ -57,52 +83,72 @@ ProfileForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
   role: PropTypes.string.isRequired,
+  interestList: PropTypes.array,
+  disableButton: PropTypes.bool,
 };
 
 function Interests(props){
-  const {handleCheckboxChange, isChecked, name} = props;
+  const {handleCheckboxChange, isChecked, value, name} = props;
   return (
     <div className="checkbox-div">
-      <Checkbox defaultChecked={isChecked} onChange={handleCheckboxChange} value={name}>{name}</Checkbox>      
+      <Checkbox defaultChecked={isChecked} onChange={()=>handleCheckboxChange(value)} key ={value}>{name}</Checkbox>      
     </div>
   )
 
 }
 Interests.propTypes = {
   handleCheckboxChange: PropTypes.func.isRequired,
-  isChecked: PropTypes.func.isRequired,
+  isChecked: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
+  value: PropTypes.number,
 }
 
 function FormComponent(props) {
-  const { values, onFinish, handleCancel } = props;
-  const {organizationName, contactNumber, email, address} =values;
+  const { values, onFinish, handleCancel, role, handleChange, ifUpdate } = props;
+  const {organization, contact_number, email, address, name} =values;
+  
+
   return (
     <Form
           name="profile"
           initialValues={{
-            organizationName: organizationName,
-            contactNumber: contactNumber,
+            organization: organization,
+            name: name,
+            contact_number: contact_number,
             email: email,
             address: address
           }}
+          onChange = {handleChange}
           onFinish={onFinish}
         >
-          <Form.Item
-            name="organizationName"
+          {
+            role === "subscriber"?(
+              <Form.Item
+              name="name"
+              rules={[
+                { required: true, message: "Name cannot be empty!!"  }
+              ]}
+          >
+            <Input size = "large"  prefix = {<img src={userImg}/>} placeholder = "Name" className = 'input-style'/>
+          </Form.Item>
+            ):(
+              <Form.Item
+            name="organization"
             rules={[
               { required: true, message: ORGANISATION_NAME  }
             ]}
           >
             <Input size = "large"  prefix = {<img src={organisationImg}/>} placeholder = "Organisation Name" className = 'input-style'/>
           </Form.Item>
+            )
+          }
           <Form.Item
             name="email"
           >
             <Input disabled prefix={<img src={emailImg} />} size = "large" placeholder = "Email" className = 'input-style'/>
           </Form.Item>
           <Form.Item
-            name="contactNumber"
+            name="contact_number"
             rules={[
               { required: true, message: CONTACT_NO },
               {
@@ -132,7 +178,7 @@ function FormComponent(props) {
             <Button className="cancel-button" onClick={handleCancel}>
               Cancel
             </Button>
-            <Button htmlType="submit" type="primary" className="save-button">
+            <Button disabled = {!ifUpdate} htmlType="submit" type="primary" className="save-button">
               Update
             </Button>
           </div>
@@ -144,6 +190,7 @@ FormComponent.propTypes = {
   values: PropTypes.object.isRequired,
   handleCancel: PropTypes.func.isRequired,
   onFinish: PropTypes.func.isRequired,
+  role: PropTypes.string,
+  handleChange: PropTypes.func,
+  ifUpdate: PropTypes.bool,
 }
-
-const interestsList= ["Festival","Conference", "Ceremonies","Concerts","Seminars","Conventions","Trade Fairs","Formal Parties","Conventions"];
