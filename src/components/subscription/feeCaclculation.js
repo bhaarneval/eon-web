@@ -177,11 +177,11 @@ class FeeCalculation extends Component {
             {(this.props.eventData.is_subscribed) && !this.state.isUpdate ? (
               <div className="already-subscibed">
                 <h2 style={{ color: "#57ABA0" }}>
-                  You have already bought {this.state.boughtSeats} seats for this event.
+                  You have already bought {this.props.noOfSeats} seats for this event.
                 </h2>
                 {this.state.amountPaid > 0 &&
                    <h4 style={{ color: "#57ABA0" }}>
-                    Total amount paid : ₹ {this.state.amountPaid}
+                    Total amount paid : ₹ {this.props.eventData.subscription_details.amount_paid}
                   </h4>
                 }
                 <h4 style={{ color: "#57ABA0" }}>
