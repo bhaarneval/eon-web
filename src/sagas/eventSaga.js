@@ -90,9 +90,9 @@ export function* createNewEvent(param) {
     } else {
       yield put({
         type: actionEventTypes.RECEIVED_EVENT_DATA,
-        payload: responseJson,
+        payload: responseJson.data,
       });
-      callback({ id: responseJson.id });
+      callback({ id: responseJson.data.id });
     }
   } catch (e) {
     console.error(e);
