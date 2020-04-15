@@ -25,6 +25,10 @@ class Dashboard extends Component {
       spinning: true,
       isChecked: false,
       isWishlist: false,
+      searchText: "",
+      startDate:"",
+      endDate: "",
+      eventType:"",
       role: this.props.userRole,
     };
   }
@@ -55,7 +59,12 @@ class Dashboard extends Component {
     if (type !== "wishlist") {
       fetchEvents({ userData, accessToken });
       this.setState({
+        isChecked: false,
         isWishlist: false,
+        searchText: "",
+        startDate: "",
+        endDate: "",
+        eventType: "",
       });
     } else if (type === "wishlist") {
       fetchEvents({
@@ -64,7 +73,12 @@ class Dashboard extends Component {
         filterData: { is_wishlisted: "True" },
       });
       this.setState({
+        isChecked: false,
         isWishlist: true,
+        searchText: "",
+        startDate: "",
+        endDate: "",
+        eventType: "",
       });
     }
   };
@@ -117,23 +131,47 @@ class Dashboard extends Component {
     });
   };
 
-  handleFilterChange = (value) => {
+  applyFilters = () => {
     const { fetchEvents, userData, accessToken } = this.props;
-    fetchEvents({ userData, accessToken, filterData: { type: value } });
+    const {isWishlist, isChecked, startDate, endDate, eventType, searchText} = this.state;
+    let filterData = {
+      type: eventType,
+      is_wishlisted: isWishlist?"True":undefined,
+      event_created_by: isChecked?"True":undefined,
+      startDate: startDate!==""?startDate:undefined,
+      endDate: startDate!=="" && endDate!==""?endDate: undefined,
+      search: searchText!==""?searchText: undefined,
+    }
+    fetchEvents({ userData, accessToken,filterData});
+  }
+
+  handleFilterChange = (value) => {
+    this.setState({
+      eventType: value
+    },()=> {
+      this.applyFilters();
+    });
+    
   };
   handleDateChange = (date, dateString) => {
-    const { fetchEvents, userData, accessToken } = this.props;
     if (dateString[0] !== "" && dateString[1] != "") {
       const startDate = moment(dateString[0], "DD-MM-YYYY").format(
         "YYYY-MM-DD"
       );
       const endDate = moment(dateString[1], "DD-MM-YYYY").format("YYYY-MM-DD");
-      fetchEvents({
-        userData,
-        accessToken,
-        filterData: { startDate: startDate, endDate: endDate },
+      this.setState({
+        startDate: startDate,
+        endDate: endDate,
+      },()=> {
+        this.applyFilters();
       });
-    } else fetchEvents({ userData, accessToken });
+    } else 
+      this.setState({
+        startDate: "",
+        endDate: "",
+      },()=> {
+        this.applyFilters();
+      });
   };
   handleCreateEvent = () => {
     this.props.history.push("create");
@@ -143,29 +181,20 @@ class Dashboard extends Component {
     if (event.key === "Enter") {
       event.preventDefault();
       const searchText = event.target.value;
-      const { fetchEvents, userData, accessToken } = this.props;
-      fetchEvents({
-        userData,
-        accessToken,
-        filterData: { search: searchText },
+      this.setState({
+        searchText: searchText
+      },()=> {
+        this.applyFilters();
       });
     }
   };
   handleCheckChange = () => {
-    const { fetchEvents, userData, accessToken } = this.props;
-    if (!this.state.isChecked) {
-      fetchEvents({
-        userData,
-        accessToken,
-        filterData: { event_created_by: "True" },
-      });
-    } else {
-      fetchEvents({ userData, accessToken });
-    }
     this.setState({
-      isChecked: !this.state.isChecked,
+      isChecked: this.state.isChecked
+    },()=> {
+      this.applyFilters();
     });
-  };
+  }
 
   goBack = () => {
     this.props.history.push("/dashboard");
