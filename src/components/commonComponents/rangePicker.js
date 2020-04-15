@@ -6,7 +6,7 @@ import moment from "moment";
 const { RangePicker } = DatePicker;
 
 export default function StyledRangePicker (props) {
-    const {handleChange} = props;
+    const {handleChange, values} = props;
     return <RangePicker
          autofocus={true} 
          size="small"
@@ -16,9 +16,11 @@ export default function StyledRangePicker (props) {
          disabledDate={current => {
             return current && current < moment().startOf("day");
           }}
+          value = {values.startDate !== ''?[moment(values.startDate,"YYYY-MM-DD"), moment(values.endDate,"YYYY-MM-DD")]:[null,null]}
          />;
 }
 
 StyledRangePicker.propTypes = {
     handleChange :PropTypes.func.isRequired,
+    values: PropTypes.object,
 }

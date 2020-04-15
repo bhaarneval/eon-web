@@ -9,6 +9,7 @@ import { Row, Button, Spin, message, Checkbox } from "antd";
 import SearchBox from "../../components/commonComponents/searchBox";
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import StyledRangePicker from "../../components/commonComponents/rangePicker";
+import { SyncOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import {
   fetchEvents,
@@ -26,9 +27,9 @@ class Dashboard extends Component {
       isChecked: false,
       isWishlist: false,
       searchText: "",
-      startDate:"",
+      startDate: "",
       endDate: "",
-      eventType:"",
+      eventType: "",
       role: this.props.userRole,
     };
   }
@@ -133,25 +134,55 @@ class Dashboard extends Component {
 
   applyFilters = () => {
     const { fetchEvents, userData, accessToken } = this.props;
-    const {isWishlist, isChecked, startDate, endDate, eventType, searchText} = this.state;
+    const {
+      isWishlist,
+      isChecked,
+      startDate,
+      endDate,
+      eventType,
+      searchText,
+    } = this.state;
     let filterData = {
       type: eventType,
-      is_wishlisted: isWishlist?"True":undefined,
-      event_created_by: isChecked?"True":undefined,
-      startDate: startDate!==""?startDate:undefined,
-      endDate: startDate!=="" && endDate!==""?endDate: undefined,
-      search: searchText!==""?searchText: undefined,
-    }
-    fetchEvents({ userData, accessToken,filterData});
-  }
+      is_wishlisted: isWishlist ? "True" : undefined,
+      event_created_by: isChecked ? "True" : undefined,
+      startDate: startDate !== "" ? startDate : undefined,
+      endDate: startDate !== "" && endDate !== "" ? endDate : undefined,
+      search: searchText !== "" ? searchText : undefined,
+    };
+    fetchEvents({ userData, accessToken, filterData });
+  };
+  removeFilters = () => {
+    const { fetchEvents, userData, accessToken } = this.props;
+    this.setState(
+      {
+        isChecked: false,
+        searchText: "",
+        startDate: "",
+        endDate: "",
+        eventType: "",
+      },
+      () => {
+        fetchEvents({
+          userData,
+          accessToken,
+          filterData: {
+            is_wishlisted: this.state.isWishlist ? "True" : undefined,
+          },
+        });
+      }
+    );
+  };
 
   handleFilterChange = (value) => {
-    this.setState({
-      eventType: value
-    },()=> {
-      this.applyFilters();
-    });
-    
+    this.setState(
+      {
+        eventType: value,
+      },
+      () => {
+        this.applyFilters();
+      }
+    );
   };
   handleDateChange = (date, dateString) => {
     if (dateString[0] !== "" && dateString[1] != "") {
@@ -159,19 +190,25 @@ class Dashboard extends Component {
         "YYYY-MM-DD"
       );
       const endDate = moment(dateString[1], "DD-MM-YYYY").format("YYYY-MM-DD");
-      this.setState({
-        startDate: startDate,
-        endDate: endDate,
-      },()=> {
-        this.applyFilters();
-      });
-    } else 
-      this.setState({
-        startDate: "",
-        endDate: "",
-      },()=> {
-        this.applyFilters();
-      });
+      this.setState(
+        {
+          startDate: startDate,
+          endDate: endDate,
+        },
+        () => {
+          this.applyFilters();
+        }
+      );
+    } else
+      this.setState(
+        {
+          startDate: "",
+          endDate: "",
+        },
+        () => {
+          this.applyFilters();
+        }
+      );
   };
   handleCreateEvent = () => {
     this.props.history.push("create");
@@ -181,20 +218,26 @@ class Dashboard extends Component {
     if (event.key === "Enter") {
       event.preventDefault();
       const searchText = event.target.value;
-      this.setState({
-        searchText: searchText
-      },()=> {
-        this.applyFilters();
-      });
+      this.setState(
+        {
+          searchText: searchText,
+        },
+        () => {
+          this.applyFilters();
+        }
+      );
     }
   };
   handleCheckChange = () => {
-    this.setState({
-      isChecked: this.state.isChecked
-    },()=> {
-      this.applyFilters();
-    });
-  }
+    this.setState(
+      {
+        isChecked: this.state.isChecked,
+      },
+      () => {
+        this.applyFilters();
+      }
+    );
+  };
 
   goBack = () => {
     this.props.history.push("/dashboard");
@@ -212,6 +255,7 @@ class Dashboard extends Component {
           )}
           <div className="dashboard-actions-container">
             <div className="filters">
+              <Button onClick={this.removeFilters} style={{marginRight:"1%"}}><SyncOutlined /></Button>
               <SearchBox
                 handleOnChange={this.handleSearchTextChange}
                 placeholder={"Event Name / Location"}
@@ -221,9 +265,10 @@ class Dashboard extends Component {
                 handleChange={this.handleFilterChange}
                 optionsList={this.props.eventType}
                 placeholder={"Event Type"}
+                value = {this.state.eventType}
               />
-              <StyledRangePicker handleChange={this.handleDateChange} />
-              {this.props.userRole === "organiser" &&
+              <StyledRangePicker handleChange={this.handleDateChange} values = {{startDate:this.state.startDate, endDate:this.state.endDate}}/>
+              {this.props.userRole === "organiser" && (
                 <div className="checkbox-style">
                   <Checkbox
                     checked={this.state.isChecked}
@@ -233,16 +278,13 @@ class Dashboard extends Component {
                     Created By Me
                   </Checkbox>
                 </div>
-              }
+              )}
             </div>
-            {this.props.userRole === "organiser" && 
-              <Button 
-                type="primary"
-                onClick={this.handleCreateEvent}
-              >
+            {this.props.userRole === "organiser" && (
+              <Button type="primary" onClick={this.handleCreateEvent}>
                 Create
               </Button>
-            }
+            )}
           </div>
           <div className="events-container-flex">
             {this.spliceArray(eventList)}
