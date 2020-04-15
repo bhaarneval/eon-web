@@ -44,7 +44,7 @@ class EventDetail extends Component {
   }
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole} = this.props;
-    if(!eventData.id){
+    if(!eventData || !eventData.id){
       let searchParam = new URLSearchParams(search);
       let id = searchParam.get("id");
       getEventData({
@@ -322,20 +322,21 @@ render() {
       <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
-        {this.props.eventData.id && 
-        <EventInfo
-          eventData = {this.props.eventData}
-          eventType = {this.props.eventType}
-          history={this.props.history}
-          isOrganizer={this.props.userRole === 'organiser'}
-          handleShare={this.handleShare}
-          setEventUpdate={this.props.setEventUpdate}
-          cancelEvent = {this.props.cancelEvent}
-          accessToken = {this.props.accessToken}
-          handleWishlist = {this.props.updateWishList}
-        />}
+        {this.props.eventData && this.props.eventData.id && 
+          <EventInfo
+            eventData = {this.props.eventData}
+            eventType = {this.props.eventType}
+            history={this.props.history}
+            isOrganizer={this.props.userRole === 'organiser'}
+            handleShare={this.handleShare}
+            setEventUpdate={this.props.setEventUpdate}
+            cancelEvent = {this.props.cancelEvent}
+            accessToken = {this.props.accessToken}
+            handleWishlist = {this.props.updateWishList}
+          />
+        }
        {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
-        {this.props.userRole === 'organiser' && (
+        {this.props.userRole === 'organiser' && this.props.eventData && this.props.eventData.self_organised === true && (
           <div>
             <EventCount eventData = {this.props.eventData} notifySubscriber = {this.handleNotifySubscriber}/>
             <div className="invitee-row">
