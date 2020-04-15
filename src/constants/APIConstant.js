@@ -21,5 +21,6 @@ export const requestURLS = {
   NOTIFY_SUBSCRIBER: "core/notify-subscriber/",
   SUBSCRIPTION:"core/subscription/",
   SHARE_FRIEND: "core/share-with-friend/",
-  WISHLIST: "core/wishlist/"
+  WISHLIST: "core/wishlist/",
+  USER_OPERATIONS: "core/user/",
 };
