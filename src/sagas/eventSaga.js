@@ -84,9 +84,9 @@ export function* createNewEvent(param) {
       checkResponse(recievedResponse, responseJson);
       yield put({
         type: actionEventTypes.RECEIVED_EVENT_DATA,
-        payload: responseJson.data[0],
+        payload: responseJson.data,
       });
-      callback({ id: responseJson.data[0].id });
+      callback({ id: responseJson.data.id });
     } else {
       yield put({
         type: actionEventTypes.RECEIVED_EVENT_DATA,
@@ -153,7 +153,7 @@ if(filterData.is_wishlisted)
 }
 
 export function* fetchEventData(param) {
-  const { eventId, accessToken, userRole, callback, ifUpdate } = param;
+  const { eventId, accessToken, callback, ifUpdate } = param;
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
@@ -174,8 +174,7 @@ export function* fetchEventData(param) {
 
     yield put({
       type: actionEventTypes.RECEIVED_EVENT_DATA,
-      payload:
-        userRole === "organiser" ? responseJson.data[0] : responseJson.data,
+      payload:responseJson.data,
     });
 
     if(ifUpdate){
@@ -268,7 +267,7 @@ export function* saveInvitees(param) {
 
     yield put({
       type: actionEventTypes.RECEIVED_EVENT_DATA,
-      payload: responseJson.data[0],
+      payload: responseJson.data,
     });
   } catch (e) {
     console.error(e);
