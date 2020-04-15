@@ -15,38 +15,59 @@ import {
   getEventData,
   setEventUpdate,
 } from "../../actions/eventActions";
+import BackButton from "../../components/commonComponents/backButton";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       eventList: [],
-      eventsList: [],
       spinning: true,
       isChecked: false,
+      isWishlist: false,
       role: this.props.userRole,
     };
   }
   componentDidMount() {
-    const { fetchEvents, userData, accessToken, location:{search} } = this.props;
-    let searchParam = new URLSearchParams(search);
-    let type = searchParam.get("type");
-    if(type !== "wishlist"){
-      fetchEvents({ userData, accessToken });
-    }
-    else if(type === "wishlist"){
-      fetchEvents({userData, accessToken, filterData:{is_wishlisted: "True"}})
-    }
+    this.fetchEventsList();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.eventList !== prevProps.eventList) {
       this.setState({
         eventList: this.props.eventList,
-        eventsList: this.props.eventList,
       });
     }
+    if (prevProps.location.search !== this.props.location.search) {
+      this.fetchEventsList();
+    }
   }
+
+  fetchEventsList = () => {
+    const {
+      fetchEvents,
+      userData,
+      accessToken,
+      location: { search },
+    } = this.props;
+    let searchParam = new URLSearchParams(search);
+    let type = searchParam.get("type");
+    if (type !== "wishlist") {
+      fetchEvents({ userData, accessToken });
+      this.setState({
+        isWishlist: false,
+      });
+    } else if (type === "wishlist") {
+      fetchEvents({
+        userData,
+        accessToken,
+        filterData: { is_wishlisted: "True" },
+      });
+      this.setState({
+        isWishlist: true,
+      });
+    }
+  };
   handleEventClick = (id) => {
     const { getEventData, accessToken, history, userRole } = this.props;
     getEventData({
@@ -146,12 +167,20 @@ class Dashboard extends Component {
     });
   };
 
+  goBack = () => {
+    this.props.history.push("/dashboard");
+  };
+
   render() {
-    let eventsList = this.state.eventList;
+    const { eventList, isWishlist } = this.state;
     return (
       <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
         <div className="sub-content">
-          <div className="events-heading"> Event Management </div>
+          {!isWishlist ? (
+            <div className="events-heading"> Event Management </div>
+          ) : (
+            <BackButton handleOnClick={this.goBack} text={"Wishlist"} />
+          )}
           <div className="dashboard-actions-container">
             <div className="filters">
               <SearchBox
@@ -187,7 +216,7 @@ class Dashboard extends Component {
             ) : null}
           </div>
           <div className="events-container-flex">
-            {this.spliceArray(eventsList)}
+            {this.spliceArray(eventList)}
           </div>
         </div>
       </Spin>

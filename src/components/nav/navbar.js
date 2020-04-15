@@ -17,7 +17,6 @@ import {
   DARK_MODE
 } from "../../constants/constants";
 import { logOutUser, readNotifications } from "../../actions/commonActions";
-import {fetchEvents} from "../../actions/eventActions";
 
 class Navbar extends Component {
   constructor(props) {
@@ -62,8 +61,6 @@ class Navbar extends Component {
     else if(input.key === "4")
       this.props.history.push(`/profile/1`)
     else if (input.key === "5"){
-      const {accessToken, userData, fetchEvents} = this.props;
-      fetchEvents({userData: userData, accessToken: accessToken, filterData:{is_wishlisted: "True"}});
       this.props.history.push(`/dashboard?type=wishlist`);
     }  
     else{
@@ -166,7 +163,6 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   logOutUser: logOutUser,
-  fetchEvents: fetchEvents,
   readNotifications: readNotifications,
 };
 

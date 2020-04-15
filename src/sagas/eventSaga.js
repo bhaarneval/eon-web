@@ -53,9 +53,11 @@ export function* createNewEvent(param) {
       postURL = APIService.dev + requestURLS.EVENT_OPERATIONS;
     } else
       postURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${eventId}/`;
-      let {name, external_links, location, date, time, subscription_fee, event_type, no_of_tickets, description, images, event_created_by} =data;
-      let sendData = {name, external_links, location, date, time, subscription_fee, event_type, no_of_tickets, description, images, event_created_by};
-      sendData.images = imageUploadResponse.data?imageUploadResponse.data.image_name:data.images||"";
+      let {name, external_links, location, date, time, subscription_fee, event_type, no_of_tickets, description, event_created_by} =data;
+      let sendData = {name, external_links, location, date, time, subscription_fee, event_type, no_of_tickets, description, event_created_by};
+      if(data.imageFile.name){
+        sendData.images = imageUploadResponse.data?imageUploadResponse.data.image_name:""||"";
+      }
     
     let recievedResponse = {};
     let responseJson = yield fetch(postURL, {
