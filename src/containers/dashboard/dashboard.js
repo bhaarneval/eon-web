@@ -231,7 +231,7 @@ class Dashboard extends Component {
   handleCheckChange = () => {
     this.setState(
       {
-        isChecked: this.state.isChecked,
+        isChecked: !this.state.isChecked,
       },
       () => {
         this.applyFilters();
