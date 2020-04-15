@@ -21,7 +21,6 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       eventList: [],
-      eventsList: [],
       spinning: true,
       isChecked: false,
       role: this.props.userRole,
@@ -43,7 +42,6 @@ class Dashboard extends Component {
     if (this.props.eventList !== prevProps.eventList) {
       this.setState({
         eventList: this.props.eventList,
-        eventsList: this.props.eventList,
       });
     }
   }
@@ -147,7 +145,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    let eventsList = this.state.eventList;
+    const {eventList} = this.state;
     return (
       <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
         <div className="sub-content">
@@ -187,7 +185,7 @@ class Dashboard extends Component {
             ) : null}
           </div>
           <div className="events-container-flex">
-            {this.spliceArray(eventsList)}
+            {this.spliceArray(eventList)}
           </div>
         </div>
       </Spin>
