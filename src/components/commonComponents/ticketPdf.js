@@ -1,6 +1,16 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
 //PDFDownloadLink
-import { Page, Text, View, Document, StyleSheet,PDFDownloadLink, Image } from '@react-pdf/renderer';
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  PDFDownloadLink,
+  Image,
+} from "@react-pdf/renderer";
 import BITSIcon from "../../assets/logo.png";
 import sampleQR from "../../assets/sampleQR.jpg";
 
@@ -33,50 +43,72 @@ const newstyles = StyleSheet.create({
   },
   details: {
     margin: 20,
-    height:200,
-    width:"100%",
-    display:"flex",
-    flexDirection:"row",
+    height: 200,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
   },
   eventDetails: {
-    display:"flex",
-    flexDirection:"column",
+    display: "flex",
+    flexDirection: "column",
     marginLeft: 30,
-    justifyContent:"space-between"
-  }
+    justifyContent: "space-between",
+  },
 });
 
 // Create Document Component
-const MyDocument = (
-  <Document>
-    <Page size="A4" style={newstyles.page}>
-      <View style={newstyles.header}>
-        <Image src={BITSIcon} style={newstyles.imageStyle} />
-        <Text style={newstyles.headerText}>Technex</Text>
-      </View>
-      <View style={newstyles.details}>
-        <Image src={sampleQR} style={newstyles.QRStyle} />
-        <View style={newstyles.eventDetails}>
-          <Text>Event Name: Technex</Text>
-          <Text>Number of seats: 4</Text>
-          <Text>Amount : 2000</Text>
-          <Text>Event Date: Thursday, 23 May, 10:00 AM</Text>
-          <Text>Location: HashedIn Technologies</Text>
+function MyDocument(props) {
+  const { eventData, userData } = props;
+  const { date, time, location, name } = eventData;
+  const { no_of_tickets_bought, amount_paid } = eventData.subscription_details;
+  return (
+    <Document>
+      <Page size="A4" style={newstyles.page}>
+        <View style={newstyles.header}>
+          <Image src={BITSIcon} style={newstyles.imageStyle} />
+          <Text style={newstyles.headerText}>EOn</Text>
         </View>
-      </View>
-    </Page>
-  </Document>
-);
+        <View style={newstyles.details}>
+          <Image src={sampleQR} style={newstyles.QRStyle} />
+          <View style={newstyles.eventDetails}>
+            <Text>Event Name: {name}</Text>
+            <Text>Number of seats: {no_of_tickets_bought}</Text>
+            {amount_paid ? <Text>Amount : {amount_paid}</Text> : null}
+            <Text>Booked by: {userData.name}</Text>
+            <Text>
+              Date: {moment(date, "YYYY-MM-DD").format("dddd, DD MMM YYYY")}
+            </Text>
+            <Text>Time: {moment(time, "hh:mm A").format("hh:mm A")}</Text>
+            <Text>Location: {location}</Text>
+          </View>
+        </View>
+      </Page>
+    </Document>
+  );
+}
 
+MyDocument.propTypes = {
+  eventData: PropTypes.object,
+  userData: PropTypes.object,
+};
 
+const PDF = (props) => {
+  return (
+    <div>
+      <PDFDownloadLink
+        document={
+          <MyDocument eventData={props.eventData} userData={props.userData} />
+        }
+        fileName="tickets.pdf"
+      >
+        <div style={{ color: "#ffffff" }}>Download</div>
+      </PDFDownloadLink>
+    </div>
+  );
+};
 
-const PDF = () => {
-    return (
-      <div>
-        <PDFDownloadLink document={MyDocument} fileName="tickets.pdf">
-          <div style = {{color:"#ffffff"}}>Download</div>
-        </PDFDownloadLink>
-      </div>
-    );
-  };
+PDF.propTypes = {
+  eventData: PropTypes.object,
+  userData: PropTypes.object,
+};
 export default PDF;

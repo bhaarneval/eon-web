@@ -2,7 +2,7 @@ import { Button, InputNumber } from "antd";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./subscription.css";
-// import PDF from "../commonComponents/ticketPdf";
+import PDF from "../commonComponents/ticketPdf";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
 class FeeCalculation extends Component {
@@ -244,7 +244,7 @@ class FeeCalculation extends Component {
         </div>
         {(this.props.eventData.is_subscribed) && !this.state.isUpdate ? (
           <div className="update-row">
-            <Button type="primary">Download</Button>
+            <Button type="primary"><PDF eventData = {this.props.eventData} userData = {this.props.userData}/></Button>
             <div className="cancel-row">
               <Button onClick={this.props.handleCancel}>Cancel</Button>
               <Button
@@ -281,7 +281,8 @@ FeeCalculation.propTypes = {
   handleCancel: PropTypes.func,
   handleRefund: PropTypes.func,
   eventData: PropTypes.object,
-  amountPaid: PropTypes.number
+  amountPaid: PropTypes.number,
+  userData: PropTypes.object,
 };
 
 export default FeeCalculation;
