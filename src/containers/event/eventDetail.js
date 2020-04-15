@@ -249,14 +249,21 @@ handleRefund = (seats) => {
 } 
 
 handleRefundConfirm = () => {
-  const { userData, eventData, subscriptionPaidEvent, subscriptionFreeEvent,accessToken} = this.props;
+  const { userData, eventData, subscriptionFreeEvent,accessToken} = this.props;
   if(eventData.subscription_fee!==0){
+    let newSeats = this.state.newSeats - eventData.subscription_details.no_of_tickets_bought;
+    let amount = (-newSeats)*eventData.subscription_fee;
+    let discountAmount = 0;
+    if(eventData.subscription_details.discount_percentage!==0){
+      discountAmount = amount - ((amount*eventData.subscription_details.discount_percentage)/100);
+    }
+    
     let data = {
       event_id: eventData.id,
       user_id: userData.user_id,
-      no_of_tickets: this.state.newSeats - eventData.subscription_details.no_of_tickets_bought,
-      amount: eventData.subscription_details.amount_paid,
-      discount_amount: eventData.subscription_details.discount_given,
+      no_of_tickets: newSeats,
+      amount: amount,
+      discount_amount: discountAmount,
     }
     this.setState({
       showUpdateSeatsModal: false,
