@@ -194,7 +194,7 @@ class Dashboard extends Component {
                 placeholder={"Event Type"}
               />
               <StyledRangePicker handleChange={this.handleDateChange} />
-              {this.props.userRole === "organiser" ? (
+              {this.props.userRole === "organiser" &&
                 <div className="checkbox-style">
                   <Checkbox
                     checked={this.state.isChecked}
@@ -204,16 +204,16 @@ class Dashboard extends Component {
                     Created By Me
                   </Checkbox>
                 </div>
-              ) : null}
+              }
             </div>
-            {this.props.userRole === "organiser" ? (
-              <Button
+            {this.props.userRole === "organiser" && 
+              <Button 
+                type="primary"
                 onClick={this.handleCreateEvent}
-                className="button-create"
               >
                 Create
               </Button>
-            ) : null}
+            }
           </div>
           <div className="events-container-flex">
             {this.spliceArray(eventList)}
