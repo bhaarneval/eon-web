@@ -140,7 +140,7 @@ export function* getCode(param) {
     let responseJSON = yield fetch(getUrl, {
       headers: headers,
       method: "POST",
-      body: JSON.stringify({"notification_id" : data}),
+      body: JSON.stringify(data),
     }).then((response) => {
       recievedResponse = response;
       return response.json();

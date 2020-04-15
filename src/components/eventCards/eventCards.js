@@ -11,9 +11,9 @@ import emptyImg from "../../assets/image.svg";
 export default function EventCards(props) {
     const {event, onClick} = props;
     let {id,name, sold_tickets, date, time, images} = event;
-    let eventDate = date+" "+time;
+    let eventDate = date + " " + time;
     eventDate = moment(eventDate,"YYYY-MM-DD hh:mm A");
-    eventDate = moment(eventDate).format("DD-MM-YYYY hh:mm A");
+    eventDate = moment(eventDate).format("DD MMM' YY hh:mm A");
   return (
     <Card
       bordered={true}

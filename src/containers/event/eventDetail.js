@@ -235,15 +235,11 @@ shareSubmit = (values) => {
 }
 handleRefund = (seats) => {
     const {eventData} = this.props;
-    const {amount_paid, discount_percentage} = eventData.subscription_details;
-    let initialPaidAmount = amount_paid;
-    let currentCost = seats * eventData.subscription_fee;
-    currentCost = currentCost-(currentCost*discount_percentage)/100;
-    let refundAmount = initialPaidAmount - currentCost;
+    const {amount_paid, no_of_tickets_bought} = eventData.subscription_details;
     this.setState({
         newSeats: seats,
-        paidAmount:initialPaidAmount,
-        refundAmount: refundAmount,
+        paidAmount:amount_paid,
+        refundAmount: seats*(amount_paid/no_of_tickets_bought),
         showUpdateSeatsModal: true,
     })
 } 
@@ -388,6 +384,7 @@ render() {
               <FeeCaclculation
                 eventData={this.props.eventData}
                 noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
+                amountPaid={eventData.subscription_details.amount_paid}
                 discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
                 perHeadAmount={eventData.subscription_fee}
                 payNow={this.payNow}
@@ -399,7 +396,7 @@ render() {
           </div>
         )}
         {this.state.showPaymentSuccess && (
-          <Modal visible onCancel={this.handleClose} footer={null} width={500}>
+          <Modal visible onCancel={this.handleClose} footer={null} width={400}>
             <div className="payment-success">
               <CheckCircleFilled style={{ color: "green", fontSize: "600%" }} />
             </div>
@@ -428,7 +425,7 @@ render() {
               {
                 eventData.subscription_fee!==0 && 
                 <div className = "cancel-success cancel-success-paid">All the
-                money paid will be refunded back to you.</div>
+                money paid will be refunded to you.</div>
               }
               <Button type="primary" onClick={this.confirmCancel} style={{marginTop:"10%"}}>
                 Confirm
@@ -502,7 +499,7 @@ render() {
                       <b className="color-text">₹ {this.state.paidAmount}</b>
                     </div>
                     <div>
-                      Total amount refundalble to you is{" "}
+                      Total amount refundable to you is{" "}
                       <b className="color-text">₹ {this.state.refundAmount}</b>
                     </div>
                   </div>

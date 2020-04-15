@@ -94,7 +94,7 @@ class EventInfo extends Component {
         const {eventData, eventType} = this.props;
         let eventDate = eventData.date + " "+ eventData.time;
         eventDate = moment(eventDate,"YYYY-MM-DD hh:mm A");
-        eventDate = eventDate.format("DD MMMM, hh:mm A");
+        eventDate = eventDate.format("DD MMM' YY, hh:mm A");
         return (
             <div className="detail-card">
                 <div className="detail-card-top">
