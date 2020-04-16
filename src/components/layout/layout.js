@@ -67,18 +67,27 @@ function StyledComp(props) {
         <div className="mainContentContainer">
           <Route path="/" component={Navbar} />
             <div className="contentBody">
-              <Switch>
-                <BeforeLogin path="/" exact isLoggedIn={isLoggedIn?"true":"false"} component={Login} />
-                <BeforeLogin path="/login" isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
-                <BeforeLogin path="/register/organiser" exact isLoggedIn={isLoggedIn?"true":"false"}  component={OrganiserRegistration}/>
-                <BeforeLogin path="/register/subscriber" exact isLoggedIn={isLoggedIn?"true":"false"}  component={UserRegistration}/>
-                <BeforeLogin path="/forgot-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ForgotPassword} />
-                <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
-                <AfterLogin path="/dashboard" isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
-                <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
-                <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
-                <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
-              </Switch>
+              {
+                isLoggedIn?(
+                  <Switch>
+                    <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
+                    <AfterLogin path="/dashboard" exact isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
+                    <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
+                    <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
+                    <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
+                    <Route render={() => <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />} />
+                  </Switch>
+                ):!localStorage.getItem("token") && (
+                  <Switch>
+                    <BeforeLogin path="/" exact isLoggedIn={isLoggedIn?"true":"false"} component={Login} />
+                    <BeforeLogin path="/login" isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
+                    <BeforeLogin path="/register/organiser" exact isLoggedIn={isLoggedIn?"true":"false"}  component={OrganiserRegistration}/>
+                    <BeforeLogin path="/register/subscriber" exact isLoggedIn={isLoggedIn?"true":"false"}  component={UserRegistration}/>
+                    <BeforeLogin path="/forgot-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ForgotPassword} />
+                    <Route render={() => <Redirect to={{ pathname: '/login', state: { from: props.location } }} />} />
+                   </Switch>
+                )
+              }
             </div>
         </div>
       </div>
