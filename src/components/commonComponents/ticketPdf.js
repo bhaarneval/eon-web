@@ -11,14 +11,14 @@ import {
   PDFDownloadLink,
   Image,
 } from "@react-pdf/renderer";
-import BITSIcon from "../../assets/logo.png";
+// import BITSIcon from "../../assets/logo.png";
+import Icon from "../../assets/bitslogo.png";
 import sampleQR from "../../assets/sampleQR.jpg";
 
 // Create styles
 const newstyles = StyleSheet.create({
   page: {
     flexDirection: "column",
-    backgroundColor: "#E4E4E4",
   },
   header: {
     margin: 10,
@@ -38,8 +38,8 @@ const newstyles = StyleSheet.create({
     marginTop: 20,
   },
   QRStyle: {
-    height: 200,
-    width: 200,
+    height: 100,
+    width: 100,
   },
   details: {
     margin: 20,
@@ -52,20 +52,26 @@ const newstyles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     marginLeft: 30,
+    lineHeight:"1.8",
     justifyContent: "space-between",
   },
+  noteStyle: {
+    fontSize:"16px",
+    fontWeight:"bold",
+
+  }
 });
 
 // Create Document Component
 function MyDocument(props) {
   const { eventData, userData } = props;
   const { date, time, location, name } = eventData;
-  const { no_of_tickets_bought, amount_paid } = eventData.subscription_details;
+  const { no_of_tickets_bought, amount_paid, created_on } = eventData.subscription_details;
   return (
     <Document>
       <Page size="A4" style={newstyles.page}>
         <View style={newstyles.header}>
-          <Image src={BITSIcon} style={newstyles.imageStyle} />
+          <Image src={Icon} style={newstyles.imageStyle} />
           <Text style={newstyles.headerText}>EOn</Text>
         </View>
         <View style={newstyles.details}>
@@ -74,12 +80,17 @@ function MyDocument(props) {
             <Text>Event Name: {name}</Text>
             <Text>Number of seats: {no_of_tickets_bought}</Text>
             {amount_paid ? <Text>Amount : {amount_paid}</Text> : null}
-            <Text>Booked by: {userData.name}</Text>
             <Text>
-              Date: {moment(date, "YYYY-MM-DD").format("dddd, DD MMM YYYY")}
+              Event Date:{" "}
+              {moment(date, "YYYY-MM-DD").format("dddd, DD MMM YYYY")}
             </Text>
             <Text>Time: {moment(time, "hh:mm A").format("hh:mm A")}</Text>
             <Text>Location: {location}</Text>
+            <Text>Subscriber Name: {userData.name}</Text>
+            <Text>Email Id: {userData.email}</Text>
+            <Text>Contact: {userData.contact_number}</Text>
+            <Text>Booking Date: {moment(created_on, "YYYY-MM-DD").format("dddd, DD MMM' YYYY")}</Text>
+            <Text>*Note: Tickets are non-transferable!</Text>
           </View>
         </View>
       </Page>
@@ -99,7 +110,7 @@ const PDF = (props) => {
         document={
           <MyDocument eventData={props.eventData} userData={props.userData} />
         }
-        fileName="tickets.pdf"
+        fileName={props.eventData.name+"-"+props.userData.name+".pdf"}
       >
         <div style={{ color: "#ffffff" }}>Download</div>
       </PDFDownloadLink>
