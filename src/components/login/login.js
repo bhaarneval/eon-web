@@ -2,7 +2,7 @@
 import "./login.css";
 import { EMAIL_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
-import {  Form, Input, Button, Spin } from 'antd';
+import {  Form, Input, Button } from 'antd';
 import { Tabs } from 'antd';
 import { getUser, getNotifications } from "../../actions/commonActions";
 import { connect } from "react-redux";
@@ -62,7 +62,6 @@ class Login extends Component {
   }
   render() {
     return (
-      <Spin spinning={this.props.fetchingUser} className="spinner">
       <div className="loginContainer">
         <div className="leftBody">
           <Tabs onChange={this.tabChange}>
@@ -116,7 +115,6 @@ class Login extends Component {
           </Form>
         </div>
     </div>
-    </Spin>
     );
   }
 }

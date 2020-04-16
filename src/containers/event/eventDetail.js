@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
-import {Button, Input, Modal, Form, Spin, message} from 'antd';
+import {Button, Input, Modal, Form, message} from 'antd';
 import { CheckCircleFilled } from "@ant-design/icons";
 import EventInfo from "../../components/eventDetail/eventInfo";
 import EventCount from "../../components/eventDetail/eventCount";
@@ -319,7 +319,6 @@ render() {
     const { discountPercentage} = this.state;
     const { eventData } = this.props;
     return (
-      <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         {this.props.eventData && this.props.eventData.id && 
@@ -512,7 +511,6 @@ render() {
           </Modal>
         )}
       </div>
-      </Spin>
     );
   }
 }

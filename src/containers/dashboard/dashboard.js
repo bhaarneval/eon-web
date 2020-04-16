@@ -5,7 +5,7 @@ import "./dashboard.css";
 import EventCards from "../../components/eventCards/eventCards";
 import UserEventcards from "../../components/eventCards/userEventCards";
 
-import { Row, Button, Spin, message, Checkbox } from "antd";
+import { Row, Button, message, Checkbox } from "antd";
 import SearchBox from "../../components/commonComponents/searchBox";
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import StyledRangePicker from "../../components/commonComponents/rangePicker";
@@ -243,7 +243,6 @@ class Dashboard extends Component {
   render() {
     const { eventList, isWishlist, searchText } = this.state;
     return (
-      <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
         <div className="sub-content">
           {!isWishlist ? (
             <div className="events-heading"> Event Management </div>
@@ -288,7 +287,6 @@ class Dashboard extends Component {
             {this.spliceArray(eventList)}
           </div>
         </div>
-      </Spin>
     );
   }
 }

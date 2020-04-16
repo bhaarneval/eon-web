@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import FormSteps from "../registration/formSteps";
-import { Form, Input, Spin } from "antd";
+import { Form, Input } from "antd";
 import { RightOutlined,LeftOutlined, KeyOutlined } from "@ant-design/icons";
 import StyledButtons from "../registration/styledButtons";
 import {
@@ -100,7 +100,6 @@ class ForgotPassword extends Component {
   render() {
     const { stepList, activeKey, email, passwordPattern, hasErrored, errorMessage } = this.state;
     return (
-      <Spin spinning={this.props.fetchingUser} className="spinner">
       <div className="forgotPasswordContainer">
           <img src={PasswordImg} style={{width:"60%"}}/>
         <div className="form-container">
@@ -225,7 +224,6 @@ class ForgotPassword extends Component {
           )}
         </div>
       </div>
-      </Spin>
     );
   }
 }

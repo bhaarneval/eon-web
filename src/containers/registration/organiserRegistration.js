@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import './registration.css';
-import { Spin } from "antd";
 import {BasicDetails, PasswordDetails} from '../../components/registration/organiserRegistration/forms';
 import FormSteps from '../../components/registration/formSteps';
 import TermsAndConditions from '../../components/registration/termsAndConditions';
@@ -103,7 +102,6 @@ handlePassWordChange = (values) => {
        password
      } = this.state;
   return (
-    <Spin spinning={this.props.fetchingUser} className="spinner" >
     <div className="registration-main">
       {activeKey === 0 ? (
         <img src={BasicDetailsImg} className="image-style" />
@@ -141,7 +139,6 @@ handlePassWordChange = (values) => {
         ) : null}
       </div>
     </div>
-    </Spin>
   );
    }
  }

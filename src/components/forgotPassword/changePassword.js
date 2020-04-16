@@ -3,7 +3,7 @@ import "./forgotPassword.css";
 import { INVALID_PASSWORD, CONFIRM_PASSWORD, PASSWORD_DO_NOT_MATCH, EMAIL_REQUIRED, PASSWORD_INFO } from "../../constants/messages";
 import React, { Component } from "react";
 import {connect} from "react-redux";
-import {  Form, Input, Button, Spin  } from 'antd';
+import {  Form, Input, Button  } from 'antd';
 
 import { UserOutlined } from '@ant-design/icons';
 import { PASSWORD_VALIDATION, EMAIL_VALIDATION } from "../../constants/constants";
@@ -61,7 +61,6 @@ class ChangePassword extends Component {
     let passwordPattern = "^"+this.state.password+"$";
     passwordPattern = new RegExp(passwordPattern);
     return (
-      <Spin spinning={this.props.fetchingUser} className="spinner">
       <div className="header-buttons">
       <BackButton handleOnClick={this.goBack} text={"Change Password"}/>
       <div className="changePasswordContainer">
@@ -136,7 +135,6 @@ class ChangePassword extends Component {
         </div>
     </div>
     </div>
-    </Spin>
     );
   }
 }

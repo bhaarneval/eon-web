@@ -5,7 +5,6 @@ import BackButton from "../../components/commonComponents/backButton";
 import ProfileForm from "../../components/profile/profileForm";
 
 import PropTypes from "prop-types";
-import {Spin } from "antd";
 import { getUserProfile, updateUserProfile } from "../../actions/commonActions";
 
 class Profile extends Component {
@@ -42,9 +41,8 @@ class Profile extends Component {
   };
 
   render() {
-    const {userData, userProfile, fetchingUser,userRole } = this.props;
+    const {userData, userProfile,userRole } = this.props;
     return (
-      <Spin spinning={fetchingUser} className="spinner-dashboard">
         <div className="create-container">
           <div className="header">
             <BackButton handleOnClick={this.goBack} text={"User Profile"} />
@@ -65,7 +63,6 @@ class Profile extends Component {
             </div>
           )}
         </div>
-      </Spin>
     );
   }
 }

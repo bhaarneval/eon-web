@@ -16,6 +16,7 @@ import CreateEvent from "../../containers/createEvent/createEvent";
 import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
 import * as jwt from 'jsonwebtoken';
+import { Spin } from "antd";
 
 const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
@@ -100,19 +101,27 @@ class LayoutComponent extends React.Component {
 
   render() {
     return (
-      <StyledComp
+      <Spin spinning = {this.props.fetchingEvent || this.props.fetchingUser} className="spinner">
+        <StyledComp
         userData={this.props.userData}
       />
+      </Spin>
     );
   }
 }
 
 const mapStateToProps = ({
   userReducer: {
-    userData
+    userData,
+    fetchingUser,
+  },
+  eventReducer: {
+    fetchingEvent,
   }
 }) => ({
-  userData
+  userData,
+  fetchingUser,
+  fetchingEvent,
 })
 
 export default connect(mapStateToProps)(LayoutComponent);
