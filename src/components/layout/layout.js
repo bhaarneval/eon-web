@@ -25,7 +25,7 @@ const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        hasUserLoggedIn ? (
+        hasUserLoggedIn === "true" ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
@@ -42,7 +42,7 @@ const BeforeLogin = ({ component: Component, isLoggedIn, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        hasUserLoggedIn ? (
+        hasUserLoggedIn==="true" ? (
           <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />
         ) : (
           <Component {...props} />
@@ -53,12 +53,12 @@ const BeforeLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 }
 
 function StyledComp(props) {
-  const isLoggedin = props.userData.user_id;
+  const isLoggedIn = props.userData.user_id;
   
   return (
     <div>
       <div className="flex flex-row layoutContainer">
-        {isLoggedin &&
+        {isLoggedIn &&
           <div className="flex flex-column layoutNavContainer">
             <SideNav />
           </div>
@@ -67,16 +67,16 @@ function StyledComp(props) {
           <Route path="/" component={Navbar}/>
           <div className="contentBody">
             <Router>
-              <BeforeLogin path="/" isLoggedIn exact component={Login} />
-              <BeforeLogin path="/login" isLoggedIn exact component={Login} />
-              <BeforeLogin path="/register/organiser" exact isLoggedIn component={OrganiserRegistration}/>
-              <BeforeLogin path="/register/subscriber" exact isLoggedIn component={UserRegistration}/>
-              <BeforeLogin path="/forgot-password" exact isLoggedIn component={ForgotPassword} />
-              <AfterLogin path="/change-password" exact component={ChangePassword} isLoggedIn/>
-              <AfterLogin path="/dashboard" exact component = {Dashboard}  isLoggedIn/>
-              <AfterLogin path="/create" exact component={CreateEvent}  isLoggedIn/>
-              <AfterLogin path="/event-details/" component = {EventDetail}  isLoggedIn/>
-              <AfterLogin path="/profile" component = {Profile}  isLoggedIn/>
+              <BeforeLogin path="/" exact isLoggedIn={isLoggedIn?"true":"false"} component={Login} />
+              <BeforeLogin path="/login" exact isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
+              <BeforeLogin path="/register/organiser" exact isLoggedIn={isLoggedIn?"true":"false"}  component={OrganiserRegistration}/>
+              <BeforeLogin path="/register/subscriber" exact isLoggedIn={isLoggedIn?"true":"false"}  component={UserRegistration}/>
+              <BeforeLogin path="/forgot-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ForgotPassword} />
+              <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
+              <AfterLogin path="/dashboard" exact isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
+              <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
+              <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
+              <AfterLogin path="/profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
             </Router>
             }
           </div>
