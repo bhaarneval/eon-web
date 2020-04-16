@@ -59,28 +59,30 @@ function StyledComp(props) {
   return (
     <div>
       <div className="flex flex-row layoutContainer">
-        {isLoggedIn &&
+        {isLoggedIn && (
           <div className="flex flex-column layoutNavContainer">
             <SideNav />
           </div>
-        }
+        )}
         <div className="mainContentContainer">
-          <Route path="/" component={Navbar}/>
-          <div className="contentBody">
-            <Switch>
-              <BeforeLogin path="/" exact isLoggedIn={isLoggedIn?"true":"false"} component={Login} />
-              <BeforeLogin path="/login" exact isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
-              <BeforeLogin path="/register/organiser" exact isLoggedIn={isLoggedIn?"true":"false"}  component={OrganiserRegistration}/>
-              <BeforeLogin path="/register/subscriber" exact isLoggedIn={isLoggedIn?"true":"false"}  component={UserRegistration}/>
-              <BeforeLogin path="/forgot-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ForgotPassword} />
-              <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
-              <AfterLogin path="/dashboard" isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
-              <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
-              <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
-              <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
-            </Switch>
-            }
-          </div>
+          <Route path="/" component={Navbar} />
+          {
+            isLoggedIn!==undefined && (
+            <div className="contentBody">
+              <Switch>
+                <BeforeLogin path="/" exact isLoggedIn={isLoggedIn?"true":"false"} component={Login} />
+                <BeforeLogin path="/login" exact isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
+                <BeforeLogin path="/register/organiser" exact isLoggedIn={isLoggedIn?"true":"false"}  component={OrganiserRegistration}/>
+                <BeforeLogin path="/register/subscriber" exact isLoggedIn={isLoggedIn?"true":"false"}  component={UserRegistration}/>
+                <BeforeLogin path="/forgot-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ForgotPassword} />
+                <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
+                <AfterLogin path="/dashboard" isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
+                <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
+                <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
+                <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
+              </Switch>
+            </div>)
+          }
         </div>
       </div>
     </div>
