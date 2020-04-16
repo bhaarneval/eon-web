@@ -1,7 +1,7 @@
 import "./layout.css";
 /* eslint-disable */
 import * as React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router,Redirect } from "react-router-dom";
 
 import Login from "../../components/login/login";
 import OrganiserRegistration from "../../containers/registration/organiserRegistration";
@@ -17,9 +17,44 @@ import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
 import * as jwt from 'jsonwebtoken';
 
+const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
+
+  const hasUserLoggedIn = isLoggedIn;
+
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        hasUserLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+        )
+      }
+    />
+  )
+}
+const BeforeLogin = ({ component: Component, isLoggedIn, ...rest }) => {
+
+  const hasUserLoggedIn = isLoggedIn;
+
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        hasUserLoggedIn ? (
+          <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />
+        ) : (
+          <Component {...props} />
+        )
+      }
+    />
+  )
+}
 
 function StyledComp(props) {
   const isLoggedin = props.userData.user_id;
+  
   return (
     <div>
       <div className="flex flex-row layoutContainer">
@@ -31,21 +66,18 @@ function StyledComp(props) {
         <div className="mainContentContainer">
           <Route path="/" component={Navbar}/>
           <div className="contentBody">
-            <Switch>
-              <Route path="/" exact component={Login} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/register/organiser" exact component={OrganiserRegistration}/>
-              <Route path="/register/subscriber" exact component={UserRegistration}/>
-              <Route path="/forgot-password" exact component={ForgotPassword} />
-            </Switch>
-            {isLoggedin &&
-              <Switch>
-                <Route path="/change-password" exact component={ChangePassword} />
-                <Route path="/dashboard" exact component = {Dashboard}/>
-                <Route path="/create" exact component={CreateEvent}/>
-                <Route path="/event-details/" component = {EventDetail}/>
-                <Route path="/profile/1" component = {Profile}/>
-              </Switch>
+            <Router>
+              <BeforeLogin path="/" isLoggedIn exact component={Login} />
+              <BeforeLogin path="/login" isLoggedIn exact component={Login} />
+              <BeforeLogin path="/register/organiser" exact isLoggedIn component={OrganiserRegistration}/>
+              <BeforeLogin path="/register/subscriber" exact isLoggedIn component={UserRegistration}/>
+              <BeforeLogin path="/forgot-password" exact isLoggedIn component={ForgotPassword} />
+              <AfterLogin path="/change-password" exact component={ChangePassword} isLoggedIn/>
+              <AfterLogin path="/dashboard" exact component = {Dashboard}  isLoggedIn/>
+              <AfterLogin path="/create" exact component={CreateEvent}  isLoggedIn/>
+              <AfterLogin path="/event-details/" component = {EventDetail}  isLoggedIn/>
+              <AfterLogin path="/profile" component = {Profile}  isLoggedIn/>
+            </Router>
             }
           </div>
         </div>
@@ -84,3 +116,4 @@ const mapStateToProps = ({
 })
 
 export default connect(mapStateToProps)(LayoutComponent);
+
