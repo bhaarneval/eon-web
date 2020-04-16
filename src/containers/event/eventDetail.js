@@ -224,10 +224,10 @@ handleShare = () => {
     })
 }
 shareSubmit = (values) => {
-  const {accessToken, shareWithFriend} = this.props;
+  const {accessToken, shareWithFriend, eventData} = this.props;
   shareWithFriend({
     accessToken,
-    data: { email_id: values.email, message: values.message },
+    data: { email_id: values.email, message: values.message, event_id: eventData.id },
   });
     this.setState({
         showShareModal: false,

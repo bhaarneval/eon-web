@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
+import {Button} from "antd";
 //PDFDownloadLink
 import {
   Page,
@@ -112,7 +113,7 @@ const PDF = (props) => {
         }
         fileName={props.eventData.name+"-"+props.userData.name+".pdf"}
       >
-        <div style={{ color: "#ffffff" }}>Download</div>
+        <Button type="primary" onClick={()=>{}}>Download</Button>
       </PDFDownloadLink>
     </div>
   );
