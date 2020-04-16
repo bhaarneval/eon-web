@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {connect } from "react-redux";
 import './createEvent.css';
 import {Spin, message} from "antd";
+import moment from "moment";
 import BackButton from '../../components/commonComponents/backButton';
 import {EventForm, UpdateEventForm} from '../../components/eventCreation/eventForm';
 
@@ -76,23 +77,41 @@ class CreateEvent extends Component {
      });
    }
    else{
-    updateEventData({
-      formData: values,
-       accessToken,
-       eventId: eventData.id,
-       callback: ({ error, id }) => {
-         if (!error) {
-           this.goBack("update", id);
-         } else {
-           this.setState({
-             hasErrored: true,
-             errorMessage: error,
-           });
-         }
-       },
-
-    })
+    let data = this.filterValue(values);
+    if(Object.keys(data).length === 1){
+      message.error("Nothing to update")
+    }
+    else{
+      updateEventData({
+        formData: data,
+        accessToken,
+        eventId: eventData.id,
+        callback: ({ error, id }) => {
+          if (!error) {
+            this.goBack("update", id);
+          } else {
+            this.setState({
+              hasErrored: true,
+              errorMessage: error,
+            });
+          }
+        },
+      });
+    }
    }
+ }
+ filterValue = (values) => {
+   let {eventData} = this.props;
+
+   for(let i=0;i<Object.keys(values).length;i++){
+     let currentKey  = Object.keys(values)[i];
+     if(eventData[currentKey] === values[currentKey])
+     {delete values[currentKey];i=i-1;}
+   }
+   if(moment(eventData.time,"hh:mm:ss").format("hh:mm A") === values.time){
+     delete values.time;
+   }
+   return values;
  }
 
  goBack = (event,id) => {
