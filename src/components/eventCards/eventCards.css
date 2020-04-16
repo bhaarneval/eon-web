@@ -10,14 +10,14 @@
     object-fit: inherit;
 }
 .image-status-container {
-    display: flex;
+    display: flex !important;
 }
 .status-button {
-    cursor: none;
+    cursor: none !important;
     margin-left: -112px;
     margin-top: 3%;
-    background-color: transparent;
-    color: white;
+    background-color: transparent !important;
+    color: white !important;
 }
 .card-desc-grid{
     display: grid;
