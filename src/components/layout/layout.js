@@ -1,7 +1,7 @@
 import "./layout.css";
 /* eslint-disable */
 import * as React from "react";
-import { Route, BrowserRouter as Router,Redirect } from "react-router-dom";
+import { Route, Switch,Redirect } from "react-router-dom";
 
 import Login from "../../components/login/login";
 import OrganiserRegistration from "../../containers/registration/organiserRegistration";
@@ -67,18 +67,18 @@ function StyledComp(props) {
         <div className="mainContentContainer">
           <Route path="/" component={Navbar}/>
           <div className="contentBody">
-            <Router>
+            <Switch>
               <BeforeLogin path="/" exact isLoggedIn={isLoggedIn?"true":"false"} component={Login} />
               <BeforeLogin path="/login" exact isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
               <BeforeLogin path="/register/organiser" exact isLoggedIn={isLoggedIn?"true":"false"}  component={OrganiserRegistration}/>
               <BeforeLogin path="/register/subscriber" exact isLoggedIn={isLoggedIn?"true":"false"}  component={UserRegistration}/>
               <BeforeLogin path="/forgot-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ForgotPassword} />
               <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
-              <AfterLogin path="/dashboard" exact isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
+              <AfterLogin path="/dashboard" isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
               <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
               <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
-              <AfterLogin path="/profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
-            </Router>
+              <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
+            </Switch>
             }
           </div>
         </div>
