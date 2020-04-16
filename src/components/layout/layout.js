@@ -66,12 +66,10 @@ function StyledComp(props) {
         )}
         <div className="mainContentContainer">
           <Route path="/" component={Navbar} />
-          {
-            isLoggedIn!==undefined && (
             <div className="contentBody">
               <Switch>
                 <BeforeLogin path="/" exact isLoggedIn={isLoggedIn?"true":"false"} component={Login} />
-                <BeforeLogin path="/login" exact isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
+                <BeforeLogin path="/login" isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
                 <BeforeLogin path="/register/organiser" exact isLoggedIn={isLoggedIn?"true":"false"}  component={OrganiserRegistration}/>
                 <BeforeLogin path="/register/subscriber" exact isLoggedIn={isLoggedIn?"true":"false"}  component={UserRegistration}/>
                 <BeforeLogin path="/forgot-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ForgotPassword} />
@@ -81,8 +79,7 @@ function StyledComp(props) {
                 <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
                 <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
               </Switch>
-            </div>)
-          }
+            </div>
         </div>
       </div>
     </div>
