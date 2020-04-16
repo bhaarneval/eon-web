@@ -97,7 +97,7 @@ class CreateEvent extends Component {
 
  goBack = (event,id) => {
     if(this.state.updateType || event!=="goBack"){
-      this.props.history.replace(`/event-details?id=${id}`);
+      this.props.history.push(`/event-details?id=${id}`);
     }
     else
      this.props.history.push("/dashboard");
