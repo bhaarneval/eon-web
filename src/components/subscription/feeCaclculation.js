@@ -244,7 +244,7 @@ class FeeCalculation extends Component {
         </div>
         {(this.props.eventData.is_subscribed) && !this.state.isUpdate ? (
           <div className="update-row">
-            <Button type="primary"><PDF eventData = {this.props.eventData} userData = {this.props.userData}/></Button>
+            <PDF eventData = {this.props.eventData} userData = {this.props.userData}/>
             <div className="cancel-row">
               <Button onClick={this.props.handleCancel}>Cancel</Button>
               <Button

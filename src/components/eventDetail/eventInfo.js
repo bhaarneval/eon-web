@@ -105,7 +105,7 @@ class EventInfo extends Component {
                             {eventData.description}
                         </div>
                     </div>
-                    {this.props.isOrganizer && this.props.eventData.self_organised? (
+                    {this.props.isOrganizer && (this.props.eventData.self_organised || this.props.eventData.is_active)? (
                         <Dropdown overlay={menuSidebar}>
                         <MoreOutlined style={{ height: "10px" }} />
                         </Dropdown>

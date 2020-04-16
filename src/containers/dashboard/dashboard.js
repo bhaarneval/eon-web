@@ -215,8 +215,6 @@ class Dashboard extends Component {
   };
 
   handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
       const searchText = event.target.value;
       this.setState(
         {
@@ -226,7 +224,6 @@ class Dashboard extends Component {
           this.applyFilters();
         }
       );
-    }
   };
   handleCheckChange = () => {
     this.setState(
@@ -244,7 +241,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { eventList, isWishlist } = this.state;
+    const { eventList, isWishlist, searchText } = this.state;
     return (
       <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
         <div className="sub-content">
@@ -260,6 +257,7 @@ class Dashboard extends Component {
                 handleOnChange={this.handleSearchTextChange}
                 placeholder={"Event Name / Location"}
                 handleKeyPress={this.handleKeyPress}
+                value = {searchText}
               />
               <SelectDropDown
                 handleChange={this.handleFilterChange}
