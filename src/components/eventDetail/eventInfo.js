@@ -105,16 +105,16 @@ class EventInfo extends Component {
                             {eventData.description}
                         </div>
                     </div>
-                    {this.props.isOrganizer ? (
+                    {this.props.isOrganizer && this.props.eventData.self_organised? (
                         <Dropdown overlay={menuSidebar}>
                         <MoreOutlined style={{ height: "10px" }} />
                         </Dropdown>
-                    ) : (
+                    ) : !this.props.isOrganizer? (
                         <div>
                             <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={this.props.handleShare}/>
                             <img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/>
                         </div>
-                    )}
+                    ):null}
                 </div>
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">

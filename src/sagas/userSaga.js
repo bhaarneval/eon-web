@@ -1,6 +1,7 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionLoginTypes } from "../constants/actionTypes";
+import {message} from "antd";
 
 export function* logOut(param) {
   try {
@@ -238,6 +239,75 @@ export function* changePassword(param) {
   }
 }
 
+export function* fetchUserProfile(param){
+  const {userId, accessToken } = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  };
+  try {
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+    let getURL = APIService.dev + requestURLS.USER_OPERATIONS+`${userId}/`;
+    let responseObject = {};
+    let responseJson = yield fetch(getURL, {
+      headers: headers,
+      method: "GET",
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    });
+
+    if(!responseObject.ok) {
+      throw responseJson;
+    }
+
+    yield put({type: actionLoginTypes.FETCHED_USER_PROFILE, payload: responseJson.data});
+  }catch (e) {
+    console.error("Unable to change password", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+    message.error(e.message);
+  }
+}
+
+export function* updateUser(param){
+  const {userId, data, accessToken, callback } = param;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  };
+  try {
+    yield put({type: actionLoginTypes.SET_USER_FETCHING});
+    let updateUrl = APIService.dev + requestURLS.USER_OPERATIONS+`${userId}/`;
+    let responseObject = {};
+    let responseJson = yield fetch(updateUrl, {
+      headers: headers,
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }).then(response => {
+      responseObject = response;
+      return response.json();
+    });
+
+    if(!responseObject.ok) {
+      throw responseJson;
+    }
+
+    yield put({type: actionLoginTypes.FETCHED_USER_PROFILE, payload: responseJson.data});
+    callback();
+    message.success("Profile updated succesfully"); 
+  }catch (e) {
+    console.error("Unable to change password", e);
+    yield put({
+      type: actionLoginTypes.USER_ERROR,
+      error: e,
+    });
+    message.error("Cannot execute your request at the moment!");
+  }
+}
+
 export function* userActionWatcher() {
   // console.log("Cluster Watcher");
   yield takeLatest(actionLoginTypes.LOGGING_OUT, logOut);
@@ -246,4 +316,6 @@ export function* userActionWatcher() {
   yield takeLatest(actionLoginTypes.GET_CODE, getCode);
   yield takeLatest(actionLoginTypes.FORGOT_PASSWORD, forgotPassword);
   yield takeLatest(actionLoginTypes.CHANGE_PASSWORD, changePassword);
+  yield takeLatest(actionLoginTypes.USER_PROFILE, fetchUserProfile);
+  yield takeLatest(actionLoginTypes.UPDATE_USER_PROFILE, updateUser);
 }

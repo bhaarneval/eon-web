@@ -69,3 +69,20 @@ export const logOutUser = ({callback}) => {
     callback: callback
   }
 }
+
+export const getUserProfile = ({userId, accessToken}) => {
+  return {
+    type: actionLoginTypes.USER_PROFILE,
+    userId, accessToken
+  }
+}
+
+export const updateUserProfile = ({userId, data, accessToken, callback}) => {
+  return {
+    type: actionLoginTypes.UPDATE_USER_PROFILE,
+    userId,
+    data,
+    accessToken,
+    callback
+  }
+}

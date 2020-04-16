@@ -1,56 +1,101 @@
-import React, { Component } from 'react'
-import './profile.css';
-import BackButton from '../../components/commonComponents/backButton';
-import ProfileForm from '../../components/profile/profileForm';
+import React, { Component } from "react";
+import {connect} from "react-redux";
+import "./profile.css";
+import BackButton from "../../components/commonComponents/backButton";
+import ProfileForm from "../../components/profile/profileForm";
 
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
+import {Spin } from "antd";
+import { getUserProfile, updateUserProfile } from "../../actions/commonActions";
 
 class Profile extends Component {
- constructor(props){
-   super(props);
-   this.state={
-    role:"user",
-   }
- }
- handleSubmit = (values) => {
-    //  let data = new FormData();
-    //  Object.entries(values).map(entry => {
-    //     data.append(entry[0],entry[1]);
-    //  });
-    console.log(values);
-    this.goBack();
+  constructor(props) {
+    super(props);
+    this.state = {
+      role: "user",
+      disableButton: false,
+    };
+  }
+  componentDidMount() {
+    const {getUserProfile, accessToken, userData} = this.props;
+    getUserProfile({userId: userData.user_id, accessToken});
+  }
+  
+  handleSubmit = (values) => {
+    const {userData, accessToken, updateUserProfile} = this.props;
+    updateUserProfile({
+      data: values,
+      userId: userData.user_id,
+      accessToken,
+      callback: (error)=> {
+        if(!error){
+          this.setState({
+            disableButton: false,
+          })
+        }
+      }
+    });
+  };
 
- }
+  goBack = () => {
+    this.props.history.push("/dashboard");
+  };
 
- goBack = () => {
-     this.props.history.push("/dashboard");
- }
-
-
- render() {
-  return (
-    <div className="create-container">
-      <div className="header">
-        <BackButton handleOnClick={this.goBack} text={"User Profile"}/>
-      </div>
-      <div className="form-div">
-          <ProfileForm 
-            values = {{
-              organizationName: 'Hashedin',
-              contactNumber: '1234567890',
-              email: 'priyanka.sah@gmail.com',
-              address: '1e 405, akme'
-            }}
-            role={this.state.role} 
-            handleSubmit={this.handleSubmit} handleCancel={this.goBack}/>
-      </div>
-    </div>
-  );
-   }
- }
-
-
- Profile.propTypes = {
-    history: PropTypes.object.isRequired,
+  render() {
+    const {userData, userProfile, fetchingUser,userRole } = this.props;
+    return (
+      <Spin spinning={fetchingUser} className="spinner-dashboard">
+        <div className="create-container">
+          <div className="header">
+            <BackButton handleOnClick={this.goBack} text={"User Profile"} />
+          </div>
+          {userProfile.id &&  (
+            <div className="form-div">
+              <ProfileForm
+                values={{
+                  ...userProfile,
+                  email: userData.email,
+                }}
+                role={userRole}
+                disableButton = {this.state.disableButton}
+                handleSubmit={this.handleSubmit}
+                handleCancel={this.goBack}
+                interestList = {this.props.eventType}
+              />
+            </div>
+          )}
+        </div>
+      </Spin>
+    );
+  }
 }
-export default Profile;
+
+Profile.propTypes = {
+  history: PropTypes.object.isRequired,
+  fetchingUser: PropTypes.bool,
+  userProfile: PropTypes.object,
+  userData: PropTypes.object,
+  getUserProfile: PropTypes.func,
+  updateUserProfile: PropTypes.func,
+  accessToken: PropTypes.string,
+  userRole: PropTypes.string,
+  eventType: PropTypes.array,
+};
+
+const mapStateToProps = ({
+  userReducer: { fetchingUser, userProfile, userData, userRole, accessToken, eventType },
+}) => ({
+  fetchingUser,
+  userProfile,
+  userData,
+  userRole,
+  accessToken,
+  eventType
+});
+
+const mapDispatchToProps = {
+  getUserProfile: getUserProfile,
+  updateUserProfile: updateUserProfile,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

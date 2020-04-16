@@ -9,6 +9,7 @@ import { Row, Button, Spin, message, Checkbox } from "antd";
 import SearchBox from "../../components/commonComponents/searchBox";
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import StyledRangePicker from "../../components/commonComponents/rangePicker";
+import { SyncOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import {
   fetchEvents,
@@ -25,6 +26,10 @@ class Dashboard extends Component {
       spinning: true,
       isChecked: false,
       isWishlist: false,
+      searchText: "",
+      startDate: "",
+      endDate: "",
+      eventType: "",
       role: this.props.userRole,
     };
   }
@@ -55,7 +60,12 @@ class Dashboard extends Component {
     if (type !== "wishlist") {
       fetchEvents({ userData, accessToken });
       this.setState({
+        isChecked: false,
         isWishlist: false,
+        searchText: "",
+        startDate: "",
+        endDate: "",
+        eventType: "",
       });
     } else if (type === "wishlist") {
       fetchEvents({
@@ -64,7 +74,12 @@ class Dashboard extends Component {
         filterData: { is_wishlisted: "True" },
       });
       this.setState({
+        isChecked: false,
         isWishlist: true,
+        searchText: "",
+        startDate: "",
+        endDate: "",
+        eventType: "",
       });
     }
   };
@@ -117,23 +132,83 @@ class Dashboard extends Component {
     });
   };
 
-  handleFilterChange = (value) => {
+  applyFilters = () => {
     const { fetchEvents, userData, accessToken } = this.props;
-    fetchEvents({ userData, accessToken, filterData: { type: value } });
+    const {
+      isWishlist,
+      isChecked,
+      startDate,
+      endDate,
+      eventType,
+      searchText,
+    } = this.state;
+    let filterData = {
+      type: eventType,
+      is_wishlisted: isWishlist ? "True" : undefined,
+      event_created_by: isChecked ? "True" : undefined,
+      startDate: startDate !== "" ? startDate : undefined,
+      endDate: startDate !== "" && endDate !== "" ? endDate : undefined,
+      search: searchText !== "" ? searchText : undefined,
+    };
+    fetchEvents({ userData, accessToken, filterData });
+  };
+  removeFilters = () => {
+    const { fetchEvents, userData, accessToken } = this.props;
+    this.setState(
+      {
+        isChecked: false,
+        searchText: "",
+        startDate: "",
+        endDate: "",
+        eventType: "",
+      },
+      () => {
+        fetchEvents({
+          userData,
+          accessToken,
+          filterData: {
+            is_wishlisted: this.state.isWishlist ? "True" : undefined,
+          },
+        });
+      }
+    );
+  };
+
+  handleFilterChange = (value) => {
+    this.setState(
+      {
+        eventType: value,
+      },
+      () => {
+        this.applyFilters();
+      }
+    );
   };
   handleDateChange = (date, dateString) => {
-    const { fetchEvents, userData, accessToken } = this.props;
     if (dateString[0] !== "" && dateString[1] != "") {
       const startDate = moment(dateString[0], "DD-MM-YYYY").format(
         "YYYY-MM-DD"
       );
       const endDate = moment(dateString[1], "DD-MM-YYYY").format("YYYY-MM-DD");
-      fetchEvents({
-        userData,
-        accessToken,
-        filterData: { startDate: startDate, endDate: endDate },
-      });
-    } else fetchEvents({ userData, accessToken });
+      this.setState(
+        {
+          startDate: startDate,
+          endDate: endDate,
+        },
+        () => {
+          this.applyFilters();
+        }
+      );
+    } else
+      this.setState(
+        {
+          startDate: "",
+          endDate: "",
+        },
+        () => {
+          this.applyFilters();
+        }
+      );
   };
   handleCreateEvent = () => {
     this.props.history.push("create");
@@ -143,28 +218,25 @@ class Dashboard extends Component {
     if (event.key === "Enter") {
       event.preventDefault();
       const searchText = event.target.value;
-      const { fetchEvents, userData, accessToken } = this.props;
-      fetchEvents({
-        userData,
-        accessToken,
-        filterData: { search: searchText },
-      });
+      this.setState(
+        {
+          searchText: searchText,
+        },
+        () => {
+          this.applyFilters();
+        }
+      );
     }
   };
   handleCheckChange = () => {
-    const { fetchEvents, userData, accessToken } = this.props;
-    if (!this.state.isChecked) {
-      fetchEvents({
-        userData,
-        accessToken,
-        filterData: { event_created_by: "True" },
-      });
-    } else {
-      fetchEvents({ userData, accessToken });
-    }
-    this.setState({
-      isChecked: !this.state.isChecked,
-    });
+    this.setState(
+      {
+        isChecked: !this.state.isChecked,
+      },
+      () => {
+        this.applyFilters();
+      }
+    );
   };
 
   goBack = () => {
@@ -183,6 +255,7 @@ class Dashboard extends Component {
           )}
           <div className="dashboard-actions-container">
             <div className="filters">
+              <Button onClick={this.removeFilters} style={{marginRight:"1%"}}><SyncOutlined /></Button>
               <SearchBox
                 handleOnChange={this.handleSearchTextChange}
                 placeholder={"Event Name / Location"}
@@ -192,9 +265,10 @@ class Dashboard extends Component {
                 handleChange={this.handleFilterChange}
                 optionsList={this.props.eventType}
                 placeholder={"Event Type"}
+                value = {this.state.eventType}
               />
-              <StyledRangePicker handleChange={this.handleDateChange} />
-              {this.props.userRole === "organiser" &&
+              <StyledRangePicker handleChange={this.handleDateChange} values = {{startDate:this.state.startDate, endDate:this.state.endDate}}/>
+              {this.props.userRole === "organiser" && (
                 <div className="checkbox-style">
                   <Checkbox
                     checked={this.state.isChecked}
@@ -204,16 +278,13 @@ class Dashboard extends Component {
                     Created By Me
                   </Checkbox>
                 </div>
-              }
+              )}
             </div>
-            {this.props.userRole === "organiser" && 
-              <Button 
-                type="primary"
-                onClick={this.handleCreateEvent}
-              >
+            {this.props.userRole === "organiser" && (
+              <Button type="primary" onClick={this.handleCreateEvent}>
                 Create
               </Button>
-            }
+            )}
           </div>
           <div className="events-container-flex">
             {this.spliceArray(eventList)}

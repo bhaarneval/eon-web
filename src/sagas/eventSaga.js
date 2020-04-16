@@ -84,15 +84,15 @@ export function* createNewEvent(param) {
       checkResponse(recievedResponse, responseJson);
       yield put({
         type: actionEventTypes.RECEIVED_EVENT_DATA,
-        payload: responseJson.data[0],
+        payload: responseJson.data,
       });
-      callback({ id: responseJson.data[0].id });
+      callback({ id: responseJson.data.id });
     } else {
       yield put({
         type: actionEventTypes.RECEIVED_EVENT_DATA,
-        payload: responseJson,
+        payload: responseJson.data,
       });
-      callback({ id: responseJson.id });
+      callback({ id: responseJson.data.id });
     }
   } catch (e) {
     console.error(e);
@@ -174,7 +174,7 @@ export function* fetchEventData(param) {
 
     yield put({
       type: actionEventTypes.RECEIVED_EVENT_DATA,
-      payload: responseJson.data,
+      payload:responseJson.data,
     });
 
     if(ifUpdate){
@@ -267,7 +267,7 @@ export function* saveInvitees(param) {
 
     yield put({
       type: actionEventTypes.RECEIVED_EVENT_DATA,
-      payload: responseJson.data[0],
+      payload: responseJson.data,
     });
   } catch (e) {
     console.error(e);

@@ -391,6 +391,7 @@ render() {
                 handleFreeTicket={this.handleFreeTicket}
                 handleCancel={this.handleCancel}
                 handleRefund={this.handleRefund}
+                userData = {this.props.userData}
               />:null
             )}
           </div>

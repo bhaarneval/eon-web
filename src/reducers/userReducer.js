@@ -7,6 +7,7 @@ const initialData = {
   userData: {},
   userRole: "",
   eventType: [],
+  userProfile: {},
 };
 
 const userReducer = (state = initialData, action) => {
@@ -38,7 +39,13 @@ const userReducer = (state = initialData, action) => {
         }
       case actionLoginTypes.LOG_OUT:
         return initialData;
-        
+      
+      case actionLoginTypes.FETCHED_USER_PROFILE:
+        return {
+          ...state,
+          userProfile: action.payload,
+          fetchingUser: false,
+        }
     default:
       return state;
   }
