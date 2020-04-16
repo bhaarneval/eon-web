@@ -29,7 +29,7 @@ export function EventForm(props) {
     dateTime =  date+" "+time;
   }
   const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
-  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm A")) : useState("");
+  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm:ss")) : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState({});
 
@@ -54,6 +54,9 @@ export function EventForm(props) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("hh:mm A");
     data = {...data, imageFile:file};
+    if(!isChecked){
+      data.subscription_fee = 0;
+    }
     handleSubmit(data);
   }
 
@@ -284,7 +287,7 @@ export function UpdateEventForm(props) {
     dateTime =  date+" "+time;
   }
   const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
-  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm A hh:mm A")) : useState("");
+  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm:ss")) : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState({});
 
@@ -308,6 +311,10 @@ export function UpdateEventForm(props) {
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("hh:mm A");
+    if(!isChecked){
+      delete data.subscription_fee;
+      data.subscription_fee = 0;
+    }
     data = {...data, imageFile:file};
     if(images && images!=""){
       data.images = images;
