@@ -24,10 +24,6 @@ class Login extends Component {
     }
   }
 
-  componentWillMount(){
-    localStorage.removeItem('token')
-  }
-
     tabChange = (key) => {
       this.setState({
         userType : key
