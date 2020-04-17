@@ -16,7 +16,7 @@ class Payment extends Component {
 
     onFinish = (data) => {
         console.log(data);
-        this.props.onBankSubmit(data.accountno, data.expirydate);
+        this.props.onBankSubmit(data.card_number, data.expirydate);
     }
 
     handleClose = () => {
@@ -45,7 +45,7 @@ class Payment extends Component {
                                 />
                             </Form.Item>
                             <Form.Item
-                                name="Card Number"
+                                name="card_number"
                                 rules={[{
                                     required: true,
                                     message: BANK_REQUIRED
