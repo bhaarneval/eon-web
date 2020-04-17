@@ -14,7 +14,8 @@
 }
 .status-button {
     cursor: none !important;
-    margin-left: -112px;
+    margin-left: -45%;
+    font-weight: bold;
     margin-top: 3%;
     background-color: transparent !important;
     color: white !important;
