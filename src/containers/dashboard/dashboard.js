@@ -271,6 +271,7 @@ class Dashboard extends Component {
                     checked={this.state.isChecked}
                     onChange={this.handleCheckChange}
                     size="large"
+                    className="checkbox-me"
                   >
                     Created By Me
                   </Checkbox>
@@ -278,7 +279,7 @@ class Dashboard extends Component {
               )}
             </div>
             {this.props.userRole === "organiser" && (
-              <Button type="primary" onClick={this.handleCreateEvent}>
+              <Button type="primary" className="create-button" onClick={this.handleCreateEvent}>
                 Create
               </Button>
             )}
