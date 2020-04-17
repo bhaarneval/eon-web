@@ -18,22 +18,22 @@ export const THIRD_PORT_REQUIRED = "Third port is required";
 
 //signup constants
 export const PASSWORD_INFO = "Password must be of length 8-16 characters having one lower case, one upper case and one numeric character.";
-export const ORGANISATION_ADDRESS = "Please enter your oragnaisation address!"
-export const ORGANISATION_NAME = "Please enter your oragnaisation name!"
+export const ORGANISATION_ADDRESS = "Please enter your organization address!"
+export const ORGANISATION_NAME = "Please enter your organization name!"
 export const PASSWORD_REQUIRED = "Password is required";
 export const NAME_REQUIRED = "Please enter your full name!";
 export const EMAIL_REQUIRED = "Please enter a valid email!";
 export const CONTACT_NO = "Please enter your contact information!";
-export const INVALID_CONATCT = "Contact number that should contain only digits";
+export const INVALID_CONATCT = "Contact number that should contain only digits!";
 export const INVALID_BANK = "Account number should contain only digits";
 export const SIGNUP_PASSWORD_REQUIRED = "Please enter a password!";
-export const INVALID_PASSWORD = "Password doesn't meet all the given requirements";
+export const INVALID_PASSWORD = "Password doesn't meet all the given requirements!";
 export const CONFIRM_PASSWORD = "Please confirm your password!";
 export const PASSWORD_DO_NOT_MATCH = "Passwords do not match!";
 export const ENTER_OTP = "A verification code has been sent to the registered email ID";
 export const OTP_REQUIRED = "Verification code cannot be empty";
 export const BANK_REQUIRED = "Please enter your bank account no.";
-export const EXPIRY_REQUIRED = "Please enter expiry date";
+export const EXPIRY_REQUIRED = "Please enter expiry date!";
 
 //create constant messages
 export const EVENT_NAME = "Event name cannot be empty!";
