@@ -31,7 +31,7 @@ class Payment extends Component {
                     <div className="subscription-payment">
                         <h3>Bank details</h3>
                         <Form
-                            className="form-main"
+                            className="form-main-payment"
                             name="bankDetails"
                             onFinish={this.onFinish}
                             layout="vertical"
@@ -45,7 +45,7 @@ class Payment extends Component {
                                 />
                             </Form.Item>
                             <Form.Item
-                                name="accountno"
+                                name="Card Number"
                                 rules={[{
                                     required: true,
                                     message: BANK_REQUIRED
@@ -64,12 +64,17 @@ class Payment extends Component {
                                 rules={[{
                                     required: true,
                                     message: EXPIRY_REQUIRED
+                                },{
+                                    pattern:/^(0[1-9]|1[0-2])\/?([0-9]{4})$/,
+                                    message: "Expected, input format MM/YYYY",
                                 }]}
                             >
                                 <Input
                                     placeholder="Expiry Date (MM/YYYY)"
+                                    style={{width:"40%"}}
                                 />
                             </Form.Item>
+                            
                             <Form.Item>
                                 <Button style={{width: '100%'}} htmlType="submit" type="primary">Pay</Button>
                             </Form.Item>
