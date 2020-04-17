@@ -89,7 +89,6 @@ class ChangePassword extends Component {
                 },
                 {
                   pattern: PASSWORD_VALIDATION,
-                  min:8,
                   message: INVALID_PASSWORD
                 }
               ]}
