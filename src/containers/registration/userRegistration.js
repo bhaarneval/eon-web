@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import './registration.css';
-import { Spin } from "antd";
 import UserDetails from '../../components/registration/userRegistration/forms';
 import TermsAndConditions from "../../components/registration/termsAndConditions";
 import BasicDetailsImg from "../../assets/Basic Details.svg";
@@ -80,7 +79,6 @@ class UserRegistration extends Component {
       password
     } = this.state;
     return (
-      <Spin spinning={this.props.fetchingUser} className="spinner">
       <div
         className = 'registration-main'
       >
@@ -115,7 +113,6 @@ class UserRegistration extends Component {
           ) : null}
         </div>
       </div>
-      </Spin>
     );
   }
 }

@@ -99,7 +99,6 @@ export default function userDetails(props) {
             },
             {
               pattern: PASSWORD_VALIDATION,
-              min: 8,
               message: INVALID_PASSWORD,
             },
           ]}
@@ -108,7 +107,6 @@ export default function userDetails(props) {
             className="input-style"
             prefix={<img src={lockImg} />}
             placeholder="Enter Password"
-            maxLength={16}
             onChange={handlePasswordChange}
           />
         </Form.Item>
@@ -123,7 +121,6 @@ export default function userDetails(props) {
             className="input-style"
             prefix={<img src={lockImg} />}
             placeholder="Confirm Password"
-            maxLength={16}
             visibilityToggle={false}
           />
         </Form.Item>

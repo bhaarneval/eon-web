@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./eventDetail.css";
-import {Button, Input, Modal, Form, Spin, message} from 'antd';
+import {Button, Input, Modal, Form, message} from 'antd';
 import { CheckCircleFilled } from "@ant-design/icons";
 import EventInfo from "../../components/eventDetail/eventInfo";
 import EventCount from "../../components/eventDetail/eventCount";
@@ -43,7 +43,7 @@ class EventDetail extends Component {
     };
   }
   componentDidMount(){
-    const {eventData, location:{search}, getEventData,accessToken, userRole} = this.props;
+    const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
     if(!eventData || !eventData.id){
       let searchParam = new URLSearchParams(search);
       let id = searchParam.get("id");
@@ -54,6 +54,7 @@ class EventDetail extends Component {
         callback: (error) => {
           if (error) {
             message.error(error);
+            history.push("/dashboard");
           }
         },
       }); 
@@ -319,7 +320,6 @@ render() {
     const { discountPercentage} = this.state;
     const { eventData } = this.props;
     return (
-      <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         {this.props.eventData && this.props.eventData.id && 
@@ -512,7 +512,6 @@ render() {
           </Modal>
         )}
       </div>
-      </Spin>
     );
   }
 }

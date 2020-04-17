@@ -1,7 +1,7 @@
 import "./layout.css";
 /* eslint-disable */
 import * as React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,Redirect } from "react-router-dom";
 
 import Login from "../../components/login/login";
 import OrganiserRegistration from "../../containers/registration/organiserRegistration";
@@ -16,38 +16,79 @@ import CreateEvent from "../../containers/createEvent/createEvent";
 import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
 import * as jwt from 'jsonwebtoken';
+import { Spin } from "antd";
 
+const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
+
+  const hasUserLoggedIn = isLoggedIn;
+
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        hasUserLoggedIn === "true" ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+        )
+      }
+    />
+  )
+}
+const BeforeLogin = ({ component: Component, isLoggedIn, ...rest }) => {
+
+  const hasUserLoggedIn = isLoggedIn;
+
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        hasUserLoggedIn==="true" ? (
+          <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />
+        ) : (
+          <Component {...props} />
+        )
+      }
+    />
+  )
+}
 
 function StyledComp(props) {
-  const isLoggedin = props.userData.user_id;
+  const isLoggedIn = props.userData.user_id;
+  
   return (
     <div>
       <div className="flex flex-row layoutContainer">
-        {isLoggedin &&
+        {isLoggedIn && (
           <div className="flex flex-column layoutNavContainer">
             <SideNav />
           </div>
-        }
+        )}
         <div className="mainContentContainer">
-          <Route path="/" component={Navbar}/>
-          <div className="contentBody">
-            <Switch>
-              <Route path="/" exact component={Login} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/register/organiser" exact component={OrganiserRegistration}/>
-              <Route path="/register/subscriber" exact component={UserRegistration}/>
-              <Route path="/forgot-password" exact component={ForgotPassword} />
-            </Switch>
-            {isLoggedin &&
-              <Switch>
-                <Route path="/change-password" exact component={ChangePassword} />
-                <Route path="/dashboard" exact component = {Dashboard}/>
-                <Route path="/create" exact component={CreateEvent}/>
-                <Route path="/event-details/" component = {EventDetail}/>
-                <Route path="/profile/1" component = {Profile}/>
-              </Switch>
-            }
-          </div>
+          <Route path="/" component={Navbar} />
+            <div className="contentBody">
+              {
+                isLoggedIn?(
+                  <Switch>
+                    <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
+                    <AfterLogin path="/dashboard" exact isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
+                    <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
+                    <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
+                    <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
+                    <Route render={() => <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />} />
+                  </Switch>
+                ):!localStorage.getItem("token") && (
+                  <Switch>
+                    <BeforeLogin path="/" exact isLoggedIn={isLoggedIn?"true":"false"} component={Login} />
+                    <BeforeLogin path="/login" isLoggedIn={isLoggedIn?"true":"false"}  component={Login} />
+                    <BeforeLogin path="/register/organiser" exact isLoggedIn={isLoggedIn?"true":"false"}  component={OrganiserRegistration}/>
+                    <BeforeLogin path="/register/subscriber" exact isLoggedIn={isLoggedIn?"true":"false"}  component={UserRegistration}/>
+                    <BeforeLogin path="/forgot-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ForgotPassword} />
+                    <Route render={() => <Redirect to={{ pathname: '/login', state: { from: props.location } }} />} />
+                   </Switch>
+                )
+              }
+            </div>
         </div>
       </div>
     </div>
@@ -68,19 +109,28 @@ class LayoutComponent extends React.Component {
 
   render() {
     return (
-      <StyledComp
+      <Spin spinning = {this.props.fetchingEvent || this.props.fetchingUser} className="spinner">
+        <StyledComp
         userData={this.props.userData}
       />
+      </Spin>
     );
   }
 }
 
 const mapStateToProps = ({
   userReducer: {
-    userData
+    userData,
+    fetchingUser,
+  },
+  eventReducer: {
+    fetchingEvent,
   }
 }) => ({
-  userData
+  userData,
+  fetchingUser,
+  fetchingEvent,
 })
 
 export default connect(mapStateToProps)(LayoutComponent);
+

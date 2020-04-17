@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect } from "react-redux";
 import './createEvent.css';
-import {Spin, message} from "antd";
+import { message} from "antd";
 import moment from "moment";
 import BackButton from '../../components/commonComponents/backButton';
 import {EventForm, UpdateEventForm} from '../../components/eventCreation/eventForm';
@@ -29,7 +29,7 @@ class CreateEvent extends Component {
    let type = searchParam.get("type");
    let id = searchParam.get("id");
    if (type === "edit" && !this.props.eventData.id) {
-     const { getEventData, accessToken, userRole } = this.props;
+     const { getEventData, accessToken, userRole, history } = this.props;
      getEventData({
        id,
        accessToken,
@@ -37,6 +37,7 @@ class CreateEvent extends Component {
        callback: (error) => {
          if (error) {
            message.error(error);
+           history.push("/dashboard");
          }
        },
        ifUpdate:true,
@@ -127,7 +128,6 @@ class CreateEvent extends Component {
    let {updateType, hasErrored,errorMessage} = this.state;
    let {eventData} = this.props;
   return (
-    <Spin spinning={this.props.fetchingEvent} className="spinner-dashboard">
     <div className="create-container">
       <BackButton handleOnClick={()=>this.goBack("goBack", this.props.eventData.id)} text = {updateType?"Update Event":"Create Event"} />
       <div className="form-div">
@@ -139,7 +139,6 @@ class CreateEvent extends Component {
         }
       </div>
     </div>
-    </Spin>
   );
    }
  }

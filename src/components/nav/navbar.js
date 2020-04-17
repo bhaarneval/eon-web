@@ -59,7 +59,7 @@ class Navbar extends Component {
     else if(input.key === "3")
       this.props.history.push(`/change-password`)
     else if(input.key === "4")
-      this.props.history.push(`/profile/1`)
+      this.props.history.push(`/my-profile`)
     else if (input.key === "5"){
       this.props.history.push(`/dashboard?type=wishlist`);
     }  
