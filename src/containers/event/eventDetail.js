@@ -43,7 +43,7 @@ class EventDetail extends Component {
     };
   }
   componentDidMount(){
-    const {eventData, location:{search}, getEventData,accessToken, userRole} = this.props;
+    const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
     if(!eventData || !eventData.id){
       let searchParam = new URLSearchParams(search);
       let id = searchParam.get("id");
@@ -54,6 +54,7 @@ class EventDetail extends Component {
         callback: (error) => {
           if (error) {
             message.error(error);
+            history.push("/dashboard");
           }
         },
       }); 

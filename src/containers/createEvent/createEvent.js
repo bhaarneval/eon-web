@@ -29,7 +29,7 @@ class CreateEvent extends Component {
    let type = searchParam.get("type");
    let id = searchParam.get("id");
    if (type === "edit" && !this.props.eventData.id) {
-     const { getEventData, accessToken, userRole } = this.props;
+     const { getEventData, accessToken, userRole, history } = this.props;
      getEventData({
        id,
        accessToken,
@@ -37,6 +37,7 @@ class CreateEvent extends Component {
        callback: (error) => {
          if (error) {
            message.error(error);
+           history.push("/dashboard");
          }
        },
        ifUpdate:true,
