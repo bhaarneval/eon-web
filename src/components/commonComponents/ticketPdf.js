@@ -12,7 +12,6 @@ import {
   PDFDownloadLink,
   Image,
 } from "@react-pdf/renderer";
-// import BITSIcon from "../../assets/logo.png";
 import Icon from "../../assets/bitslogo.png";
 import sampleQR from "../../assets/sampleQR.jpg";
 

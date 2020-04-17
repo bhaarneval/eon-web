@@ -3,6 +3,7 @@ import "./nav.css";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Dropdown, Menu } from 'antd';
+import logo from '../../assets/bitslogo.png';
 
 import {
   LogoutOutlined,
@@ -109,7 +110,10 @@ class Navbar extends Component {
       </Menu>
     );
     return (
-      <div className="flex flex-row flex-end nav-container">
+      <div className="nav-container">
+        {!localStorage.getItem("token") &&
+          <img style={{ width: '3%' }} src={logo}/>
+        }
         <div className="top-nav">
           {this.props.userRole === 'subscriber' &&
             <BellOutlined className="nav-items" style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>

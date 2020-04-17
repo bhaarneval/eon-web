@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import './eventDetail.css'
-// import fb from '../../assets/fb.svg';
+import fb from '../../assets/fb.svg';
 import feedback from '../../assets/feedback.svg';
 import reminder from '../../assets/reminder.svg';
 import update from '../../assets/update.svg';
@@ -8,6 +8,10 @@ import user from '../../assets/user_yellow.svg';
 import {Modal, Input, Button} from 'antd';
 const { TextArea } = Input;
 import React, { Component } from "react";
+import {
+    FacebookShareButton,
+    FacebookShareCount
+} from 'react-share';
 
 
 class EventCount extends Component {
@@ -51,7 +55,9 @@ class EventCount extends Component {
             <div className="detail-card-count">
                 <div className="detail-card-tile detail-card-container">
                     <div>
-        <span className="detail-card-tile-row"><img className="subscriber-image" src={user}/><div className="detail-card-tile-text">{eventData.sold_tickets}</div></span>
+                        <span className="detail-card-tile-row"><img className="subscriber-image" src={user}/>
+                            <div className="detail-card-tile-text">{eventData.sold_tickets}</div>
+                        </span>
                         <div>
                             No of Subscribers
                         </div>
@@ -66,19 +72,21 @@ class EventCount extends Component {
                     </div>
                 </div>
                 <div className="detail-card-tile detail-card-container">
+                    <FacebookShareButton url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
+                        <img className="subscriber-image" src={fb}/>
+                    </FacebookShareButton>
+                    <FacebookShareCount url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
+                        {shareCount => <span className="myShareCountWrapper">{shareCount}</span>}
+                    </FacebookShareCount>
                     <div>
-                        <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="large"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">sad</a>
-                        </div>
-                        <div>
-                            Share on social media
-                        </div>
+                        Share
                     </div>
                 </div>
                 <div className="detail-card-tile reminder-tile">
-                    <div onClick={() => this.sendUpdate('reminder')}  className="detail-card-container reminder-row">
+                    <div onClick={() => this.sendUpdate('reminder')}  className="cursor detail-card-container reminder-row">
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={reminder}/>Send reminder</span>
                     </div>
-                    <div onClick={() => this.sendUpdate('updates')} className="detail-card-container reminder-row">
+                    <div onClick={() => this.sendUpdate('updates')} className="cursor detail-card-container reminder-row">
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={update}/>Send updates</span>
                     </div>
                 </div>
