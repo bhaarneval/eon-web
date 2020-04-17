@@ -126,7 +126,7 @@ function FormComponent(props) {
               <Form.Item
               name="name"
               rules={[
-                { required: true, message: "Name cannot be empty!!"  }
+                { required: true, message: "Please enter your name!"  }
               ]}
           >
             <Input size = "large"  prefix = {<img src={userImg}/>} placeholder = "Name" className = 'input-style'/>
@@ -168,7 +168,7 @@ function FormComponent(props) {
             rules={[
               {
                 required: true,
-                message: ORGANISATION_ADDRESS
+                message: role !== "subscriber"? ORGANISATION_ADDRESS : "Please enter your address!"
               }
             ]}
           >
