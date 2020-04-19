@@ -3,6 +3,7 @@ import "./nav.css";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Dropdown, Menu, Button } from 'antd';
+import logo from '../../assets/bitslogo.png';
 
 import {
   LogoutOutlined,
@@ -114,7 +115,10 @@ class Navbar extends Component {
     );
     console.log(this.props.location);
     return (
-      <div className="flex flex-row flex-end nav-container">
+      <div className="nav-container">
+        {!localStorage.getItem("token") &&
+          <img style={{ width: '3%' }} src={logo}/>
+        }
         <div className="top-nav">
           {this.props.accessToken==="" && this.props.location.pathname !== "/login" ?(
             <Button style={{color:"#262C6F", border: "none", fontWeight:"bold"}} onClick={this.goBack}>Login</Button> 

@@ -17,7 +17,7 @@ export default function EventCards(props) {
   return (
     <Card
       bordered={true}
-      className="cards-style"
+      className="cursor cards-style"
       onClick={() => onClick(id)}
       cover={
         <div className="image-status-container">

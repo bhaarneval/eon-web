@@ -8,7 +8,7 @@ import { constants } from "../../constants/constants";
 import analytics from '../../assets/Analytics.svg';
 import event from '../../assets/Event Mgment.svg';
 import ticket from '../../assets/Tickets.svg';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/bitslogo.png';
 
 class SideNav extends Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class SideNav extends Component {
     const themeWiseIconClass = `${iconClass} ${isDark ? 'activeDark' : 'activeLight'}`;
     return (
       <div className="sideNav">
-        <img style={{ width: '98%' }} src={logo}/>
+        <img style={{ width: '80%' }} src={logo}/>
         <div
           className={ active === constants.HOME ? themeWiseIconClass : iconClass}
           onClick={() => this.onClick(constants.HOME)}
