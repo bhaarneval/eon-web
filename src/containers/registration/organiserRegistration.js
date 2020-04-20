@@ -78,7 +78,7 @@ handlePassWordChange = (values) => {
     }
     else {
         const { password } = values;
-        formData = {...formData, password,role:"organiser"};
+        formData = {...formData, password,role:"organizer"};
         this.setState({
             formData: formData,
             showModal: true
@@ -111,7 +111,7 @@ handlePassWordChange = (values) => {
       <div className="form-container">
         <div className="form-header">
           <h1>
-            <b>Event Organiser Sign Up</b>
+            <b>Event Organizer Sign Up</b>
           </h1>
           <h4>Please provide the following details</h4>
         </div>

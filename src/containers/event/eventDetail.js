@@ -327,7 +327,7 @@ render() {
             eventData = {this.props.eventData}
             eventType = {this.props.eventType}
             history={this.props.history}
-            isOrganizer={this.props.userRole === 'organiser'}
+            isOrganizer={this.props.userRole === 'organizer'}
             handleShare={this.handleShare}
             setEventUpdate={this.props.setEventUpdate}
             cancelEvent = {this.props.cancelEvent}
@@ -336,7 +336,7 @@ render() {
           />
         }
        {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
-        {this.props.userRole === 'organiser' && this.props.eventData && (this.props.eventData.self_organised === true || this.props.eventData.is_active) && (
+        {this.props.userRole === 'organizer' && this.props.eventData && (this.props.eventData.self_organised === true || this.props.eventData.is_active) && (
           <div>
             <EventCount eventData = {this.props.eventData} notifySubscriber = {this.handleNotifySubscriber}/>
             <div className="invitee-row">

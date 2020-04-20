@@ -21,7 +21,7 @@ class CreateEvent extends Component {
  }
 
  componentDidMount() {
-   if (this.props.userRole !== "organiser") {
+   if (this.props.userRole !== "organizer") {
      this.props.history.push("/dashboard");
    }
 
