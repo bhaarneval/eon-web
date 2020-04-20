@@ -99,7 +99,7 @@ class Navbar extends Component {
   render() {
     const menu = (
       <Menu onClick={key => this.takeMenuAction(key)}>
-        <Menu.Item key="1">Organiser Registration</Menu.Item>
+        <Menu.Item key="1">Organizer Registration</Menu.Item>
         <Menu.Item key="2">Subscriber Registration</Menu.Item>
       </Menu>
     );

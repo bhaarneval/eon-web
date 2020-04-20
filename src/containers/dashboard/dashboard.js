@@ -111,7 +111,7 @@ class Dashboard extends Component {
       return (
         <Row key={index} className="cards-row">
           {list.map((event, index) => {
-            return this.props.userRole === "organiser" ? (
+            return this.props.userRole === "organizer" ? (
               <EventCards
                 history={this.props.history}
                 key={index}
@@ -265,7 +265,7 @@ class Dashboard extends Component {
                 value = {this.state.eventType}
               />
               <StyledRangePicker handleChange={this.handleDateChange} values = {{startDate:this.state.startDate, endDate:this.state.endDate}}/>
-              {this.props.userRole === "organiser" && (
+              {this.props.userRole === "organizer" && (
                 <div className="checkbox-style">
                   <Checkbox
                     checked={this.state.isChecked}
@@ -278,7 +278,7 @@ class Dashboard extends Component {
                 </div>
               )}
             </div>
-            {this.props.userRole === "organiser" && (
+            {this.props.userRole === "organizer" && (
               <Button type="primary" className="create-button" onClick={this.handleCreateEvent}>
                 Create
               </Button>
