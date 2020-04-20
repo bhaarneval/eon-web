@@ -1,5 +1,6 @@
 const BASE_URL =
-  "http://dev-env-bits-pilani-backend.us-east-1.elasticbeanstalk.com/";
+  // "http://dev-env-bits-pilani-backend.us-east-1.elasticbeanstalk.com/";
+  "http://bitspilanieonbackend-env.eba-iewfgdnb.us-east-1.elasticbeanstalk.com/";
 // const DEV_ENV = "dev/";
 
 export const APIService = {
