@@ -70,4 +70,28 @@ describe("login components", () => {
     const wrapper = shallow(loginComponent).dive({ context: { store } }).dive();
     wrapper.instance().onFinish({email:"mayank@gmail.com",password:"Test@123"});
   });
+
+  it("handle form finish callback with error ", () => {
+    const wrapper = shallow(loginComponent).dive({ context: { store } }).dive();
+    expect(wrapper.state("hasErrored")).toBe(false);
+    expect(wrapper.state("errorMessage")).toBe("Wrong Username/Password")
+    wrapper.instance().callback("failure","error");
+    expect(wrapper.state("hasErrored")).toBe(true);
+    expect(wrapper.state("errorMessage")).toBe("error");
+  });
+  it("handle form finish callback with error ", () => {
+    const wrapper = shallow(loginComponent).dive({ context: { store } }).dive();
+    expect(wrapper.state("hasErrored")).toBe(false);
+    expect(wrapper.state("errorMessage")).toBe("Wrong Username/Password")
+    wrapper.instance().callback("success",{access:"shjdgasjdgasjh"});
+    expect(wrapper.state("hasErrored")).toBe(false);
+    expect(wrapper.state("errorMessage")).toBe("Wrong Username/Password")
+  });
+
+  it("handle change without error finish ", () => {
+    const wrapper = shallow(loginComponent).dive({ context: { store } }).dive();
+    wrapper.instance().handleChange();
+    expect(wrapper.state("hasErrored")).toBe(false);
+  });
+  
 });
