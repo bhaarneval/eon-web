@@ -22,23 +22,25 @@ class ChangePassword extends Component {
     }
   }
 
+  callbackMethod = (error) => {
+    if(!error) {
+      this.props.history.push("/dashboard");
+    }
+    else{
+      this.setState({
+        hasErrored: true,
+        errorMessage: error,
+      })
+    }
+  }
+
   onFinish = values => {
     const {email, oldPassword, newPassword}= values
     const data = {email, oldPassword, newPassword};
     this.props.postChangePassword({
       data: data,
       accessToken: this.props.accessToken,
-      callback: (error) => {
-        if(!error) {
-          this.props.history.push("/dashboard");
-        }
-        else{
-          this.setState({
-            hasErrored: true,
-            errorMessage: error,
-          })
-        }
-      }
+      callback: this.callbackMethod
     })
   };
 

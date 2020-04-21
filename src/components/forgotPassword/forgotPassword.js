@@ -39,6 +39,34 @@ class ForgotPassword extends Component {
       errorMessage: "Unable to connect with the server."
     };
   }
+
+  getVerificationCodeCallback = (error, value, activeKey) => {
+    if(!error) {
+      this.setState({
+        submitData: value,
+        activeKey: activeKey + 1,
+      });
+    }
+    else{
+      this.setState({
+        hasErrored: true,
+        errorMessage: error,
+      })
+    }
+  }
+
+  postForgotPasswordCallback = (error) => {
+    if(!error){
+      this.props.history.push("/login");
+    }
+    else {
+      this.setState({
+        hasErrored: true,
+        errorMessage: error
+      });
+    }
+  }
+
   onFinish = (value) => {
     let { activeKey, submitData } = this.state;
     let {getVerificationCode, postForgotPassword} = this.props;
@@ -46,35 +74,14 @@ class ForgotPassword extends Component {
       getVerificationCode({
         data: value,
         callback: (error) => {
-          if(!error) {
-            this.setState({
-              submitData: value,
-              activeKey: activeKey + 1,
-            });
-          }
-          else{
-            this.setState({
-              hasErrored: true,
-              errorMessage: error,
-            })
-          }
+          this.getVerificationCodeCallback(error?error: false, value, activeKey)
         }
       });
     } else {
         submitData = {...submitData,password:value.password, code: value.otp};
       postForgotPassword({
         data: submitData,
-        callback: (error) => {
-          if(!error){
-            this.props.history.push("/login");
-          }
-          else {
-            this.setState({
-              hasErrored: true,
-              errorMessage: error
-            });
-          }
-        }
+        callback: this.postForgotPasswordCallback
       });
     }
   };
