@@ -5,10 +5,8 @@ import rootReducer from "../reducers/rootReducer";
 import { createStore } from "redux";
 import { shallow, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import sinon from "sinon";
 import Login from "../components/login/login";
 import { Form, Input, Button } from "antd";
-import {getUser} from "../sagas/eventSaga";
 
 const store = createStore(rootReducer);
 
