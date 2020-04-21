@@ -115,7 +115,7 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts",
-      "!src/sagas/*.{js,jsx,ts,tsx}",
+      "!src/sagas/*.{js,jsx,ts,tsx}"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
