@@ -19,6 +19,7 @@ class SideNav extends Component {
   }
 
   onClick = type => {
+    console.log(type);
     switch (type) {
       case constants.HOME:
         this.setState({

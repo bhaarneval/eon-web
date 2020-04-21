@@ -76,7 +76,6 @@ class EventDetail extends Component {
 
 
 deleteAll = (list) => {
-  console.log(list);
     const {updateInviteeList, accessToken, eventData} = this.props;
     updateInviteeList({
       data:{invitation_ids:list, event: eventData.id},
@@ -86,7 +85,6 @@ deleteAll = (list) => {
 }
 
 onDiscountChange = (value) => {
-  console.log(value);
     this.setState({
         discountPercentage: value
     })

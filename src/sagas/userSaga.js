@@ -165,7 +165,6 @@ export function* forgotPassword(param) {
   const { data, callback } = param;
   try {
     let recievedResponse = {};
-    console.log(data);
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
     const getUrl = APIService.dev + requestURLS.RESET_PASSWORD;
@@ -309,7 +308,6 @@ export function* updateUser(param){
 }
 
 export function* userActionWatcher() {
-  // console.log("Cluster Watcher");
   yield takeLatest(actionLoginTypes.LOGGING_OUT, logOut);
   yield takeLatest(actionLoginTypes.GET_USER, getUser);
   yield takeLatest(actionLoginTypes.POST_USER, postUser);

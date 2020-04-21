@@ -59,9 +59,7 @@ export function EventForm(props) {
     }
     handleSubmit(data);
   }
-
-  console.log
-
+  
   return (
     <div className="event-form-container">
       <div>

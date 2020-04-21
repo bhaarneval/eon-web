@@ -61,7 +61,7 @@ function StyledComp(props) {
       <div className="flex flex-row layoutContainer">
         {isLoggedIn && (
           <div className="flex flex-column layoutNavContainer">
-            <SideNav />
+            <Route path="/" component={SideNav}/>
           </div>
         )}
         <div className="mainContentContainer">

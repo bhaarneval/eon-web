@@ -113,14 +113,13 @@ class Navbar extends Component {
         <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
-    console.log(this.props.location);
     return (
       <div className="nav-container">
         {!localStorage.getItem("token") &&
           <img style={{ width: '3%' }} src={logo}/>
         }
         <div className="top-nav">
-          {this.props.accessToken==="" && this.props.location.pathname !== "/login" ?(
+          {this.props.accessToken==="" && (this.props.location.pathname !== "/login" || this.props.location.pathname !== "/")?(
             <Button style={{color:"#262C6F", border: "none", fontWeight:"bold"}} onClick={this.goBack}>Login</Button> 
           ): null}
           {this.props.userRole === 'subscriber' &&
