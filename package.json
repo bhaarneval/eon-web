@@ -110,8 +110,8 @@
       "<rootDir>/src"
     ],
     "coverageReporters": [
-        "text",
-        "html"
+      "text",
+      "html"
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
