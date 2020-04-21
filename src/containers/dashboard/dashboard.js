@@ -16,6 +16,7 @@ import {
   getEventData,
   setEventUpdate,
 } from "../../actions/eventActions";
+import { statusList, feeTypeList} from '../../constants/constants'
 import BackButton from "../../components/commonComponents/backButton";
 
 class Dashboard extends Component {
@@ -30,6 +31,8 @@ class Dashboard extends Component {
       startDate: "",
       endDate: "",
       eventType: "",
+      statusType: "upcoming",
+      feeType: "",
       role: this.props.userRole,
     };
   }
@@ -58,7 +61,13 @@ class Dashboard extends Component {
     let searchParam = new URLSearchParams(search);
     let type = searchParam.get("type");
     if (type !== "wishlist") {
-      fetchEvents({ userData, accessToken });
+      fetchEvents({ userData, 
+        accessToken,
+        filterData: { 
+          event_status: this.state.statusType,
+          subscription_type: this.state.feeType !== "" ? this.state.feeType : undefined
+        }
+      });
       this.setState({
         isChecked: false,
         isWishlist: false,
@@ -66,6 +75,8 @@ class Dashboard extends Component {
         startDate: "",
         endDate: "",
         eventType: "",
+        statusType: "upcoming",
+        feeType: ""
       });
     } else if (type === "wishlist") {
       fetchEvents({
@@ -80,6 +91,8 @@ class Dashboard extends Component {
         startDate: "",
         endDate: "",
         eventType: "",
+        statusType: "upcoming",
+        feeType: ""
       });
     }
   };
@@ -111,7 +124,7 @@ class Dashboard extends Component {
       return (
         <Row key={index} className="cards-row">
           {list.map((event, index) => {
-            return this.props.userRole === "organiser" ? (
+            return this.props.userRole === "organizer" ? (
               <EventCards
                 history={this.props.history}
                 key={index}
@@ -140,10 +153,14 @@ class Dashboard extends Component {
       startDate,
       endDate,
       eventType,
+      statusType,
+      feeType,
       searchText,
     } = this.state;
     let filterData = {
       type: eventType,
+      event_status: statusType,
+      subscription_type: feeType !== "" ? feeType : undefined,
       is_wishlisted: isWishlist ? "True" : undefined,
       event_created_by: isChecked ? "True" : undefined,
       startDate: startDate !== "" ? startDate : undefined,
@@ -161,6 +178,8 @@ class Dashboard extends Component {
         startDate: "",
         endDate: "",
         eventType: "",
+        statusType: "upcoming",
+        feeType: ""
       },
       () => {
         fetchEvents({
@@ -168,6 +187,7 @@ class Dashboard extends Component {
           accessToken,
           filterData: {
             is_wishlisted: this.state.isWishlist ? "True" : undefined,
+            event_status: "upcoming",
           },
         });
       }
@@ -184,6 +204,29 @@ class Dashboard extends Component {
       }
     );
   };
+
+  handleStatusFilterChange = (value) => {
+    this.setState(
+      {
+        statusType: statusList[value]['type'],
+      },
+      () => {
+        this.applyFilters();
+      }
+    );
+  };
+
+  handleFeeFilterChange = (value) => {
+    this.setState(
+      {
+        feeType: feeTypeList[value]['type'],
+      },
+      () => {
+        this.applyFilters();
+      }
+    );
+  };
+
   handleDateChange = (date, dateString) => {
     if (dateString[0] !== "" && dateString[1] != "") {
       const startDate = moment(dateString[0], "DD-MM-YYYY").format(
@@ -254,7 +297,7 @@ class Dashboard extends Component {
               <Button onClick={this.removeFilters} style={{marginRight:"1%"}}><SyncOutlined /></Button>
               <SearchBox
                 handleOnChange={this.handleSearchTextChange}
-                placeholder={"Event Name / Location"}
+                placeholder={"Name / Location"}
                 handleKeyPress={this.handleKeyPress}
                 value = {searchText}
               />
@@ -264,8 +307,20 @@ class Dashboard extends Component {
                 placeholder={"Event Type"}
                 value = {this.state.eventType}
               />
+              <SelectDropDown
+                handleChange={this.handleStatusFilterChange}
+                optionsList={statusList}
+                placeholder={"Status"}
+                value = {this.state.statusType}
+              />
+              <SelectDropDown
+                handleChange={this.handleFeeFilterChange}
+                optionsList={feeTypeList}
+                placeholder={"Fee"}
+                value = {this.state.feeType}
+              />
               <StyledRangePicker handleChange={this.handleDateChange} values = {{startDate:this.state.startDate, endDate:this.state.endDate}}/>
-              {this.props.userRole === "organiser" && (
+              {this.props.userRole === "organizer" && (
                 <div className="checkbox-style">
                   <Checkbox
                     checked={this.state.isChecked}
@@ -278,7 +333,7 @@ class Dashboard extends Component {
                 </div>
               )}
             </div>
-            {this.props.userRole === "organiser" && (
+            {this.props.userRole === "organizer" && (
               <Button type="primary" className="create-button" onClick={this.handleCreateEvent}>
                 Create
               </Button>

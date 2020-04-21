@@ -5,7 +5,7 @@ import { Select } from "antd";
 const { Option } = Select;
 
 export default function SelectDropDown (props) {
-    const {optionsList,placeholder, handleChange, value} = props;
+    const {optionsList, placeholder, handleChange, value} = props;
     return (
         <Select 
             placeholder={placeholder}
@@ -13,12 +13,12 @@ export default function SelectDropDown (props) {
             style={styles.body}
             showSearch={false}
             showArrow={true}
-            value = {value!=""?value : "Event Type"}
+            value = {value!= "" ? value : placeholder}
         >
             {
                 optionsList?optionsList.map(option => {
                     return (
-                    <Option key={option.id} value = {option.id}>{option.type}</Option>
+                    <Option style={{'textTransform': 'capitalize'}} key={option.id} value = {option.id}>{option.type}</Option>
                     )
                 }):null
             }
@@ -34,8 +34,8 @@ SelectDropDown.propTypes = {
 
 const styles = {
     body:{
-        width:"15%",
         marginLeft:"1%",
         marginRight:"1%",
+        textTransform: 'capitalize',
     }
 }

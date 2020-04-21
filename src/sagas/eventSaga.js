@@ -114,14 +114,26 @@ let params = {};
 if(filterData.type){
   params = {...params, event_type:filterData.type}
 }
+if(filterData.event_status){
+  params = {...params, event_status : filterData.event_status}
+}
+
+if(filterData.subscription_type){
+  params = {...params, subscription_type : filterData.subscription_type}
+}
+
 if(filterData.startDate && filterData.endDate)
   params = {...params, start_date:filterData.startDate,end_date:filterData.endDate}
+
 if(filterData.search)
   params = {...params, search: filterData.search}
+
 if(filterData.event_created_by)
   params = {...params, event_created_by: filterData.event_created_by}
+
 if(filterData.is_wishlisted)
   params = {...params, is_wishlisted:filterData.is_wishlisted}
+
   try {
     yield put({ type: actionEventTypes.SET_EVENT_FETCHING });
     let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS;

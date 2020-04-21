@@ -2,7 +2,7 @@ import "./nav.css";
 /* eslint-disable */
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Dropdown, Menu } from 'antd';
+import { Dropdown, Menu, Button } from 'antd';
 import logo from '../../assets/bitslogo.png';
 
 import {
@@ -92,10 +92,14 @@ class Navbar extends Component {
     });
   }
 
+  goBack = () => {
+    this.props.history.push("/login");
+  }
+
   render() {
     const menu = (
       <Menu onClick={key => this.takeMenuAction(key)}>
-        <Menu.Item key="1">Organiser Registration</Menu.Item>
+        <Menu.Item key="1">Organizer Registration</Menu.Item>
         <Menu.Item key="2">Subscriber Registration</Menu.Item>
       </Menu>
     );
@@ -109,12 +113,16 @@ class Navbar extends Component {
         <Menu.Item key="6"><LogoutOutlined/></Menu.Item>
       </Menu>
     );
+    console.log(this.props.location);
     return (
       <div className="nav-container">
         {!localStorage.getItem("token") &&
           <img style={{ width: '3%' }} src={logo}/>
         }
         <div className="top-nav">
+          {this.props.accessToken==="" && this.props.location.pathname !== "/login" ?(
+            <Button style={{color:"#262C6F", border: "none", fontWeight:"bold"}} onClick={this.goBack}>Login</Button> 
+          ): null}
           {this.props.userRole === 'subscriber' &&
             <BellOutlined className="nav-items" style={{fontSize:'20px'}} onClick={this.openNotificationWithIcon}/>
           }

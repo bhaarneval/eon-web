@@ -46,7 +46,7 @@ export function BasicDetails(props) {
           { required: true, message: ORGANISATION_NAME  }
         ]}
       >
-        <Input size = "large"  prefix = {<img src={organisationImg}/>} placeholder = "Organisation Name" className = 'input-style'/>
+        <Input size = "large"  prefix = {<img src={organisationImg}/>} placeholder = "Organization Name" className = 'input-style'/>
       </Form.Item>
       <Form.Item
         name="email"
