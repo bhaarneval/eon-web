@@ -118,4 +118,41 @@ describe("forgot password components", () => {
     expect(wrapper.state("activeKey")).toBe(1);
     wrapper.instance().onFinish({ password: "mayank@gmail.com", otp: 1234 });
   });
+  it("handle get verfication code callback method call with error", () => {
+    const wrapper = shallow(forgotPassword())
+      .dive({ context: { store } })
+      .dive();
+    expect(wrapper.state("hasErrored")).toBe(false)
+    expect(wrapper.state("errorMessage")).toBe("Unable to connect with the server.");
+    wrapper.instance().getVerificationCodeCallback("Something went wrong", {email:"mayank@gmail.com"}, 0);
+    expect(wrapper.state("hasErrored")).toBe(true)
+    expect(wrapper.state("errorMessage")).toBe("Something went wrong");
+  });
+  it("handle get verfication code callback method call without error", () => {
+    const wrapper = shallow(forgotPassword())
+      .dive({ context: { store } })
+      .dive();
+    expect(wrapper.state("activeKey")).toBe(0);
+    wrapper.instance().getVerificationCodeCallback(false, {email:"mayank@gmail.com"}, 0);
+    expect(wrapper.state("submitData").email).toBe("mayank@gmail.com");
+    expect(wrapper.state("activeKey")).toBe(1);
+  });
+  it("handle post forgot password callback method call with error", () => {
+    const wrapper = shallow(forgotPassword())
+      .dive({ context: { store } })
+      .dive();
+    expect(wrapper.state("hasErrored")).toBe(false)
+    expect(wrapper.state("errorMessage")).toBe("Unable to connect with the server.");
+    wrapper.instance().postForgotPasswordCallback("Something went wrong");
+    expect(wrapper.state("hasErrored")).toBe(true)
+    expect(wrapper.state("errorMessage")).toBe("Something went wrong");
+  });
+  it("handle post forgot password callback method call without error", () => {
+    const wrapper = shallow(forgotPassword())
+      .dive({ context: { store } })
+      .dive();
+    expect(wrapper.state("hasErrored")).toBe(false);
+    wrapper.instance().postForgotPasswordCallback();
+    expect(wrapper.state("hasErrored")).toBe(false);
+  });
 });
