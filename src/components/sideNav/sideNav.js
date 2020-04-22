@@ -37,7 +37,7 @@ class SideNav extends Component {
         this.setState({
           active: constants.TICKET
         });
-        this.props.history.push("/ticket");
+        this.props.history.push("/feedbacks?id=13");
       break;
       default:
         break;

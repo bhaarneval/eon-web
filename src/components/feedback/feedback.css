@@ -1,0 +1,26 @@
+.feedback-question-container{
+    background-color: white;
+    border: 1px solid #8080801f;
+    padding: 20px 30px 0px 30px;
+}
+
+.answer-row{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.question-row{
+    margin: 13px 0px;
+    font-weight: bold;
+}
+
+.submit-button{
+    display: flex;
+    justify-content: flex-end;
+    margin: 50px 0;
+}
+
+.border-bottom{
+    border-bottom: 1px solid #211d70;
+}
