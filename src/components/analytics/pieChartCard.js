@@ -1,16 +1,23 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import "./analytics.css";
 import { Card, Progress } from "antd";
 import CanvasJSReact from "../../assets/canvasjs.react";
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-export default function PieChartCard() {
+export default function PieChartCard(props) {
+  const { analyticsData } = props;
+  const {
+    completed_events,
+    cancelled_events,
+    ongoing_events,
+    total_events,
+  } = analyticsData;
   const options = {
     animationEnabled: true,
     subtitles: [
       {
-        text: "Total Events 756",
+        text: `Total Events ${analyticsData.total_events}`,
         verticalAlign: "center",
         fontSize: 16,
         dockInsidePlotArea: true,
@@ -21,9 +28,9 @@ export default function PieChartCard() {
         type: "doughnut",
         showInLegend: false,
         dataPoints: [
-          { name: "Upcoming", y: 5, color:"orange" },
-          { name: "completed", y: 31, color:"green" },
-          { name: "Cancelled", y: 40, color:"red" },
+          { name: "Ongoing", y: ongoing_events, color: "orange" },
+          { name: "completed", y: completed_events, color: "green" },
+          { name: "Cancelled", y: cancelled_events, color: "red" },
         ],
       },
     ],
@@ -38,25 +45,40 @@ export default function PieChartCard() {
       </div>
       <div className="progress-div">
         <div className="progress-div-item">
-            <div>Completed</div>
-            <Progress percent={30} size="small" showInfo={false} strokeColor="green" />
-            <div>30%</div>
+          <div>Completed</div>
+          <Progress
+            percent={(completed_events / total_events) * 100}
+            size="small"
+            showInfo={false}
+            strokeColor="green"
+          />
+          <div>{(completed_events / total_events) * 100}%</div>
         </div>
         <div className="progress-div-item">
-            <div>Upcoming</div>
-            <Progress percent={30} size="small" showInfo={false} strokeColor="orange" />
-            <div>30%</div>
+          <div>Upcoming</div>
+          <Progress
+            percent={(ongoing_events / total_events) * 100}
+            size="small"
+            showInfo={false}
+            strokeColor="orange"
+          />
+          <div>{(ongoing_events / total_events) * 100}%</div>
         </div>
         <div className="progress-div-item">
-            <div>Cancelled</div>
-            <Progress percent={30} size="small" showInfo={false} strokeColor="red"/>
-            <div>30%</div>
+          <div>Cancelled</div>
+          <Progress
+            percent={(cancelled_events / total_events) * 100}
+            size="small"
+            showInfo={false}
+            strokeColor="red"
+          />
+          <div>{(cancelled_events / total_events) * 100}%</div>
         </div>
       </div>
     </Card>
   );
 }
 
-// PieChartCard.propTypes = {
-//   revenueGenerated: PropTypes.number.isRequired,
-// };
+PieChartCard.propTypes = {
+  analyticsData: PropTypes.object.isRequired,
+};

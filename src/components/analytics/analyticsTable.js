@@ -1,11 +1,12 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import "./analytics.css";
 import {Table} from "antd";
 
 
 
-export default function AnalyticsTable() {
+export default function AnalyticsTable(props) {
+  const {eventsList} = props;
     const columns = [
         {
           title: 'EVENT NAME',
@@ -33,9 +34,9 @@ export default function AnalyticsTable() {
                     color= "red"
                 }
                 else if (status === "upcoming"){
-                    color= "green"
+                    color= "orange"
                 }
-                else color = "yellow"
+                else color = "green"
                   return (
                     <div style={{color:`${color}`}}>
                       {status.toUpperCase()}
@@ -46,11 +47,12 @@ export default function AnalyticsTable() {
       ];
       
   return(
-       <Table columns={columns} data={{}} className="table-analytics"/>
+       <Table columns={columns} dataSource={eventsList} className="table-analytics"/>
     )
  }
 
 
 AnalyticsTable.propTypes = {
+  eventsList: PropTypes.array,
 }
  
