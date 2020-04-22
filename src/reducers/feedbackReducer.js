@@ -4,6 +4,8 @@ const initialData = {
   questions: {},
   fetchingQuestions: false,
   submittingQuestions: false,
+  fetchingResponses: false,
+  responses: {},
 };
 
 const feedbackReducer = (state = initialData, action) => {
@@ -34,6 +36,18 @@ const feedbackReducer = (state = initialData, action) => {
         ...state,
         submittingQuestions: false,
         fetchingQuestions: false,
+        fetchingResponses: false
+      };
+    case actionFeedbackTypes.RESPONSES:
+      return {
+        ...state,
+        fetchingResponses: true,
+      };
+    case actionFeedbackTypes.FETCHED_RESPONSES:
+      return {
+        ...state,
+        responses: action.payload,
+        fetchingResponses: false,
       };
     default:
       return state;

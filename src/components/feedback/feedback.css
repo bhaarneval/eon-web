@@ -25,3 +25,48 @@
 .border-bottom{
     border-bottom: 1px solid #211d70;
 }
+
+.feedback-answer-container{
+    border: 1px solid #8080801f;
+    margin-bottom: 10px;
+}
+
+.answer-body{
+    padding: 15px
+}
+
+.answer-single-body{
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.answer-image{
+    width: 70px;
+    height: 70px;
+}
+
+.feedback-count{
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+}
+
+.answer-header{
+    display: flex;
+    color: black;
+    font-size: 14px;
+    padding: 10px 30px;
+    background-color: #6bd0ef33;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.answer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+}
