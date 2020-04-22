@@ -4,7 +4,6 @@ import { actionNotificationsTypes } from "../constants/actionTypes";
 
 
 export function* getNotifications(param) {
-  console.log(param)
   try {
     let getNotificationsURL = APIService.dev+requestURLS.GET_NOTIFICATIONS_URL;
     let headers = {
@@ -32,7 +31,6 @@ export function* getNotifications(param) {
 
 export function* readNotifications(param) {
   const { list, callback } = param;
-  console.log(list)
   try {
     let recievedResponse = {};
     let readNotificationsURL = APIService.dev+requestURLS.READ_NOTIFICATIONS_URL;

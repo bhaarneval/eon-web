@@ -1,4 +1,4 @@
-import { actionTypes, actionLoginTypes, actionNotificationsTypes, actionFeedbackTypes } from "../constants/actionTypes";
+import { actionTypes, actionLoginTypes, actionNotificationsTypes, actionAnalytics, actionFeedbackTypes } from "../constants/actionTypes";
 
 export const getClusters = id => {
   return {
@@ -101,5 +101,13 @@ export const updateUserProfile = ({userId, data, accessToken, callback}) => {
     data,
     accessToken,
     callback
+  }
+}
+
+export const fetchAnalyticsData = ({accessToken, filterData}) => {
+  return {
+    type: actionAnalytics.GET_ANALYTICS,
+    accessToken,
+    filterData
   }
 }

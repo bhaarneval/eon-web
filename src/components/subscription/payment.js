@@ -15,7 +15,6 @@ class Payment extends Component {
     }
 
     onFinish = (data) => {
-        console.log(data);
         this.props.onBankSubmit(data.card_number, data.expirydate);
     }
 
