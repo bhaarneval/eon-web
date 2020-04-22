@@ -5,7 +5,7 @@ const initialData = {
   fetchingQuestions: false,
   submittingQuestions: false,
   fetchingResponses: false,
-  responses: {}
+  responses: {},
 };
 
 const feedbackReducer = (state = initialData, action) => {
@@ -14,35 +14,41 @@ const feedbackReducer = (state = initialData, action) => {
       return {
         ...state,
         fetchingQuestions: true,
-      }
+      };
     case actionFeedbackTypes.FETCHED_QUESTIONS:
       return {
         ...state,
         questions: action.payload,
         fetchingQuestions: false,
-      }
-      case actionFeedbackTypes.POST_QUESTIONS:
-        return {
-          ...state,
-          submittingQuestions: true,
-        }
-      case actionFeedbackTypes.SUBMITTED_QUESTIONS:
-        return {
-          ...state,
-          questions: action.payload,
-          submittingQuestions: false,
-        }
-      case actionFeedbackTypes.RESPONSES:
-        return {
-          ...state,
-          fetchingResponses: true,
-        }
-      case actionFeedbackTypes.FETCHED_RESPONSES:
-        return {
-          ...state,
-          responses: action.payload,
-          fetchingResponses: false,
-        }
+      };
+    case actionFeedbackTypes.POST_QUESTIONS:
+      return {
+        ...state,
+        submittingQuestions: true,
+      };
+    case actionFeedbackTypes.SUBMITTED_QUESTIONS:
+      return {
+        ...state,
+        submittingQuestions: false,
+      };
+    case actionFeedbackTypes.QUESTIONS_ERROR:
+      return {
+        ...state,
+        submittingQuestions: false,
+        fetchingQuestions: false,
+        fetchingResponses: false
+      };
+    case actionFeedbackTypes.RESPONSES:
+      return {
+        ...state,
+        fetchingResponses: true,
+      };
+    case actionFeedbackTypes.FETCHED_RESPONSES:
+      return {
+        ...state,
+        responses: action.payload,
+        fetchingResponses: false,
+      };
     default:
       return state;
   }

@@ -25,3 +25,18 @@
     background-color: #262C6F;
     color:#ffffff;
 }
+.accept-button-warning{
+    color:#ffffff;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10%;
+}
+
+.warning-message {
+    font-size: 150%;
+    color: #262C6F;
+    margin-left: 15%;
+    margin-right: 15%;
+
+}
