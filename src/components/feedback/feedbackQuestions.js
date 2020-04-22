@@ -39,7 +39,7 @@ class FeedbackQuestions extends Component {
             <div className="feedback-question-container">
                 <div className="headerText border-bottom">{this.props.eventData.name}</div>
                 {
-                    questionList && questionList.map((que, key) => {
+                    questionList.length > 0 && questionList.map((que, key) => {
                         return (
                             <div key = {key}>
                                 <div className="question-row">Q{key + 1}. {que.question}</div>
@@ -70,7 +70,7 @@ class FeedbackQuestions extends Component {
                     })
                 }
                 <div className="submit-button">
-                    <Button type="primary">
+                    <Button type="primary" onClick={this.props.onSubmit}>
                         Submit feedback
                     </Button>
                 </div>
@@ -83,7 +83,9 @@ class FeedbackQuestions extends Component {
  FeedbackQuestions.propTypes = {
     history: PropTypes.object,
     questionList: PropTypes.object,
-    eventData: PropTypes.object
+    eventData: PropTypes.object,
+    onSubmit: PropTypes.func,
 }
 
 export default FeedbackQuestions;
+  

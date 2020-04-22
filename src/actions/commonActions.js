@@ -84,6 +84,16 @@ export const getQuestions = ({accessToken}) => {
   }
 }
 
+export const postResponses = ({eventId, feedback, accessToken}) => {
+  console.log(eventId)
+  return {
+    type: actionFeedbackTypes.POST_QUESTIONS,
+    event_id: eventId,
+    feedback,
+    accessToken
+  }
+}
+
 export const updateUserProfile = ({userId, data, accessToken, callback}) => {
   return {
     type: actionLoginTypes.UPDATE_USER_PROFILE,

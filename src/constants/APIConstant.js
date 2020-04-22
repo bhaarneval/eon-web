@@ -25,4 +25,5 @@ export const requestURLS = {
   WISHLIST: "core/wishlist/",
   USER_OPERATIONS: "core/user/",
   FEEDBACK_OPERATIONS: "core/feedback-questions/",
+  FEEDBACK_POST: "core/feedback/",
 };

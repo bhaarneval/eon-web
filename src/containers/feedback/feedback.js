@@ -6,7 +6,7 @@ import FeedbackQuestions from "../../components/feedback/feedbackQuestions";
 import BackButton from "../../components/commonComponents/backButton";
 import { connect } from "react-redux";
 import { getEventData } from "../../actions/eventActions";
-import { getQuestions } from "../../actions/commonActions";
+import { getQuestions, postResponses } from "../../actions/commonActions";
 
 class Feedback extends Component {
   constructor(props) {
@@ -37,11 +37,18 @@ class Feedback extends Component {
     }
   }
 
+  onSubmit = () => {
+    const {eventData, accessToken, userRole} = this.props;
+    this.props.postResponses({
+      accessToken,
+      eventData,
+      userRole
+    })
+  }
 
-
-goBack = () => {
-    this.props.history.push("/dashboard");
-}
+  goBack = () => {
+      this.props.history.push("/dashboard");
+  }
 
 render() {
   const questionList = this.props.questions;
@@ -49,7 +56,11 @@ render() {
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         {this.props.eventData && this.props.eventData.id && 
-            <FeedbackQuestions eventData = {this.props.eventData} questionList = {questionList}/>
+            <FeedbackQuestions 
+              eventData = {this.props.eventData} 
+              questionList = {questionList}
+              onSubmit = {this.onSubmit}
+            />
         }
       </div>
     );
@@ -66,7 +77,8 @@ Feedback.propTypes = {
   getEventData: PropTypes.func,
   getQuestions: PropTypes.func,
   questions: PropTypes.object,
-  fetchingQuestions: PropTypes.bool
+  fetchingQuestions: PropTypes.bool,
+  postResponses: PropTypes.func
 };
 
 const mapStateToProps = ({
@@ -93,7 +105,9 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = ({
   getEventData: getEventData,
-  getQuestions: getQuestions
+  getQuestions: getQuestions,
+  postResponses: postResponses,
 })
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
