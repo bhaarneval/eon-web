@@ -265,14 +265,14 @@ class FeeCalculation extends Component {
             >
               Confirm
             </Button>
-            <Button
-              type="primary"
-              onClick={() => this.props.history.push(`/submit-feedback?id=${this.props.eventData.id}`)}
-            >
-              Submit Feedback
-            </Button>
           </div>
         ) : null}
+        <Button
+          type="primary"
+          onClick={() => this.props.history.push(`/submit-feedback?id=${this.props.eventData.id}`)}
+        >
+          Submit Feedback
+        </Button>
       </div>
     );
   }

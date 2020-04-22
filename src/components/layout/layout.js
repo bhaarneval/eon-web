@@ -10,6 +10,7 @@ import ForgotPassword from "../forgotPassword/forgotPassword";
 import ChangePassword from "../forgotPassword/changePassword";
 import EventDetail from "../../containers/event/eventDetail";
 import Feedback from "../../containers/feedback/feedback";
+import FeedbackResponses from "../../containers/feedback/feedbackResponses";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import Dashboard from "../../containers/dashboard/dashboard";
@@ -62,20 +63,21 @@ function StyledComp(props) {
       <div className="flex flex-row layoutContainer">
         {isLoggedIn && (
           <div className="flex flex-column layoutNavContainer">
-            <SideNav />
+            <Route path="/" component={SideNav} />
           </div>
         )}
         <div className="mainContentContainer">
           <Route path="/" component={Navbar} />
             <div className="contentBody">
               {
-                isLoggedIn?(
+                isLoggedIn ? (
                   <Switch>
                     <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
                     <AfterLogin path="/dashboard" exact isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
                     <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
                     <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
                     <AfterLogin path="/submit-feedback/" isLoggedIn={isLoggedIn?"true":"false"}  component = {Feedback}/>
+                    <AfterLogin path="/feedbacks/" isLoggedIn={isLoggedIn ? "true" : "false"}  component = {FeedbackResponses}/>
                     <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
                     <Route render={() => <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />} />
                   </Switch>
