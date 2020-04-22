@@ -47,7 +47,7 @@ class Feedback extends Component {
   }
 
   goBack = () => {
-      this.props.history.push("/dashboard");
+    this.props.history.push(`/event-details?id=${this.props.eventData.id}`);
   }
 
 render() {

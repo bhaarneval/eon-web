@@ -319,7 +319,7 @@ render() {
     const { eventData } = this.props;
     return (
       <div className="sub-content">
-        <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
+        <BackButton handleOnClick={this.goBack} text={"Dashbaord"} />
         {this.props.eventData && this.props.eventData.id && 
           <EventInfo
             eventData = {this.props.eventData}

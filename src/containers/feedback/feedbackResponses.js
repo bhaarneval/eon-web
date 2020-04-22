@@ -21,7 +21,6 @@ class FeedbackResponses extends Component {
     if(!eventData || !eventData.id){
       let searchParam = new URLSearchParams(search);
       let id = searchParam.get("id");
-      console.log(id)
       getEventData({
         id,
         accessToken,
@@ -41,7 +40,7 @@ class FeedbackResponses extends Component {
 
 
 goBack = () => {
-    this.props.history.push("/dashboard");
+  this.props.history.push(`/event-details?id=${this.props.eventData.id}`);
 }
 
 render() {
