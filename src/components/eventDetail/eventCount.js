@@ -49,6 +49,10 @@ class EventCount extends Component {
         })
     }
 
+    feedbackClick = () => {
+        this.props.history.push(`/feedbacks?id=${this.props.eventData.id}`)
+    }
+
     render () {
         const {eventData} = this.props;
         return (
@@ -64,8 +68,8 @@ class EventCount extends Component {
                     </div>
                 </div>
                 <div className="detail-card-tile detail-card-container">
-                    <div>
-                    <span className="detail-card-tile-row"><img className="subscriber-image" src={feedback}/><div className="detail-card-tile-text">2</div></span>
+                    <div onClick={this.feedbackClick}>
+                        <span className="detail-card-tile-row"><img className="subscriber-image" src={feedback}/><div className="detail-card-tile-text">{eventData.feedback_count}</div></span>
                         <div>
                             View Feedbacks
                         </div>
