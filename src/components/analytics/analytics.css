@@ -1,0 +1,45 @@
+.revenue-card {
+    width: 100%;
+    border-top: 2px solid #262C6F;
+}
+.revenue-heading{
+    font-size: 150%;
+}
+.value-style {
+    font-size: 250%;
+    padding-left: 15%;
+    
+}
+.revenue-value {
+    padding-top: 2%;
+    display: flex;
+    color: #275ECE;
+}
+.ellipsis-style {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pie-card {
+    height: 100%;
+    border-top: 2px solid red;
+}
+.pie-chart {
+    padding-top: 10%;
+}
+.progress-div{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 15%;
+}
+.progress-div-item{
+    width: 60%;
+    padding: 1%;
+    padding-left: 5%;
+    box-sizing: border-box;
+
+}
+.table-analytics{
+    margin-top: 2%;
+}
