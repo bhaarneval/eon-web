@@ -52,7 +52,7 @@ export default function PieChartCard(props) {
             showInfo={false}
             strokeColor="green"
           />
-          <div>{(completed_events / total_events) * 100}%</div>
+          <div>{total_events!==0?((completed_events / total_events) * 100)+"%":"0%"}</div>
         </div>
         <div className="progress-div-item">
           <div>Upcoming</div>
@@ -62,7 +62,7 @@ export default function PieChartCard(props) {
             showInfo={false}
             strokeColor="orange"
           />
-          <div>{(ongoing_events / total_events) * 100}%</div>
+          <div>{total_events!==0?((ongoing_events / total_events) * 100)+"%":"0%"}</div>
         </div>
         <div className="progress-div-item">
           <div>Cancelled</div>
@@ -72,7 +72,7 @@ export default function PieChartCard(props) {
             showInfo={false}
             strokeColor="red"
           />
-          <div>{(cancelled_events / total_events) * 100}%</div>
+          <div>{total_events!==0?((cancelled_events / total_events) * 100)+"%":"0%"}</div>
         </div>
       </div>
     </Card>
