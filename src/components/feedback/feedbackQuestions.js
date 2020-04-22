@@ -37,6 +37,7 @@ class FeedbackQuestions extends Component {
         const {questionList} = this.props;
         return (
             <div className="feedback-question-container">
+                <div className="headerText border-bottom">{this.props.eventData.name}</div>
                 {
                     questionList && questionList.map((que, key) => {
                         return (
@@ -82,6 +83,7 @@ class FeedbackQuestions extends Component {
  FeedbackQuestions.propTypes = {
     history: PropTypes.object,
     questionList: PropTypes.object,
+    eventData: PropTypes.object
 }
 
 export default FeedbackQuestions;

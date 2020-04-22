@@ -46,7 +46,7 @@ render() {
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
         {this.props.eventData && this.props.eventData.id && 
-            <FeedbackQuestions questionList = {questionList}/>
+            <FeedbackQuestions eventData = {this.props.eventData} questionList = {questionList}/>
         }
       </div>
     );
