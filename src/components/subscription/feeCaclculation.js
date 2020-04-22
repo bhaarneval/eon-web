@@ -253,19 +253,18 @@ class FeeCalculation extends Component {
                 eventData={this.props.eventData}
                 userData={this.props.userData}
               />
-              {!this.props.eventData.feedback_given && (
-                <Button
-                  type="primary"
-                  style ={{marginLeft:"2%"}}
-                  onClick={() =>
-                    this.props.history.push(
-                      `/submit-feedback?id=${this.props.eventData.id}`
-                    )
-                  }
-                >
-                  Submit Feedback
-                </Button>
-              )}
+              <Button
+                disabled={this.props.eventData.feedback_given}
+                type="primary"
+                style ={{marginLeft:"2%"}}
+                onClick={() =>
+                  this.props.history.push(
+                    `/submit-feedback?id=${this.props.eventData.id}`
+                  )
+                }
+              >
+                {this.props.eventData.feedback_given ? "Feedback Submitted" : "Submit Feedback"}
+              </Button>
             </div>
             <div className="cancel-row">
               <Button onClick={this.props.handleCancel}>Cancel</Button>

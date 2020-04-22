@@ -68,7 +68,6 @@ class EventInfo extends Component {
     }
     handleBookmark = () => {
         let currentState = this.state.bookmarked;
-
         const {eventData, handleWishlist, accessToken} = this.props;
         handleWishlist({
             data: {event_id:eventData.id},
@@ -83,7 +82,6 @@ class EventInfo extends Component {
     }
 
     render() {
-
         const bookMarkImg = this.state.bookmarked?Bookmarked:AddBookmark;
         const menuSidebar = (
             <Menu onClick={key => this.takeMenuAction(key)}>
@@ -91,7 +89,7 @@ class EventInfo extends Component {
                 <Menu.Item key="2">Edit</Menu.Item>
             </Menu>
         );
-        const {eventData, eventType} = this.props;
+        const {eventData, eventType, isOrganizer, handleShare} = this.props;
         let eventDate = eventData.date + " "+ eventData.time;
         eventDate = moment(eventDate,"YYYY-MM-DD hh:mm A");
         eventDate = eventDate.format("DD MMM' YY, hh:mm A");
@@ -105,13 +103,13 @@ class EventInfo extends Component {
                             {eventData.description}
                         </div>
                     </div>
-                    {this.props.isOrganizer && (this.props.eventData.self_organised || this.props.eventData.is_active)? (
+                    {isOrganizer && eventData.self_organised && eventData.event_status === "upcoming" ? (
                         <Dropdown overlay={menuSidebar}>
                         <MoreOutlined style={{ height: "10px" }} />
                         </Dropdown>
-                    ) : !this.props.isOrganizer? (
+                    ) : !isOrganizer? (
                         <div>
-                            <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={this.props.handleShare}/>
+                            <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={handleShare}/>
                             <img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/>
                         </div>
                     ):null}
@@ -119,7 +117,7 @@ class EventInfo extends Component {
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
                         <div><b>Type of event</b></div>
-                    <div>{eventType.length>0 && (eventData.event_type||eventData.type)?eventType.find(option => (eventData.event_type===option.id)||(eventData.type===option.id)).type.toUpperCase():""}</div>
+                    <div>{eventType.length>0 && (eventData.event_type||eventData.type)?eventType.find(option => (eventData.event_type === option.id)||(eventData.type===option.id)).type.toUpperCase():""}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>No. of Tickets</b></div>

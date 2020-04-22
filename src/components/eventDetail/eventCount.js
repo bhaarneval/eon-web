@@ -54,7 +54,8 @@ class EventCount extends Component {
     }
 
     render () {
-        const {eventData} = this.props;
+        const { eventData } = this.props;
+        const isUpcoming = eventData && eventData.event_status === "upcoming";
         return (
             <div className="detail-card-count">
                 <div className="detail-card-tile detail-card-container">
@@ -87,10 +88,10 @@ class EventCount extends Component {
                     </div>
                 </div>
                 <div className="detail-card-tile reminder-tile">
-                    <div onClick={() => this.sendUpdate('reminder')}  className="cursor detail-card-container reminder-row">
+                    <div onClick={() => isUpcoming && this.sendUpdate('reminder')}  className={`${isUpcoming ? 'cursor' : 'notAllowedCursor'} detail-card-container reminder-row`}>
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={reminder}/>Send reminder</span>
                     </div>
-                    <div onClick={() => this.sendUpdate('updates')} className="cursor detail-card-container reminder-row">
+                    <div onClick={() => isUpcoming && this.sendUpdate('updates')} className={`${isUpcoming ? 'cursor' : 'notAllowedCursor'} detail-card-container reminder-row`}>
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={update}/>Send updates</span>
                     </div>
                 </div>

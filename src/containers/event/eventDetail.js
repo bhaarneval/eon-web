@@ -316,31 +316,31 @@ sendNotification({
 
 render() {
     const { discountPercentage} = this.state;
-    const { eventData } = this.props;
+    const { eventData, eventType, history, userRole, setEventUpdate, cancelEvent, accessToken,  updateWishList} = this.props;
     return (
       <div className="sub-content">
-        <BackButton handleOnClick={this.goBack} text={"Dashbaord"} />
-        {this.props.eventData && this.props.eventData.id && 
+        <BackButton handleOnClick={this.goBack} text={"Event Details"} />
+        {eventData && eventData.id && 
           <EventInfo
-            eventData = {this.props.eventData}
-            eventType = {this.props.eventType}
-            history={this.props.history}
-            isOrganizer={this.props.userRole === 'organizer'}
+            eventData = {eventData}
+            eventType = {eventType}
+            history={history}
+            isOrganizer={userRole === 'organizer'}
             handleShare={this.handleShare}
-            setEventUpdate={this.props.setEventUpdate}
-            cancelEvent = {this.props.cancelEvent}
-            accessToken = {this.props.accessToken}
-            handleWishlist = {this.props.updateWishList}
+            setEventUpdate={setEventUpdate}
+            cancelEvent = {cancelEvent}
+            accessToken = {accessToken}
+            handleWishlist = {updateWishList}
           />
         }
-        {this.props.userRole === 'organizer' && this.props.eventData && (this.props.eventData.self_organised === true || this.props.eventData.is_active) && (
+        {userRole === 'organizer' && eventData && (eventData.self_organised === true || this.props.eventData.is_active) && (
           <div>
-            <EventCount history={this.props.history} eventData = {this.props.eventData} notifySubscriber = {this.handleNotifySubscriber}/>
+            <EventCount history={history} eventData = {eventData} notifySubscriber = {this.handleNotifySubscriber}/>
             <div className="invitee-row">
               <h2>
                 <b>Invitees List</b>
               </h2>
-              <Button type="primary" disabled={this.props.eventData.event_status === "completed"} onClick={this.inviteButtonClick}>
+              <Button type="primary" disabled={eventData.event_status !== "upcoming"} onClick={this.inviteButtonClick}>
                 Add Invitees
               </Button>
             </div>
@@ -354,7 +354,7 @@ render() {
               data={
                 this.state.searchValue.length > 0
                   ? this.state.filteredRows
-                  : this.props.eventData.invitee_list
+                  : eventData.invitee_list
               }
             />
             {this.state.showModal && (
@@ -362,25 +362,25 @@ render() {
                 handleClose={this.handleModalClose}
                 handleSend={this.handleSend}
                 onDiscountChange={this.onDiscountChange}
-                eventData = {this.props.eventData}
+                eventData = {eventData}
                 discountPercentage = {discountPercentage}
               />
             )}
           </div>
         )}
-        {this.props.userRole === 'subscriber' && (
+        {userRole === 'subscriber' && (
           <div>
             {this.state.showPayment? (
               <Payment
                 onBankSubmit={this.onBankSubmit}
-                history={this.props.history}
+                history={history}
                 handleBackClick={this.handlePaymentsBack}
               />
             ) : (
               eventData.subscription_details?
               <FeeCaclculation
                 eventData={this.props.eventData}
-                history={this.props.history}
+                history={history}
                 noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
                 amountPaid={eventData.subscription_details.amount_paid}
                 discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}

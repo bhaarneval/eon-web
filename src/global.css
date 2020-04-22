@@ -25,6 +25,10 @@
     cursor: pointer;
 }
 
+.notAllowedCursor{
+    cursor: not-allowed;
+}
+
 .popover{
     padding: 15px;
     font-size: 14px;
