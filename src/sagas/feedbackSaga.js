@@ -1,6 +1,6 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
-import { actionFeedbackTypes } from "../constants/actionTypes";
+import { actionFeedbackTypes, actionEventTypes } from "../constants/actionTypes";
 import { message } from "antd";
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -97,6 +97,25 @@ export function* postQuestions(param) {
     if(!responseObject.ok){
       throw responseJson;
     }
+    yield put({type:actionEventTypes.SET_EVENT_FETCHING})
+    let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${feedback.event_id}/`;
+    responseJson = yield fetch(getURL, {
+      headers: headers,
+      method: "GET",
+    }).then((response) => {
+      responseObject = response;
+      return response.json();
+    });
+
+    if(!responseObject.ok){
+      throw responseJson;
+    }
+
+    yield put({
+      type: actionEventTypes.RECEIVED_EVENT_DATA,
+      payload: responseJson.data,
+    });
+
     yield put({type:actionFeedbackTypes.SUBMITTED_QUESTIONS});
     message.success("Responses Submitted");
     callback(true);

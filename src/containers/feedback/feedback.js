@@ -32,9 +32,10 @@ class Feedback extends Component {
           }
         },
       })
-      const {getQuestions} = this.props;
-      getQuestions({accessToken})
     }
+    
+    const {getQuestions} = this.props;
+      getQuestions({accessToken})
   }
 
   submitCallback = (success) => {

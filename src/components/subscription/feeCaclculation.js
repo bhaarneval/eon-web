@@ -15,19 +15,18 @@ class FeeCalculation extends Component {
       totalAmountAfterPromo: this.props.noOfSeats * this.props.perHeadAmount,
       totalAmount: this.props.noOfSeats * this.props.perHeadAmount,
       codeApplied: false,
-      isSubscribed: this.props.eventData.is_subscribed||false,
+      isSubscribed: this.props.eventData.is_subscribed || false,
       isUpdate: false,
     };
   }
 
   onIncDecSeats = (type) => {
-    let {seats, totalAmount,codeApplied} = this.state;
-    const {perHeadAmount, discountPercentage} =this. props;
+    let { seats, totalAmount, codeApplied } = this.state;
+    const { perHeadAmount, discountPercentage } = this.props;
     if (type === "inc") {
       totalAmount = (seats + 1) * perHeadAmount;
       if (codeApplied) {
-        totalAmount =
-          totalAmount - totalAmount * (discountPercentage / 100);
+        totalAmount = totalAmount - totalAmount * (discountPercentage / 100);
       }
       this.setState({
         seats: seats + 1,
@@ -39,8 +38,7 @@ class FeeCalculation extends Component {
     } else {
       let totalAmount = (seats - 1) * perHeadAmount;
       if (codeApplied) {
-        totalAmount =
-          totalAmount - totalAmount * (discountPercentage / 100);
+        totalAmount = totalAmount - totalAmount * (discountPercentage / 100);
       }
       this.setState({
         seats: seats - 1,
@@ -70,11 +68,9 @@ class FeeCalculation extends Component {
     } = this.props;
     let { seats, totalAmount } = this.state;
     if (perHeadAmount === 0) {
-      if(seats< noOfSeats){
-        handleFreeTicket(seats-noOfSeats);
-      }
-      else if(seats> noOfSeats)
-        handleFreeTicket(seats-noOfSeats);
+      if (seats < noOfSeats) {
+        handleFreeTicket(seats - noOfSeats);
+      } else if (seats > noOfSeats) handleFreeTicket(seats - noOfSeats);
 
       return;
     }
@@ -106,50 +102,53 @@ class FeeCalculation extends Component {
         <div className="detail-card">
           <div className="subscription-container">
             <div className="subscription-left">
-            {this.state.isUpdate ?
-              <h2>Newly added seats : {this.state.seats - this.state.boughtSeats}</h2>
-              :
-              <div className="subscription-seats borderBottom">
-                <MinusCircleOutlined
-                  style={{ fontSize: "200%", color: "#262C6F" }}
-                  onClick={() =>
-                    !this.state.isUpdate
-                      ? this.state.seats !== 1
-                        ? this.onIncDecSeats("dec")
+              {this.state.isUpdate ? (
+                <h2>
+                  Newly added seats :{" "}
+                  {this.state.seats - this.state.boughtSeats}
+                </h2>
+              ) : (
+                <div className="subscription-seats borderBottom">
+                  <MinusCircleOutlined
+                    style={{ fontSize: "200%", color: "#262C6F" }}
+                    onClick={() =>
+                      !this.state.isUpdate
+                        ? this.state.seats !== 1
+                          ? this.onIncDecSeats("dec")
+                          : null
                         : null
-                      : null
-                  }
-                />
-                <div style={{ fontSize: "150%" }}>
-                  <b>{this.state.seats}</b>
+                    }
+                  />
+                  <div style={{ fontSize: "150%" }}>
+                    <b>{this.state.seats}</b>
+                  </div>
+                  <PlusCircleOutlined
+                    style={{ fontSize: "200%", color: "#262C6F" }}
+                    onClick={() =>
+                      !this.state.isUpdate ? this.onIncDecSeats("inc") : null
+                    }
+                  />
+                  <InputNumber
+                    min={this.props.noOfSeats}
+                    disabled
+                    value={
+                      this.props.perHeadAmount !== 0
+                        ? "₹ " + this.state.totalAmount
+                        : "       -"
+                    }
+                    style={{
+                      color: "#262C6F",
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #262C6F",
+                      fontSize: "15px",
+                      fontWeight: "bold",
+                    }}
+                  />
                 </div>
-                <PlusCircleOutlined
-                  style={{ fontSize: "200%", color: "#262C6F" }}
-                  onClick={() =>
-                    !this.state.isUpdate ? this.onIncDecSeats("inc") : null
-                  }
-                />
-                <InputNumber
-                  min={this.props.noOfSeats}
-                  disabled
-                  value={
-                    this.props.perHeadAmount !== 0
-                      ? "₹ " + this.state.totalAmount
-                      : "       -"
-                  }
-                  style={{
-                    color: "#262C6F",
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #262C6F",
-                    fontSize: "15px",
-                    fontWeight: "bold",
-                  }}
-                />
-              </div>
-              }
+              )}
               {(this.props.perHeadAmount !== 0 &&
                 this.props.discountPercentage !== 0 &&
-                !(this.props.eventData.is_subscribed)) ||
+                !this.props.eventData.is_subscribed) ||
               (this.state.isUpdate && this.props.discountPercentage !== 0) ? (
                 <div>
                   <h3>
@@ -174,16 +173,18 @@ class FeeCalculation extends Component {
                 </div>
               ) : null}
             </div>
-            {(this.props.eventData.is_subscribed) && !this.state.isUpdate ? (
+            {this.props.eventData.is_subscribed && !this.state.isUpdate ? (
               <div className="already-subscibed">
                 <h2 style={{ color: "#57ABA0" }}>
-                  You have already bought {this.props.noOfSeats} seats for this event.
+                  You have already bought {this.props.noOfSeats} seats for this
+                  event.
                 </h2>
-                {this.state.amountPaid > 0 &&
-                   <h4 style={{ color: "#57ABA0" }}>
-                    Total amount paid : ₹ {this.props.eventData.subscription_details.amount_paid}
+                {this.state.amountPaid > 0 && (
+                  <h4 style={{ color: "#57ABA0" }}>
+                    Total amount paid : ₹{" "}
+                    {this.props.eventData.subscription_details.amount_paid}
                   </h4>
-                }
+                )}
                 <h4 style={{ color: "#57ABA0" }}>
                   *Click on <b>Download</b> for event details and QR Code
                 </h4>
@@ -230,7 +231,9 @@ class FeeCalculation extends Component {
                     onClick={() =>
                       this.props.payNow(
                         this.state.seats,
-                        this.state.codeApplied ? this.state.totalAmountAfterPromo : this.state.totalAmount,
+                        this.state.codeApplied
+                          ? this.state.totalAmountAfterPromo
+                          : this.state.totalAmount,
                         this.state.totalAmount
                       )
                     }
@@ -242,9 +245,28 @@ class FeeCalculation extends Component {
             )}
           </div>
         </div>
-        {(this.props.eventData.is_subscribed) && !this.state.isUpdate ? (
+
+        {this.props.eventData.is_subscribed && !this.state.isUpdate ? (
           <div className="update-row">
-            <PDF eventData = {this.props.eventData} userData = {this.props.userData}/>
+            <div style = {{display:"flex", justifyContent:"flex-start"}}>
+              <PDF
+                eventData={this.props.eventData}
+                userData={this.props.userData}
+              />
+              {!this.props.eventData.feedback_given && (
+                <Button
+                  type="primary"
+                  style ={{marginLeft:"2%"}}
+                  onClick={() =>
+                    this.props.history.push(
+                      `/submit-feedback?id=${this.props.eventData.id}`
+                    )
+                  }
+                >
+                  Submit Feedback
+                </Button>
+              )}
+            </div>
             <div className="cancel-row">
               <Button onClick={this.props.handleCancel}>Cancel</Button>
               <Button
@@ -267,12 +289,6 @@ class FeeCalculation extends Component {
             </Button>
           </div>
         ) : null}
-        <Button
-          type="primary"
-          onClick={() => this.props.history.push(`/submit-feedback?id=${this.props.eventData.id}`)}
-        >
-          Submit Feedback
-        </Button>
       </div>
     );
   }
@@ -289,7 +305,7 @@ FeeCalculation.propTypes = {
   eventData: PropTypes.object,
   amountPaid: PropTypes.number,
   userData: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default FeeCalculation;
