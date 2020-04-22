@@ -2,13 +2,15 @@ import clusterReducer from "./clusterReducer";
 import userReducer from "./userReducer";
 import eventReducer from "./eventReducer";
 import notificationReducer from "./notificationReducer";
+import analyticsReducer from "./analyticsReducer"
 import { combineReducers } from "redux";
 
 const appReducer = combineReducers({
   clusterReducer,
   userReducer,
   eventReducer,
-  notificationReducer
+  notificationReducer,
+  analyticsReducer
 });
 
 const rootReducer = (state, action) => {
