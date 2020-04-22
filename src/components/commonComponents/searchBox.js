@@ -22,7 +22,7 @@ export default function SearchBox (props) {
         onPressEnter={(event) => handleKeyPress(event)}
         style={{ width: 200, zIndex: 1 }}
         prefix={<img src={searchImg}/>}
-        allowClear={true}
+        allowClear={false}
         onChange = {handleChange}
         value={currentValue}
       />
