@@ -1,0 +1,22 @@
+.feedback-question-container{
+    background-color: white;
+    border: 1px solid #8080801f;
+    padding: 30px;
+}
+
+.answer-row{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.question-row{
+    margin: 10px 0px;
+    font-weight: bold;
+}
+
+.submit-button{
+    display: flex;
+    justify-content: flex-end;
+    margin: 50px 0;
+}

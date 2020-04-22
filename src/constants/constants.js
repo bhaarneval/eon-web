@@ -24,3 +24,10 @@ export const feeTypeList = [
     {id : 0, type : 'paid'},
     {id : 1, type : 'free'},
 ]
+
+export const questionList = [
+    {id : 0, question : 'How was the event?'},
+    {id : 1, question : 'Did you face any issue?'},
+    {id : 2, question : 'Was it helpful?'},
+    {id : 3, question : 'Any other feedback?'},
+]

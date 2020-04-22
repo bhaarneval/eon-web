@@ -9,6 +9,7 @@ import UserRegistration from "../../containers/registration/userRegistration";
 import ForgotPassword from "../forgotPassword/forgotPassword";
 import ChangePassword from "../forgotPassword/changePassword";
 import EventDetail from "../../containers/event/eventDetail";
+import Feedback from "../../containers/feedback/feedback";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import Dashboard from "../../containers/dashboard/dashboard";
@@ -74,6 +75,7 @@ function StyledComp(props) {
                     <AfterLogin path="/dashboard" exact isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
                     <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
                     <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
+                    <AfterLogin path="/submit-feedback/" isLoggedIn={isLoggedIn?"true":"false"}  component = {Feedback}/>
                     <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
                     <Route render={() => <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />} />
                   </Switch>

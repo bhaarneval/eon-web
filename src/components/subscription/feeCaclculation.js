@@ -265,6 +265,12 @@ class FeeCalculation extends Component {
             >
               Confirm
             </Button>
+            <Button
+              type="primary"
+              onClick={() => this.props.history.push(`/submit-feedback?id=${this.props.eventData.id}`)}
+            >
+              Submit Feedback
+            </Button>
           </div>
         ) : null}
       </div>
@@ -283,6 +289,7 @@ FeeCalculation.propTypes = {
   eventData: PropTypes.object,
   amountPaid: PropTypes.number,
   userData: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default FeeCalculation;
