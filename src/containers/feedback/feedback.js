@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./feedback.css";
 import {message} from 'antd';
-import {questionList} from '../../constants/constants'
 import FeedbackQuestions from "../../components/feedback/feedbackQuestions";
 import BackButton from "../../components/commonComponents/backButton";
 import { connect } from "react-redux";
 import { getEventData } from "../../actions/eventActions";
+import { getQuestions } from "../../actions/commonActions";
 
 class Feedback extends Component {
   constructor(props) {
@@ -31,7 +31,9 @@ class Feedback extends Component {
             history.push("/dashboard");
           }
         },
-      }); 
+      })
+      const {getQuestions} = this.props;
+      getQuestions({accessToken})
     }
   }
 
@@ -42,6 +44,7 @@ goBack = () => {
 }
 
 render() {
+  const questionList = this.props.questions;
     return (
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
@@ -61,6 +64,9 @@ Feedback.propTypes = {
   accessToken: PropTypes.string,
   location: PropTypes.object,
   getEventData: PropTypes.func,
+  getQuestions: PropTypes.func,
+  questions: PropTypes.object,
+  fetchingQuestions: PropTypes.bool
 };
 
 const mapStateToProps = ({
@@ -72,16 +78,22 @@ const mapStateToProps = ({
     eventData,
     fetchingEvent
   },
-
+  feedbackReducer: {
+    questions,
+    fetchingQuestions
+  },
 }) => ({
   userRole,
   accessToken,
   eventData,
-  fetchingEvent
+  fetchingEvent,
+  questions,
+  fetchingQuestions
 })
 
 const mapDispatchToProps = ({
   getEventData: getEventData,
+  getQuestions: getQuestions
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

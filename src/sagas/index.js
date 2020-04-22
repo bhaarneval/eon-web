@@ -4,6 +4,7 @@ import { userActionWatcher } from "./userSaga";
 import { eventActionWatcher } from "./eventSaga";
 import {notificationsActionWatcher} from "./notificationSaga"
 import {analyticsActionWatcher} from "./analyticsSaga";
+import {feedbackActionWatcher} from "./feedbackSaga"
 
 /**
  * saga to yield all others
@@ -16,5 +17,6 @@ export default function* rootSaga() {
     eventActionWatcher(),
     notificationsActionWatcher(),
     analyticsActionWatcher(),
+    feedbackActionWatcher(),
   ]);
 }

@@ -24,5 +24,6 @@ export const requestURLS = {
   SHARE_FRIEND: "core/share-with-friend/",
   WISHLIST: "core/wishlist/",
   USER_OPERATIONS: "core/user/",
-  ANALYTICS: "core/event-summary/"
+  ANALYTICS: "core/event-summary/",
+  FEEDBACK_OPERATIONS: "core/feedback-questions/",
 };
