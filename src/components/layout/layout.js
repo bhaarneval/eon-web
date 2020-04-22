@@ -115,7 +115,7 @@ class LayoutComponent extends React.Component {
 
   render() {
     return (
-      <Spin spinning = {this.props.fetchingEvent || this.props.fetchingUser} className="spinner">
+      <Spin spinning = {this.props.fetchingEvent || this.props.fetchingUser || this.props.fetchingData} className="spinner">
         <StyledComp
         userData={this.props.userData}
       />
@@ -131,11 +131,15 @@ const mapStateToProps = ({
   },
   eventReducer: {
     fetchingEvent,
+  },
+  analyticsReducer: {
+    fetchingData
   }
 }) => ({
   userData,
   fetchingUser,
   fetchingEvent,
+  fetchingData
 })
 
 export default connect(mapStateToProps)(LayoutComponent);
