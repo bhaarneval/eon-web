@@ -1,4 +1,4 @@
-import { actionTypes, actionLoginTypes, actionNotificationsTypes } from "../constants/actionTypes";
+import { actionTypes, actionLoginTypes, actionNotificationsTypes, actionFeedbackTypes } from "../constants/actionTypes";
 
 export const getClusters = id => {
   return {
@@ -74,6 +74,13 @@ export const getUserProfile = ({userId, accessToken}) => {
   return {
     type: actionLoginTypes.USER_PROFILE,
     userId, accessToken
+  }
+}
+
+export const getQuestions = ({accessToken}) => {
+  return {
+    type: actionFeedbackTypes.QUESTIONS,
+    accessToken
   }
 }
 

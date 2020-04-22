@@ -8,6 +8,8 @@ const initialData = {
   userRole: "",
   eventType: [],
   userProfile: {},
+  questions: {},
+  fetchingQuestions: false,
 };
 
 const userReducer = (state = initialData, action) => {
@@ -45,6 +47,13 @@ const userReducer = (state = initialData, action) => {
           ...state,
           userProfile: action.payload,
           fetchingUser: false,
+        }
+
+        case actionLoginTypes.FETCHED_QUESTIONS:
+        return {
+          ...state,
+          questions: action.payload,
+          fetchingQuestions: false,
         }
     default:
       return state;
