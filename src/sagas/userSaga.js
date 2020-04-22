@@ -308,40 +308,6 @@ export function* updateUser(param){
   }
 }
 
-export function* fetchQuestions(param){
-  const {accessToken } = param;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`,
-  };
-  try {
-    yield put({type: actionLoginTypes.SET_QUESTIONS_FETCHING});
-    let getURL = APIService.dev + requestURLS.FEEDBACK_OPERATIONS;
-    let responseObject = {};
-    let responseJson = yield fetch(getURL, {
-      headers: headers,
-      method: "GET",
-    }).then(response => {
-      responseObject = response;
-      return response.json();
-    });
-
-    if(!responseObject.ok) {
-      throw responseJson;
-    }
-
-    yield put({type: actionLoginTypes.FETCHED_QUESTIONS, payload: responseJson.data});
-  }catch (e) {
-    console.error("Unable to change password", e);
-    yield put({
-      type: actionLoginTypes.QUESTIONS_ERROR,
-      error: e,
-    });
-    message.error(e.message);
-  }
-}
-
-
 export function* userActionWatcher() {
   // console.log("Cluster Watcher");
   yield takeLatest(actionLoginTypes.LOGGING_OUT, logOut);
@@ -351,6 +317,5 @@ export function* userActionWatcher() {
   yield takeLatest(actionLoginTypes.FORGOT_PASSWORD, forgotPassword);
   yield takeLatest(actionLoginTypes.CHANGE_PASSWORD, changePassword);
   yield takeLatest(actionLoginTypes.USER_PROFILE, fetchUserProfile);
-  yield takeLatest(actionLoginTypes.QUESTIONS, fetchQuestions);
   yield takeLatest(actionLoginTypes.UPDATE_USER_PROFILE, updateUser);
 }

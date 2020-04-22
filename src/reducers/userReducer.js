@@ -48,13 +48,6 @@ const userReducer = (state = initialData, action) => {
           userProfile: action.payload,
           fetchingUser: false,
         }
-
-        case actionLoginTypes.FETCHED_QUESTIONS:
-        return {
-          ...state,
-          questions: action.payload,
-          fetchingQuestions: false,
-        }
     default:
       return state;
   }

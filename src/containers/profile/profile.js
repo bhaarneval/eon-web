@@ -77,7 +77,6 @@ Profile.propTypes = {
   accessToken: PropTypes.string,
   userRole: PropTypes.string,
   eventType: PropTypes.array,
-  getQuestions: PropTypes.func,
 };
 
 const mapStateToProps = ({
