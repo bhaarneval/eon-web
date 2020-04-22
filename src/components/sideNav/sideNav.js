@@ -25,7 +25,7 @@ class SideNav extends Component {
         this.setState({
           active: constants.HOME
         });
-        this.props.history.push("/dashboard");
+        this.props.history.push("/analytics");
       break;
       case constants.EVENT:
         this.setState({

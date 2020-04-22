@@ -19,6 +19,7 @@ import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
 import * as jwt from 'jsonwebtoken';
 import { Spin } from "antd";
+import Analytics from "../../containers/analytics/analytics";
 
 const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
@@ -79,6 +80,7 @@ function StyledComp(props) {
                     <AfterLogin path="/submit-feedback/" isLoggedIn={isLoggedIn?"true":"false"}  component = {Feedback}/>
                     <AfterLogin path="/feedbacks/" isLoggedIn={isLoggedIn ? "true" : "false"}  component = {FeedbackResponses}/>
                     <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
+                    <AfterLogin path="/analytics" isLoggedIn={isLoggedIn?"true":"false"} component = {Analytics}/> 
                     <Route render={() => <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />} />
                   </Switch>
                 ):!localStorage.getItem("token") && (
