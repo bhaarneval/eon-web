@@ -18,9 +18,9 @@ class FeedbackResponses extends Component {
   
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
+    let searchParam = new URLSearchParams(search);
+    let id = searchParam.get("id");
     if(!eventData || !eventData.id){
-      let searchParam = new URLSearchParams(search);
-      let id = searchParam.get("id");
       getEventData({
         id,
         accessToken,
@@ -32,9 +32,9 @@ class FeedbackResponses extends Component {
           }
         },
       }); 
-      const {getResponses} = this.props;
-      getResponses({id, accessToken})
     }
+    const {getResponses} = this.props;
+    getResponses({id, accessToken})
   }
 
 
