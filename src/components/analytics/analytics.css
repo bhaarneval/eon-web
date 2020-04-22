@@ -1,6 +1,6 @@
 .revenue-card {
     width: 100%;
-    border-top: 2px solid #262C6F;
+    border-top: 2px solid #0F58CB;
 }
 .revenue-heading{
     font-size: 150%;
@@ -13,7 +13,7 @@
 .revenue-value {
     padding-top: 2%;
     display: flex;
-    color: #275ECE;
+    color: #0F58CB;
 }
 .ellipsis-style {
     width: 100%;

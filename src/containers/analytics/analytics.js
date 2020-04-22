@@ -41,10 +41,10 @@ class Analytics extends Component {
         </div>
         <Card className="table-card">
           <div style={{ width: "100%", }}>
-            <div style={{ width: "100%", display: "flex" }}>
+            <div style={{ width: "100%", display: "flex", justifyContent:"flex-start" }}>
               <SearchBox
                 handleOnChange={this.handleSearchTextChange}
-                placeholder={"Name / Location"}
+                placeholder={"Event Name"}
                 handleKeyPress={this.handleKeyPress}
                 value={searchText}
               />
