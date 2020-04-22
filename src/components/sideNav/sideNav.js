@@ -7,7 +7,6 @@ import { isDark } from "../../util/themeIdentify";
 import { constants } from "../../constants/constants";
 import analytics from "../../assets/Analytics.svg";
 import event from "../../assets/Event Mgment.svg";
-import ticket from "../../assets/Tickets.svg";
 import logo from "../../assets/bitslogo.png";
 
 class SideNav extends Component {
@@ -50,12 +49,6 @@ class SideNav extends Component {
         });
         this.props.history.push("/dashboard");
         break;
-      case constants.TICKET:
-        this.setState({
-          active: constants.TICKET,
-        });
-        this.props.history.push("/feedbacks?id=13");
-        break;
       default:
         break;
     }
@@ -69,7 +62,7 @@ class SideNav extends Component {
     }`;
     return (
       <div className="sideNav">
-        <img style={{ width: "80%" }} src={logo} />
+        <img style={{ width: "80%", marginBottom: '50px' }} src={logo} />
         <div
           className={active === constants.HOME ? themeWiseIconClass : iconClass}
           onClick={() => this.onClick(constants.HOME)}
@@ -83,16 +76,6 @@ class SideNav extends Component {
           onClick={() => this.onClick(constants.EVENT)}
         >
           <img src={event} style={{ fontSize: "20px" }} />
-        </div>
-        <div
-          className={
-            active === constants.TICKET ? themeWiseIconClass : "iconContainer"
-          }
-          onClick={() => {
-            this.onClick(constants.TICKET);
-          }}
-        >
-          <img src={ticket} sstyle={{ fontSize: "20px" }} />
         </div>
       </div>
     );
