@@ -94,7 +94,8 @@ export function* postUser(param) {
       throw responseJSON;
     }
 
-    let getEventTypeURL = APIService.dev+requestURLS.GET_EVENT_TYPES;
+    if(data.role !== "organizer"){
+      let getEventTypeURL = APIService.dev+requestURLS.GET_EVENT_TYPES;
     headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${responseJSON.data.access}`
@@ -117,6 +118,11 @@ export function* postUser(param) {
     });
     callback();
     localStorage.setItem("token", responseJSON.data.access);
+    }
+    else{
+      yield put({type: actionLoginTypes.SET_USER_FETCHING});
+      callback();
+    }
   } catch (e) {
     console.error("error while post", e);
     yield put({
