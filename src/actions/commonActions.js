@@ -84,13 +84,13 @@ export const getQuestions = ({accessToken}) => {
   }
 }
 
-export const postResponses = ({eventId, feedback, accessToken}) => {
-  console.log(eventId)
+export const postResponses = ({eventId, feedback, accessToken, callback}) => {
   return {
     type: actionFeedbackTypes.POST_QUESTIONS,
     event_id: eventId,
     feedback,
-    accessToken
+    accessToken, 
+    callback
   }
 }
 

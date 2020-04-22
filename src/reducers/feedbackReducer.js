@@ -12,24 +12,29 @@ const feedbackReducer = (state = initialData, action) => {
       return {
         ...state,
         fetchingQuestions: true,
-      }
+      };
     case actionFeedbackTypes.FETCHED_QUESTIONS:
       return {
         ...state,
         questions: action.payload,
         fetchingQuestions: false,
-      }
-      case actionFeedbackTypes.POST_QUESTIONS:
-        return {
-          ...state,
-          submittingQuestions: true,
-        }
-      case actionFeedbackTypes.SUBMITTED_QUESTIONS:
-        return {
-          ...state,
-          questions: action.payload,
-          submittingQuestions: false,
-        }
+      };
+    case actionFeedbackTypes.POST_QUESTIONS:
+      return {
+        ...state,
+        submittingQuestions: true,
+      };
+    case actionFeedbackTypes.SUBMITTED_QUESTIONS:
+      return {
+        ...state,
+        submittingQuestions: false,
+      };
+    case actionFeedbackTypes.QUESTIONS_ERROR:
+      return {
+        ...state,
+        submittingQuestions: false,
+        fetchingQuestions: false,
+      };
     default:
       return state;
   }

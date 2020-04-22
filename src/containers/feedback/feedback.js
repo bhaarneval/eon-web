@@ -37,12 +37,19 @@ class Feedback extends Component {
     }
   }
 
-  onSubmit = () => {
-    const {eventData, accessToken, userRole} = this.props;
+  submitCallback = (success) => {
+    if(success){
+      this.props.history.push(`/event-details?id=${this.props.eventData.id}`);
+    }
+  }
+
+  onSubmit = (data) => {
+    const {eventData,accessToken,} = this.props;
     this.props.postResponses({
+      eventId: eventData.id,
       accessToken,
-      eventData,
-      userRole
+      feedback:data,
+      callback:this.submitCallback
     })
   }
 
@@ -54,7 +61,7 @@ render() {
   const questionList = this.props.questions;
     return (
       <div className="sub-content">
-        <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
+        <BackButton handleOnClick={this.goBack} text={"Submit Feedback"} />
         {this.props.eventData && this.props.eventData.id && 
             <FeedbackQuestions 
               eventData = {this.props.eventData} 
@@ -76,7 +83,7 @@ Feedback.propTypes = {
   location: PropTypes.object,
   getEventData: PropTypes.func,
   getQuestions: PropTypes.func,
-  questions: PropTypes.object,
+  questions: PropTypes.any,
   fetchingQuestions: PropTypes.bool,
   postResponses: PropTypes.func
 };
