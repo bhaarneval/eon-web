@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import "./analytics.css";
 import {Table} from "antd";
 
-
-
 export default function AnalyticsTable(props) {
   const {eventsList} = props;
     const columns = [
@@ -47,7 +45,10 @@ export default function AnalyticsTable(props) {
       ];
       
   return(
-       <Table columns={columns} dataSource={eventsList} className="table-analytics" pagination={{ pageSize: 10 }}/>
+       <Table columns={columns} dataSource={eventsList} className="table-analytics"
+        pagination={false}
+        // pagination={{ pageSize: 10 }}
+      />
     )
  }
 
