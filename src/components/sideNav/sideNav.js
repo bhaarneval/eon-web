@@ -1,6 +1,7 @@
 import "./sideNav.css";
 
 import React, { Component } from "react";
+import {connect} from "react-redux"
 import PropTypes from "prop-types";
 
 import { isDark } from "../../util/themeIdentify";
@@ -64,12 +65,12 @@ class SideNav extends Component {
     return (
       <div className="sideNav">
         <img style={{ width: "80%", marginBottom: '50px' }} src={logo} />
-        <div
+        {this.props.userRole === "organizer" && <div
           className={active === constants.HOME ? themeWiseIconClass : iconClass}
           onClick={() => this.onClick(constants.HOME)}
         >
           <img src={analytics} style={{ fontSize: "20px" }} />
-        </div>
+        </div>}
         <div
           className={
             active === constants.EVENT ? themeWiseIconClass : iconClass
@@ -87,6 +88,15 @@ SideNav.propTypes = {
   history: PropTypes.object,
   classes: PropTypes.object,
   location: PropTypes.object,
+  userRole: PropTypes.string,
 };
 
-export default SideNav;
+const mapStateToProps = ({
+  userReducer:{
+    userRole
+  }
+})=> ({
+  userRole
+});
+
+export default connect(mapStateToProps)(SideNav);
