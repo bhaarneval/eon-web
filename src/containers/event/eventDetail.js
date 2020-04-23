@@ -356,6 +356,7 @@ render() {
                   ? this.state.filteredRows
                   : eventData.invitee_list
               }
+              eventData = {this.props.eventData}
             />
             {this.state.showModal && (
               <InviteesPopup
