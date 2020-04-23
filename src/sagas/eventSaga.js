@@ -88,8 +88,6 @@ export function* createNewEvent(param) {
       });
       callback({ id: responseJson.data.id });
     } else {
-      if(!responseJson.event_status)
-        responseJson.event_status = "upcoming"; 
       yield put({
         type: actionEventTypes.RECEIVED_EVENT_DATA,
         payload: responseJson,
