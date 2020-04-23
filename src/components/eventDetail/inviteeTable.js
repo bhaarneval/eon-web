@@ -76,7 +76,7 @@ class EventTable extends React.Component {
           <Button
             type="primary"
             className="deleteButton"
-            disabled={this.props.eventData.event_status !== "upcoming"}
+            disabled={this.props.eventStatus !== "upcoming"}
             onClick={() => {
               this.setState({
                 selectedRowKeys: [],
@@ -104,7 +104,7 @@ class EventTable extends React.Component {
 EventTable.propTypes = {
   data: PropTypes.array,
   deleteAll: PropTypes.func,
-  eventData: PropTypes.object,
+  eventStatus: PropTypes.string,
 };
 
 export default EventTable;
