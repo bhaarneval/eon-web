@@ -62,7 +62,7 @@ export function* fetchResponses(param){
     }
     yield put({type: actionFeedbackTypes.FETCHED_RESPONSES, payload: responseJson.data});
   }catch (e) {
-    console.error("Unable to change password", e);
+    console.error("Unable to fetch responses", e);
     yield put({
       type: actionFeedbackTypes.QUESTIONS_ERROR,
       error: e,
@@ -149,7 +149,7 @@ export function* postQuestions(param) {
     });
 
     yield put({type:actionFeedbackTypes.SUBMITTED_QUESTIONS});
-    message.success("Responses Submitted");
+    message.success("Your feedback has been submitted successfully");
     callback(true);
   } catch (e) {
     console.log("Error while submitting responses", e);
