@@ -15,7 +15,7 @@
     display: flex;
     color: #0F58CB;
 }
-.ellipsis-style {
+.ellipsis-style-analytics {
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -26,7 +26,8 @@
     border-top: 2px solid red;
 }
 .pie-chart {
-    padding-top: 10%;
+    display: flex;
+    justify-content: center;
 }
 .progress-div{
     display: flex;

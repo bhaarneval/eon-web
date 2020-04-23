@@ -66,7 +66,7 @@ FeedbackResponses.propTypes = {
   getEventData: PropTypes.func,
   getResponses: PropTypes.func,
   fetchingResponses: PropTypes.bool,
-  responses: PropTypes.object
+  responses: PropTypes.any
 };
 
 const mapStateToProps = ({

@@ -31,7 +31,7 @@ class Analytics extends Component {
     const {searchText, status} = this.state;
     let filterData = {
         searchText: searchText!=""?searchText:undefined,
-        status: (status!=="")?statusList[status].type:undefined
+        status: (status!=="")?status:undefined
     }
     fetchAnalyticsData({
       accessToken,
@@ -62,7 +62,7 @@ class Analytics extends Component {
   handleDropDownChange = (key) => {
     this.setState(
         {
-          status: key,
+          status: statusList[key]['type'],
         },
         () => {
           this.fetchAnalytic();
@@ -76,7 +76,7 @@ class Analytics extends Component {
     }, () => this.fetchAnalytic());
   }
   render() {
-    const { searchText } = this.state;
+    const { searchText, status } = this.state;
     const { analyticsData } = this.props;
     return (
       <>
@@ -109,7 +109,7 @@ class Analytics extends Component {
                   handleChange={this.handleDropDownChange}
                   optionsList={statusList}
                   placeholder={"Status"}
-                  value={this.state.status!==""?this.state.status:"Status"}
+                  value={status!==""?status:"Status"}
                 />
               </div>
               <AnalyticsTable  eventsList = {analyticsData.event_list}/>

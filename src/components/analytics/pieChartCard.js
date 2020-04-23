@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./analytics.css";
 import { Card, Progress } from "antd";
-import CanvasJSReact from "../../assets/canvasjs.react";
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 export default function PieChartCard(props) {
   const { analyticsData } = props;
@@ -14,20 +14,52 @@ export default function PieChartCard(props) {
     total_events,
   } = analyticsData;
   const options = {
-    animationEnabled: true,
-    subtitles: [
-      {
-        text: `Total Events ${analyticsData.total_events}`,
-        verticalAlign: "center",
-        fontSize: 16,
-        dockInsidePlotArea: true,
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: 0,
+      plotShadow: false,
+      height: 265,
+      width: 265,
+      type: "pie",
+    },
+    title: {
+      text: `Total Events<br>${total_events}`,
+      align: "center",
+      verticalAlign: "middle",
+      style: {
+        color: "#0F58CB",
+        fontSize: "16px",
       },
-    ],
-    data: [
+    },
+    credits: {
+      enabled: false,
+    },
+    tooltip: {
+      pointFormat: "{point.percentage:.1f}%",
+    },
+    accessibility: {
+      point: null,
+    },
+    plotOptions: {
+      series: {
+        states: {
+          inactive: {
+            opacity: 1,
+          },
+        },
+      },
+      pie: {
+        dataLabels: {
+          enabled: false,
+        },
+      },
+    },
+    series: [
       {
-        type: "doughnut",
-        showInLegend: false,
-        dataPoints: [
+        type: "pie",
+        name: "Event Status",
+        innerSize: "60%",
+        data: [
           { name: "Ongoing", y: ongoing_events, color: "orange" },
           { name: "completed", y: completed_events, color: "green" },
           { name: "Cancelled", y: cancelled_events, color: "red" },
@@ -35,13 +67,14 @@ export default function PieChartCard(props) {
       },
     ],
   };
+
   return (
     <Card className="pie-card">
       <div className="revenue-heading">
         <b>Events Status</b>
       </div>
       <div className="pie-chart">
-        <CanvasJSChart options={options} />
+        <HighchartsReact highcharts={Highcharts} options={options} />
       </div>
       <div className="progress-div">
         <div className="progress-div-item">
@@ -52,7 +85,11 @@ export default function PieChartCard(props) {
             showInfo={false}
             strokeColor="green"
           />
-          <div>{total_events!==0?((completed_events / total_events) * 100)+"%":"0%"}</div>
+          <div>
+            {total_events !== 0
+              ? Number((completed_events / total_events) * 100).toFixed(2) + "%"
+              : "0%"}
+          </div>
         </div>
         <div className="progress-div-item">
           <div>Upcoming</div>
@@ -62,7 +99,11 @@ export default function PieChartCard(props) {
             showInfo={false}
             strokeColor="orange"
           />
-          <div>{total_events!==0?((ongoing_events / total_events) * 100)+"%":"0%"}</div>
+          <div>
+            {total_events !== 0
+              ? Number((ongoing_events / total_events) * 100).toFixed(2) + "%"
+              : "0%"}
+          </div>
         </div>
         <div className="progress-div-item">
           <div>Cancelled</div>
@@ -72,7 +113,12 @@ export default function PieChartCard(props) {
             showInfo={false}
             strokeColor="red"
           />
-          <div>{total_events!==0?((cancelled_events / total_events) * 100)+"%":"0%"}</div>
+
+          <div>
+            {total_events !== 0
+              ? Number((cancelled_events / total_events) * 100).toFixed(2) + "%"
+              : "0%"}
+          </div>
         </div>
       </div>
     </Card>
