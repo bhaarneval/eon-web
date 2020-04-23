@@ -26,15 +26,38 @@
     right: 0px;
     border: 1px solid #80808026;
     z-index: 1;
-    height: 100vh;
+    max-height: 80vh;
     flex-wrap: wrap;
     width: 25%;
+
+}
+.notification-empty{
+    background: white;
+    position: absolute;
+    top: -1px;
+    right: 0px;
+    border: 1px solid #80808026;
+    z-index: 1;
+    height: 27vh;
+    flex-wrap: wrap;
+    width: 25%; 
 }
 
 .li-item{
-    word-break: break-all;
-    border-bottom: 1px solid #80808026;
-    padding: 20px;
+    overflow-wrap: normal;
+    border-bottom: 5px solid #80808026 !important;
+    border-top: 5px solid #80808026 !important;
+    border-radius: 5px !important;
+    padding: 5px !important;
+    padding-top: 10px !important;
+    padding-right: 0px !important;
+    cursor: pointer;
+}
+.cancel-button{
+    object-fit: scale-down;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
 }
 
 .notification-header{
@@ -48,13 +71,13 @@
 }
 
 .notification-body{
-    margin-top: 20px;
+    overflow-y: auto;
+    max-height: 72vh;
 }
 
 .notification-clear{
-    float: right;
-    padding: 10px;
-    margin-bottom: 20px;
+    margin-left: 20%;
+    cursor: pointer;
 }
 
 .nav-items{
