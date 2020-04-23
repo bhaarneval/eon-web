@@ -68,8 +68,8 @@ class EventCount extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="detail-card-tile detail-card-container">
-                    <div onClick={this.feedbackClick}>
+                <div className="detail-card-tile detail-card-container" style={{cursor: "pointer"}} onClick={this.feedbackClick}>
+                    <div>
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={feedback}/><div className="detail-card-tile-text">{eventData.feedback_count}</div></span>
                         <div>
                             View Feedbacks
@@ -83,7 +83,7 @@ class EventCount extends Component {
                     <FacebookShareCount url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
                         {shareCount => <span className="myShareCountWrapper">{shareCount}</span>}
                     </FacebookShareCount>
-                    <div>
+                    <div style={{cursor:"default"}}>
                         Share
                     </div>
                 </div>

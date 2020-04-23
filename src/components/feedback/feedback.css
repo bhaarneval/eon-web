@@ -6,8 +6,23 @@
 
 .answer-row{
     width: 100%;
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    column-gap: 1%;
+}
+
+.submit-response-images {
+    height: 55px;
+    width:100%;
+    object-fit:scale-down;
+    margin-left: "1%",
+}
+.attachment-button{
+    margin-left: 2%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
+    height: 65%;
 }
 
 .question-row{
@@ -44,6 +59,7 @@
 .answer-image{
     width: 70px;
     height: 70px;
+    object-fit: scale-down;
 }
 
 .feedback-count{

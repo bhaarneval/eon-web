@@ -85,7 +85,7 @@ export function BasicDetails(props) {
           }
         ]}
       >
-        <Input.TextArea placeholder = "Enter Address" autoSize = {false} className = 'input-style'/>
+        <Input.TextArea placeholder = "Enter Address" autoSize = {{minRows:3, maxRows: 3}} className = "input-textarea"/>
       </Form.Item>
       <div
         className = 'one-button-style'

@@ -460,7 +460,7 @@ render() {
                   <Input.TextArea
                     placeholder="Enter custom share message"
                     autoSize={{ minRows: 4, maxRows: 4 }}
-                    onResize={false}
+                    className = "input-textarea"
                   />
                 </Form.Item>
                 <div className="share-confirm">
