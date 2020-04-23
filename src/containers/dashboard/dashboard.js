@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import "./dashboard.css";
-import EventCards from "../../components/eventCards/eventCards";
 import UserEventcards from "../../components/eventCards/userEventCards";
 
 import { Row, Button, message, Checkbox } from "antd";
@@ -124,21 +123,14 @@ class Dashboard extends Component {
       return (
         <Row key={index} className="cards-row">
           {list.map((event, index) => {
-            return this.props.userRole === "organizer" ? (
-              <EventCards
-                history={this.props.history}
-                key={index}
-                event={event}
-                onClick={this.handleEventClick}
-              />
-            ) : (
+            return (
               <UserEventcards
                 history={this.props.history}
                 key={index}
                 event={event}
                 onClick={this.handleEventClick}
               />
-            );
+            )
           })}
         </Row>
       );

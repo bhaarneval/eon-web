@@ -28,7 +28,7 @@ export default function EventCards(props) {
             className="cards-cover-style"
             align="center"
           />
-          {is_subscribed?<Button shape="round" className="status-button ellipsis-style">
+          {is_subscribed ? <Button shape="round" className="status-button ellipsis-style">
             Subscribed
           </Button>:null}
         </div>

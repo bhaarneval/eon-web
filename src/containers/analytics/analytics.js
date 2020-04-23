@@ -101,7 +101,7 @@ class Analytics extends Component {
                 <Button onClick={this.removeFilters} style={{marginRight:"1%"}}><SyncOutlined /></Button>
                 <SearchBox
                   handleOnChange={this.handleSearchTextChange}
-                  placeholder={"Event Name"}
+                  placeholder={"Event Name / Location"}
                   handleKeyPress={this.handleKeyPress}
                   value={searchText}
                 />
