@@ -75,7 +75,7 @@ class FeedbackQuestions extends Component {
                     <Form.Item
                       name={key}
                       key={key}
-                      style={{ width: "85%", alignItems: "center" }}
+                      style={{ width: "100%", alignItems: "center" }}
                       rules={[
                         {
                           required: true,
@@ -87,18 +87,13 @@ class FeedbackQuestions extends Component {
                         rows={2}
                         placeholder="Answer"
                         autoSize={{ minRows: 2, maxRows: 2 }}
-                        style={{ width: "100%", resize: "none" }}
+                        className = "input-textarea"
                       />
                     </Form.Item>
                     {this.state.currentImg[key] &&
                     this.state.currentImg[key].name ? (
                       <img
-                        style={{
-                          height: "55px",
-                          width: "16.5%",
-                          objectFit: "scale-down",
-                          marginLeft: "1%",
-                        }}
+                        className="submit-response-images"
                         src={
                           this.state.currentImg[key] &&
                           this.state.currentImg[key].name
@@ -107,7 +102,7 @@ class FeedbackQuestions extends Component {
                         }
                       />
                     ) : (
-                      <div style={{ marginTop: "1%", marginLeft: "2%" }}>
+                      <div className="attachment-button">
                         <Upload
                           data={key}
                           accept=".png,.jpeg,.jpg,.svg,"

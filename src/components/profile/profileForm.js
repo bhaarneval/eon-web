@@ -172,7 +172,7 @@ function FormComponent(props) {
               }
             ]}
           >
-            <Input.TextArea placeholder = "Enter Address" autoSize = {false} className = 'input-style'/>
+            <Input.TextArea placeholder = "Enter Address" autoSize = {{minRows:4, maxRows:4}} className = "input-textarea"/>
           </Form.Item>
           <div className="button-container">
             <Button className="cancel-button" onClick={handleCancel}>

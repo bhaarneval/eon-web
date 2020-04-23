@@ -240,7 +240,7 @@ export function EventForm(props) {
             <Input.TextArea
               placeholder="Description"
               autoSize={{ minRows: 4, maxRows: 4 }}
-              onResize={false}
+              className = "input-textarea"
             />
           </Form.Item>
           {hasErrored && <div className="error-message">{errorMessage}</div>}
@@ -500,7 +500,7 @@ export function UpdateEventForm(props) {
             <Input.TextArea
               placeholder="Description"
               autoSize={{ minRows: 4, maxRows: 4 }}
-              onResize={false}
+              className = "input-textarea"
             />
           </Form.Item>
           {hasErrored && <div className="error-message">{errorMessage}</div>}
