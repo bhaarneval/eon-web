@@ -19,11 +19,7 @@ class SideNav extends Component {
   componentDidMount() {
     const { location } = this.props;
     const pathName = location.pathname;
-    if (pathName === "/feedbacks") {
-      this.setState({
-        active: constants.TICKET,
-      });
-    } else if (pathName === "/analytics") {
+    if (pathName === "/analytics") {
       this.setState({
         active: constants.HOME,
       });
@@ -35,7 +31,6 @@ class SideNav extends Component {
   }
 
   onClick = (type) => {
-    console.log(type);
     switch (type) {
       case constants.HOME:
         this.setState({
