@@ -10,7 +10,7 @@ export default function WarningModal(props) {
     <Modal
       visible
       onCancel={handleAccept}
-      title={<div className="modal-header">Registration Succesfull</div>}
+      title={<div className="modal-header">Registration Succesful</div>}
       footer={null}
       width={660}
     >
