@@ -23,7 +23,13 @@ class SideNav extends Component {
       this.setState({
         active: constants.HOME,
       });
-    } else {
+    } 
+    else if (pathName === "/feedbacks") {
+      this.setState({
+        active: constants.TICKET,
+      });
+    }
+    else {
       this.setState({
         active: constants.EVENT,
       });
