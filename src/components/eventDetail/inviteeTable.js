@@ -89,14 +89,10 @@ class EventTable extends React.Component {
         )}
         <Table
           pagination={false}
-          rowSelection={
-            this.props.eventData.event_status !== "upcoming"
-              ? {
-                  type: "checkbox",
-                  ...rowSelection,
-                }
-              : false
-          }
+          rowSelection={{
+            type: "checkbox",
+            ...rowSelection,
+          }}
           columns={columns}
           dataSource={tableData}
         />
