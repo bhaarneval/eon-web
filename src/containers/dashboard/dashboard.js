@@ -307,12 +307,14 @@ class Dashboard extends Component {
                 placeholder={"Event Type"}
                 value = {this.state.eventType}
               />
-              <SelectDropDown
-                handleChange={this.handleStatusFilterChange}
-                optionsList={statusList}
-                placeholder={"Status"}
-                value = {this.state.statusType}
-              />
+              {this.props.userRole === "organizer" && (
+                <SelectDropDown
+                  handleChange={this.handleStatusFilterChange}
+                  optionsList={statusList}
+                  placeholder={"Status"}
+                  value = {this.state.statusType}
+                />
+              )}
               <SelectDropDown
                 handleChange={this.handleFeeFilterChange}
                 optionsList={feeTypeList}

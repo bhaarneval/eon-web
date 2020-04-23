@@ -10,13 +10,13 @@ export default function WarningModal(props) {
     <Modal
       visible
       onCancel={handleAccept}
-      title={<div className="modal-header">Registration Succesful</div>}
+      title={<div className="modal-header">Registration Success!</div>}
       footer={null}
       width={660}
     >
       <div className="warning-message">
-        Your registration was succesfull.<br/> Please ask a <b>Admin</b> to activate
-        your account
+        Your registration with EOn is completed!<br/> Please contact <b>Admin</b> for activation of
+        your account.
       </div>
       <div className = 'accept-button-warning'>
         <Button className = 'accept-button' onClick = {handleAccept}>Accept</Button>
