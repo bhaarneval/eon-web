@@ -13,7 +13,7 @@ export default function RevenueCard(props) {
             <div className="revenue-heading"><b>Revenue Generated</b></div>
             <div className="revenue-value">
                 <img src={revenueImg} style={{height:"100%", width:"20%"}}/>
-                <div className="value-style ellipsis-style">₹ {revenueGenerated.toLocaleString()}</div>
+                <div className="value-style ellipsis-style-analytics">₹ {revenueGenerated.toLocaleString()}</div>
             </div>
         </Card>
     )
