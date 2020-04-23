@@ -23,7 +23,9 @@ class Analytics extends Component {
   }
 
   componentDidMount() {
-    this.fetchAnalytic();
+   if(this.props.userRole !== "subscriber") {
+      this.fetchAnalytic();
+   }
   }
 
   fetchAnalytic = () => {
@@ -123,10 +125,11 @@ class Analytics extends Component {
   }
 }
 const mapStateToProps = ({
-  userReducer: { accessToken },
+  userReducer: { accessToken, userRole },
   analyticsReducer: { analyticsData },
 }) => ({
   accessToken,
+  userRole,
   analyticsData,
 });
 const mapDispatchToProps = {
@@ -137,5 +140,6 @@ Analytics.propTypes = {
   accessToken: PropTypes.string,
   fetchAnalyticsData: PropTypes.func,
   analyticsData: PropTypes.object,
+  userRole: PropTypes.string,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Analytics);

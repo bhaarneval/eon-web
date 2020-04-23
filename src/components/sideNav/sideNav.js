@@ -18,22 +18,34 @@ class SideNav extends Component {
     };
   }
   componentDidMount() {
-    const { location } = this.props;
+    const { location, userRole, history } = this.props;
     const pathName = location.pathname;
-    if (pathName === "/analytics") {
-      this.setState({
-        active: constants.HOME,
-      });
-    } 
-    else if (pathName === "/feedbacks") {
-      this.setState({
-        active: constants.TICKET,
-      });
+    if(userRole === "organizer") {
+      if (pathName === "/analytics") {
+        this.setState({
+          active: constants.HOME,
+        });
+      } 
+      else if (pathName === "/feedbacks") {
+        this.setState({
+          active: constants.TICKET,
+        });
+      }
+      else {
+        this.setState({
+          active: constants.EVENT,
+        });
+      }
     }
-    else {
-      this.setState({
-        active: constants.EVENT,
-      });
+    else{
+      if (pathName === "/analytics" || pathName === "/feedbacks") {
+        history.push("/dashboard")
+      }
+      else {
+        this.setState({
+          active: constants.EVENT,
+        });
+      }
     }
   }
 
