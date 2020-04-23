@@ -317,6 +317,7 @@ sendNotification({
 render() {
     const { discountPercentage} = this.state;
     const { eventData, eventType, history, userRole, setEventUpdate, cancelEvent, accessToken,  updateWishList} = this.props;
+    const actionNotAllowed = eventData && eventData.event_status !== 'upcoming' && !eventData.is_subscribed;
     return (
       <div className="sub-content">
         <BackButton handleOnClick={this.goBack} text={"Event Details"} />
@@ -369,7 +370,7 @@ render() {
             )}
           </div>
         )}
-        {userRole === 'subscriber' && (
+        {userRole === 'subscriber' && !actionNotAllowed && (
           <div>
             {this.state.showPayment? (
               <Payment
@@ -378,11 +379,11 @@ render() {
                 handleBackClick={this.handlePaymentsBack}
               />
             ) : (
-              eventData.subscription_details?
+              eventData.subscription_details ?
               <FeeCaclculation
                 eventData={this.props.eventData}
                 history={history}
-                noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
+                noOfSeats={eventData.subscription_details.no_of_tickets_bought || 1}
                 amountPaid={eventData.subscription_details.amount_paid}
                 discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
                 perHeadAmount={eventData.subscription_fee}

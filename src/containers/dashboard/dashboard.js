@@ -307,18 +307,16 @@ class Dashboard extends Component {
                 placeholder={"Event Type"}
                 value = {this.state.eventType}
               />
-              {this.props.userRole === "organizer" && (
-                <SelectDropDown
-                  handleChange={this.handleStatusFilterChange}
-                  optionsList={statusList}
-                  placeholder={"Status"}
-                  value = {this.state.statusType}
-                />
-              )}
+              <SelectDropDown
+                handleChange={this.handleStatusFilterChange}
+                optionsList={statusList}
+                placeholder={"Status"}
+                value = {this.state.statusType}
+              />
               <SelectDropDown
                 handleChange={this.handleFeeFilterChange}
                 optionsList={feeTypeList}
-                placeholder={"Fee"}
+                placeholder={"Fee Type"}
                 value = {this.state.feeType}
               />
               <StyledRangePicker handleChange={this.handleDateChange} values = {{startDate:this.state.startDate, endDate:this.state.endDate}}/>
