@@ -37,6 +37,7 @@
     "highcharts-react-official": "^3.0.0",
     "html-webpack-plugin": "4.0.0-beta.11",
     "identity-obj-proxy": "3.0.0",
+    "javascript-time-ago": "^2.0.7",
     "jest": "24.9.0",
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-resolve": "24.9.0",

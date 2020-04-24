@@ -52,7 +52,7 @@ export function EventForm(props) {
 
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
-    data.time = moment(eventDate).format("HH:mm");
+    data.time = moment(eventDate).format("HH:mm:ss");
     data = {...data, imageFile:file};
     if(!isChecked){
       data.subscription_fee = 0;
@@ -308,7 +308,7 @@ export function UpdateEventForm(props) {
 
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
-    data.time = moment(eventDate).format("HH:mm");
+    data.time = moment(eventDate).format("HH:mm:ss");
     if(!isChecked){
       delete data.subscription_fee;
       data.subscription_fee = 0;

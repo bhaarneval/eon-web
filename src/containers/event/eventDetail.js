@@ -44,9 +44,10 @@ class EventDetail extends Component {
   }
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
-    if(!eventData || !eventData.id){
-      let searchParam = new URLSearchParams(search);
+    let searchParam = new URLSearchParams(search);
       let id = searchParam.get("id");
+    if(!eventData || !eventData.id || eventData.id !== id){
+      
       getEventData({
         id,
         accessToken,
@@ -59,6 +60,7 @@ class EventDetail extends Component {
         },
       }); 
     }
+    
   }
 
   inviteButtonClick = () => {
