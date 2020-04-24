@@ -129,9 +129,9 @@ class Analytics extends Component {
                 </div>
               </div>
               <TicketGraph data={analyticsData && analyticsData.ticket_graph_object} />
+              <EventWiseRevenue data={analyticsData && analyticsData.ticket_graph_object} />
               <MonthWiseStatusCount data={analyticsData && analyticsData.monthly_event_count} />
               <MonthWiseRevenue data={analyticsData && analyticsData.monthly_revenue} />
-              <EventWiseRevenue data={analyticsData && analyticsData.ticket_graph_object} />
             </div>
           )
         }
