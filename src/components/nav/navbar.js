@@ -79,7 +79,7 @@ class Navbar extends Component {
   logout = () => {
     this.props.logOutUser({
       callback: () => {
-        localStorage.removeItem("token");
+        localStorage.clear();
         if (!localStorage.getItem("token")) this.props.history.push("/login");
       },
     });
