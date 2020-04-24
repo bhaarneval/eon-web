@@ -20,43 +20,26 @@
 }
 
 .notification{
-    background: white;
     position: absolute;
-    top: -1px;
+    top: 0px;
     right: 0px;
     border: 1px solid #80808026;
-    z-index: 1;
-    max-height: 80vh;
+    z-index: 100;
+    height: 89vh;
     flex-wrap: wrap;
-    width: 25%;
-
-}
-.notification-empty{
-    background: white;
-    position: absolute;
-    top: -1px;
-    right: 0px;
-    border: 1px solid #80808026;
-    z-index: 1;
-    height: 27vh;
-    flex-wrap: wrap;
-    width: 25%; 
+    padding: 0px !important;
 }
 
 .li-item{
     overflow-wrap: normal;
-    border-bottom: 5px solid #80808026 !important;
-    border-top: 5px solid #80808026 !important;
+    border-bottom: 1px solid #80808026 !important;
     border-radius: 5px !important;
-    padding: 5px !important;
-    padding-top: 10px !important;
-    padding-right: 0px !important;
-    cursor: pointer;
+    padding: 0px !important;
 }
 .cancel-button{
     object-fit: scale-down;
-    height: 20px;
-    width: 20px;
+    height: 16px;
+    width: 16px;
     cursor: pointer;
 }
 
@@ -68,11 +51,13 @@
     flex-direction: row;
     justify-content: space-between;
     font-weight: bold;
+    cursor: default;
 }
 
 .notification-body{
     overflow-y: auto;
-    max-height: 72vh;
+    height: 89vh;
+    cursor: default;
 }
 
 .notification-clear{
@@ -84,4 +69,30 @@
     color: #262C6F;
     margin-right: 20px;
     margin-left: 20px;
+}
+.card-not-body{
+    display: flex;
+    flex-direction: column;
+}
+.card-not-header{
+    display: flex;
+    justify-content: space-between;
+}
+.header-text-not{
+    font-weight: bold;
+    font-size: 16px;
+    width: 90%;
+}
+.notification-text{
+    color:#8c8c8c;
+    font-size: 13px;
+
+}
+.time-not{
+    color: #bfbfbf;
+    font-size: small;
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 2%;
+    font-weight: lighter;
 }

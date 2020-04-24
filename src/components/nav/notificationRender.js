@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Empty, Card } from "antd";
+import { Empty, Card, Modal } from "antd";
 import "./nav.css";
-import cancelIcon from "../../assets/icons8-cancel-32.png";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+import deleteIcon from "../../assets/icons8-delete.svg";
+import moment from "moment";
 
 /**
  * @author
@@ -12,33 +15,24 @@ import cancelIcon from "../../assets/icons8-cancel-32.png";
 class NotificationRender extends Component {
   constructor(props) {
     super(props);
-    this.setWrapperRef = this.setWrapperRef.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-  componentWillUnMount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-  setWrapperRef(node) {
-    this.wrapperRef = node;
-  }
-  handleClickOutside(event) {
-    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      this.props.openNotificationWithIcon();
-    }
+    TimeAgo.addLocale(en);
   }
 
   render() {
+    const timeAgo = new TimeAgo("en-IN");
     return (
-      <div
-        ref={this.setWrapperRef}
-        className={
-          this.props.notifications && this.props.notifications.length != 0
-            ? "notification"
-            : "notification-empty"
+      <Modal
+        visible
+        width={"25%"}
+        onCancel={this.props.openNotificationWithIcon}
+        footer={null}
+        className="notification"
+        bodyStyle={{ padding: "0px" }} //dont remove this ever
+        closeIcon={
+          <img
+            src={deleteIcon}
+            className="cancel-button"
+          />
         }
       >
         <div className="notification-header">
@@ -46,12 +40,7 @@ class NotificationRender extends Component {
           <div className="notification-clear" onClick={this.props.clearAll}>
             Clear All
           </div>
-          <div
-            onClick={this.props.openNotificationWithIcon}
-            style={{ cursor: "pointer" }}
-          >
-            X
-          </div>
+          <div style={{ cursor: "pointer" }}></div>
         </div>
 
         {this.props.notifications && this.props.notifications.length !== 0 ? (
@@ -59,32 +48,50 @@ class NotificationRender extends Component {
             {this.props.notifications &&
               this.props.notifications.map((data) => {
                 return (
-                  <Card
-                    className="li-item"
-                    hoverable={true}
-                    key={data.id}
-                    title={
-                      <h2 onClick={()=> this.props.handleNotificationClick(data.event_id)}>
-                        <b>{data.event}</b>
-                      </h2>
-                    }
-                    extra={<img src={cancelIcon} className="cancel-button" onClick={() => this.props.handleClearOneNotification(data.id)}/>}
-                  >
-                    <div
-                      key={data.id}
-                      value={data.id}
-                      onClick={()=> this.props.handleNotificationClick(data.event_id)}
-                    >
-                      {data.message}
+                  <Card className="li-item" key={data.id}>
+                    <div className="card-not-body">
+                      <div className="card-not-header">
+                        <div className="header-text-not ellipsis-style">
+                          {data.event}
+                        </div>
+                        <div
+                          onClick={() =>
+                            this.props.handleClearOneNotification(data.id)
+                          }
+                        >
+                          <img
+                            src={deleteIcon}
+                            className="cancel-button"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        key={data.id}
+                        value={data.id}
+                        className="notification-text"
+                      >
+                        {data.message}
+                      </div>
+                      <div className="time-not">
+                        {timeAgo.format(moment(data.created_on).toDate())}
+                      </div>
                     </div>
                   </Card>
                 );
               })}
           </div>
         ) : (
-          <Empty description={false} imageStyle={{ objectFit: "contain", paddingTop:"2%", boxSizing:"border-box" }} />
+          <Empty
+            description={false}
+            imageStyle={{
+              objectFit: "contain",
+              paddingTop: "2%",
+              height: "89vh",
+              boxSizing: "border-box",
+            }}
+          />
         )}
-      </div>
+      </Modal>
     );
   }
 }
