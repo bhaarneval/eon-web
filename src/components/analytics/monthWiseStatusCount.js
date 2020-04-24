@@ -14,14 +14,17 @@ export default function MonthWiseStatusCount(props) {
         type: 'line'
     },
     title: {
-        text: 'Monthly status count'
+        text: 'Month wise event status counts'
     },
     xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        title: {
+            text: 'Months'
+        },
     },
     yAxis: {
         title: {
-            text: 'Event count'
+            text: 'Event Count'
         }
     },
     plotOptions: {
@@ -29,14 +32,14 @@ export default function MonthWiseStatusCount(props) {
             dataLabels: {
                 enabled: true
             },
-            enableMouseTracking: false
+            enableMouseTracking: true
         }
     },
     series: [data[0], data[1], data[2]]
   };
 
   return (
-    <Card className="pie-card">
+    <Card className="graphs">
       <HighchartsReact highcharts={Highcharts} options={options} />
     </Card>
   );

@@ -18,13 +18,19 @@ export default function TicketGraph(props) {
 
   const options = {
     chart: {
-      type: 'column'
-  },
-  title: {
-      text: 'Ticket comparision'
-  },
-  xAxis: {
-      categories: name_list
+        type: 'column'
+    },
+    title: {
+        text: 'Total vs Sold Tickets'
+    },
+    xAxis: {
+        categories: name_list,
+        title: {
+            text: 'Events'
+        },
+        scrollbar:{
+            enabled:true
+        },
   },
   yAxis: {
       min: 0,
@@ -52,7 +58,7 @@ export default function TicketGraph(props) {
   },
   tooltip: {
       headerFormat: '<b>{point.x}</b><br/>',
-      pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+      pointFormat: '{series.name}: {point.y}<br/>Total Tickets: {point.stackTotal}'
   },
   plotOptions: {
       column: {
@@ -74,7 +80,7 @@ export default function TicketGraph(props) {
   };
 
   return (
-    <Card className="pie-card">
+    <Card className="graphs">
       <HighchartsReact highcharts={Highcharts} options={options} />
     </Card>
   );

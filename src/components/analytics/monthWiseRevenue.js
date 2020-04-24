@@ -14,10 +14,13 @@ export default function MonthWiseRevenue(props) {
         type: 'line'
     },
     title: {
-        text: 'Month wise revenu'
+        text: 'Month wise revenue'
     },
     xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        title: {
+            text: 'Months'
+        },
     },
     yAxis: {
         title: {
@@ -29,7 +32,7 @@ export default function MonthWiseRevenue(props) {
             dataLabels: {
                 enabled: true
             },
-            enableMouseTracking: false
+            enableMouseTracking: true
         }
     },
     series: [{
@@ -39,7 +42,7 @@ export default function MonthWiseRevenue(props) {
   };
 
   return (
-    <Card className="pie-card">
+    <Card className="graphs">
       <HighchartsReact highcharts={Highcharts} options={options} />
     </Card>
   );

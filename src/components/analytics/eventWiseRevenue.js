@@ -20,10 +20,13 @@ export default function EventWiseRevenue(props) {
         type: 'line'
     },
     title: {
-        text: 'Event wise revenu'
+        text: 'Event wise revenue'
     },
     xAxis: {
-        categories: name_list
+        categories: name_list,
+        title: {
+            text: 'Events'
+        },
     },
     yAxis: {
         title: {
@@ -35,7 +38,7 @@ export default function EventWiseRevenue(props) {
             dataLabels: {
                 enabled: true
             },
-            enableMouseTracking: false
+            enableMouseTracking: true
         }
     },
     series: [{
@@ -45,7 +48,7 @@ export default function EventWiseRevenue(props) {
   };
 
   return (
-    <Card className="pie-card">
+    <Card className="graphs">
       <HighchartsReact highcharts={Highcharts} options={options} />
     </Card>
   );

@@ -91,7 +91,10 @@ class Analytics extends Component {
             <div className="analytics-container">
               <div style={{display: 'flex'}}>
                 <div className="side-cards">
-                  <RevenueCard revenueGenerated={analyticsData.total_revenue} />
+                  <div className="revenue-row">
+                    <RevenueCard header="Revenue generated" revenueGenerated={'₹' + analyticsData.total_revenue} />
+                    <RevenueCard header="Upcoming events" revenueGenerated={analyticsData.ongoing_events} />
+                  </div>
                   <div className="pie-chart-div">
                     <PieChartCard analyticsData={analyticsData} />
                   </div>
@@ -127,8 +130,8 @@ class Analytics extends Component {
               </div>
               <TicketGraph data={analyticsData && analyticsData.ticket_graph_object} />
               <MonthWiseStatusCount data={analyticsData && analyticsData.monthly_event_count} />
-              <EventWiseRevenue data={analyticsData && analyticsData.ticket_graph_object} />
               <MonthWiseRevenue data={analyticsData && analyticsData.monthly_revenue} />
+              <EventWiseRevenue data={analyticsData && analyticsData.ticket_graph_object} />
             </div>
           )
         }

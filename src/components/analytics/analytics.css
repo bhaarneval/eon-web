@@ -1,14 +1,20 @@
 .revenue-card {
-    width: 100%;
+    width: 49%;
+    margin-bottom: 6px;
     border-top: 2px solid #0F58CB;
 }
 .revenue-heading{
     font-size: 130%;
 }
 .value-style {
-    font-size: 200%;
-    padding-left: 15%;
+    font-size: 110%;
+    padding-left: 5%;
     
+}
+.revenue-row{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
 .revenue-value {
     padding-top: 2%;
@@ -25,22 +31,29 @@
     height: 100%;
     border-top: 2px solid red;
 }
+
+.graphs{
+    border-top: 2px solid lightseagreen;
+    width: 98%;
+    margin-top: 10px;
+}
 .pie-chart {
     display: flex;
     justify-content: center;
 }
+
 .progress-div{
     display: flex;
-    justify-content: space-around;
-    padding-top: 15%;
+    width: 100%;
+    justify-content: space-between;
 }
+
 .progress-div-item{
-    width: 60%;
-    padding: 1%;
-    padding-left: 5%;
+    width: 30%;
     box-sizing: border-box;
 
 }
+
 .table-analytics{
-    margin-top: 2%;
+    margin-top: 5px;
 }
