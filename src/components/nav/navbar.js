@@ -106,13 +106,6 @@ class Navbar extends Component {
     this.props.history.push("/login");
   };
 
-  handleNotificationClick = (id) => {
-    this.setState({
-      openNotification: false,
-    });
-    this.props.history.push(`/event-details?id=${id}`);
-  };
-
   handleClearOneNotification = (id) => {
     let listId=[id]
     this.props.readNotifications({
@@ -167,11 +160,11 @@ class Navbar extends Component {
             <Badge
               count={notifications.length}
               showZero={false}
-              overflowCount={10}
+              dot={notifications.length!==0?true: false}
             >
               <BellOutlined
                 className="nav-items"
-                style={{ fontSize: "20px", marginRight: "0px" }}
+                style={{ fontSize: "20px", marginRight: "-5px", marginTop:"-1px" }}
                 onClick={this.openNotificationWithIcon}
               />
             </Badge>
@@ -181,7 +174,6 @@ class Navbar extends Component {
               notifications={notifications}
               openNotificationWithIcon={this.openNotificationWithIcon}
               clearAll={this.clearAll}
-              handleNotificationClick={this.handleNotificationClick}
               handleClearOneNotification = {this.handleClearOneNotification}
             />
           )}
