@@ -1,7 +1,7 @@
 .revenue-card {
     width: 49%;
-    margin-bottom: 6px;
-    border-top: 2px solid #0F58CB;
+    margin-bottom: 6px !important;
+    border-top: 2px solid #0F58CB !important;
 }
 .revenue-heading{
     font-size: 130%;
@@ -29,13 +29,13 @@
 }
 .pie-card {
     height: 100%;
-    border-top: 2px solid red;
+    border-top: 2px solid red !important;
 }
 
 .graphs{
-    border-top: 2px solid lightseagreen;
+    border-top: 2px solid lightseagreen !important;
     width: 98%;
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 .pie-chart {
     display: flex;
