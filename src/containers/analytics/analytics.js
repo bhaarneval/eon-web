@@ -6,6 +6,10 @@ import { Card, Button } from "antd";
 import {SyncOutlined} from "@ant-design/icons";
 import RevenueCard from "../../components/analytics/analyticsRevenueCard";
 import PieChartCard from "../../components/analytics/pieChartCard";
+import TicketGraph from "../../components/analytics/ticketGraph";
+import MonthWiseStatusCount from "../../components/analytics/monthWiseStatusCount";
+import EventWiseRevenue from "../../components/analytics/eventWiseRevenue";
+import MonthWiseRevenue from "../../components/analytics/monthWiseRevenue";
 import SearchBox from "../../components/commonComponents/searchBox";
 import SelectDropDown from "../../components/commonComponents/selectDropdown";
 import { statusList } from "../../constants/constants";
@@ -83,42 +87,50 @@ class Analytics extends Component {
     return (
       <>
         {
-            analyticsData.event_list && (
-                <div className="analytics-container">
-          <div className="side-cards">
-            <RevenueCard revenueGenerated={analyticsData.total_revenue} />
-            <div className="pie-chart-div">
-              <PieChartCard analyticsData={analyticsData} />
-            </div>
-          </div>
-          <Card className="table-card">
-            <div style={{ width: "100%" }}>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <Button onClick={this.removeFilters} style={{marginRight:"1%"}}><SyncOutlined /></Button>
-                <SearchBox
-                  handleOnChange={this.handleSearchTextChange}
-                  placeholder={"Event Name / Location"}
-                  handleKeyPress={this.handleKeyPress}
-                  value={searchText}
-                />
-                <SelectDropDown
-                  handleChange={this.handleDropDownChange}
-                  optionsList={statusList}
-                  placeholder={"Status"}
-                  value={status!==""?status:"Status"}
-                />
+          analyticsData.event_list && (
+            <div className="analytics-container">
+              <div style={{display: 'flex'}}>
+                <div className="side-cards">
+                  <RevenueCard revenueGenerated={analyticsData.total_revenue} />
+                  <div className="pie-chart-div">
+                    <PieChartCard analyticsData={analyticsData} />
+                  </div>
+                </div>
+                <div>
+                  <Card className="table-card">
+                    <div style={{ width: "100%" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                        }}
+                      >
+                        <Button onClick={this.removeFilters} style={{marginRight:"1%"}}><SyncOutlined /></Button>
+                        <SearchBox
+                          handleOnChange={this.handleSearchTextChange}
+                          placeholder={"Event Name / Location"}
+                          handleKeyPress={this.handleKeyPress}
+                          value={searchText}
+                        />
+                        <SelectDropDown
+                          handleChange={this.handleDropDownChange}
+                          optionsList={statusList}
+                          placeholder={"Status"}
+                          value={status !== "" ? status : "Status"}
+                        />
+                      </div>
+                      <AnalyticsTable  eventsList = {analyticsData.event_list}/>
+                    </div>
+                  </Card>
+                </div>
               </div>
-              <AnalyticsTable  eventsList = {analyticsData.event_list}/>
+              <TicketGraph data={analyticsData && analyticsData.ticket_graph_object} />
+              <MonthWiseStatusCount data={analyticsData && analyticsData.monthly_event_count} />
+              <EventWiseRevenue data={analyticsData && analyticsData.ticket_graph_object} />
+              <MonthWiseRevenue data={analyticsData && analyticsData.monthly_revenue} />
             </div>
-          </Card>
-        </div>
-            )
+          )
         }
       </>
     );

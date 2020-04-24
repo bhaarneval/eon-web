@@ -46,8 +46,8 @@ export default function AnalyticsTable(props) {
       
   return(
        <Table columns={columns} dataSource={eventsList} className="table-analytics"
-        pagination={false}
-        // pagination={{ pageSize: 10 }}
+        // pagination={false}
+        pagination={{ pageSize: 5 }}
       />
     )
  }

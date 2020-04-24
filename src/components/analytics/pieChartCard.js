@@ -18,8 +18,8 @@ export default function PieChartCard(props) {
       plotBackgroundColor: null,
       plotBorderWidth: 0,
       plotShadow: false,
-      height: 265,
-      width: 265,
+      height: 250,
+      width: 250,
       type: "pie",
     },
     title: {
@@ -58,7 +58,7 @@ export default function PieChartCard(props) {
       {
         type: "pie",
         name: "Event Status",
-        innerSize: "60%",
+        innerSize: "70%",
         data: [
           { name: "Ongoing", y: ongoing_events, color: "orange" },
           { name: "completed", y: completed_events, color: "green" },
