@@ -182,7 +182,7 @@ class Navbar extends Component {
               <div className="nav-items">
                 {this.props.userData.name
                   ? this.props.userData.name
-                  : this.props.userData.email}{" "}
+                  : this.props.userData.organization}{" "}
                 <DownOutlined />
               </div>
             </Dropdown>

@@ -18,8 +18,12 @@ export default function PieChartCard(props) {
       plotBackgroundColor: null,
       plotBorderWidth: 0,
       plotShadow: false,
-      height: 250,
-      width: 250,
+      margin: [0, 0, 0, 0],
+      spacingTop: 0,
+      spacingBottom: 0,
+      spacingLeft: 0,
+      spacingRight: 0,
+      height:250,
       type: "pie",
     },
     title: {
@@ -49,6 +53,7 @@ export default function PieChartCard(props) {
         },
       },
       pie: {
+        size: "100%",
         dataLabels: {
           enabled: false,
         },

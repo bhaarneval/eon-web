@@ -23,6 +23,9 @@ export default function TicketGraph(props) {
     title: {
         text: 'Total vs Sold Tickets'
     },
+    credits: {
+        enabled: false,
+      },
     xAxis: {
         categories: name_list,
         title: {
