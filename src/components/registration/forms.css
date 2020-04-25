@@ -3,7 +3,7 @@
     width: 100%;
 }
 .input-style {
-    padding: 2%;
+    padding: 2% !important;
 }
 .button-arrow {
     font-size: 200%;
