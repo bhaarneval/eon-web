@@ -53,11 +53,11 @@ export default function AnalyticsTable(props) {
       },
     },
   ];
-  const dataList = [...eventsList, ...eventsList, ...eventsList];
+    
   return (
     <Table
       columns={columns}
-      dataSource={dataList}
+      dataSource={eventsList}
       className="table-analytics"
       // pagination={false}
       pagination={{ pageSize: 5 }}
