@@ -2,7 +2,7 @@ import { Button, InputNumber } from "antd";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./subscription.css";
-import PDF from "../commonComponents/ticketPdf";
+// import PDF from "../commonComponents/ticketPdf";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
 class FeeCalculation extends Component {
@@ -95,6 +95,16 @@ class FeeCalculation extends Component {
       codeApplied: false,
     });
   };
+
+  feedbackButtonClick = () => {
+    const {eventData} = this.props;
+    this.props.history.push(
+      eventData.feedback_given ? 
+        `/feedbacks?id=${this.props.eventData.id}` 
+      : 
+        `/submit-feedback?id=${this.props.eventData.id}`
+    )
+  }
 
   render() {
     const {eventData} = this.props;
@@ -253,21 +263,16 @@ class FeeCalculation extends Component {
         {this.props.eventData.is_subscribed && !this.state.isUpdate ? (
           <div className="update-row">
             <div style = {{display:"flex", justifyContent:"flex-start"}}>
-              <PDF
+              {/* <PDF
                 eventData={this.props.eventData}
                 userData={this.props.userData}
-              />
+              /> */}
               <Button
-                disabled={this.props.eventData.feedback_given}
                 type="primary"
                 style ={{marginLeft:"2%"}}
-                onClick={() =>
-                  this.props.history.push(
-                    `/submit-feedback?id=${this.props.eventData.id}`
-                  )
-                }
+                onClick={this.feedbackButtonClick}
               >
-                {this.props.eventData.feedback_given ? "Feedback Submitted" : "Submit Feedback"}
+                {this.props.eventData.feedback_given ? "View Feedback" : "Submit Feedback"}
               </Button>
             </div>
             {actionAllowed && 

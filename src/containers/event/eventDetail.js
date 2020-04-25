@@ -47,7 +47,6 @@ class EventDetail extends Component {
     let searchParam = new URLSearchParams(search);
       let id = searchParam.get("id");
     if(!eventData || !eventData.id || eventData.id !== id){
-      
       getEventData({
         id,
         accessToken,
@@ -60,7 +59,6 @@ class EventDetail extends Component {
         },
       }); 
     }
-    
   }
 
   inviteButtonClick = () => {
@@ -537,7 +535,7 @@ EventDetail.propTypes = {
   shareWithFriend: PropTypes.func,
   cancelSubscription: PropTypes.func,
   updateWishList: PropTypes.func,
-};
+}
 
 const mapStateToProps = ({
   userReducer: {
@@ -550,14 +548,13 @@ const mapStateToProps = ({
     eventData,
     fetchingEvent
   },
-
 }) => ({
   userRole,
   userData,
   accessToken,
   eventType,
   eventData,
-  fetchingEvent
+  fetchingEvent,
 })
 const mapDispatchToProps = ({
   updateInviteeList: updateInviteeList,
