@@ -245,7 +245,7 @@ export function EventForm(props) {
           </Form.Item>
           {hasErrored && <div className="error-message">{errorMessage}</div>}
           <div className="button-container">
-            <Button className="cancel-button" onClick={handleCancel}>
+            <Button type="default" onClick={handleCancel}>
               Cancel
             </Button>
             <Button htmlType="submit" type="primary" className="save-button">
@@ -505,7 +505,7 @@ export function UpdateEventForm(props) {
           </Form.Item>
           {hasErrored && <div className="error-message">{errorMessage}</div>}
           <div className="button-container">
-            <Button className="cancel-button" onClick={handleCancel}>
+            <Button type="default" onClick={handleCancel}>
               Cancel
             </Button>
             <Button htmlType="submit" type="primary" className="save-button">
