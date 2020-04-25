@@ -16,6 +16,9 @@ export default function MonthWiseRevenue(props) {
     title: {
         text: 'Month wise revenue'
     },
+    credits: {
+        enabled: false,
+      },
     xAxis: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         title: {
