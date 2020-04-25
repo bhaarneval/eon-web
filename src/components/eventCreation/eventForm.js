@@ -52,16 +52,14 @@ export function EventForm(props) {
 
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
-    data.time = moment(eventDate).format("hh:mm A");
+    data.time = moment(eventDate).format("HH:mm:ss");
     data = {...data, imageFile:file};
     if(!isChecked){
       data.subscription_fee = 0;
     }
     handleSubmit(data);
   }
-
-  console.log
-
+  
   return (
     <div className="event-form-container">
       <div>
@@ -242,7 +240,7 @@ export function EventForm(props) {
             <Input.TextArea
               placeholder="Description"
               autoSize={{ minRows: 4, maxRows: 4 }}
-              onResize={false}
+              className = "input-textarea"
             />
           </Form.Item>
           {hasErrored && <div className="error-message">{errorMessage}</div>}
@@ -310,7 +308,7 @@ export function UpdateEventForm(props) {
 
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
-    data.time = moment(eventDate).format("hh:mm A");
+    data.time = moment(eventDate).format("HH:mm:ss");
     if(!isChecked){
       delete data.subscription_fee;
       data.subscription_fee = 0;
@@ -502,7 +500,7 @@ export function UpdateEventForm(props) {
             <Input.TextArea
               placeholder="Description"
               autoSize={{ minRows: 4, maxRows: 4 }}
-              onResize={false}
+              className = "input-textarea"
             />
           </Form.Item>
           {hasErrored && <div className="error-message">{errorMessage}</div>}

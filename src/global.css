@@ -15,8 +15,18 @@
     padding-bottom: 3%;
 }
 
+.headerText{
+    font-size: 25px;
+    font-weight: bold;
+    color: #211d70;
+}
+
 .cursor{
     cursor: pointer;
+}
+
+.notAllowedCursor{
+    cursor: not-allowed;
 }
 
 .popover{

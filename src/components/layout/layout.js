@@ -9,6 +9,8 @@ import UserRegistration from "../../containers/registration/userRegistration";
 import ForgotPassword from "../forgotPassword/forgotPassword";
 import ChangePassword from "../forgotPassword/changePassword";
 import EventDetail from "../../containers/event/eventDetail";
+import Feedback from "../../containers/feedback/feedback";
+import FeedbackResponses from "../../containers/feedback/feedbackResponses";
 import Navbar from "../../components/nav/navbar";
 import SideNav from "../../components/sideNav/sideNav";
 import Dashboard from "../../containers/dashboard/dashboard";
@@ -17,6 +19,8 @@ import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
 import * as jwt from 'jsonwebtoken';
 import { Spin } from "antd";
+import Analytics from "../../containers/analytics/analytics";
+import { getNotifications } from "../../actions/commonActions";
 
 const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
@@ -55,26 +59,33 @@ const BeforeLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
 function StyledComp(props) {
   const isLoggedIn = props.userData.user_id;
-  
+    const {userData, userRole, getNotifications, accessToken} = props;
+
+    if(userData.user_id && userRole === "subscriber" && accessToken !== ""){
+      getNotifications(accessToken);
+    }
   return (
     <div>
       <div className="flex flex-row layoutContainer">
         {isLoggedIn && (
           <div className="flex flex-column layoutNavContainer">
-            <SideNav />
+            <Route path="/" component={SideNav} />
           </div>
         )}
         <div className="mainContentContainer">
           <Route path="/" component={Navbar} />
             <div className="contentBody">
               {
-                isLoggedIn?(
+                isLoggedIn ? (
                   <Switch>
                     <AfterLogin path="/change-password" exact isLoggedIn={isLoggedIn?"true":"false"}  component={ChangePassword}/>
                     <AfterLogin path="/dashboard" exact isLoggedIn={isLoggedIn?"true":"false"}  component = {Dashboard}/>
                     <AfterLogin path="/create" exact isLoggedIn={isLoggedIn?"true":"false"}  component={CreateEvent} />
                     <AfterLogin path="/event-details/" isLoggedIn={isLoggedIn?"true":"false"}  component = {EventDetail}/>
+                    <AfterLogin path="/submit-feedback/" isLoggedIn={isLoggedIn?"true":"false"}  component = {Feedback}/>
+                    <AfterLogin path="/feedbacks/" isLoggedIn={isLoggedIn ? "true" : "false"}  component = {FeedbackResponses}/>
                     <AfterLogin path="/my-profile"  isLoggedIn={isLoggedIn?"true":"false"} component = {Profile}/>
+                    <AfterLogin path="/analytics" isLoggedIn={isLoggedIn?"true":"false"} component = {Analytics}/> 
                     <Route render={() => <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />} />
                   </Switch>
                 ):!localStorage.getItem("token") && (
@@ -108,10 +119,20 @@ class LayoutComponent extends React.Component {
   }
 
   render() {
+    const {
+      fetchingUser,
+      fetchingEvent,
+      fetchingData,
+      fetchingQuestions,
+      submittingQuestions,
+      fetchingResponses
+      } = this.props;
+      const {userData, userRole, getNotifications, accessToken} = this.props;
+    let isFetching = fetchingEvent || fetchingUser || fetchingData || fetchingQuestions || submittingQuestions || fetchingResponses;
     return (
-      <Spin spinning = {this.props.fetchingEvent || this.props.fetchingUser} className="spinner">
+      <Spin spinning = {isFetching} className="spinner">
         <StyledComp
-        userData={this.props.userData}
+        userData={userData} userRole = {userRole} getNotifications = {getNotifications} accessToken= {accessToken}
       />
       </Spin>
     );
@@ -121,16 +142,36 @@ class LayoutComponent extends React.Component {
 const mapStateToProps = ({
   userReducer: {
     userData,
+    userRole,
+    accessToken,
     fetchingUser,
   },
   eventReducer: {
     fetchingEvent,
+  },
+  analyticsReducer: {
+    fetchingData
+  },
+  feedbackReducer: {
+    fetchingQuestions,
+    submittingQuestions,
+    fetchingResponses
   }
 }) => ({
   userData,
+  userRole,
+  accessToken,
   fetchingUser,
   fetchingEvent,
+  fetchingData,
+  fetchingQuestions,
+  submittingQuestions,
+  fetchingResponses
 })
 
-export default connect(mapStateToProps)(LayoutComponent);
+const mapDispatchToProps = {
+  getNotifications: getNotifications
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(LayoutComponent);
 

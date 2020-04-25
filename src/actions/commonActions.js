@@ -1,4 +1,4 @@
-import { actionTypes, actionLoginTypes, actionNotificationsTypes } from "../constants/actionTypes";
+import { actionTypes, actionLoginTypes, actionNotificationsTypes, actionAnalytics, actionFeedbackTypes } from "../constants/actionTypes";
 
 export const getClusters = id => {
   return {
@@ -77,6 +77,34 @@ export const getUserProfile = ({userId, accessToken}) => {
   }
 }
 
+export const getQuestions = ({accessToken}) => {
+  return {
+    type: actionFeedbackTypes.QUESTIONS,
+    accessToken
+  }
+}
+
+
+export const getResponses = ({id, accessToken}) => {
+  console.log(id, accessToken)
+  return {
+    type: actionFeedbackTypes.RESPONSES,
+    accessToken,
+    id
+  }
+}
+
+export const postResponses = ({eventId, feedback, accessToken, callback}) => {
+  console.log(eventId)
+  return {
+    type: actionFeedbackTypes.POST_QUESTIONS,
+    event_id: eventId,
+    feedback,
+    accessToken, 
+    callback
+  }
+}
+
 export const updateUserProfile = ({userId, data, accessToken, callback}) => {
   return {
     type: actionLoginTypes.UPDATE_USER_PROFILE,
@@ -84,5 +112,13 @@ export const updateUserProfile = ({userId, data, accessToken, callback}) => {
     data,
     accessToken,
     callback
+  }
+}
+
+export const fetchAnalyticsData = ({accessToken, filterData}) => {
+  return {
+    type: actionAnalytics.GET_ANALYTICS,
+    accessToken,
+    filterData
   }
 }

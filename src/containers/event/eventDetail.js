@@ -44,9 +44,10 @@ class EventDetail extends Component {
   }
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
-    if(!eventData || !eventData.id){
-      let searchParam = new URLSearchParams(search);
+    let searchParam = new URLSearchParams(search);
       let id = searchParam.get("id");
+    if(!eventData || !eventData.id || eventData.id !== id){
+      
       getEventData({
         id,
         accessToken,
@@ -59,6 +60,7 @@ class EventDetail extends Component {
         },
       }); 
     }
+    
   }
 
   inviteButtonClick = () => {
@@ -76,7 +78,6 @@ class EventDetail extends Component {
 
 
 deleteAll = (list) => {
-  console.log(list);
     const {updateInviteeList, accessToken, eventData} = this.props;
     updateInviteeList({
       data:{invitation_ids:list, event: eventData.id},
@@ -86,7 +87,6 @@ deleteAll = (list) => {
 }
 
 onDiscountChange = (value) => {
-  console.log(value);
     this.setState({
         discountPercentage: value
     })
@@ -318,32 +318,32 @@ sendNotification({
 
 render() {
     const { discountPercentage} = this.state;
-    const { eventData } = this.props;
+    const { eventData, eventType, history, userRole, setEventUpdate, cancelEvent, accessToken,  updateWishList} = this.props;
+    const actionNotAllowed = eventData && eventData.event_status !== 'upcoming' && !eventData.is_subscribed;
     return (
       <div className="sub-content">
-        <BackButton handleOnClick={this.goBack} text={"Event Detail"} />
-        {this.props.eventData && this.props.eventData.id && 
+        <BackButton handleOnClick={this.goBack} text={"Event Details"} />
+        {eventData && eventData.id && 
           <EventInfo
-            eventData = {this.props.eventData}
-            eventType = {this.props.eventType}
-            history={this.props.history}
-            isOrganizer={this.props.userRole === 'organizer'}
+            eventData = {eventData}
+            eventType = {eventType}
+            history={history}
+            isOrganizer={userRole === 'organizer'}
             handleShare={this.handleShare}
-            setEventUpdate={this.props.setEventUpdate}
-            cancelEvent = {this.props.cancelEvent}
-            accessToken = {this.props.accessToken}
-            handleWishlist = {this.props.updateWishList}
+            setEventUpdate={setEventUpdate}
+            cancelEvent = {cancelEvent}
+            accessToken = {accessToken}
+            handleWishlist = {updateWishList}
           />
         }
-       {/* <div className="fb-share-button" data-href="https://d3icgv3vrc0gqv.cloudfront.net/" data-layout="button_count" data-size="small"><a rel="noopener noreferrer" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore">Share</a></div> */}
-        {this.props.userRole === 'organizer' && this.props.eventData && (this.props.eventData.self_organised === true || this.props.eventData.is_active) && (
+        {userRole === 'organizer' && eventData && (eventData.self_organised === true || this.props.eventData.is_active) && (
           <div>
-            <EventCount eventData = {this.props.eventData} notifySubscriber = {this.handleNotifySubscriber}/>
+            <EventCount history={history} eventData = {eventData} notifySubscriber = {this.handleNotifySubscriber}/>
             <div className="invitee-row">
               <h2>
                 <b>Invitees List</b>
               </h2>
-              <Button type="primary" onClick={this.inviteButtonClick}>
+              <Button type="primary" disabled={eventData.event_status !== "upcoming"} onClick={this.inviteButtonClick}>
                 Add Invitees
               </Button>
             </div>
@@ -357,33 +357,35 @@ render() {
               data={
                 this.state.searchValue.length > 0
                   ? this.state.filteredRows
-                  : this.props.eventData.invitee_list
+                  : eventData.invitee_list
               }
+              eventStatus = {this.props.eventData.event_status}
             />
             {this.state.showModal && (
               <InviteesPopup
                 handleClose={this.handleModalClose}
                 handleSend={this.handleSend}
                 onDiscountChange={this.onDiscountChange}
-                eventData = {this.props.eventData}
+                eventData = {eventData}
                 discountPercentage = {discountPercentage}
               />
             )}
           </div>
         )}
-        {this.props.userRole === 'subscriber' && (
+        {userRole === 'subscriber' && !actionNotAllowed && (
           <div>
             {this.state.showPayment? (
               <Payment
                 onBankSubmit={this.onBankSubmit}
-                history={this.props.history}
+                history={history}
                 handleBackClick={this.handlePaymentsBack}
               />
             ) : (
-              eventData.subscription_details?
+              eventData.subscription_details ?
               <FeeCaclculation
                 eventData={this.props.eventData}
-                noOfSeats={eventData.subscription_details.no_of_tickets_bought||1}
+                history={history}
+                noOfSeats={eventData.subscription_details.no_of_tickets_bought || 1}
                 amountPaid={eventData.subscription_details.amount_paid}
                 discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
                 perHeadAmount={eventData.subscription_fee}
@@ -462,7 +464,7 @@ render() {
                   <Input.TextArea
                     placeholder="Enter custom share message"
                     autoSize={{ minRows: 4, maxRows: 4 }}
-                    onResize={false}
+                    className = "input-textarea"
                   />
                 </Form.Item>
                 <div className="share-confirm">

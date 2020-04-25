@@ -1,30 +1,30 @@
-import { Table } from 'antd';
+import { Table } from "antd";
 import React from "react";
 import PropTypes from "prop-types";
-import {Button} from 'antd';
+import { Button } from "antd";
 
 const columns = [
   {
-    title: 'Email',
-    dataIndex: 'email',
+    title: "Email",
+    dataIndex: "email",
   },
   {
-    title: 'Name',
-    dataIndex: 'name',
+    title: "Name",
+    dataIndex: "name",
   },
   {
-    title: 'Contact',
-    dataIndex: 'contact',
+    title: "Contact",
+    dataIndex: "contact",
   },
   {
-    title: 'Discount',
-    dataIndex: 'discount',
+    title: "Discount",
+    dataIndex: "discount",
   },
 ];
 
 class EventTable extends React.Component {
   state = {
-    selectedRowKeys: []
+    selectedRowKeys: [],
   };
 
   start = () => {
@@ -36,25 +36,24 @@ class EventTable extends React.Component {
   };
 
   onSelectChange = (selectedRowKeys) => {
-    this.setState({selectedRowKeys});
-
+    this.setState({ selectedRowKeys });
   };
 
   getTableData = () => {
     let tableData = [];
-    const data= this.props.data || [];
-    for( let i=0;i<data.length;i++){
+    const data = this.props.data || [];
+    for (let i = 0; i < data.length; i++) {
       let newData = {
         key: data[i].invitation_id,
         email: data[i].email,
-        name: data[i].user ? data[i].user.name : '',
-        contact: data[i].user ? data[i].user.contact_number : '',
+        name: data[i].user ? data[i].user.name : "",
+        contact: data[i].user ? data[i].user.contact_number : "",
         discount: data[i].discount_percentage,
       };
-      tableData = [...tableData,newData]
+      tableData = [...tableData, newData];
     }
     return tableData;
-  }
+  };
 
   render() {
     const { selectedRowKeys } = this.state;
@@ -66,29 +65,46 @@ class EventTable extends React.Component {
     let tableData = this.getTableData();
 
     return (
-      <div style={{marginTop: !hasSelected ? '50px' : '10px', marginBottom: '50px'}}>
+      <div
+        style={{
+          marginTop: !hasSelected ? "50px" : "10px",
+          marginBottom: "50px",
+        }}
+      >
         {/* <div>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</div> */}
-        {hasSelected && 
-            <Button type="primary" className="deleteButton" onClick={() => {
+        {hasSelected && (
+          <Button
+            type="primary"
+            className="deleteButton"
+            disabled={this.props.eventStatus !== "upcoming"}
+            onClick={() => {
               this.setState({
-                selectedRowKeys:[],
+                selectedRowKeys: [],
               });
               this.props.deleteAll(this.state.selectedRowKeys);
-            }}>
-                Delete Selected
-            </Button>}
-        <Table pagination={false} rowSelection={{
-          type: 'checkbox',
-          ...rowSelection,
-        }} columns={columns} dataSource={tableData} />
+            }}
+          >
+            Delete Selected
+          </Button>
+        )}
+        <Table
+          pagination={false}
+          rowSelection={{
+            type: "checkbox",
+            ...rowSelection,
+          }}
+          columns={columns}
+          dataSource={tableData}
+        />
       </div>
     );
   }
 }
 
 EventTable.propTypes = {
-    data: PropTypes.array,
-    deleteAll: PropTypes.func,
+  data: PropTypes.array,
+  deleteAll: PropTypes.func,
+  eventStatus: PropTypes.string,
 };
 
 export default EventTable;

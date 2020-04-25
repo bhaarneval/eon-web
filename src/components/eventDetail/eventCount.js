@@ -49,8 +49,13 @@ class EventCount extends Component {
         })
     }
 
+    feedbackClick = () => {
+        this.props.history.push(`/feedbacks?id=${this.props.eventData.id}`)
+    }
+
     render () {
-        const {eventData} = this.props;
+        const { eventData } = this.props;
+        const isUpcoming = eventData && eventData.event_status === "upcoming";
         return (
             <div className="detail-card-count">
                 <div className="detail-card-tile detail-card-container">
@@ -63,9 +68,9 @@ class EventCount extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="detail-card-tile detail-card-container">
+                <div className="detail-card-tile detail-card-container" style={{cursor: "pointer"}} onClick={this.feedbackClick}>
                     <div>
-                    <span className="detail-card-tile-row"><img className="subscriber-image" src={feedback}/><div className="detail-card-tile-text">2</div></span>
+                        <span className="detail-card-tile-row"><img className="subscriber-image" src={feedback}/><div className="detail-card-tile-text">{eventData.feedback_count}</div></span>
                         <div>
                             View Feedbacks
                         </div>
@@ -78,15 +83,15 @@ class EventCount extends Component {
                     <FacebookShareCount url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
                         {shareCount => <span className="myShareCountWrapper">{shareCount}</span>}
                     </FacebookShareCount>
-                    <div>
+                    <div style={{cursor:"default"}}>
                         Share
                     </div>
                 </div>
                 <div className="detail-card-tile reminder-tile">
-                    <div onClick={() => this.sendUpdate('reminder')}  className="cursor detail-card-container reminder-row">
+                    <div onClick={() => isUpcoming && this.sendUpdate('reminder')}  className={`${isUpcoming ? 'cursor' : 'notAllowedCursor'} detail-card-container reminder-row`}>
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={reminder}/>Send reminder</span>
                     </div>
-                    <div onClick={() => this.sendUpdate('updates')} className="cursor detail-card-container reminder-row">
+                    <div onClick={() => isUpcoming && this.sendUpdate('updates')} className={`${isUpcoming ? 'cursor' : 'notAllowedCursor'} detail-card-container reminder-row`}>
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={update}/>Send updates</span>
                     </div>
                 </div>

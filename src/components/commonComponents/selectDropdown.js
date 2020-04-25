@@ -36,6 +36,7 @@ const styles = {
     body:{
         marginLeft:"1%",
         marginRight:"1%",
+        width:"15%",
         textTransform: 'capitalize',
     }
 }

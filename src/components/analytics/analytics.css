@@ -1,0 +1,59 @@
+.revenue-card {
+    width: 49%;
+    margin-bottom: 6px !important;
+    border-top: 2px solid #0F58CB !important;
+}
+.revenue-heading{
+    font-size: 130%;
+}
+.value-style {
+    font-size: 110%;
+    padding-left: 5%;
+    
+}
+.revenue-row{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.revenue-value {
+    padding-top: 2%;
+    display: flex;
+    color: #0F58CB;
+}
+.ellipsis-style-analytics {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pie-card {
+    height: 100%;
+    border-top: 2px solid red !important;
+}
+
+.graphs{
+    border-top: 2px solid lightseagreen !important;
+    width: 98%;
+    margin-top: 10px !important;
+}
+.pie-chart {
+    display: flex;
+    justify-content: center;
+}
+
+.progress-div{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.progress-div-item{
+    width: 30%;
+    box-sizing: border-box;
+
+}
+
+.table-analytics{
+    margin-top: 5px;
+}

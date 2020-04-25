@@ -8,6 +8,8 @@ const initialData = {
   userRole: "",
   eventType: [],
   userProfile: {},
+  questions: {},
+  fetchingQuestions: false,
 };
 
 const userReducer = (state = initialData, action) => {

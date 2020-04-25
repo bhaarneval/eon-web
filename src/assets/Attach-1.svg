@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23" height="24" viewBox="0 0 23 24">
+  <defs>
+    <clipPath id="clip-Attach-1">
+      <rect width="23" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="Attach-1" clip-path="url(#clip-Attach-1)">
+    <g id="insert_invitation-24px">
+      <path id="Path_15" data-name="Path 15" d="M0,0H24V24H0Z" fill="none"/>
+    </g>
+    <g id="attachment-line" transform="translate(3.157 4)">
+      <path id="Path_526" data-name="Path 526" d="M0,0H16.5V16.5H0Z" fill="none"/>
+      <path id="Path_527" data-name="Path 527" d="M10.875,9.907V6.125a2.75,2.75,0,1,0-5.5,0V9.907a4.469,4.469,0,0,0,8.938,0V3.375h1.375V9.907A5.844,5.844,0,0,1,4,9.907V6.125a4.125,4.125,0,1,1,8.25,0V9.907a2.406,2.406,0,0,1-4.813,0V6.125H8.813V9.907a1.031,1.031,0,0,0,2.063,0Z" transform="translate(-1.25 -0.625)"/>
+    </g>
+  </g>
+</svg>

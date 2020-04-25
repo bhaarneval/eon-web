@@ -4,7 +4,6 @@ import { actionNotificationsTypes } from "../constants/actionTypes";
 
 
 export function* getNotifications(param) {
-  console.log(param)
   try {
     let getNotificationsURL = APIService.dev+requestURLS.GET_NOTIFICATIONS_URL;
     let headers = {
@@ -31,8 +30,7 @@ export function* getNotifications(param) {
 }
 
 export function* readNotifications(param) {
-  const { list, callback } = param;
-  console.log(list)
+  const { list } = param;
   try {
     let recievedResponse = {};
     let readNotificationsURL = APIService.dev+requestURLS.READ_NOTIFICATIONS_URL;
@@ -51,14 +49,30 @@ export function* readNotifications(param) {
     if (!recievedResponse.ok) {
       throw responseJSON;
     }
-    callback();
+
+    let getNotificationsURL = APIService.dev+requestURLS.GET_NOTIFICATIONS_URL;
+
+    let eventType = yield fetch (getNotificationsURL,{
+      headers: headers,
+      method: "GET",
+    }).then(response=>{
+      recievedResponse = response;
+      return response.json();
+    });
+
+    if (!recievedResponse.ok) {
+      throw responseJSON;
+    }
+    yield put({
+      type: actionNotificationsTypes.NOTIFICATIONS_RECIEVED,
+      payload: eventType.data,
+    });
   } catch (e) {
     console.error("error while post", e);
     yield put({
       type: actionNotificationsTypes.NOTIFICATIONS_READ_ERROR,
       error: e,
     });
-    callback(e.message);
   }
 }
 

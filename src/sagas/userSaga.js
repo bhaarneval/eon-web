@@ -94,7 +94,8 @@ export function* postUser(param) {
       throw responseJSON;
     }
 
-    let getEventTypeURL = APIService.dev+requestURLS.GET_EVENT_TYPES;
+    if(data.role !== "organizer"){
+      let getEventTypeURL = APIService.dev+requestURLS.GET_EVENT_TYPES;
     headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${responseJSON.data.access}`
@@ -117,6 +118,11 @@ export function* postUser(param) {
     });
     callback();
     localStorage.setItem("token", responseJSON.data.access);
+    }
+    else{
+      yield put({type: actionLoginTypes.SET_USER_FETCHING});
+      callback();
+    }
   } catch (e) {
     console.error("error while post", e);
     yield put({
@@ -165,7 +171,6 @@ export function* forgotPassword(param) {
   const { data, callback } = param;
   try {
     let recievedResponse = {};
-    console.log(data);
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
 
     const getUrl = APIService.dev + requestURLS.RESET_PASSWORD;
@@ -309,7 +314,6 @@ export function* updateUser(param){
 }
 
 export function* userActionWatcher() {
-  // console.log("Cluster Watcher");
   yield takeLatest(actionLoginTypes.LOGGING_OUT, logOut);
   yield takeLatest(actionLoginTypes.GET_USER, getUser);
   yield takeLatest(actionLoginTypes.POST_USER, postUser);

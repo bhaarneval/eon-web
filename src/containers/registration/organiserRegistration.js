@@ -5,6 +5,7 @@ import './registration.css';
 import {BasicDetails, PasswordDetails} from '../../components/registration/organiserRegistration/forms';
 import FormSteps from '../../components/registration/formSteps';
 import TermsAndConditions from '../../components/registration/termsAndConditions';
+import WarningModal from '../../components/registration/warningModal';
 import  BasicDetailsImg from '../../assets/Basic Details.svg';
 import PasswordImg from '../../assets/Password_Illustration.svg';
 import { postUser } from '../../actions/commonActions';
@@ -20,7 +21,8 @@ class OrganiserRegistration extends Component {
             showModal: false,
             isChecked: false,
             hasErrored: false,
-            errorMessage: "Unable to connect to the server!"
+            errorMessage: "Unable to connect to the server!",
+            showWarningModal: false
         }
     }
 handleModalClose = () => {
@@ -40,7 +42,9 @@ handleAccept = () => {
         callback: (error) => {
           if (!error) {
             localStorage.setItem("loggedIn", true);
-            this.props.history.push("/dashboard");
+            this.setState({
+              showWarningModal: true
+            })
           } else {
             this.setState({
               hasErrored: true,
@@ -99,7 +103,8 @@ handlePassWordChange = (values) => {
        stepList,
        formData,
        isChecked,
-       password
+       password,
+       showWarningModal,
      } = this.state;
   return (
     <div className="registration-main">
@@ -137,6 +142,10 @@ handlePassWordChange = (values) => {
             handleCheckChange={this.handleCheckBoxChange}
           />
         ) : null}
+        {
+          showWarningModal && 
+          <WarningModal handleAccept={()=>this.props.history.push("/login")}/>
+        }
       </div>
     </div>
   );
