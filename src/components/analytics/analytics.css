@@ -27,6 +27,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.event-name-style {
+    text-overflow : ellipsis;
+    overflow : hidden;
+    white-space: nowrap;
+    width: 180px;
+    cursor: default;
+}
 .pie-card {
     height: 100%;
     border-top: 2px solid red !important;
@@ -56,7 +63,10 @@
 
 .table-analytics{
     margin-top: 5px;
+    width: 100%;
 }
 .table-card{
     height: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }

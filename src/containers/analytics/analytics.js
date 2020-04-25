@@ -93,7 +93,7 @@ class Analytics extends Component {
       <>
         {analyticsData.event_list && (
           <div className="analytics-container">
-            <div  style={{height:"100%", boxSizing:"border-box"}}>
+            <div  style={{height:"100%", boxSizing:"border-box", marginRight:"2%"}}>
               <div style={{ display: "flex" }}>
                 <div className="side-cards">
                   <div className="revenue-row">
