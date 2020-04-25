@@ -57,7 +57,7 @@ class EventCount extends Component {
         const isUpcoming = eventData && eventData.event_status === "upcoming";
         return (
             <div className="detail-card-count">
-                <div className="detail-card-tile cursor detail-card-container">
+                <div className="detail-card-tile detail-card-container">
                     <div>
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={user}/>
                             <div className="detail-card-tile-text">{eventData.sold_tickets}</div>
