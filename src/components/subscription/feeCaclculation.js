@@ -1,4 +1,4 @@
-import { Button, InputNumber } from "antd";
+import { Button, InputNumber, message } from "antd";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./subscription.css";
@@ -24,7 +24,10 @@ class FeeCalculation extends Component {
     let { seats, totalAmount, codeApplied } = this.state;
     const { perHeadAmount, discountPercentage, remainingTickets } = this.props;
     if (type === "inc") {
-      if (seats >= remainingTickets) return;
+      if (seats >= remainingTickets) {
+        message.error(`Only ${remainingTickets} tickets are remaining.`);
+        return;
+      }
       totalAmount = (seats + 1) * perHeadAmount;
       if (codeApplied) {
         totalAmount = totalAmount - totalAmount * (discountPercentage / 100);
