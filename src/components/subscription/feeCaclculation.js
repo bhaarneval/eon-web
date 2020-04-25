@@ -22,8 +22,9 @@ class FeeCalculation extends Component {
 
   onIncDecSeats = (type) => {
     let { seats, totalAmount, codeApplied } = this.state;
-    const { perHeadAmount, discountPercentage } = this.props;
+    const { perHeadAmount, discountPercentage, remainingTickets } = this.props;
     if (type === "inc") {
+      if (seats >= remainingTickets) return;
       totalAmount = (seats + 1) * perHeadAmount;
       if (codeApplied) {
         totalAmount = totalAmount - totalAmount * (discountPercentage / 100);
@@ -115,6 +116,7 @@ class FeeCalculation extends Component {
           <div className="subscription-container">
             {actionAllowed &&
               <div className="subscription-left">
+                <div className="available-tickets">Total Available Tickets : {this.props.remainingTickets}</div>
                 {this.state.isUpdate ? (
                   <h2>
                     Newly added seats :{" "}
@@ -316,6 +318,7 @@ FeeCalculation.propTypes = {
   amountPaid: PropTypes.number,
   userData: PropTypes.object,
   history: PropTypes.object,
+  remainingTickets: PropTypes.number
 };
 
 export default FeeCalculation;
