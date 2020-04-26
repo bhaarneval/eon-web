@@ -13,6 +13,7 @@ import StyledButtons from "../components/registration/styledButtons";
 import FormSteps from "../components/registration/formSteps";
 import TermsAndConditions from "../components/registration/termsAndConditions";
 import { Form, Input, Button, Modal } from "antd";
+import WarningModal from "../components/registration/warningModal";
 
 const handleSubmit = sinon.spy();
 const handleChangePassword = sinon.spy();
@@ -85,7 +86,7 @@ describe("Organizer registration form components", () => {
   });
   it("numer of Input field", () => {
     const wrapper = shallow(basicDetails());
-    expect(wrapper.find(".input-style")).toHaveLength(4);
+    expect(wrapper.find(".input-style")).toHaveLength(3);
   });
   it("Number of input components", () => {
     const wrapper = shallow(basicDetails());
@@ -139,6 +140,18 @@ const termsAndConditionModal = (isChecked) => {
 describe("Terms and condition modal components", () => {
   it("number of components", () => {
     const wrapper = shallow(termsAndConditionModal());
+    expect(wrapper.find(Modal)).toHaveLength(1);
+  });
+});
+
+const warningModal = () => {
+  return (
+    <WarningModal handleAccept={handleModalClose}/>
+  );
+};
+describe("Terms and condition modal components", () => {
+  it("number of components", () => {
+    const wrapper = shallow(warningModal());
     expect(wrapper.find(Modal)).toHaveLength(1);
   });
 });

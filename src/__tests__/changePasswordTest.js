@@ -6,7 +6,7 @@ import { createStore } from "redux";
 import { shallow, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import ChangePassword from "../components/forgotPassword/changePassword";
-import { Form, Input, Button } from "antd";
+import { Form, Input } from "antd";
 
 const store = createStore(rootReducer);
 
@@ -76,6 +76,12 @@ describe("forgot password components", () => {
       .dive({ context: { store } })
       .dive();
     wrapper.instance().goBack();
+  });
+  it("handle logout method", () => {
+    const wrapper = shallow(changePassword())
+      .dive({ context: { store } })
+      .dive();
+    wrapper.instance().logoutCallback();
   });
   it("handle change old password", () => {
     const wrapper = shallow(changePassword())

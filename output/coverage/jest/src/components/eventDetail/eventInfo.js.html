@@ -22,9 +22,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">5.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/35</span>
+                <span class='fraction'>2/35</span>
             </div>
         
             
@@ -43,9 +43,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">5.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/34</span>
+                <span class='fraction'>2/34</span>
             </div>
         
             
@@ -236,13 +236,11 @@
 <a name='L178'></a><a href='#L178'>178</a>
 <a name='L179'></a><a href='#L179'>179</a>
 <a name='L180'></a><a href='#L180'>180</a>
-<a name='L181'></a><a href='#L181'>181</a>
-<a name='L182'></a><a href='#L182'>182</a>
-<a name='L183'></a><a href='#L183'>183</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L181'></a><a href='#L181'>181</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -308,7 +306,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -316,7 +313,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -408,7 +404,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -424,7 +420,7 @@
 import PropTypes from 'prop-types'
 import './eventDetail.css'
 import { Dropdown, Menu, Button, Input } from 'antd';
-const { TextArea } = <span class="cstat-no" title="statement not covered" >Input;</span>
+const { TextArea } = Input;
 import React, { Component } from "react";
 import {Modal} from 'antd';
 import {
@@ -490,7 +486,6 @@ class EventInfo extends Component {
     }
     handleBookmark = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
         let currentState = <span class="cstat-no" title="statement not covered" >this.state.bookmarked;</span>
-&nbsp;
         const {eventData, handleWishlist, accessToken} = <span class="cstat-no" title="statement not covered" >this.props;</span>
 <span class="cstat-no" title="statement not covered" >        handleWishlist({</span>
             data: {event_id:eventData.id},
@@ -505,7 +500,6 @@ class EventInfo extends Component {
     }
 &nbsp;
 <span class="fstat-no" title="function not covered" >    re</span>nder() {
-&nbsp;
         const bookMarkImg = <span class="cstat-no" title="statement not covered" >this.state.bookmarked?Bookmarked:AddBookmark;</span>
         const menuSidebar = (
 <span class="cstat-no" title="statement not covered" >            &lt;Menu onClick={<span class="fstat-no" title="function not covered" >ke</span>y =&gt; <span class="cstat-no" title="statement not covered" >this.takeMenuAction(key)}</span>&gt;</span>
@@ -513,7 +507,7 @@ class EventInfo extends Component {
                 &lt;Menu.Item key="2"&gt;Edit&lt;/Menu.Item&gt;
             &lt;/Menu&gt;
         );
-        const {eventData, eventType} = <span class="cstat-no" title="statement not covered" >this.props;</span>
+        const {eventData, eventType, isOrganizer, handleShare} = <span class="cstat-no" title="statement not covered" >this.props;</span>
         let eventDate = <span class="cstat-no" title="statement not covered" >eventData.date + " "+ eventData.time;</span>
 <span class="cstat-no" title="statement not covered" >        eventDate = moment(eventDate,"YYYY-MM-DD hh:mm A");</span>
 <span class="cstat-no" title="statement not covered" >        eventDate = eventDate.format("DD MMM' YY, hh:mm A");</span>
@@ -527,13 +521,13 @@ class EventInfo extends Component {
                             {eventData.description}
                         &lt;/div&gt;
                     &lt;/div&gt;
-                    {this.props.isOrganizer &amp;&amp; (this.props.eventData.self_organised || this.props.eventData.is_active)? (
+                    {isOrganizer &amp;&amp; eventData.self_organised &amp;&amp; eventData.event_status === "upcoming" ? (
                         &lt;Dropdown overlay={menuSidebar}&gt;
                         &lt;MoreOutlined style={{ height: "10px" }} /&gt;
                         &lt;/Dropdown&gt;
-                    ) : !this.props.isOrganizer? (
+                    ) : !isOrganizer? (
                         &lt;div&gt;
-                            &lt;img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={this.props.handleShare}/&gt;
+                            &lt;img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={handleShare}/&gt;
                             &lt;img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/&gt;
                         &lt;/div&gt;
                     ):null}
@@ -541,7 +535,7 @@ class EventInfo extends Component {
                 &lt;div className="detail-card-top-other"&gt;
                     &lt;div className="detail-card-top-other-box"&gt;
                         &lt;div&gt;&lt;b&gt;Type of event&lt;/b&gt;&lt;/div&gt;
-                    &lt;div&gt;{eventType.length&gt;0 &amp;&amp; (eventData.event_type||eventData.type)?eventType.find(<span class="fstat-no" title="function not covered" >op</span>tion =&gt; <span class="cstat-no" title="statement not covered" >(eventData.event_type===option.id)||(eventData.type===option.id))</span>.type.toUpperCase():""}&lt;/div&gt;
+                    &lt;div&gt;{eventType.length&gt;0 &amp;&amp; (eventData.event_type||eventData.type)?eventType.find(<span class="fstat-no" title="function not covered" >op</span>tion =&gt; <span class="cstat-no" title="statement not covered" >(eventData.event_type === option.id)||(eventData.type===option.id))</span>.type.toUpperCase():""}&lt;/div&gt;
                     &lt;/div&gt;
                     &lt;div className="detail-card-top-other-box"&gt;
                         &lt;div&gt;&lt;b&gt;No. of Tickets&lt;/b&gt;&lt;/div&gt;
@@ -590,7 +584,7 @@ class EventInfo extends Component {
  }
 &nbsp;
 &nbsp;
-<span class="cstat-no" title="statement not covered" > EventInfo.propTypes = {</span>
+ EventInfo.propTypes = {
     eventData: PropTypes.object.isRequired,
     isOrganizer: PropTypes.bool,
     handleShare: PropTypes.func,
@@ -609,7 +603,7 @@ export default EventInfo;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Apr 20 2020 16:09:31 GMT+0530 (India Standard Time)
+                at Sun Apr 26 2020 21:28:34 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

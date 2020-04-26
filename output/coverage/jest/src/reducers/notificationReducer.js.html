@@ -22,30 +22,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>5/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>3/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>5/10</span>
             </div>
         
             
@@ -54,7 +54,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -103,30 +103,14 @@
 <a name='L45'></a><a href='#L45'>45</a>
 <a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">53x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -143,51 +127,67 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">52x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { actionNotificationsTypes } from "../constants/actionTypes";
 &nbsp;
-const initialData = <span class="cstat-no" title="statement not covered" >{</span>
+const initialData = {
   notifications: [],
 };
 &nbsp;
-const notificationsReducer = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(s</span>tate = <span class="branch-0 cbranch-no" title="branch not covered" >initialData,</span> action) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  switch (action.type) {</span>
+const notificationsReducer = (state = initialData, action) =&gt; {
+  switch (action.type) {
     case actionNotificationsTypes.GET_NOTIFICATIONS:
-<span class="cstat-no" title="statement not covered" >      return {</span>
+      return {
         ...state,
         fetchingNotifications: true
       }
-    case actionNotificationsTypes.NOTIFICATIONS_RECIEVED:
+<span class="branch-1 cbranch-no" title="branch not covered" >    case actionNotificationsTypes.NOTIFICATIONS_RECIEVED:</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         ...state,
         notifications: action.payload,
         fetchingNotifications: false,
       };
-    case actionNotificationsTypes.NOTIFICATIONS_ERROR:
+<span class="branch-2 cbranch-no" title="branch not covered" >    case actionNotificationsTypes.NOTIFICATIONS_ERROR:</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
       ...state,
       fetchingNotifications:false,
     }
-    case actionNotificationsTypes.READ_NOTIFICATIONS:
+<span class="branch-3 cbranch-no" title="branch not covered" >    case actionNotificationsTypes.READ_NOTIFICATIONS:</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         ...state,
         readingNotifications: true
       }
-    case actionNotificationsTypes.NOTIFICATIONS_READ:
+<span class="branch-4 cbranch-no" title="branch not covered" >    case actionNotificationsTypes.NOTIFICATIONS_READ:</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         ...state,
         notifications: action.payload,
         readingNotifications: false,
       };
-    case actionNotificationsTypes.NOTIFICATIONS_READ_ERROR:
+<span class="branch-5 cbranch-no" title="branch not covered" >    case actionNotificationsTypes.NOTIFICATIONS_READ_ERROR:</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
       ...state,
       readingNotifications:false,
     }
     default:
-<span class="cstat-no" title="statement not covered" >      return state;</span>
+      return state;
   }
 };
 export default notificationsReducer;
@@ -198,7 +198,7 @@ export default notificationsReducer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Apr 20 2020 16:09:31 GMT+0530 (India Standard Time)
+                at Sun Apr 26 2020 21:28:34 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
