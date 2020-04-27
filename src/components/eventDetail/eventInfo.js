@@ -1,7 +1,7 @@
 
 import PropTypes from 'prop-types'
 import './eventDetail.css'
-import { Dropdown, Menu, Button, Input } from 'antd';
+import { Dropdown, Menu, Button, Input, Tag } from 'antd';
 const { TextArea } = Input;
 import React, { Component } from "react";
 import {Modal} from 'antd';
@@ -101,7 +101,14 @@ class EventInfo extends Component {
         return (
             <div className="detail-card">
                 <div className="detail-card-top">
-                    <img src={eventData.images} className="detail-img"/>
+                    <div className="detail-image-div">
+                        <img src={eventData.images} className="detail-img"/>
+                        {eventData.is_subscribed && 
+                            <Tag color="#e8c7f5" style = {{position: 'absolute'}} className="status-button ellipsis-style">
+                                Subscribed
+                            </Tag>
+                        }
+                    </div>
                     <div className="detail-card-top-descContainer">
                         <h2>{eventData.name}</h2>
                         <div className="detail-card-top-desc">

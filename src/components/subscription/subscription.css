@@ -3,7 +3,6 @@
     flex-direction: row;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 2% 2% 2% 3%;
 }
 .subscription-container-payment {
     display: flex;
