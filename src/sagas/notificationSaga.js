@@ -68,7 +68,6 @@ export function* readNotifications(param) {
       payload: eventType.data,
     });
   } catch (e) {
-    console.error("error while post", e);
     yield put({
       type: actionNotificationsTypes.NOTIFICATIONS_READ_ERROR,
       error: e,

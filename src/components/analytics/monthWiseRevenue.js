@@ -7,7 +7,6 @@ import HighchartsReact from "highcharts-react-official";
 
 export default function MonthWiseRevenue(props) {
   const { data } = props;
-  console.log(data)
 
   const options = {
     chart: {

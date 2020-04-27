@@ -2,7 +2,7 @@ import { Button, InputNumber } from "antd";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./subscription.css";
-// import PDF from "../commonComponents/ticketPdf";
+import PDF from "../commonComponents/ticketPdf";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
 class FeeCalculation extends Component {
@@ -22,9 +22,6 @@ class FeeCalculation extends Component {
   }
 
   onIncDecSeats = (type) => {
-    this.setState({
-      soldOutError : ''
-    })
     let { seats, totalAmount, codeApplied} = this.state;
     const { perHeadAmount, discountPercentage, remainingTickets, eventData, noOfSeats } = this.props;
     const {is_subscribed} = eventData;
@@ -126,6 +123,10 @@ class FeeCalculation extends Component {
       soldOutError : ''
     })
     this.props.handleCancel()
+  }
+
+  handleFreeTicket = (seats) => {
+    this.props.handleFreeTicket(seats);
   }
 
   render() {
@@ -289,10 +290,12 @@ class FeeCalculation extends Component {
         {this.props.eventData.is_subscribed && !this.state.isUpdate ? (
           <div className="update-row">
             <div style = {{display:"flex", justifyContent:"flex-start"}}>
-              {/* <PDF
+            {!this.props.processing &&
+              <PDF
                 eventData={this.props.eventData}
                 userData={this.props.userData}
-              /> */}
+            />
+            }
               <Button
                 type="primary"
                 style ={{marginLeft:"2%"}}
@@ -319,7 +322,7 @@ class FeeCalculation extends Component {
             {" "}
             <Button
               type="primary"
-              onClick={() => this.props.handleFreeTicket(this.state.seats)}
+              onClick={() => this.handleFreeTicket(this.state.seats)}
             >
               Confirm
             </Button>
@@ -342,7 +345,8 @@ FeeCalculation.propTypes = {
   amountPaid: PropTypes.number,
   userData: PropTypes.object,
   history: PropTypes.object,
-  remainingTickets: PropTypes.number
+  remainingTickets: PropTypes.number,
+  processing: PropTypes.bool,
 };
 
 export default FeeCalculation;

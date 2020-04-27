@@ -7,13 +7,10 @@ import HighchartsReact from "highcharts-react-official";
 
 export default function EventWiseRevenue(props) {
   const { data } = props;
-  console.log(data)
   const {
     name_list,
     revenue_list
   } = data;
-
-  console.log(name_list)
 
   const options = {
     chart: {

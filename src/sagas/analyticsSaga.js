@@ -48,13 +48,11 @@ export function* getAnalyticsData(param) {
       payload: responseJson.data,
     });
   } catch (e) {
-    console.error(e);
     yield put({ type: actionAnalytics.FETCHING_ANALYTICS });
     message.error(e.message);
   }
 }
 
 export function* analyticsActionWatcher() {
-  // console.log("Cluster Watcher");
   yield takeLatest(actionAnalytics.GET_ANALYTICS, getAnalyticsData);
 }

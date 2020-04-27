@@ -8,7 +8,6 @@ export function* logOut(param) {
     yield put({ type: actionLoginTypes.LOG_OUT });
     param.callback();
   } catch (e) {
-    console.error("Unable to logout", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
       error: e,
@@ -63,7 +62,6 @@ export function* getUser(param) {
     callback('success', responseJSON.data);
     localStorage.setItem("token", responseJSON.data.access);
   } catch (e) {
-    console.error("error while fetching", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
       error: e,
@@ -124,7 +122,6 @@ export function* postUser(param) {
       callback();
     }
   } catch (e) {
-    console.error("error while post", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
       error: e,
@@ -158,7 +155,6 @@ export function* getCode(param) {
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
     callback();
   } catch (e) {
-    console.error("Error while getting verification code", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
       error: e,
@@ -194,7 +190,6 @@ export function* forgotPassword(param) {
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
     callback();
   } catch (e) {
-    console.error("Error while posting password change", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
       error: e,
@@ -235,7 +230,6 @@ export function* changePassword(param) {
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });
     callback();
   } catch (e) {
-    console.error("Unable to change password", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
       error: e,
@@ -268,7 +262,6 @@ export function* fetchUserProfile(param){
 
     yield put({type: actionLoginTypes.FETCHED_USER_PROFILE, payload: responseJson.data});
   }catch (e) {
-    console.error("Unable to change password", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
       error: e,
@@ -304,7 +297,6 @@ export function* updateUser(param){
     callback();
     message.success("Profile updated succesfully"); 
   }catch (e) {
-    console.error("Unable to change password", e);
     yield put({
       type: actionLoginTypes.USER_ERROR,
       error: e,

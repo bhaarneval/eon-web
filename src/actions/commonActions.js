@@ -86,7 +86,6 @@ export const getQuestions = ({accessToken}) => {
 
 
 export const getResponses = ({id, accessToken}) => {
-  console.log(id, accessToken)
   return {
     type: actionFeedbackTypes.RESPONSES,
     accessToken,
@@ -95,7 +94,6 @@ export const getResponses = ({id, accessToken}) => {
 }
 
 export const postResponses = ({eventId, feedback, accessToken, callback}) => {
-  console.log(eventId)
   return {
     type: actionFeedbackTypes.POST_QUESTIONS,
     event_id: eventId,

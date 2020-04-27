@@ -10,7 +10,6 @@ import {feedbackActionWatcher} from "./feedbackSaga"
  * saga to yield all others
  */
 export default function* rootSaga() {
-  console.log("Root Saga Initialized");
   yield all([
     clusterActionWatcher(),
     userActionWatcher(),

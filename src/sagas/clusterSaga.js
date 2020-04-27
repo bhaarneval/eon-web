@@ -8,7 +8,6 @@ import { actionTypes } from "../constants/actionTypes";
  * @param {id: number} param
  */
 export function* fetchCluster(param) {
-  // console.log("Fetching Clusters", param.id);
   try {
     const getUrl = APIService.dev + param.id;
     const headers = {
@@ -27,6 +26,5 @@ export function* fetchCluster(param) {
 }
 
 export function* clusterActionWatcher() {
-  // console.log("Cluster Watcher");
   yield takeLatest(actionTypes.GET_CLUSTERS, fetchCluster);
 }
