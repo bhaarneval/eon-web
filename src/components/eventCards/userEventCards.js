@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Card, Button} from 'antd';
+import {Card} from 'antd';
 import calendarImg from '../../assets/calendar.svg';
 import locationPin from "../../assets/pin.svg";
 import './eventCards.css';
@@ -31,9 +31,9 @@ export default function EventCards(props) {
             className="cards-cover-style"
             align="center"
           />
-          {is_subscribed ? <Button shape="round" className="status-button ellipsis-style">
+          {is_subscribed ? <Tag color="#e8c7f5" className="status-button ellipsis-style">
             Subscribed
-          </Button>:null}
+          </Tag>:null}
         </div>
       }
     >

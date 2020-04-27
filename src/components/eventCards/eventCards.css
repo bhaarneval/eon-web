@@ -14,11 +14,10 @@
 }
 .status-button {
     cursor: none !important;
-    margin-left: -45%;
-    font-weight: bold;
+    margin-left: -35%;
+    color: black;
+    height: 22px;
     margin-top: 3%;
-    background-color: transparent !important;
-    color: white !important;
 }
 .card-desc-grid{
     display: grid;
