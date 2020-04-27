@@ -6,7 +6,7 @@ import { createStore } from "redux";
 import { shallow, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import ForgotPassword from "../components/forgotPassword/forgotPassword";
-import { Form, Input, Button } from "antd";
+import { Form, Input } from "antd";
 
 const store = createStore(rootReducer);
 
@@ -154,5 +154,23 @@ describe("forgot password components", () => {
     expect(wrapper.state("hasErrored")).toBe(false);
     wrapper.instance().postForgotPasswordCallback();
     expect(wrapper.state("hasErrored")).toBe(false);
+  });
+  it("handle post forgot password callback method call without error", () => {
+    const wrapper = shallow(forgotPassword())
+      .dive({ context: { store } })
+      .dive();
+      wrapper.setProps({
+        getVerificationCode: ({callback}) => callback(),
+      })
+    wrapper.instance().onFinish({});
+  });
+  it("handle post forgot password callback method call without error", () => {
+    const wrapper = shallow(forgotPassword())
+      .dive({ context: { store } })
+      .dive();
+      wrapper.setProps({
+        getVerificationCode: ({callback}) => callback("error"),
+      })
+    wrapper.instance().onFinish({});
   });
 });

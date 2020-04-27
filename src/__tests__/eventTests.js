@@ -3,11 +3,10 @@
 import React from "react";
 import rootReducer from "../reducers/rootReducer";
 import { createStore } from "redux";
-import sinon from "sinon";
 import { shallow, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import EventDetail from "../containers/event/eventDetail";
-import { Form, Input, Button } from "antd";
+import { Input, Button } from "antd";
 
 const store = createStore(rootReducer);
 
@@ -421,6 +420,35 @@ describe("login components", () => {
           searchValue: "hello",
           showPayment: true,
       })
-
+  });
+  it("handle callback", () => {
+    const wrapper = shallow(eventDetailsComponent)
+      .dive({ context: { store } })
+      .dive();
+      wrapper.setProps({
+        getEventData: ({callback}) => callback("error"),
+        location: {
+          search: "id=23"
+        },
+        eventData: {
+          id: 21
+        },
+      })
+      wrapper.instance().componentDidMount();
+  });
+  it("handle callback", () => {
+    const wrapper = shallow(eventDetailsComponent)
+      .dive({ context: { store } })
+      .dive();
+      wrapper.setProps({
+        getEventData: ({callback}) => callback(),
+        location: {
+          search: "id=23"
+        },
+        eventData: {
+          id: 23
+        },
+      })
+      wrapper.instance().componentDidMount();
   });
 });
