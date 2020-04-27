@@ -107,27 +107,28 @@ class Navbar extends Component {
   };
 
   handleClearOneNotification = (id) => {
-    let listId=[id]
+    let listId = [id];
     this.props.readNotifications({
       list: { notification_ids: listId },
       access: this.props.accessToken,
     });
 
     let notification = this.state.notifications;
-    notification = notification.filter(data => data.id!==id);
+    notification = notification.filter((data) => data.id !== id);
     this.setState({
-      notifications: notification
-    })
+      notifications: notification,
+    });
   };
-
-  render() {
-    const menu = (
+  menu = () => {
+    return (
       <Menu onClick={(key) => this.takeMenuAction(key)}>
         <Menu.Item key="1">Organizer Registration</Menu.Item>
         <Menu.Item key="2">Subscriber Registration</Menu.Item>
       </Menu>
     );
-    const menuSidebar = (
+  };
+  menuSidebar = () => {
+    return (
       <Menu onClick={(key) => this.takeMenuAction(key)}>
         <Menu.Item key="3">Change Password</Menu.Item>
         <Menu.Item key="4">Profile</Menu.Item>
@@ -139,6 +140,9 @@ class Navbar extends Component {
         </Menu.Item>
       </Menu>
     );
+  };
+
+  render() {
     const { notifications } = this.state;
     return (
       <div className="nav-container">
@@ -160,11 +164,15 @@ class Navbar extends Component {
             <Badge
               count={notifications.length}
               showZero={false}
-              dot={notifications.length!==0?true: false}
+              dot={notifications.length !== 0 ? true : false}
             >
               <BellOutlined
                 className="nav-items"
-                style={{ fontSize: "20px", marginRight: "-5px", marginTop:"-1px" }}
+                style={{
+                  fontSize: "20px",
+                  marginRight: "-5px",
+                  marginTop: "-1px",
+                }}
                 onClick={this.openNotificationWithIcon}
               />
             </Badge>
@@ -174,11 +182,11 @@ class Navbar extends Component {
               notifications={notifications}
               openNotificationWithIcon={this.openNotificationWithIcon}
               clearAll={this.clearAll}
-              handleClearOneNotification = {this.handleClearOneNotification}
+              handleClearOneNotification={this.handleClearOneNotification}
             />
           )}
           {localStorage.getItem("token") && this.props.accessToken !== "" ? (
-            <Dropdown overlay={menuSidebar}>
+            <Dropdown overlay={this.menuSidebar}>
               <div className="nav-items">
                 {this.props.userData.name
                   ? this.props.userData.name
@@ -187,7 +195,7 @@ class Navbar extends Component {
               </div>
             </Dropdown>
           ) : (
-            <Dropdown overlay={menu}>
+            <Dropdown overlay={this.menu}>
               <div className="nav-items">
                 Register <DownOutlined />
               </div>
