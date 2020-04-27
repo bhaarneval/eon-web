@@ -79,7 +79,7 @@ class CreateEvent extends Component {
    }
    else{
     let data = this.filterValue(values);
-    if(Object.keys(data).length === 1){
+    if(Object.keys(data).length === 1 && !data.imageFile.name){
       message.error("Nothing to update")
     }
     else{
