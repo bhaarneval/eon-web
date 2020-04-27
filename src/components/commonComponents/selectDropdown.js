@@ -5,7 +5,7 @@ import { Select } from "antd";
 const { Option } = Select;
 
 export default function SelectDropDown (props) {
-    const {optionsList, placeholder, handleChange, value} = props;
+    const {optionsList, placeholder, handleChange, value, allOptionRequired} = props;
     return (
         <Select 
             placeholder={placeholder}
@@ -16,11 +16,18 @@ export default function SelectDropDown (props) {
             value = {value!= "" ? value : placeholder}
         >
             {
-                optionsList?optionsList.map(option => {
+                optionsList && optionsList.map(option => {
                     return (
-                    <Option style={{'textTransform': 'capitalize'}} key={option.id} value = {option.id}>{option.type}</Option>
+                        <Option className="capitalize" key={option.id} value = {option.id}>    
+                            {option.type}
+                        </Option>
                     )
-                }):null
+                })
+            }
+            {allOptionRequired &&
+                <Option className="capitalize" key='All' value = 'All'>    
+                    {'All'}
+                </Option>
             }
         </Select>
     )
@@ -30,6 +37,7 @@ SelectDropDown.propTypes = {
     placeholder:PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
     value: PropTypes.any,
+    allOptionRequired: PropTypes.bool
 }
 
 const styles = {

@@ -46,7 +46,6 @@
 .user-cards-flex {
     display: flex;
     flex-direction: column;
-    /* margin-top: -10%; */
 }
 .attendies-fees-div{
     display: flex;
@@ -59,15 +58,16 @@
     box-sizing: border-box;
     padding: 0 5px 0 5px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: bold;
 }
 .attendies-fees-div{
-    padding: 5px;
-    font-size: 12px;
+    padding: 5px 0;
+    font-size: 11px;
     box-sizing: border-box;
 }
 .address-div{
-    font-size: 12px;
+    font-size: 11px;
     width: 100%; 
 }
 .ellipsis-style {
