@@ -216,7 +216,7 @@ export function BasicDetails(props) {
         rules={[
           {
             required: true,
-            message: "Address cannot be empty!"
+            message: "Please enter your address!"
           }
         ]}
       >
