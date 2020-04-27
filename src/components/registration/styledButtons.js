@@ -30,5 +30,5 @@ export default function StyledButtons (props) {
 StyledButtons.propTypes = {
     content:PropTypes.element.isRequired,
     onClick: PropTypes.func,
-    type: PropTypes.string,
+    type: PropTypes.string.isRequired,
 }
