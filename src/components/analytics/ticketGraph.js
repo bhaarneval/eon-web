@@ -7,14 +7,11 @@ import HighchartsReact from "highcharts-react-official";
 
 export default function TicketGraph(props) {
   const { data } = props;
-  console.log(data)
   const {
     name_list,
     sold_tickets,
     remaining_tickets
   } = data;
-
-  console.log(name_list)
 
   const options = {
     chart: {

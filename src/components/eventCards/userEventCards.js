@@ -17,7 +17,6 @@ export default function EventCards(props) {
     eventDate = moment(eventDate,"YYYY-MM-DD hh:mm A");
     eventDate = moment(eventDate).format("DD MMM'YY hh:mm A");
     const tagColor = `${event_status === 'upcoming' ? 'orange' : ''}${event_status === 'cancelled' ? 'red' : ''}${event_status === 'completed' ? 'green' : ''}`;
-    console.log(tagColor)
   return (
     <Card
       bordered={true}

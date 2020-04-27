@@ -35,7 +35,6 @@ class EventCount extends Component {
     }
 
     type = () => {
-        console.log(this.state.message, this.state.reminderType)
         this.setState({
             updatePopup: false,
         })

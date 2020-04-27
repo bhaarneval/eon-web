@@ -40,13 +40,14 @@ class EventDetail extends Component {
       paidAmount: 0,
       refundAmount: 0,
       newSeats: 0,
+      processing: false,
     };
   }
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
     let searchParam = new URLSearchParams(search);
-      let id = searchParam.get("id");
-    if(!eventData || !eventData.id || eventData.id !== id){
+    let id = searchParam.get("id");
+    if(!eventData || !eventData.id || eventData.id !== parseInt(id)){
       getEventData({
         id,
         accessToken,
@@ -138,6 +139,9 @@ subscriptionPaidEventCallback = (error) => {
 }
 
 onBankSubmit = (accountNo, expiry) => {
+    this.setState({
+      processing: true
+    })
     let expMonth = moment(expiry,"MM-YYYY").format("MM");
     let exp = moment(expiry, "MM-YYYY").format("YYYY");
     const { finalAmount, finalSeats, totalAmount } =this.state;
@@ -169,6 +173,9 @@ subscriptionFreeEventCallback = (error) => {
 }
 
 handleFreeTicket = (seats) => {
+  this.setState({
+    processing: true,
+  });
   if (seats >= 1 && seats> 0) {
     const {
       eventData,
@@ -206,7 +213,8 @@ handlePaymentsBack = () => {
 
 handleClose = () => {
     this.setState({
-      showPaymentSuccess: false
+      showPaymentSuccess: false,
+      processing: false
     })
 }
 
@@ -243,6 +251,7 @@ handleRefund = (seats) => {
     this.setState({
         newSeats: seats,
         paidAmount:amount_paid,
+        processing: true,
         refundAmount: amount_paid - seats*(amount_paid/no_of_tickets_bought),
         showUpdateSeatsModal: true,
     })
@@ -398,6 +407,7 @@ render() {
                 discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
                 perHeadAmount={eventData.subscription_fee}
                 payNow={this.payNow}
+                processing={this.state.processing}
                 handleFreeTicket={this.handleFreeTicket}
                 handleCancel={this.handleCancel}
                 handleRefund={this.handleRefund}
@@ -530,7 +540,6 @@ EventDetail.propTypes = {
   history: PropTypes.object,
   userRole: PropTypes.string,
   eventData: PropTypes.object,
-  fetchingEvent: PropTypes.bool,
   updateInviteeList: PropTypes.func,
   accessToken: PropTypes.string,
   setEventUpdate: PropTypes.func,
@@ -555,8 +564,7 @@ const mapStateToProps = ({
     eventType,
   },
   eventReducer: {
-    eventData,
-    fetchingEvent
+    eventData
   },
 }) => ({
   userRole,
@@ -564,7 +572,6 @@ const mapStateToProps = ({
   accessToken,
   eventType,
   eventData,
-  fetchingEvent,
 })
 const mapDispatchToProps = ({
   updateInviteeList: updateInviteeList,

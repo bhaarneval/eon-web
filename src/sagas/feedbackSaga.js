@@ -30,7 +30,6 @@ export function* fetchQuestions(param) {
       payload: responseJson.data,
     });
   } catch (e) {
-    console.log("Error while fetching questions!", e);
     yield put({
       type: actionFeedbackTypes.QUESTIONS_ERROR,
       error: e,
@@ -41,7 +40,6 @@ export function* fetchQuestions(param) {
 
 export function* fetchResponses(param){
   const {accessToken, id } = param;
-  console.log(param, id)
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,
@@ -62,7 +60,6 @@ export function* fetchResponses(param){
     }
     yield put({type: actionFeedbackTypes.FETCHED_RESPONSES, payload: responseJson.data});
   }catch (e) {
-    console.error("Unable to fetch responses", e);
     yield put({
       type: actionFeedbackTypes.QUESTIONS_ERROR,
       error: e,
@@ -152,7 +149,6 @@ export function* postQuestions(param) {
     message.success("Your feedback has been submitted successfully");
     callback(true);
   } catch (e) {
-    console.log("Error while submitting responses", e);
     yield put({
       type: actionFeedbackTypes.QUESTIONS_ERROR,
       error: e,
