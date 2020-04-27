@@ -9,7 +9,7 @@ import {
 } from "../../constants/messages";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button, Modal } from "antd";
+import { Form, Input, Button, Modal, message} from "antd";
 
 import { UserOutlined } from "@ant-design/icons";
 import {
@@ -51,7 +51,10 @@ class ChangePassword extends Component {
       accessToken: this.props.accessToken,
       callback: (error) => {
         if (!error) {
-          this.logout();
+          message.success("Password updated successfully! Please login again!");
+          setTimeout(() => {
+            this.logout();
+          }, 1000);
         } else {
           this.setState({
             hasErrored: true,
@@ -117,10 +120,6 @@ class ChangePassword extends Component {
                   {
                     required: true,
                     message: "Please input your old password!",
-                  },
-                  {
-                    pattern: PASSWORD_VALIDATION,
-                    message: INVALID_PASSWORD,
                   },
                 ]}
               >
