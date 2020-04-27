@@ -133,8 +133,8 @@ onBankSubmit = (accountNo, expiry) => {
     this.setState({
       processing: true
     })
-    let expMonth = moment(expiry,"MM-YYYY").format("MM");
-    let exp = moment(expiry, "MM-YYYY").format("YYYY");
+    let expMonth = moment(expiry,"MM-YY").format("MM");
+    let exp = moment(expiry, "MM-YY").format("YYYY");
     const { finalAmount, finalSeats, totalAmount } =this.state;
     const {eventData, userData, accessToken,subscriptionPaidEvent} =this.props;
 
