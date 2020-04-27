@@ -91,7 +91,8 @@ export function BasicDetails(props) {
         className = 'one-button-style'
       >
         <StyledButtons
-          content = {<RightOutlined className = 'button-arrow'/>}
+          content = {<RightOutlined className = 'button-arrow' />}
+          type={"submit"}
         />
       </div>
     </Form>
@@ -169,11 +170,13 @@ export function PasswordDetails(props) {
         className = 'two-button-style'
       >
         <StyledButtons
-          content={<LeftOutlined className = 'button-arrow' />}
+          content={<LeftOutlined className = 'button-arrow'/>}
+          type={"button"}
           onClick={handleBack}
         />
         <StyledButtons
-          content={<RightOutlined className = 'button-arrow' />}
+          content={<RightOutlined className = 'button-arrow'/>}
+          type={"submit"}
         />
       </div>
     </Form>
