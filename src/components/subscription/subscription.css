@@ -57,7 +57,7 @@
 }
 
 .update-row{
-    padding: 20px 0px;
+    padding-top: 15px;
     display: flex;
     justify-content: space-between;
 }
@@ -133,7 +133,6 @@
     color: #262C6F;
 }
 .update-button{
-    width: 60%;
     margin-top: 4%;
 }
 .form-main-payment{
