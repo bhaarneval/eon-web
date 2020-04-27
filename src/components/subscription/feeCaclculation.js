@@ -21,10 +21,11 @@ class FeeCalculation extends Component {
   }
 
   onIncDecSeats = (type) => {
-    let { seats, totalAmount, codeApplied } = this.state;
-    const { perHeadAmount, discountPercentage, remainingTickets } = this.props;
+    let { seats, totalAmount, codeApplied} = this.state;
+    const { perHeadAmount, discountPercentage, remainingTickets, eventData, noOfSeats } = this.props;
+    const {is_subscribed} = eventData;
     if (type === "inc") {
-      if (seats >= remainingTickets) {
+      if ((!is_subscribed && ((seats - noOfSeats + 1) >= remainingTickets)) || (is_subscribed && (seats - noOfSeats) >= remainingTickets)) {
         message.error(`Only ${remainingTickets} tickets are remaining.`);
         return;
       }
