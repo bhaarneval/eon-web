@@ -18,7 +18,8 @@ class EventCount extends Component {
         super(props);
         this.state = {
             updatePopup: false,
-            message: ''
+            message: '',
+            reminderType: ""
         }
       }
 
