@@ -139,7 +139,7 @@ class ChangePassword extends Component {
                   },
                   {
                     pattern: this.state.oldPassword,
-                    message: "New Password cannot be same as old password",
+                    message: "New Password cannot be same as old password!",
                   },
                   {
                     pattern: PASSWORD_VALIDATION,
