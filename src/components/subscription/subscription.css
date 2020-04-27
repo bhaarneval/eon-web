@@ -19,6 +19,17 @@
     flex-direction: column
 }
 
+.available-tickets{
+    border: 1px solid #ff000036;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 12px;
+    margin-bottom: 15px;
+    background-color: #ff00001f;
+    width: 90%;
+    font-weight: bold;
+}
+
 .subscription-seats{
     width: 90%;
     display: flex;

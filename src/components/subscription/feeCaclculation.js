@@ -2,7 +2,7 @@ import { Button, InputNumber } from "antd";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./subscription.css";
-import PDF from "../commonComponents/ticketPdf";
+// import PDF from "../commonComponents/ticketPdf";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
 class FeeCalculation extends Component {
@@ -17,13 +17,24 @@ class FeeCalculation extends Component {
       codeApplied: false,
       isSubscribed: this.props.eventData.is_subscribed || false,
       isUpdate: false,
+      soldOutError: '',
     };
   }
 
   onIncDecSeats = (type) => {
-    let { seats, totalAmount, codeApplied } = this.state;
-    const { perHeadAmount, discountPercentage } = this.props;
+    this.setState({
+      soldOutError : ''
+    })
+    let { seats, totalAmount, codeApplied} = this.state;
+    const { perHeadAmount, discountPercentage, remainingTickets, eventData, noOfSeats } = this.props;
+    const {is_subscribed} = eventData;
     if (type === "inc") {
+      if ((!is_subscribed && ((seats - noOfSeats + 1) >= remainingTickets)) || (is_subscribed && (seats - noOfSeats) >= remainingTickets)) {
+        this.setState({
+          soldOutError : `Only ${remainingTickets} tickets are remaining.`
+        })
+        return;
+      }
       totalAmount = (seats + 1) * perHeadAmount;
       if (codeApplied) {
         totalAmount = totalAmount - totalAmount * (discountPercentage / 100);
@@ -60,6 +71,9 @@ class FeeCalculation extends Component {
   };
 
   handleSeatsUpdate = () => {
+    this.setState({
+      soldOutError: ''
+    })
     const {
       perHeadAmount,
       handleFreeTicket,
@@ -89,12 +103,30 @@ class FeeCalculation extends Component {
   handleUpdateCancel = () => {
     this.setState({
       seats: this.props.noOfSeats,
+      soldOutError : '',
       isUpdate: false,
       totalAmount: this.props.noOfSeats * this.props.perHeadAmount,
       totalAmountAfterPromo: this.props.noOfSeats * this.props.perHeadAmount,
       codeApplied: false,
     });
   };
+
+  feedbackButtonClick = () => {
+    const {eventData} = this.props;
+    this.props.history.push(
+      eventData.feedback_given ? 
+        `/feedbacks?id=${this.props.eventData.id}` 
+      : 
+        `/submit-feedback?id=${this.props.eventData.id}`
+    )
+  }
+
+  handleCancel = () => {
+    this.setState({
+      soldOutError : ''
+    })
+    this.props.handleCancel()
+  }
 
   render() {
     const {eventData} = this.props;
@@ -105,6 +137,7 @@ class FeeCalculation extends Component {
           <div className="subscription-container">
             {actionAllowed &&
               <div className="subscription-left">
+                <div className="available-tickets">Total Available Tickets : {this.props.remainingTickets}</div>
                 {this.state.isUpdate ? (
                   <h2>
                     Newly added seats :{" "}
@@ -149,6 +182,9 @@ class FeeCalculation extends Component {
                     />
                   </div>
                 )}
+                {this.state.soldOutError.length > 0 &&
+                <div className="error">{this.state.soldOutError}</div>
+                }
                 {(this.props.perHeadAmount !== 0 &&
                   this.props.discountPercentage !== 0 &&
                   !this.props.eventData.is_subscribed) ||
@@ -253,26 +289,21 @@ class FeeCalculation extends Component {
         {this.props.eventData.is_subscribed && !this.state.isUpdate ? (
           <div className="update-row">
             <div style = {{display:"flex", justifyContent:"flex-start"}}>
-              <PDF
+              {/* <PDF
                 eventData={this.props.eventData}
                 userData={this.props.userData}
-              />
+              /> */}
               <Button
-                disabled={this.props.eventData.feedback_given}
                 type="primary"
                 style ={{marginLeft:"2%"}}
-                onClick={() =>
-                  this.props.history.push(
-                    `/submit-feedback?id=${this.props.eventData.id}`
-                  )
-                }
+                onClick={this.feedbackButtonClick}
               >
-                {this.props.eventData.feedback_given ? "Feedback Submitted" : "Submit Feedback"}
+                {this.props.eventData.feedback_given ? "View Feedback" : "Submit Feedback"}
               </Button>
             </div>
             {actionAllowed && 
               <div className="cancel-row">
-                <Button onClick={this.props.handleCancel}>Cancel</Button>
+                <Button onClick={this.handleCancel}>Cancel</Button>
                 <Button
                   type="primary"
                   disabled={this.props.noOfSeats === this.state.seats}
@@ -311,6 +342,7 @@ FeeCalculation.propTypes = {
   amountPaid: PropTypes.number,
   userData: PropTypes.object,
   history: PropTypes.object,
+  remainingTickets: PropTypes.number
 };
 
 export default FeeCalculation;

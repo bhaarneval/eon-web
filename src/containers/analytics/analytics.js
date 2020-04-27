@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./analyticsContainer.css";
 import { Card, Button } from "antd";
-import {SyncOutlined} from "@ant-design/icons";
+import { SyncOutlined } from "@ant-design/icons";
 import RevenueCard from "../../components/analytics/analyticsRevenueCard";
 import PieChartCard from "../../components/analytics/pieChartCard";
 import TicketGraph from "../../components/analytics/ticketGraph";
@@ -27,23 +27,25 @@ class Analytics extends Component {
   }
 
   componentDidMount() {
-   if(this.props.userRole !== "subscriber") {
+    if (this.props.userRole !== "subscriber") {
       this.fetchAnalytic();
-   }
+    } else {
+      this.props.history.push("/dashboard");
+    }
   }
 
   fetchAnalytic = () => {
     const { accessToken, fetchAnalyticsData } = this.props;
-    const {searchText, status} = this.state;
+    const { searchText, status } = this.state;
     let filterData = {
-        searchText: searchText!=""?searchText:undefined,
-        status: (status!=="")?status:undefined
-    }
+      searchText: searchText != "" ? searchText : undefined,
+      status: status !== "" ? status : undefined,
+    };
     fetchAnalyticsData({
       accessToken,
       filterData: filterData,
     });
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if (this.props.analyticsData !== prevProps.analyticsData) {
@@ -67,33 +69,42 @@ class Analytics extends Component {
 
   handleDropDownChange = (key) => {
     this.setState(
-        {
-          status: statusList[key]['type'],
-        },
-        () => {
-          this.fetchAnalytic();
-        }
-      );
-  }
+      {
+        status: statusList[key]["type"],
+      },
+      () => {
+        this.fetchAnalytic();
+      }
+    );
+  };
   removeFilters = () => {
-      this.setState({
-          searchText: "",
-          status: ""
-    }, () => this.fetchAnalytic());
-  }
+    this.setState(
+      {
+        searchText: "",
+        status: "",
+      },
+      () => this.fetchAnalytic()
+    );
+  };
   render() {
     const { searchText, status } = this.state;
     const { analyticsData } = this.props;
     return (
       <>
-        {
-          analyticsData.event_list && (
-            <div className="analytics-container">
-              <div style={{display: 'flex'}}>
+        {analyticsData.event_list && (
+          <div className="analytics-container">
+            <div  style={{height:"100%", boxSizing:"border-box", marginRight:"2%"}}>
+              <div style={{ display: "flex" }}>
                 <div className="side-cards">
                   <div className="revenue-row">
-                    <RevenueCard header="Revenue generated" revenueGenerated={'₹' + analyticsData.total_revenue} />
-                    <RevenueCard header="Upcoming events" revenueGenerated={analyticsData.ongoing_events} />
+                    <RevenueCard
+                      header="Revenue generated"
+                      revenueGenerated={"₹" + analyticsData.total_revenue}
+                    />
+                    <RevenueCard
+                      header="Upcoming events"
+                      revenueGenerated={analyticsData.ongoing_events}
+                    />
                   </div>
                   <div className="pie-chart-div">
                     <PieChartCard analyticsData={analyticsData} />
@@ -109,7 +120,12 @@ class Analytics extends Component {
                           justifyContent: "flex-start",
                         }}
                       >
-                        <Button onClick={this.removeFilters} style={{marginRight:"1%"}}><SyncOutlined /></Button>
+                        <Button
+                          onClick={this.removeFilters}
+                          style={{ marginRight: "1%" }}
+                        >
+                          <SyncOutlined />
+                        </Button>
                         <SearchBox
                           handleOnChange={this.handleSearchTextChange}
                           placeholder={"Event Name / Location"}
@@ -123,18 +139,28 @@ class Analytics extends Component {
                           value={status !== "" ? status : "Status"}
                         />
                       </div>
-                      <AnalyticsTable  eventsList = {analyticsData.event_list}/>
+                      <AnalyticsTable eventsList={analyticsData.event_list} />
                     </div>
                   </Card>
                 </div>
               </div>
-              <TicketGraph data={analyticsData && analyticsData.ticket_graph_object} />
-              <EventWiseRevenue data={analyticsData && analyticsData.ticket_graph_object} />
-              <MonthWiseStatusCount data={analyticsData && analyticsData.monthly_event_count} />
-              <MonthWiseRevenue data={analyticsData && analyticsData.monthly_revenue} />
             </div>
-          )
-        }
+            <div style={{marginTop:"1%"}}>
+            <TicketGraph
+              data={analyticsData && analyticsData.ticket_graph_object}
+            />
+            <EventWiseRevenue
+              data={analyticsData && analyticsData.ticket_graph_object}
+            />
+            <MonthWiseStatusCount
+              data={analyticsData && analyticsData.monthly_event_count}
+            />
+            <MonthWiseRevenue
+              data={analyticsData && analyticsData.monthly_revenue}
+            />
+            </div>
+          </div>
+        )}
       </>
     );
   }
@@ -156,5 +182,6 @@ Analytics.propTypes = {
   fetchAnalyticsData: PropTypes.func,
   analyticsData: PropTypes.object,
   userRole: PropTypes.string,
+  history: PropTypes.object,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Analytics);

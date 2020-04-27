@@ -175,7 +175,7 @@ function FormComponent(props) {
             <Input.TextArea placeholder = "Enter Address" autoSize = {{minRows:4, maxRows:4}} className = "input-textarea"/>
           </Form.Item>
           <div className="button-container">
-            <Button className="cancel-button" onClick={handleCancel}>
+            <Button type="default" onClick={handleCancel}>
               Cancel
             </Button>
             <Button disabled = {!ifUpdate} htmlType="submit" type="primary" className="save-button">

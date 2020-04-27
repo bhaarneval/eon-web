@@ -10,7 +10,6 @@ const { TextArea } = Input;
 import React, { Component } from "react";
 import {
     FacebookShareButton,
-    FacebookShareCount
 } from 'react-share';
 
 
@@ -68,7 +67,7 @@ class EventCount extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="detail-card-tile detail-card-container" style={{cursor: "pointer"}} onClick={this.feedbackClick}>
+                <div className="detail-card-tile cursor detail-card-container" onClick={this.feedbackClick}>
                     <div>
                         <span className="detail-card-tile-row"><img className="subscriber-image" src={feedback}/><div className="detail-card-tile-text">{eventData.feedback_count}</div></span>
                         <div>
@@ -77,29 +76,28 @@ class EventCount extends Component {
                     </div>
                 </div>
                 <div className="detail-card-tile detail-card-container">
-                    <FacebookShareButton url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
-                        <img className="subscriber-image" src={fb}/>
-                    </FacebookShareButton>
-                    <FacebookShareCount url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
-                        {shareCount => <span className="myShareCountWrapper">{shareCount}</span>}
-                    </FacebookShareCount>
-                    <div style={{cursor:"default"}}>
-                        Share
+                    <div>
+                        <FacebookShareButton url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
+                            <img className="subscriber-image" src={fb}/>
+                        </FacebookShareButton>
+                        <div className="cursor">
+                            Share
+                        </div>
                     </div>
                 </div>
                 <div className="detail-card-tile reminder-tile">
                     <div onClick={() => isUpcoming && this.sendUpdate('reminder')}  className={`${isUpcoming ? 'cursor' : 'notAllowedCursor'} detail-card-container reminder-row`}>
-                        <span className="detail-card-tile-row"><img className="subscriber-image" src={reminder}/>Send reminder</span>
+                        <span className="detail-card-tile-row"><img className="subscriber-image" src={reminder}/>Send Reminder</span>
                     </div>
                     <div onClick={() => isUpcoming && this.sendUpdate('updates')} className={`${isUpcoming ? 'cursor' : 'notAllowedCursor'} detail-card-container reminder-row`}>
-                        <span className="detail-card-tile-row"><img className="subscriber-image" src={update}/>Send updates</span>
+                        <span className="detail-card-tile-row"><img className="subscriber-image" src={update}/>Send Update</span>
                     </div>
                 </div>
                 {this.state.updatePopup &&
                     <Modal
                         visible
                         onCancel = {this.handleClose}
-                        title = {<div className = 'modal-header'>{this.state.reminderType === 'updates' ? 'Send an update' : 'Send reminder'}</div>}
+                        title = {<div className = 'modal-header'>{this.state.reminderType === 'updates' ? 'Send Update' : 'Send Reminder'}</div>}
                         footer = {null}
                         width={660}
                     >

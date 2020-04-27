@@ -7,7 +7,6 @@ import HighchartsReact from "highcharts-react-official";
 
 export default function MonthWiseStatusCount(props) {
   const { data } = props;
-  console.log(data)
 
   const options = {
     chart: {
@@ -16,6 +15,9 @@ export default function MonthWiseStatusCount(props) {
     title: {
         text: 'Month wise event status counts'
     },
+    credits: {
+        enabled: false,
+      },
     xAxis: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         title: {

@@ -47,7 +47,6 @@ class EventDetail extends Component {
     let searchParam = new URLSearchParams(search);
       let id = searchParam.get("id");
     if(!eventData || !eventData.id || eventData.id !== id){
-      
       getEventData({
         id,
         accessToken,
@@ -60,7 +59,6 @@ class EventDetail extends Component {
         },
       }); 
     }
-    
   }
 
   inviteButtonClick = () => {
@@ -394,6 +392,7 @@ render() {
               <FeeCaclculation
                 eventData={this.props.eventData}
                 history={history}
+                remainingTickets={eventData.remaining_tickets}
                 noOfSeats={eventData.subscription_details.no_of_tickets_bought || 1}
                 amountPaid={eventData.subscription_details.amount_paid}
                 discountPercentage={eventData.discount_percentage||eventData.subscription_details.discount_percentage||0}
@@ -546,7 +545,7 @@ EventDetail.propTypes = {
   shareWithFriend: PropTypes.func,
   cancelSubscription: PropTypes.func,
   updateWishList: PropTypes.func,
-};
+}
 
 const mapStateToProps = ({
   userReducer: {
@@ -559,14 +558,13 @@ const mapStateToProps = ({
     eventData,
     fetchingEvent
   },
-
 }) => ({
   userRole,
   userData,
   accessToken,
   eventType,
   eventData,
-  fetchingEvent
+  fetchingEvent,
 })
 const mapDispatchToProps = ({
   updateInviteeList: updateInviteeList,

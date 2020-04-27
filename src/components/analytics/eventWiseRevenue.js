@@ -22,6 +22,9 @@ export default function EventWiseRevenue(props) {
     title: {
         text: 'Event wise revenue'
     },
+    credits: {
+      enabled: false,
+    },
     xAxis: {
         categories: name_list,
         title: {

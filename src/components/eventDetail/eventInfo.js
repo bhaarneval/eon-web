@@ -5,6 +5,7 @@ import { Dropdown, Menu, Button, Input } from 'antd';
 const { TextArea } = Input;
 import React, { Component } from "react";
 import {Modal} from 'antd';
+import fb from '../../assets/fb.svg';
 import {
     MoreOutlined,
   } from '@ant-design/icons';
@@ -13,6 +14,10 @@ import {
   import AddBookmark from "../../assets/addBookmark.svg";
   import Bookmarked from "../../assets/bookmarked.svg";
 import moment from 'moment';
+import {
+    FacebookShareButton,
+} from 'react-share';
+
 
 class EventInfo extends Component {
     constructor(props) {
@@ -111,12 +116,15 @@ class EventInfo extends Component {
                         <div>
                             <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={handleShare}/>
                             <img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/>
+                            <FacebookShareButton url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
+                                <img className="subscriber-image" src={fb}/>
+                            </FacebookShareButton>
                         </div>
                     ):null}
                 </div>
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
-                        <div><b>Type of event</b></div>
+                        <div><b>Type of Event</b></div>
                     <div>{eventType.length>0 && (eventData.event_type||eventData.type)?eventType.find(option => (eventData.event_type === option.id)||(eventData.type===option.id)).type.toUpperCase():""}</div>
                     </div>
                     <div className="detail-card-top-other-box">
