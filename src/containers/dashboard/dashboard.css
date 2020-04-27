@@ -14,7 +14,7 @@
 .cards-row{
     width: 100%;
     height: 18em;
-    margin-top: 4%;
+    margin: 4% 0;
 }
 .dashboard-actions-container {
     padding: 1%;
@@ -31,7 +31,7 @@
 
 .sub-content{
     margin-left: 6%;
-    padding: 1% 2%;
+    padding: 5px 25px 10px 20px;
 }
 
 .button-create {
