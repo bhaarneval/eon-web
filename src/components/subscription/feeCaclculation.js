@@ -1,4 +1,4 @@
-import { Button, InputNumber, message } from "antd";
+import { Button, InputNumber } from "antd";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./subscription.css";
@@ -17,16 +17,22 @@ class FeeCalculation extends Component {
       codeApplied: false,
       isSubscribed: this.props.eventData.is_subscribed || false,
       isUpdate: false,
+      soldOutError: '',
     };
   }
 
   onIncDecSeats = (type) => {
+    this.setState({
+      soldOutError : ''
+    })
     let { seats, totalAmount, codeApplied} = this.state;
     const { perHeadAmount, discountPercentage, remainingTickets, eventData, noOfSeats } = this.props;
     const {is_subscribed} = eventData;
     if (type === "inc") {
       if ((!is_subscribed && ((seats - noOfSeats + 1) >= remainingTickets)) || (is_subscribed && (seats - noOfSeats) >= remainingTickets)) {
-        message.error(`Only ${remainingTickets} tickets are remaining.`);
+        this.setState({
+          soldOutError : `Only ${remainingTickets} tickets are remaining.`
+        })
         return;
       }
       totalAmount = (seats + 1) * perHeadAmount;
@@ -165,6 +171,9 @@ class FeeCalculation extends Component {
                     />
                   </div>
                 )}
+                {this.state.soldOutError.length > 0 &&
+                <div className="error">{this.state.soldOutError}</div>
+                }
                 {(this.props.perHeadAmount !== 0 &&
                   this.props.discountPercentage !== 0 &&
                   !this.props.eventData.is_subscribed) ||
