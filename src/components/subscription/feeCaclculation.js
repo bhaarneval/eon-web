@@ -71,6 +71,9 @@ class FeeCalculation extends Component {
   };
 
   handleSeatsUpdate = () => {
+    this.setState({
+      soldOutError: ''
+    })
     const {
       perHeadAmount,
       handleFreeTicket,
@@ -100,6 +103,7 @@ class FeeCalculation extends Component {
   handleUpdateCancel = () => {
     this.setState({
       seats: this.props.noOfSeats,
+      soldOutError : '',
       isUpdate: false,
       totalAmount: this.props.noOfSeats * this.props.perHeadAmount,
       totalAmountAfterPromo: this.props.noOfSeats * this.props.perHeadAmount,
@@ -115,6 +119,13 @@ class FeeCalculation extends Component {
       : 
         `/submit-feedback?id=${this.props.eventData.id}`
     )
+  }
+
+  handleCancel = () => {
+    this.setState({
+      soldOutError : ''
+    })
+    this.props.handleCancel()
   }
 
   render() {
@@ -292,7 +303,7 @@ class FeeCalculation extends Component {
             </div>
             {actionAllowed && 
               <div className="cancel-row">
-                <Button onClick={this.props.handleCancel}>Cancel</Button>
+                <Button onClick={this.handleCancel}>Cancel</Button>
                 <Button
                   type="primary"
                   disabled={this.props.noOfSeats === this.state.seats}
