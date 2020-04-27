@@ -111,14 +111,14 @@ export function* fetchEventsList(param) {
   };
   
 let params = {};
-if(filterData.type){
+if(filterData.type && filterData.type !== 'All'){
   params = {...params, event_type:filterData.type}
 }
 if(filterData.event_status){
   params = {...params, event_status : filterData.event_status}
 }
 
-if(filterData.subscription_type){
+if(filterData.subscription_type && filterData.subscription_type !== 'All'){
   params = {...params, subscription_type : filterData.subscription_type}
 }
 

@@ -17,7 +17,6 @@ import {
   EMAIL_VALIDATION,
 } from "../../constants/constants";
 import BackButton from "../commonComponents/backButton";
-import { CheckCircleFilled } from "@ant-design/icons";
 import { postChangePassword, logOutUser } from "../../actions/commonActions";
 
 class ChangePassword extends Component {
@@ -131,7 +130,6 @@ logout = () => {
                 ]}
               >
                 <Input.Password
-                  visibilityToggle={false}
                   className="input-style"
                   placeholder="Old Password"
                   onChange={this.handleOldPasswordChange}
@@ -177,15 +175,14 @@ logout = () => {
               {this.state.hasErrored && (
                 <div className="error-message">{this.state.errorMessage}</div>
               )}
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  style={{ width: "100%" }}
-                >
-                  Reset Password
+              <div className="button-container">
+                <Button type="default" onClick={this.goBack}>
+                  Cancel
                 </Button>
-              </Form.Item>
+                <Button htmlType="submit" type="primary" className="save-button">
+                  Reset
+                </Button>
+              </div>
             </Form>
           </div>
         </div>

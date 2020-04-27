@@ -17,12 +17,14 @@ export const statusList = [
     {id : 0, type : 'upcoming'},
     {id : 1, type : 'completed'},
     {id : 2, type : 'cancelled'},
+    {id : 3, type : 'All'},
 ]
 
 
 export const feeTypeList = [
     {id : 0, type : 'paid'},
     {id : 1, type : 'free'},
+    {id : 2, type : 'All'},
 ]
 
 export const questionList = [

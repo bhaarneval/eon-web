@@ -294,6 +294,7 @@ class Dashboard extends Component {
                 value = {searchText}
               />
               <SelectDropDown
+                allOptionRequired={true}
                 handleChange={this.handleFilterChange}
                 optionsList={this.props.eventType}
                 placeholder={"Event Type"}
