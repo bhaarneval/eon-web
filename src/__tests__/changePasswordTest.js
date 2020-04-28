@@ -97,20 +97,28 @@ describe("forgot password components", () => {
       .dive();
     wrapper.instance().onFinish({ email: "mayank@gmail.com" });
   });
-  it("handle callback method call with error", () => {
+  it("handle post without error", () => {
     const wrapper = shallow(changePassword())
       .dive({ context: { store } })
       .dive();
-    expect(wrapper.state("hasErrored")).toBe(false)
-    expect(wrapper.state("errorMessage")).toBe("Unable to connect with server");
-    wrapper.instance().callbackMethod("Something went wrong");
-    expect(wrapper.state("hasErrored")).toBe(true)
-    expect(wrapper.state("errorMessage")).toBe("Something went wrong");
+    wrapper.setProps({
+      postChangePassword: ({callback}) => callback()
+    })
+    jest.useFakeTimers();
+    wrapper.instance().onFinish({ email: "mayank@gmail.com", });
+    jest.advanceTimersByTime(1000);
+    jest.useRealTimers();
   });
-  it("handle callback method call without error", () => {
+  it("handle post without error", () => {
     const wrapper = shallow(changePassword())
       .dive({ context: { store } })
       .dive();
-    wrapper.instance().callbackMethod();
+    wrapper.setProps({
+      postChangePassword: ({callback}) => callback("error")
+    })
+    expect(wrapper.state("hasErrored")).toBe(false);
+    wrapper.instance().onFinish({ email: "mayank@gmail.com", });
+    expect(wrapper.state("hasErrored")).toBe(true);
+    expect(wrapper.state("errorMessage")).toBe("error");
   });
 });

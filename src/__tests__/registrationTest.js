@@ -4,11 +4,14 @@ import React from "react";
 import { shallow, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import sinon from "sinon";
-import UserDetails from "../components/registration/userRegistration/forms";
 import {
   BasicDetails,
   PasswordDetails,
 } from "../components/registration/organiserRegistration/forms";
+import {
+  BasicDetails as BasicDetailsForm,
+  PasswordDetails as PasswordDetailsForm,
+} from "../components/registration/userRegistration/forms";
 import StyledButtons from "../components/registration/styledButtons";
 import FormSteps from "../components/registration/formSteps";
 import TermsAndConditions from "../components/registration/termsAndConditions";
@@ -17,50 +20,8 @@ import WarningModal from "../components/registration/warningModal";
 
 const handleSubmit = sinon.spy();
 const handleChangePassword = sinon.spy();
-const userDetails = (hasErrored) => {
-  return (
-    <UserDetails
-      values={{}}
-      handleSubmit={handleSubmit}
-      handlePasswordChange={handleChangePassword}
-      currentPassword={""}
-      hasErrored={hasErrored ? hasErrored : false}
-      errorMessage={""}
-    />
-  );
-};
+
 configure({ adapter: new Adapter() });
-describe("User Registration components", () => {
-  it("find the numer of Form components", () => {
-    const wrapper = shallow(userDetails());
-    expect(wrapper.find(".form-main")).toHaveLength(1);
-  });
-  it("numer of Input field", () => {
-    const wrapper = shallow(userDetails());
-    expect(wrapper.find(".input-style")).toHaveLength(5);
-  });
-  it("number of error message div", () => {
-    const wrapper = shallow(userDetails(true));
-
-    expect(wrapper.find(".error-message")).toHaveLength(1);
-  });
-  it("Number of password info div", () => {
-    const wrapper = shallow(userDetails());
-
-    expect(wrapper.find(".password-info")).toHaveLength(1);
-  });
-  it("Number of input components", () => {
-    const wrapper = shallow(userDetails());
-
-    expect(wrapper.find(Form.Item)).toHaveLength(5);
-  });
-  it("Number of password input div", () => {
-    const wrapper = shallow(userDetails());
-
-    expect(wrapper.find(Input.Password)).toHaveLength(2);
-  });
-});
-
 const basicDetails = () => {
   return <BasicDetails values={{}} handleSubmit={handleSubmit} />;
 };
@@ -153,5 +114,50 @@ describe("Terms and condition modal components", () => {
   it("number of components", () => {
     const wrapper = shallow(warningModal());
     expect(wrapper.find(Modal)).toHaveLength(1);
+  });
+});
+
+//userRegistration forms 
+
+const basicDetailsUser = () => {
+  return <BasicDetailsForm values={{}} handleSubmit={handleSubmit} />;
+};
+
+const passwordDetailsUser = (hasErrored) => {
+  return (
+    <PasswordDetailsForm
+      handleSubmit={handleSubmit}
+      values={{}}
+      handleBack={handleBack}
+      handlePasswordChange={handleChangePassword}
+      currentPassword={""}
+      hasErrored={hasErrored ? hasErrored : false}
+      errorMessage={""}
+    />
+  );
+};
+describe("Organizer registration form components", () => {
+  it("find the numer of Form components", () => {
+    const wrapper = shallow(basicDetailsUser());
+    expect(wrapper.find(".form-main")).toHaveLength(1);
+  });
+  it("numer of Input field", () => {
+    const wrapper = shallow(basicDetailsUser());
+    expect(wrapper.find(".input-style")).toHaveLength(3);
+  });
+  it("Number of input components", () => {
+    const wrapper = shallow(basicDetailsUser());
+
+    expect(wrapper.find(Form.Item)).toHaveLength(4);
+  });
+  it("Number of password input div", () => {
+    const wrapper = shallow(passwordDetailsUser());
+
+    expect(wrapper.find(Input.Password)).toHaveLength(2);
+  });
+  it("Number of error message div", () => {
+    const wrapper = shallow(passwordDetailsUser(true));
+
+    expect(wrapper.find(".error-message")).toHaveLength(1);
   });
 });
