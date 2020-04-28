@@ -111,7 +111,7 @@ search = (event) => {
     this.setState({
         searchValue: event.target.value,
         filteredRows: this.props.eventData.invitee_list.filter((data) => {
-          let name = data.user? data.user.name.toLowerCase(): "";
+          let name = data.user && data.user.name? data.user.name.toLowerCase(): "";
           let email = data.email.toLowerCase();
           return name.includes(searchText)|| email.includes(searchText)})
     })
