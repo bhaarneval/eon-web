@@ -43,14 +43,14 @@ export default function EventCards(props) {
           <div className="fees-div ellipsis-style">{subscription_fee === 0? "Free":"₹"+subscription_fee}</div>
         </div>
         <div className="address-div attendies-fees-div ellipsis-style">
-          <div>
+          <div className="ellipsis-style">
             <img src={calendarImg} className="calendar-gap"/>
             {eventDate}
           </div>
           <Tag 
             style={{marginRight : '0px'}}
             color={tagColor}>
-            <span className="capitalize">{event_status}</span>
+            <span className="capitalize ellipsis-style">{event_status}</span>
             </Tag>
           </div>
           <div className="address-div ellipsis-style">

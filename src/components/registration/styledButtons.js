@@ -8,7 +8,7 @@ import { Button } from 'antd';
 **/
 
 export default function StyledButtons (props) {
-    const { content, onClick } = props;
+    const { content, onClick, type } = props;
   return(
     <Button
     style={{
@@ -17,7 +17,7 @@ export default function StyledButtons (props) {
       backgroundColor:'#262C6F'
     }}
     type="primary"
-    htmlType="submit"
+    htmlType={type}
     shape="circle"
     onClick = {onClick}
   >
@@ -30,4 +30,5 @@ export default function StyledButtons (props) {
 StyledButtons.propTypes = {
     content:PropTypes.element.isRequired,
     onClick: PropTypes.func,
+    type: PropTypes.string.isRequired,
 }
