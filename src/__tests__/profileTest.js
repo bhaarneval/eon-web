@@ -15,7 +15,7 @@ const userProfile = {id:12, name:"John Doe", address:"address", email:"abc@xyz.c
 const profileComponent = <Profile store={store} history={{push:(text)=>{console.log(text+' called')}}} userProfile={userProfile}/>;
 
 configure({ adapter: new Adapter() });
-describe("login components", () => {
+describe("Profile components", () => {
 
   it("number of Components", () => {
     const wrapper = shallow(profileComponent).dive({ context: { store } }).dive();
