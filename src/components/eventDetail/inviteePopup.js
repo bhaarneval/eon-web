@@ -128,7 +128,7 @@ class InviteesPopup extends Component {
                     <div className = 'send-button-row'>
                         <div className = 'send-button'>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="primary" onClick={() => handleSend(this.state.inviteeList)}>Send</Button>
+                            <Button type="primary" disabled={Object.keys(this.state.inviteeList).length ==0} onClick={() => handleSend(this.state.inviteeList)}>Send</Button>
                         </div>
                     </div>
                 </div>
@@ -141,7 +141,7 @@ class InviteesPopup extends Component {
     handleClose: PropTypes.func.isRequired,
     onDiscountChange: PropTypes.func.isRequired,
     eventData: PropTypes.object,
-    discountPercentage: PropTypes.string,
+    discountPercentage: PropTypes.number,
 }
 
 export default InviteesPopup;
