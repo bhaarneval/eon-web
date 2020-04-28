@@ -87,6 +87,11 @@
     padding-bottom: 0%;
     padding: 2%;
 }
+.already-subscribed-block{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 .already-subscibed{
     background-color: #E5F4F3;
     width: 50%;

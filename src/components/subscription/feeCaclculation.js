@@ -215,7 +215,8 @@ class FeeCalculation extends Component {
               </div>
             }
             {this.props.eventData.is_subscribed && !this.state.isUpdate ? (
-              <div className="already-subscibed">
+              eventData.event_status!=="upcoming"?(<div className="already-subscribed-block">
+                <div className="already-subscibed">
                 <h2 style={{ color: "#57ABA0" }}>
                   You have already bought {this.props.noOfSeats} seats for this
                   event.
@@ -230,6 +231,23 @@ class FeeCalculation extends Component {
                   *Click on <b>Download</b> for event details and QR Code
                 </h4>
               </div>
+               </div>):(
+                 <div className="already-subscibed">
+                 <h2 style={{ color: "#57ABA0" }}>
+                   You have already bought {this.props.noOfSeats} seats for this
+                   event.
+                 </h2>
+                 {this.state.amountPaid > 0 && (
+                   <h4 style={{ color: "#57ABA0" }}>
+                     Total amount paid : ₹{" "}
+                     {this.props.eventData.subscription_details.amount_paid}
+                   </h4>
+                 )}
+                 <h4 style={{ color: "#57ABA0" }}>
+                   *Click on <b>Download</b> for event details and QR Code
+                 </h4>
+               </div>
+               )
             ) : !this.props.perHeadAmount ||
               this.props.perHeadAmount === 0 ? null : (
               <div className="subscription-left">
