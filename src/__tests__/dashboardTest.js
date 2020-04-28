@@ -43,25 +43,25 @@ const eventList =  [
     }];
 
 configure({ adapter: new Adapter() });
-describe("login components", () => {
+describe("dashboard components", () => {
 
-  it("number of Form Components", () => {
+  it("number of sub-content Components", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.find(".sub-content")).toHaveLength(1);
   });
-  it("number of components", () => {
+  it("number of dashboard-actions-container components", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.find(".dashboard-actions-container")).toHaveLength(1);
   });
-  it("number of input field", () => {
+  it("number of filter field", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.find(".filters")).toHaveLength(1);
   });
-  it("number of password input field", () => {
+  it("number of events-container-flex", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.find(".events-container-flex")).toHaveLength(1);
   });
-  it("number of password input field", () => {
+  it("number of create button and checkbox for oraganizer", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.setProps({
         userRole:"organizer"
@@ -69,40 +69,40 @@ describe("login components", () => {
     expect(wrapper.find(".create-button")).toHaveLength(1);
     expect(wrapper.find(".checkbox-style")).toHaveLength(1);
   });
-  it("number of password input field", () => {
+  it("number of events-heading", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.setState({
         isWishlist: false
     })
     expect(wrapper.find(".events-heading")).toHaveLength(1);
   });
-  it("number of password input field", () => {
+  it("state of wishlist", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.setState({
         isWishlist: true
     })
   });
-  it("number of password input field", () => {
+  it("go back method dashboard", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.instance().goBack();
   });
-  it("number of password input field", () => {
+  it("handle create event method dashboard", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.instance().handleCreateEvent();
   });
-  it("number of password input field", () => {
+  it("handleCheckChange method dashboard", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.state("isChecked")).toBe(false);
     wrapper.instance().handleCheckChange();
     expect(wrapper.state("isChecked")).toBe(true);
   });
-  it("number of password input field", () => {
+  it("handle key press method dashboard", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.state("searchText")).toBe("");
     wrapper.instance().handleKeyPress({target:{value:"hello"}});
     expect(wrapper.state("searchText")).toBe("hello");
   });
-  it("number of password input field", () => {
+  it("date selection simulation", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.state("startDate")).toBe("");
     expect(wrapper.state("endDate")).toBe("");
@@ -113,25 +113,25 @@ describe("login components", () => {
     expect(wrapper.state("startDate")).toBe("");
     expect(wrapper.state("endDate")).toBe("");
   });
-  it("number of password input field", () => {
+  it("fee type filter change", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.state("feeType")).toBe("");
     wrapper.instance().handleFeeFilterChange(1);
     expect(wrapper.state("feeType")).toBe("free");
   });
-  it("number of password input field", () => {
+  it("status filter change", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.state("statusType")).toBe("upcoming");
     wrapper.instance().handleStatusFilterChange(2);
     expect(wrapper.state("statusType")).toBe("cancelled");
   });
-  it("number of password input field", () => {
+  it("event type filter change", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     expect(wrapper.state("eventType")).toBe("");
     wrapper.instance().handleFilterChange(1);
     expect(wrapper.state("eventType")).toBe(1);
   });
-  it("number of password input field", () => {
+  it("remove filters", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.setState({
         isChecked: true,
@@ -158,7 +158,7 @@ describe("login components", () => {
     expect(wrapper.state("statusType")).toBe("upcoming");
     expect(wrapper.state("feeType")).toBe("");
   });
-  it("number of password input field", () => {
+  it("remove filters", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.setState({
         isChecked: true,
@@ -186,7 +186,7 @@ describe("login components", () => {
     expect(wrapper.state("statusType")).toBe("upcoming");
     expect(wrapper.state("feeType")).toBe("");
   });
-  it("number of password input field", () => {
+  it("apply filters", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.setState({
         isChecked: true,
@@ -200,11 +200,11 @@ describe("login components", () => {
     })
     wrapper.instance().applyFilters();
   });
-  it("number of password input field", () => {
+  it("splice array", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.instance().spliceArray(eventList);
   }); 
-  it("number of password input field", () => {
+  it("event click", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.setProps({
         getEventData: ({callback}) =>{callback()} 
@@ -215,7 +215,7 @@ describe("login components", () => {
     })
     wrapper.instance().handleEventClick(23);
   });  
-  it("number of password input field", () => {
+  it("fetch events for wishlist", () => {
     const wrapper = shallow(dashboardComponent).dive({ context: { store } }).dive();
     wrapper.setProps({
         location: {

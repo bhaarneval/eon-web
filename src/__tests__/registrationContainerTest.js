@@ -13,17 +13,17 @@ const store = createStore(rootReducer);
 const organiserComponent = <OrganiserRegistration store={store} history={{push:(text)=>{console.log(text+' called')}}}/>;
 
 configure({ adapter: new Adapter() });
-describe("login components", () => {
+describe("Registration container components", () => {
 
   it("number of Form Components", () => {
     const wrapper = shallow(organiserComponent).dive({ context: { store } }).dive();
     expect(wrapper.find(".registration-main")).toHaveLength(1);
   });
-  it("number of components", () => {
+  it("number of image components", () => {
     const wrapper = shallow(organiserComponent).dive({ context: { store } }).dive();
     expect(wrapper.find(".image-style")).toHaveLength(1);
   });
-  it("number of components", () => {
+  it("number of image components", () => {
     const wrapper = shallow(organiserComponent).dive({ context: { store } }).dive();
     wrapper.setState({
         activeKey: 1,
@@ -41,11 +41,11 @@ describe("login components", () => {
     })
     expect(wrapper.find(".form-container")).toHaveLength(1);
   });
-  it("number of password input field", () => {
+  it("number of form header field", () => {
     const wrapper = shallow(organiserComponent).dive({ context: { store } }).dive();
     expect(wrapper.find(".form-header")).toHaveLength(1);
   });
-  it("handle callback", () => {
+  it("handle modal close", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -59,7 +59,7 @@ describe("login components", () => {
       expect(wrapper.state("isChecked")).toBe(false);
       expect(wrapper.state("showModal")).toBe(false);
   });
-  it("handle callback", () => {
+  it("handle accept", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -72,7 +72,7 @@ describe("login components", () => {
       wrapper.instance().handleAccept();
       expect(wrapper.state("showModal")).toBe(false);
   });
-  it("handle callback", () => {
+  it("handle accept", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -104,7 +104,7 @@ describe("login components", () => {
       expect(wrapper.state("showModal")).toBe(false);
       expect(wrapper.state("showWarningModal")).toBe(true);
   });
-  it("handle callback", () => {
+  it("handle callback for accept", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -124,7 +124,7 @@ describe("login components", () => {
       expect(wrapper.state("showWarningModal")).toBe(false);
       expect(wrapper.state("hasErrored")).toBe(true);
   });
-  it("handle callback", () => {
+  it("handle checkboxchange", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -138,7 +138,7 @@ describe("login components", () => {
       wrapper.instance().handleCheckBoxChange();
       expect(wrapper.state("isChecked")).toBe(false);
   });
-  it("handle callback", () => {
+  it("handle password change", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -152,7 +152,7 @@ describe("login components", () => {
       }});
       expect(wrapper.state("password")).toBe("hello");
   });
-  it("handle callback", () => {
+  it("handle handleBack on multi step form", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -165,7 +165,7 @@ describe("login components", () => {
       wrapper.instance().handleBack();
       expect(wrapper.state("activeKey")).toBe(0);
   });
-  it("handle callback", () => {
+  it("handle submit", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -181,7 +181,7 @@ describe("login components", () => {
       expect(wrapper.state("formData")).toStrictEqual({email: "test@abc.com", password: "Test@123",address: undefined, contact: undefined, organization: undefined, role:"organizer"});
       expect(wrapper.state("showModal")).toBe(true);
   });
-  it("handle callback", () => {
+  it("handle acceptwarning", () => {
     const wrapper = shallow(organiserComponent)
       .dive({ context: { store } })
       .dive();
@@ -189,21 +189,21 @@ describe("login components", () => {
   });
 });
 
-const subscriberregistration = <UserRegistration store={store} history={{push:(text)=>{console.log(text+' called')}}}/>;
+const subscriberegistration = <UserRegistration store={store} history={{push:(text)=>{console.log(text+' called')}}}/>;
 
 configure({ adapter: new Adapter() });
 describe("login components", () => {
 
   it("number of Form Components", () => {
-    const wrapper = shallow(subscriberregistration).dive({ context: { store } }).dive();
+    const wrapper = shallow(subscriberegistration).dive({ context: { store } }).dive();
     expect(wrapper.find(".registration-main")).toHaveLength(1);
   });
-  it("number of components", () => {
-    const wrapper = shallow(subscriberregistration).dive({ context: { store } }).dive();
+  it("number of image components", () => {
+    const wrapper = shallow(subscriberegistration).dive({ context: { store } }).dive();
     expect(wrapper.find(".image-style")).toHaveLength(1);
   });
-  it("number of components", () => {
-    const wrapper = shallow(subscriberregistration).dive({ context: { store } }).dive();
+  it("number of image components", () => {
+    const wrapper = shallow(subscriberegistration).dive({ context: { store } }).dive();
     wrapper.setState({
         activeKey: 1,
         showModal: true,
@@ -212,7 +212,7 @@ describe("login components", () => {
     expect(wrapper.find(".image-style")).toHaveLength(1);
   });
   it("number of input field", () => {
-    const wrapper = shallow(subscriberregistration).dive({ context: { store } }).dive();
+    const wrapper = shallow(subscriberegistration).dive({ context: { store } }).dive();
     wrapper.setState({
         activeKey: 2,
         showModal: true,
@@ -220,12 +220,12 @@ describe("login components", () => {
     })
     expect(wrapper.find(".form-container")).toHaveLength(1);
   });
-  it("number of password input field", () => {
-    const wrapper = shallow(subscriberregistration).dive({ context: { store } }).dive();
+  it("number of form", () => {
+    const wrapper = shallow(subscriberegistration).dive({ context: { store } }).dive();
     expect(wrapper.find(".form-header")).toHaveLength(1);
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle modal close", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({
@@ -238,8 +238,8 @@ describe("login components", () => {
       expect(wrapper.state("isChecked")).toBe(false);
       expect(wrapper.state("showModal")).toBe(false);
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle accept", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({
@@ -251,8 +251,8 @@ describe("login components", () => {
       wrapper.instance().handleAccept();
       expect(wrapper.state("showModal")).toBe(false);
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle accept", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({
@@ -265,8 +265,8 @@ describe("login components", () => {
       wrapper.instance().handleAccept();
       expect(wrapper.state("showModal")).toBe(true);
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle accept", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({
@@ -277,12 +277,11 @@ describe("login components", () => {
           postUser: ({callback}) => callback()
       })
       expect(wrapper.state("isChecked")).toBe(true);
-      expect(wrapper.state("showWarningModal")).toBe(false);
       wrapper.instance().handleAccept();
       expect(wrapper.state("showModal")).toBe(false);
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle accept", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({
@@ -293,16 +292,14 @@ describe("login components", () => {
           postUser: ({callback}) => callback("error")
       })
       expect(wrapper.state("isChecked")).toBe(true);
-      expect(wrapper.state("showWarningModal")).toBe(false);
       expect(wrapper.state("showModal")).toBe(true);
       expect(wrapper.state("hasErrored")).toBe(false);
       wrapper.instance().handleAccept();
       expect(wrapper.state("showModal")).toBe(false);
-      expect(wrapper.state("showWarningModal")).toBe(false);
       expect(wrapper.state("hasErrored")).toBe(true);
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle checkboxcahnge", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({
@@ -315,8 +312,8 @@ describe("login components", () => {
       wrapper.instance().handleCheckBoxChange();
       expect(wrapper.state("isChecked")).toBe(false);
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle password change", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({
@@ -329,8 +326,8 @@ describe("login components", () => {
       }});
       expect(wrapper.state("password")).toBe("hello");
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle handle back", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({
@@ -342,8 +339,8 @@ describe("login components", () => {
       wrapper.instance().handleBack();
       expect(wrapper.state("activeKey")).toBe(0);
   });
-  it("handle callback", () => {
-    const wrapper = shallow(subscriberregistration)
+  it("handle submit", () => {
+    const wrapper = shallow(subscriberegistration)
       .dive({ context: { store } })
       .dive();
       wrapper.setState({

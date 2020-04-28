@@ -50,13 +50,13 @@ const notifications = [
   },
 ];
 configure({ adapter: new Adapter() });
-describe("login components", () => {
-  it("number of div Components", () => {
+describe("NavBar components", () => {
+  it("number of .nav-conatiner Components", () => {
     const wrapper = shallow(navComponent).dive({ context: { store } }).dive();
 
     expect(wrapper.find(".nav-container")).toHaveLength(1);
   });
-  it("number of div Components", () => {
+  it("number of different Components", () => {
     const wrapper = shallow(navComponent).dive({ context: { store } }).dive();
     wrapper.setState({
       openNotification: true,
@@ -69,7 +69,7 @@ describe("login components", () => {
     expect(wrapper.find(NotificationRender)).toHaveLength(1);
     expect(wrapper.find(Badge)).toHaveLength(1);
   });
-  it("number of div Components", () => {
+  it("number of differen Components", () => {
     const wrapper = shallow(navComponent).dive({ context: { store } }).dive();
     wrapper.setState({
       openNotification: true,
@@ -86,7 +86,7 @@ describe("login components", () => {
     localStorage.removeItem("token");
     expect(wrapper.find(Dropdown)).toHaveLength(1);
   });
-  it("number of div Components", () => {
+  it("handle clear all", () => {
     const wrapper = shallow(navComponent).dive({ context: { store } }).dive();
     wrapper.instance().goBack();
     wrapper.setProps({
@@ -108,7 +108,7 @@ describe("login components", () => {
       wrapper.instance().clearAll();
       wrapper.instance().handleChange();
   });
-  it("number of div Components", () => {
+  it("methods updating openModal state", () => {
     const wrapper = shallow(navComponent).dive({ context: { store } }).dive();
       expect(wrapper.state("openNotification")).toBe(false);
       wrapper.instance().openNotificationWithIcon();
@@ -133,7 +133,7 @@ describe("login components", () => {
       });
       wrapper.instance().menuSidebar();
   });
-  it("number of div Components", () => {
+  it("takeMenu action", () => {
     const wrapper = shallow(navComponent).dive({ context: { store } }).dive();
     wrapper.instance().takeMenuAction({key:"1"});
     wrapper.instance().takeMenuAction({key:"2"});
@@ -142,7 +142,7 @@ describe("login components", () => {
     wrapper.instance().takeMenuAction({key:"5"});
     wrapper.instance().takeMenuAction({key:"6"});
   });
-  it("number of div Components", () => {
+  it("handle logout and clear one notification", () => {
     const wrapper = shallow(navComponent).dive({ context: { store } }).dive();
     wrapper.setProps({
         logOutUser: ({callback}) => callback(),
@@ -158,12 +158,12 @@ const notificationRender = (
     <NotificationRender notifications={notifications} handleClearOneNotification={handleClearOneNotification}/>
   );
   configure({ adapter: new Adapter() });
-  describe("event form components", () => {
-    it("numer of img components", () => {
+  describe("Noto=ificationRenderer components", () => {
+    it("numer of div components", () => {
       const wrapper = shallow(notificationRender);
       wrapper.find("div").at(8).simulate("click");
     });
-    it("numer of img components", () => {
+    it("numer of Empty components", () => {
         const wrapper = shallow(notificationRender);
         wrapper.setProps({
             notifications: []

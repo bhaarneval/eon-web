@@ -30,17 +30,17 @@ const eventData = {
 }
 
 configure({ adapter: new Adapter() });
-describe("Create components", () => {
+describe("Create Event container", () => {
 
-  it("number of Form Components", () => {
+  it("number create container", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     expect(wrapper.find(".create-container")).toHaveLength(1);
   });
-  it("number of components", () => {
+  it("number of form div", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     expect(wrapper.find(".form-div")).toHaveLength(1);
   });
-  it("number of components", () => {
+  it("number of form div when user role is organizer and type is edit", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.setProps({
         userRole: "organizer",
@@ -54,7 +54,7 @@ describe("Create components", () => {
     expect(wrapper.find(".form-div")).toHaveLength(1);
     wrapper.instance().componentDidMount();
   });
-  it("number of components", () => {
+  it("execute getEventData method  callback", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.setProps({
         userRole: "organizer",
@@ -66,7 +66,7 @@ describe("Create components", () => {
     expect(wrapper.find(".form-div")).toHaveLength(1);
     wrapper.instance().componentDidMount();
   });
-  it("number of components", () => {
+  it("execute getEventData method  callback with error", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.setProps({
         userRole: "organizer",
@@ -78,7 +78,7 @@ describe("Create components", () => {
     expect(wrapper.find(".form-div")).toHaveLength(1);
     wrapper.instance().componentDidMount();
   });
-  it("number of components", () => {
+  it("handle create event method submit with error in callback", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.setProps({
         createNewEvent: ({callback}) => callback({error:true}),
@@ -93,7 +93,7 @@ describe("Create components", () => {
     wrapper.instance().handleSubmit({});
     expect(wrapper.state("hasErrored")).toBe(true);
   });
-  it("number of components", () => {
+  it("handle create event method submit without error in callback", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.setProps({
         createNewEvent: ({callback}) => callback({error:false, id: 23}),
@@ -108,7 +108,7 @@ describe("Create components", () => {
     wrapper.instance().handleSubmit({});
     expect(wrapper.state("hasErrored")).toBe(false);
   });
-  it("number of components", () => {
+  it("updateEventData method with error", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.setProps({
         updateEventData: ({callback}) => callback({error:true, id: 23}),
@@ -127,7 +127,7 @@ describe("Create components", () => {
     wrapper.instance().handleSubmit(event);
     expect(wrapper.state("hasErrored")).toBe(true);
   });
-  it("number of components", () => {
+  it("updateEventData method without error", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.setProps({
         updateEventData: ({callback}) => callback({error:false, id: 23}),
@@ -146,7 +146,7 @@ describe("Create components", () => {
     wrapper.instance().handleSubmit(event);
     expect(wrapper.state("hasErrored")).toBe(false);
   });
-  it("number of components", () => {
+  it("updating time for event", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.setProps({
         userData: {
@@ -163,7 +163,7 @@ describe("Create components", () => {
     wrapper.instance().handleSubmit(event);
   });
 
-  it("number of components", () => {
+  it("testing goBack component", () => {
     const wrapper = shallow(createEventContainer).dive({ context: { store } }).dive();
     wrapper.instance().goBack("goBack",1);
   });
@@ -209,21 +209,21 @@ describe("event form components", () => {
     const wrapper = shallow(eventForm);
     expect(wrapper.find(Form)).toHaveLength(1);
   });
-  it("numer of img components", () => {
+  it("numer of Input components", () => {
     const wrapper = shallow(eventForm);
     expect(wrapper.find(Input)).toHaveLength(5);
   });
-  it("numer of img components", () => {
+  it("numer of DatePicker components", () => {
     const wrapper = shallow(eventForm);
     expect(wrapper.find(Select)).toHaveLength(1);
     wrapper.find(DatePicker).simulate('click');
   });
-  it("numer of img components", () => {
+  it("numer of Button components", () => {
     const wrapper = shallow(eventForm);
     expect(wrapper.find(Button)).toHaveLength(3);
   });
 
-  it("numer of img components", () => {
+  it("numer of error components", () => {
     const wrapper = shallow(eventForm);
     wrapper.setProps({
         hasErrored: true,
@@ -232,13 +232,13 @@ describe("event form components", () => {
     expect(wrapper.find(".error-message")).toHaveLength(1);
   });
 
-  it("numer of img components", () => {
+  it("simulate form submit and switch toggle", () => {
     const wrapper = shallow(eventForm);
     wrapper.find(Switch).simulate("change", false)
     wrapper.find(Form).props().onFinish({});
   });
 
-  it("numer of img components", () => {
+  it("calling prop methods of antd libraries", () => {
     const wrapper = shallow(eventForm);
     wrapper.find(DatePicker).simulate("change", "12-08-2020")
   });
@@ -254,24 +254,24 @@ describe("event form components", () => {
   });
 
   
-  it("numer of img components", () => {
+  it("numer of Form components", () => {
     const wrapper = shallow(noDataEventForm);
     expect(wrapper.find(Form)).toHaveLength(1);
   });
-  it("numer of img components", () => {
+  it("numer of Input components", () => {
     const wrapper = shallow(noDataEventForm);
     expect(wrapper.find(Input)).toHaveLength(5);
   });
-  it("numer of img components", () => {
+  it("numer of iDatePickermg components", () => {
     const wrapper = shallow(noDataEventForm);
     expect(wrapper.find(Select)).toHaveLength(1);
     wrapper.find(DatePicker).simulate('click');
   });
-  it("numer of img components", () => {
+  it("numer of Button components", () => {
     const wrapper = shallow(noDataEventForm);
     expect(wrapper.find(Button)).toHaveLength(3);
   });
-  it("numer of img components", () => {
+  it("numer of Button components", () => {
     const wrapper = shallow(noDataEventForm);
     wrapper.setProps({
         eventType: [
@@ -299,7 +299,7 @@ const updateEventForm = (
 const noDataUpdateEventForm =  <UpdateEventForm values = {{}} handleCancel={handleOnClick} handleSubmit={handleOnClick} updateType={false} />
 
 configure({ adapter: new Adapter() });
-describe("event form components", () => {
+describe("event update form components", () => {
 it("numer of img components", () => {
 const wrapper = shallow(updateEventForm);
 expect(wrapper.find(Form)).toHaveLength(1);
@@ -353,17 +353,17 @@ wrapper.setProps({
 expect(wrapper.find(Button)).toHaveLength(3);
 });
 
-it("numer of img components", () => {
+it("simulate switch togggle and form submit", () => {
     const wrapper = shallow(updateEventForm);
     wrapper.find(Switch).simulate("change", false)
     wrapper.find(Form).props().onFinish({});
   });
 
-  it("numer of img components", () => {
+  it("simulate date selection", () => {
     const wrapper = shallow(updateEventForm);
     wrapper.find(DatePicker).simulate("change", "12-08-2020")
   });
-  it("numer of img components", () => {
+  it("antd libraries props methods", () => {
     const wrapper = shallow(updateEventForm);
     wrapper.find(Upload).props().beforeUpload({target: {
         files: [
@@ -373,7 +373,7 @@ it("numer of img components", () => {
         wrapper.find(DatePicker).props().disabledDate(moment("12-02-2020", "DD-MM-YYYY"));
         wrapper.find(Form).props().onFinish({});
   });
-  it("numer of img components", () => {
+  it("numer of error message components", () => {
     const wrapper = shallow(updateEventForm);
     wrapper.setProps({
         hasErrored: true,

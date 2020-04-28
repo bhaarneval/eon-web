@@ -136,7 +136,7 @@ const passwordDetailsUser = (hasErrored) => {
     />
   );
 };
-describe("Organizer registration form components", () => {
+describe("Subscriber registration form components", () => {
   it("find the numer of Form components", () => {
     const wrapper = shallow(basicDetailsUser());
     expect(wrapper.find(".form-main")).toHaveLength(1);

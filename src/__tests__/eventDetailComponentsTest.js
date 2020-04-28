@@ -62,12 +62,12 @@ const eventCountComponent = (
 );
 
 configure({ adapter: new Adapter() });
-describe("back button components", () => {
-  it("numer of img components", () => {
+describe("Event Detail components", () => {
+  it("numer of detail-card-count components", () => {
     const wrapper = shallow(eventCountComponent);
     expect(wrapper.find(".detail-card-count")).toHaveLength(1);
   });
-  it("numer of img components", () => {
+  it("methods changing upadatePopup", () => {
     const wrapper = shallow(eventCountComponent);
     wrapper.setState({
       updatePopup: true,
@@ -90,14 +90,14 @@ describe("back button components", () => {
     expect(wrapper.state("updatePopup")).toBe(true);
     wrapper.instance().feedbackClick();
   });
-  it("numer of img components", () => {
+  it("message change for updates and reminders", () => {
     const wrapper = shallow(eventCountComponent);
 
     expect(wrapper.state("message")).toBe("");
     wrapper.instance().onChange({ target: { value: "hello" } });
     expect(wrapper.state("message")).toBe("hello");
   });
-  it("numer of img components", () => {
+  it("simulate button click and feedbacks", () => {
     const wrapper = shallow(eventCountComponent);
 
     wrapper.find(".detail-card-container").at(4).simulate("click");
@@ -124,12 +124,12 @@ const eventInfoComponent = (
 );
 
 configure({ adapter: new Adapter() });
-describe("back button components", () => {
-  it("numer of img components", () => {
+describe("Event info components", () => {
+  it("numer of detail-card components", () => {
     const wrapper = shallow(eventInfoComponent);
     expect(wrapper.find(".detail-card")).toHaveLength(1);
   });
-  it("numer of img components", () => {
+  it("different conditions", () => {
     const wrapper = shallow(eventInfoComponent);
     wrapper.setProps({
       isOrganizer: false,
@@ -140,7 +140,7 @@ describe("back button components", () => {
       },
     });
   });
-  it("numer of img components", () => {
+  it("take menu action , cancel, handleBookmark, onChange", () => {
     const wrapper = shallow(eventInfoComponent);
     wrapper.setProps({
       isOrganizer: false,
@@ -163,7 +163,7 @@ describe("back button components", () => {
     wrapper.instance().cancel();
     wrapper.instance().handleBookmark();
   });
-  it("numer of img components", () => {
+  it("handle wishlist, callback with error", () => {
     const wrapper = shallow(eventInfoComponent);
     wrapper.setProps({
       isOrganizer: false,
@@ -204,29 +204,12 @@ const inviteesPopup = (
 );
 
 configure({ adapter: new Adapter() });
-describe("back button components", () => {
-  it("numer of img components", () => {
+describe("Invitee popup components", () => {
+  it("numer of warning components", () => {
     const wrapper = shallow(inviteesPopup);
     expect(wrapper.find(".warning")).toHaveLength(2);
   });
-  it("numer of img components", () => {
-    const wrapper = shallow(inviteesPopup);
-    wrapper.setState({
-      emailError: "asasa",
-      message: "asasa",
-      inviteeList: ["hello", "hello", "hello"],
-    });
-
-    wrapper.find(InputNumber).at(0).props().formatter("hello");
-    wrapper.find(InputNumber).at(0).props().parser("hello%");
-    wrapper.find(Button).at(1).simulate("click");
-    wrapper.instance().validateEmail("mayank@gmail.com");
-    wrapper.instance().onDelete("hello");
-    wrapper.instance().onChange({ target: { value: "hello world" } });
-    wrapper.find(".delete-mark").at(0).simulate("click");
-    expect(wrapper.find(".warning")).toHaveLength(2);
-  });
-  it("numer of img components", () => {
+  it("prominent methods", () => {
     const wrapper = shallow(inviteesPopup);
     wrapper.setState({
       emailError: "asasa",
@@ -243,8 +226,25 @@ describe("back button components", () => {
     wrapper.find(".delete-mark").at(0).simulate("click");
     expect(wrapper.find(".warning")).toHaveLength(2);
   });
+  it("prominent methods 2", () => {
+    const wrapper = shallow(inviteesPopup);
+    wrapper.setState({
+      emailError: "asasa",
+      message: "asasa",
+      inviteeList: ["hello", "hello", "hello"],
+    });
 
-  it("numer of img components", () => {
+    wrapper.find(InputNumber).at(0).props().formatter("hello");
+    wrapper.find(InputNumber).at(0).props().parser("hello%");
+    wrapper.find(Button).at(1).simulate("click");
+    wrapper.instance().validateEmail("mayank@gmail.com");
+    wrapper.instance().onDelete("hello");
+    wrapper.instance().onChange({ target: { value: "hello world" } });
+    wrapper.find(".delete-mark").at(0).simulate("click");
+    expect(wrapper.find(".warning")).toHaveLength(2);
+  });
+
+  it("adding email to list", () => {
     const wrapper = shallow(inviteesPopup);
     wrapper.setState({
       count: 3,
@@ -324,8 +324,8 @@ const inviteeTable = (
 );
 
 configure({ adapter: new Adapter() });
-describe("back button components", () => {
-  it("numer of img components", () => {
+describe("Invitee table components", () => {
+  it("numer of Button components", () => {
     const wrapper = shallow(inviteeTable);
     expect(wrapper.find(Table)).toHaveLength(1);
     wrapper.setState({
@@ -334,13 +334,13 @@ describe("back button components", () => {
     expect(wrapper.find(Button)).toHaveLength(1);
     wrapper.find(Button).simulate("click");
   });
-  it("numer of img components", () => {
+  it("if data undefined", () => {
     const wrapper = shallow(inviteeTable);
     wrapper.setProps({
       data: undefined,
     });
   });
-  it("numer of img components", () => {
+  it("selecting row keys", () => {
     const wrapper = shallow(inviteeTable);
     jest.useFakeTimers();
     expect(wrapper.state("selectedRowKeys")).toStrictEqual([]);

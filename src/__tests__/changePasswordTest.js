@@ -24,14 +24,14 @@ const changePassword = () => {
 };
 
 configure({ adapter: new Adapter() });
-describe("forgot password components", () => {
+describe("Change password components", () => {
   it("number of Form Components", () => {
     const wrapper = shallow(changePassword())
       .dive({ context: { store } })
       .dive();
     expect(wrapper.find(Form)).toHaveLength(1);
   });
-  it("number of containers", () => {
+  it("number of buttons", () => {
     const wrapper = shallow(changePassword())
       .dive({ context: { store } })
       .dive();
@@ -109,7 +109,7 @@ describe("forgot password components", () => {
     jest.advanceTimersByTime(1000);
     jest.useRealTimers();
   });
-  it("handle post without error", () => {
+  it("handle post with error", () => {
     const wrapper = shallow(changePassword())
       .dive({ context: { store } })
       .dive();

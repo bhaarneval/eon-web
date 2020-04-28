@@ -23,14 +23,14 @@ const eventDetailsComponent = (
 );
 
 configure({ adapter: new Adapter() });
-describe("login components", () => {
-  it("number of Form Components", () => {
+describe("Event conatiner components", () => {
+  it("number of sub-content Components", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
     expect(wrapper.find(".sub-content")).toHaveLength(1);
   });
-  it("number of components", () => {
+  it("number of invitee row components", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -50,7 +50,7 @@ describe("login components", () => {
       callback: () => expect(wrapper.find(Input)).toHaveLength(1),
     });
   });
-  it("number of password input field", () => {
+  it("number of payment -success field", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -96,13 +96,13 @@ describe("login components", () => {
     wrapper.instance().handleModalClose();
     expect(wrapper.state("showModal")).toBe(false);
   });
-  it("handle closeModal", () => {
+  it("handle deleteALl", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
     wrapper.instance().deleteAll();
   });
-  it("handle closeModal", () => {
+  it("handle discount change", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -124,7 +124,7 @@ describe("login components", () => {
     wrapper.instance().handleSend([12, 13]);
     expect(wrapper.state("showModal")).toBe(false);
   });
-  it("handle closeModal", () => {
+  it("handle search", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -143,7 +143,7 @@ describe("login components", () => {
     });
     wrapper.instance().search({ target: { value: "hello" } });
   });
-  it("handle closeModal", () => {
+  it("handle pay now", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -178,14 +178,14 @@ describe("login components", () => {
     expect(wrapper.state("finalAmount")).toBe(1200);
     expect(wrapper.state("totalAmount")).toBe(1500);
   });
-  it("handle closeModal", () => {
+  it("handle onBankSubmit", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
 
     wrapper.instance().onBankSubmit("12345678", "12-2020");
   });
-  it("handle closeModal", () => {
+  it("handle subscriptionPaid event", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -199,7 +199,7 @@ describe("login components", () => {
     expect(wrapper.state("showPaymentSuccess")).toBe(true);
     wrapper.instance().subscriptionPaidEventCallback("error");
   });
-  it("handle closeModal", () => {
+  it("handle subscription free event", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -208,7 +208,7 @@ describe("login components", () => {
     expect(wrapper.state("showPaymentSuccess")).toBe(true);
     wrapper.instance().subscriptionFreeEventCallback("error");
   });
-  it("handle closeModal", () => {
+  it("handle free ticket ", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -228,7 +228,7 @@ describe("login components", () => {
 
     wrapper.instance().handleFreeTicket(0);
   });
-  it("handle closeModal", () => {
+  it("handle payment back", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -240,7 +240,7 @@ describe("login components", () => {
     wrapper.instance().handlePaymentsBack();
     expect(wrapper.state("showPayment")).toBe(false);
   });
-  it("handle closeModal", () => {
+  it("handle close and confoirm cancel ", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -257,7 +257,7 @@ describe("login components", () => {
     wrapper.instance().confirmCancel();
     expect(wrapper.state("showCancelModal")).toBe(false);
   });
-  it("handle closeModal", () => {
+  it("handle showsharemodal", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -271,7 +271,7 @@ describe("login components", () => {
     expect(wrapper.state("showShareModal")).toBe(false);
   });
 
-  it("handle closeModal", () => {
+  it("handle refund flow", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -328,13 +328,13 @@ describe("login components", () => {
     expect(wrapper.state("showPaymentSuccess")).toBe(true);
     wrapper.instance().freeSeatsUpdateCallback("some error");
   });
-  it("handle closeModal", () => {
+  it("handle notifysubscriber", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
       wrapper.instance().handleNotifySubscriber("some Message", 8);
   });
-  it("handle closeModal", () => {
+  it("handle different props variables", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -354,7 +354,7 @@ describe("login components", () => {
       })
 
   });
-  it("handle closeModal", () => {
+  it("handle diff prop and state variables", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -378,7 +378,7 @@ describe("login components", () => {
       })
 
   });
-  it("handle closeModal", () => {
+  it("handle different props and state variables", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -401,7 +401,7 @@ describe("login components", () => {
       })
 
   });
-  it("handle closeModal", () => {
+  it("handle variables", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -421,7 +421,7 @@ describe("login components", () => {
           showPayment: true,
       })
   });
-  it("handle callback", () => {
+  it("handle fetch when reloading", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();
@@ -436,7 +436,7 @@ describe("login components", () => {
       })
       wrapper.instance().componentDidMount();
   });
-  it("handle callback", () => {
+  it("handle fetch when different id", () => {
     const wrapper = shallow(eventDetailsComponent)
       .dive({ context: { store } })
       .dive();

@@ -19,7 +19,7 @@ const backButton = (
 );
 
 configure({ adapter: new Adapter() });
-describe("back button components", () => {
+describe("Back button components", () => {
   it("numer of img components", () => {
     const wrapper = shallow(backButton);
     expect(wrapper.find("styles.header")).toHaveLength(0);
@@ -110,8 +110,8 @@ const ticketPdf = (
   />
 );
 
-describe("Select Drop down components", () => {
-  it("numer of Select components", () => {
+describe("PDF components", () => {
+  it("numer of Button components", () => {
     const wrapper = shallow(ticketPdf);
     expect(wrapper.find(Button)).toHaveLength(1);
   });

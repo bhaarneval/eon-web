@@ -15,21 +15,21 @@ const userCards = (image, isSubscribed, subscriptionFee) => {
 }
 
 configure({ adapter: new Adapter() });
-describe("back button components", () => {
-  it("numer of img components", () => {
+describe("Event cards components", () => {
+  it("numer of cardstyle components", () => {
     const wrapper = shallow(userCards("undefined",false));
     expect(wrapper.find(".cards-style")).toHaveLength(1);
   });
-  it("numer of img components", () => {
+  it("numer of img components with image empty", () => {
     const wrapper = shallow(userCards("", true, 0));
     expect(wrapper.find(".cards-style")).toHaveLength(1);
   });
-  it("numer of img components", () => {
+  it("numer of img components with image undefined", () => {
     const wrapper = shallow(userCards());
     expect(wrapper.find(".cards-style")).toHaveLength(1);
     wrapper.find(".cards-style").simulate('click');
   });
-  it("numer of img components", () => {
+  it("numer of img components with image there", () => {
     const wrapper = shallow(userCards("google.png",true));
     expect(wrapper.find(".cards-style")).toHaveLength(1);
   });
