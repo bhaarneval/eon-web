@@ -142,11 +142,6 @@ class UserRegistration extends Component {
               handleCheckChange={this.handleCheckBoxChange}
             />
           ) : null}
-          {showWarningModal && (
-            <WarningModal
-              handleAccept={() => this.props.history.push("/login")}
-            />
-          )}
         </div>
       </div>
     );
