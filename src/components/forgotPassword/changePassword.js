@@ -47,7 +47,7 @@ class ChangePassword extends Component {
       accessToken: this.props.accessToken,
       callback: (error) => {
         if (!error) {
-          message.success("Password updated successfully! Please login again!");
+          message.success("Password updated successfully");
           setTimeout(() => {
             this.props.logOutUser({
               callback: this.logoutCallback,

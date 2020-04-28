@@ -290,7 +290,7 @@ class FeeCalculation extends Component {
         {this.props.eventData.is_subscribed && !this.state.isUpdate ? (
           <div className="update-row">
             <div style = {{display:"flex", justifyContent:"flex-start"}}>
-            {!this.props.processing && actionAllowed &&
+            {!this.props.processing &&
               <PDF
                 eventData={this.props.eventData}
                 userData={this.props.userData}
