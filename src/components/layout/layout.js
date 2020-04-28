@@ -1,8 +1,7 @@
 import "./layout.css";
-/* eslint-disable */
 import * as React from "react";
 import { Route, Switch,Redirect } from "react-router-dom";
-
+import PropTypes from "prop-types";
 import Login from "../../components/login/login";
 import OrganiserRegistration from "../../containers/registration/organiserRegistration";
 import UserRegistration from "../../containers/registration/userRegistration";
@@ -39,6 +38,11 @@ const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
     />
   )
 }
+AfterLogin.propTypes = {
+  component: PropTypes.any,
+  isLoggedIn: PropTypes.string,
+  location: PropTypes.object,
+}
 const BeforeLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
   const hasUserLoggedIn = isLoggedIn;
@@ -56,7 +60,18 @@ const BeforeLogin = ({ component: Component, isLoggedIn, ...rest }) => {
     />
   )
 }
-
+BeforeLogin.propTypes = {
+  component: PropTypes.any,
+  isLoggedIn: PropTypes.string,
+  location: PropTypes.object,
+}
+StyledComp.propTypes = {
+  userData: PropTypes.object,
+  userRole: PropTypes.string,
+  accessToken: PropTypes.string,
+  getNotifications: PropTypes.func,
+  location: PropTypes.object,
+}
 function StyledComp(props) {
   const isLoggedIn = props.userData.user_id;
     const {userData, userRole, getNotifications, accessToken} = props;
@@ -108,7 +123,7 @@ function StyledComp(props) {
 
 class LayoutComponent extends React.Component {
 
-  componentWillMount = () => {
+  UNSAFE_componentWillMount = () => {
     const token = localStorage.getItem('token');
     var decoded = jwt.decode(token, {complete: true});
     const currentTime = Math.floor(new Date().getTime()/1000);
@@ -137,6 +152,19 @@ class LayoutComponent extends React.Component {
       </Spin>
     );
   }
+}
+
+LayoutComponent.propTypes = {
+  fetchingData: PropTypes.bool,
+  fetchingEvent: PropTypes.bool,
+  fetchingQuestions: PropTypes.bool,
+  fetchingResponses: PropTypes.bool,
+  fetchingUser: PropTypes.bool,
+  submittingQuestions: PropTypes.bool,
+  userData: PropTypes.object,
+  userRole: PropTypes.string,
+  accessToken: PropTypes.string,
+  getNotifications: PropTypes.func,
 }
 
 const mapStateToProps = ({

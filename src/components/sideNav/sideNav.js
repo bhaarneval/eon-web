@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import {connect} from "react-redux"
 import PropTypes from "prop-types";
 
-import { isDark } from "../../util/themeIdentify";
 import { constants } from "../../constants/constants";
 import analytics from "../../assets/Analytics.svg";
 import event from "../../assets/Event Mgment.svg";
@@ -71,9 +70,7 @@ class SideNav extends Component {
   render() {
     const { active } = this.state;
     const iconClass = "vertical-center flex flex-row center iconContainer";
-    const themeWiseIconClass = `${iconClass} ${
-      isDark ? "activeDark" : "activeLight"
-    }`;
+    const themeWiseIconClass = `${iconClass} ${"activeDark"}`;
     return (
       <div className="sideNav">
         <img style={{ width: "80%", marginBottom: '50px' }} src={logo} />

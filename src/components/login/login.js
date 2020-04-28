@@ -1,7 +1,8 @@
-/* eslint-disable */
+
 import "./login.css";
 import { EMAIL_REQUIRED } from "../../constants/messages";
 import React, { Component } from "react";
+import PropTypes from "prop-types"
 import {  Form, Input, Button } from 'antd';
 import { Tabs } from 'antd';
 import { getUser, getNotifications } from "../../actions/commonActions";
@@ -131,5 +132,12 @@ const mapDispatchToProps = {
   getUser: getUser,
   getNotifications: getNotifications
 };
+
+Login.propTypes = {
+  fetchingUser: PropTypes.bool,
+  getUser: PropTypes.func,
+  getNotifications: PropTypes.func,
+  history: PropTypes.object,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
