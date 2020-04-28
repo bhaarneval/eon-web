@@ -51,5 +51,5 @@ export default function MonthWiseRevenue(props) {
 }
 
 MonthWiseRevenue.propTypes = {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
 };

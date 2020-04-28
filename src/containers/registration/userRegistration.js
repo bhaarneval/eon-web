@@ -8,7 +8,6 @@ import {
 } from "../../components/registration/userRegistration/forms";
 import FormSteps from "../../components/registration/formSteps";
 import TermsAndConditions from "../../components/registration/termsAndConditions";
-import WarningModal from "../../components/registration/warningModal";
 import BasicDetailsImg from "../../assets/Basic Details.svg";
 import PasswordImg from "../../assets/Password_Illustration.svg";
 import { postUser } from "../../actions/commonActions";
@@ -25,7 +24,6 @@ class UserRegistration extends Component {
       isChecked: false,
       hasErrored: false,
       errorMessage: "Unable to connect to the server!",
-      showWarningModal: false,
     };
   }
   handleModalClose = () => {
@@ -104,7 +102,6 @@ class UserRegistration extends Component {
       formData,
       isChecked,
       password,
-      showWarningModal,
     } = this.state;
     return (
       <div className="registration-main">

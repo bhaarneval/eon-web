@@ -1,20 +1,12 @@
 import "./nav.css";
-/* eslint-disable */
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Dropdown, Menu, Button, Badge, notification } from "antd";
+import { connect } from "react-redux";
+import { Dropdown, Menu, Button, Badge } from "antd";
 import logo from "../../assets/bitslogo.png";
 import NotificationRender from "./notificationRender";
 
 import { LogoutOutlined, DownOutlined, BellOutlined } from "@ant-design/icons";
-
-import {
-  LOGOUT,
-  MY_ACCOUNT,
-  LIGHT_MODE,
-  DARK_MODE,
-} from "../../constants/constants";
 import { logOutUser, readNotifications } from "../../actions/commonActions";
 
 class Navbar extends Component {
@@ -225,6 +217,13 @@ const mapDispatchToProps = {
 
 Navbar.propTypes = {
   notifications: PropTypes.array,
+  accessToken: PropTypes.string,
+  userData: PropTypes.object,
+  userRole: PropTypes.string,
+  logOutUser: PropTypes.func,
+  readNotifications: PropTypes.func,
+  history: PropTypes.object,
+  location: PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
