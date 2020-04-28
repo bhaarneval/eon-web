@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-/* eslint-disable */
 import StyledButtons from '../styledButtons';
 import '../forms.css';
 import { Form, Input } from "antd";
@@ -107,6 +106,7 @@ PasswordDetails.propTypes = {
   currentPassword: PropTypes.string.isRequired,
   hasErrored: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
+  handleConfirmPassword: PropTypes.func,
 };
 export function PasswordDetails(props) {
   const { values, handleSubmit, handleBack, currentPassword, handlePasswordChange, handleConfirmPassword, hasErrored, errorMessage } = props;
