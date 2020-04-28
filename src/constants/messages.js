@@ -1,6 +1,3 @@
-export const CLUSTER_NAME_MATCHES = "Cluster name should be a string";
-export const CLUSTER_NAME_REQUIRED = "Cluster name is required";
-export const CLUSTER_PASSWORD_REQUIRED = "Cluster password is required";
 export const NODES_REQUIRED = "Number of nodes is required";
 export const SQL_VERSION_REQUIRED = "SQL Version is required";
 export const VALID_DOMAIN = "Not a valid domain name";
