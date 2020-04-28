@@ -106,9 +106,7 @@ describe("Terms and condition modal components", () => {
 });
 
 const warningModal = () => {
-  return (
-    <WarningModal handleAccept={handleModalClose}/>
-  );
+  return <WarningModal handleAccept={handleModalClose} />;
 };
 describe("Terms and condition modal components", () => {
   it("number of components", () => {
@@ -117,7 +115,7 @@ describe("Terms and condition modal components", () => {
   });
 });
 
-//userRegistration forms 
+//userRegistration forms
 
 const basicDetailsUser = () => {
   return <BasicDetailsForm values={{}} handleSubmit={handleSubmit} />;
