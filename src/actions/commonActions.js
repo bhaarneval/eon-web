@@ -1,11 +1,4 @@
-import { actionTypes, actionLoginTypes, actionNotificationsTypes, actionAnalytics, actionFeedbackTypes } from "../constants/actionTypes";
-
-export const getClusters = id => {
-  return {
-    type: actionTypes.GET_CLUSTERS,
-    id: id
-  };
-};
+import { actionLoginTypes, actionNotificationsTypes, actionAnalytics, actionFeedbackTypes } from "../constants/actionTypes";
 
 export const getUser = ({email,password,callback}) => {
   return {

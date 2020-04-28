@@ -1,68 +1,94 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+28th April
+BITS EOn
 
-## Available Scripts
+### `npm install`
 
-In the project directory, you can run:
+Install all the dependencies mentioned in package.json
 
-### `yarn start`
+### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `yarn test`
+### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This command will run all the test cases in 'Test' folder.
+After all the test cases pass, a report will be generated and you can see on this link.
 
-### `yarn build`
+==========================================================================================
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Main libraries which has been used :
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Antd
+An enterprise-class UI design language and React UI library with a set of high-quality React components, one of best React UI libraries for enterprises.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+https://ant.design/docs/react/introduce
 
-### `yarn eject`
+### Redux 
+Redux is a predictable state container for JavaScript apps.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test. On top of that, it provides a great developer experience, such as live code editing combined with a time traveling debugger.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+https://redux.js.org/introduction/getting-started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Redux Saga
+redux-saga is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, easy to test, and better at handling failures.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+https://redux-saga.js.org/
 
-## Learn More
+### Highcharts
+https://www.npmjs.com/package/highcharts-react-official
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### PDF Download
+https://www.npmjs.com/package/@react-pdf/renderer
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Folder structure
 
-### Code Splitting
+Components :
+Components are pure screens which can be reused. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+    Analytics : Screens for analytics dashboard.
+    Common Components:
+    -> Back button for all the screens
+    -> Range picker for date picker
+    -> Search boxes for dashboard and analytics
+    -> Dropdowns for status/event/fee
+    -> PDF generator for downloading the pdf
 
-### Analyzing the Bundle Size
+    Dashboard cards : Cards on dashboard with event details
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+    Event creation : Forms for creation of events
 
-### Making a Progressive Web App
+    Event details : Displaying the event information
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+    Feedback module : Feedback question forms and feedback response sceen
 
-### Advanced Configuration
+    Forgot password : Screen for forgot password
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+    Login : Screens for login
 
-### Deployment
+    Navbars : Side navbars and top navbars.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+    Profile : User profile screen
 
-### `yarn build` fails to minify
+    Registration : Screens for organizer registration and subscriber registration.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+    Subscription : Screens for buying/updating/downloading tickets for an event.
+
+Containers :
+Containers contains the logic of any module which passes on the information to a component and component just renders that data.
+
+    Analytics : Logic for fetching analytics data.
+    Create event : Logic for creating an event
+    Dashboard : Logic for fetching event list on the basis of search filters.
+    Event detail : Logic to fetch a particular event.
+    Feedback : Logic to fetch the feedback questions/answers/posting response.
+    Profile : Logic to show profile information and updating the information.
+    Registration : Logic to register an organizer and subscriber.
+
+    Reducers : All the reducers for storing the data in redux stores.
+
+    Sagas : API calls for all the backend interactions.
+
+
