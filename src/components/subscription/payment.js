@@ -37,7 +37,7 @@ class Payment extends Component {
                         >
                             <Form.Item
                                 name="name"
-                                rules={[{ required: true, message: NAME_REQUIRED }]}
+                                rules={[{ required: true, message: NAME_REQUIRED },{pattern: /^[a-zA-Z ]+$/,message: "Name cannot contain special/numeric characters!"}]}
                             >
                                 <Input
                                     placeholder="Full Name"
@@ -64,12 +64,12 @@ class Payment extends Component {
                                     required: true,
                                     message: EXPIRY_REQUIRED
                                 },{
-                                    pattern:/^(0[1-9]|1[0-2])\/?([0-9]{4})$/,
-                                    message: "Expected, input format MM/YYYY",
+                                    pattern:/^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
+                                    message: "Expected, input format MM/YY",
                                 }]}
                             >
                                 <Input
-                                    placeholder="Expiry Date (MM/YYYY)"
+                                    placeholder="Expiry Date (MM/YY)"
                                     style={{width:"40%"}}
                                 />
                             </Form.Item>

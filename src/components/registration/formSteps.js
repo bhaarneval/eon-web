@@ -18,7 +18,7 @@ export default class FormSteps  extends Component {
      } = this.props;
   return (
     <div className = "multistep-style">
-      <Steps current={activeKey} labelPlacement="vertical" className='step-style'>
+      <Steps current={activeKey} labelPlacement="vertical" className='step-style' style={{width:"80%"}}>
         {stepList.map((steps, index) => (
           <Step key={index} title={steps} />
         ))}

@@ -9,7 +9,7 @@ import {
 } from "../../constants/messages";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button, Modal } from "antd";
+import { Form, Input, Button, Modal, message } from "antd";
 
 import { UserOutlined } from "@ant-design/icons";
 import {
@@ -32,30 +32,12 @@ class ChangePassword extends Component {
     };
   }
 
-logoutCallback = () => {
+  logoutCallback = () => {
     localStorage.clear();
     if (!localStorage.getItem("token")) {
       window.location.replace("/login");
     }
-}
-  
-logout = () => {
-    this.props.logOutUser({
-      callback: this.logoutCallback ,
-    });
   };
-
-  callbackMethod = (error) => {
-    if(!error) {
-      this.logout();
-    }
-    else{
-      this.setState({
-        hasErrored: true,
-        errorMessage: error,
-      })
-    }
-  }
 
   onFinish = (values) => {
     const { email, oldPassword, newPassword } = values;
@@ -63,7 +45,21 @@ logout = () => {
     this.props.postChangePassword({
       data: data,
       accessToken: this.props.accessToken,
-      callback: this.callbackMethod
+      callback: (error) => {
+        if (!error) {
+          message.success("Password updated successfully! Please login again!");
+          setTimeout(() => {
+            this.props.logOutUser({
+              callback: this.logoutCallback,
+            });
+          }, 1000);
+        } else {
+          this.setState({
+            hasErrored: true,
+            errorMessage: error,
+          });
+        }
+      },
     });
   };
 
@@ -123,10 +119,6 @@ logout = () => {
                     required: true,
                     message: "Please input your old password!",
                   },
-                  {
-                    pattern: PASSWORD_VALIDATION,
-                    message: INVALID_PASSWORD,
-                  },
                 ]}
               >
                 <Input.Password
@@ -144,7 +136,7 @@ logout = () => {
                   },
                   {
                     pattern: this.state.oldPassword,
-                    message: "New Password cannot be same as old password",
+                    message: "New Password cannot be same as old password!",
                   },
                   {
                     pattern: PASSWORD_VALIDATION,
@@ -179,7 +171,11 @@ logout = () => {
                 <Button type="default" onClick={this.goBack}>
                   Cancel
                 </Button>
-                <Button htmlType="submit" type="primary" className="save-button">
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  className="save-button"
+                >
                   Reset
                 </Button>
               </div>

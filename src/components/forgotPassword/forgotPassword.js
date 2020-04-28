@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import FormSteps from "../registration/formSteps";
-import { Form, Input } from "antd";
+import { Form, Input, message } from "antd";
 import { RightOutlined,LeftOutlined, KeyOutlined } from "@ant-design/icons";
 import StyledButtons from "../registration/styledButtons";
 import {
@@ -55,18 +55,6 @@ class ForgotPassword extends Component {
     }
   }
 
-  postForgotPasswordCallback = (error) => {
-    if(!error){
-      this.props.history.push("/login");
-    }
-    else {
-      this.setState({
-        hasErrored: true,
-        errorMessage: error
-      });
-    }
-  }
-
   onFinish = (value) => {
     let { activeKey, submitData } = this.state;
     let {getVerificationCode, postForgotPassword} = this.props;
@@ -81,7 +69,19 @@ class ForgotPassword extends Component {
         submitData = {...submitData,password:value.password, code: value.otp};
       postForgotPassword({
         data: submitData,
-        callback: this.postForgotPasswordCallback
+        callback: (error) => {
+          if(!error){
+            message.success("Password Updated Successfully!");
+              this.props.history.push("/login")
+            
+          }
+          else {
+            this.setState({
+              hasErrored: true,
+              errorMessage: error
+            });
+          }
+        }
       });
     }
   };
@@ -148,6 +148,7 @@ class ForgotPassword extends Component {
                 </Form.Item>
                 <div className="one-button-div-center">
                   <StyledButtons
+                  type={"submit"}
                     content={<RightOutlined className="button-arrow" />}
                   />
                 </div>
@@ -220,9 +221,11 @@ class ForgotPassword extends Component {
                 <StyledButtons
                     content={<LeftOutlined className="button-arrow" />}
                     onClick={this.handleBack}
+                    type={"button"}
                   />
                   <StyledButtons
                     content={<RightOutlined className="button-arrow" />}
+                    type={"submit"}
                   />
                 </div>
               </Form>
