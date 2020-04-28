@@ -66,7 +66,7 @@ class ForgotPassword extends Component {
         data: submitData,
         callback: (error) => {
           if(!error){
-            message.success("Password Updated Successfully!");
+            message.success("Password Updated Successfully");
               this.props.history.push("/login")
             
           }
