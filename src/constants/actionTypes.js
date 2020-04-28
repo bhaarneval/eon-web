@@ -1,8 +1,3 @@
-export const actionTypes = {
-    GET_CLUSTERS: "GET_CLUSTERS",
-    CLUSTERS_RECIEVED: "CLUSTERS_RECIEVED"
-};
-
 export const actionNotificationsTypes = {
     GET_NOTIFICATIONS: "GET_NOTIFICATIONS",
     NOTIFICATIONS_RECIEVED: "NOTIFICATIONS_RECIEVED",

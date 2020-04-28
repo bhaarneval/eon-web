@@ -1,6 +1,5 @@
 export const constants = {
     HOME: "HOME",
-    TICKET: "CLUSTER",
     EVENT: "EVENT",
 }
 
