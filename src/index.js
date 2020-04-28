@@ -28,7 +28,7 @@ function* initSaga() {
 const persistConfig = {
   key: 'userReducer',
   storage: storage,
-  whitelist: ['userReducer', 'notificationReducer'] // which reducer want to store
+  whitelist: ['userReducer'] // which reducer want to store
 };
 const pReducer = persistReducer(persistConfig, rootReducer);
 

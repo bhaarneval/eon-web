@@ -7,7 +7,11 @@ import logo from "../../assets/bitslogo.png";
 import NotificationRender from "./notificationRender";
 
 import { LogoutOutlined, DownOutlined, BellOutlined } from "@ant-design/icons";
-import { logOutUser, readNotifications } from "../../actions/commonActions";
+import {
+  logOutUser,
+  readNotifications,
+  getNotifications,
+} from "../../actions/commonActions";
 
 class Navbar extends Component {
   constructor(props) {
@@ -31,6 +35,12 @@ class Navbar extends Component {
       this.setState({
         notifications: this.props.notifications,
       });
+    }
+    if (this.props.userData !== prevProps.userData) {
+      const { userData, userRole, accessToken, getNotification } = this.props;
+      if (userData.user_id && userRole === "subscriber" && accessToken !== "") {
+        getNotification(accessToken);
+      }
     }
   }
 
@@ -99,17 +109,17 @@ class Navbar extends Component {
   };
 
   handleClearOneNotification = (id) => {
-    let listId=[id]
+    let listId = [id];
     this.props.readNotifications({
       list: { notification_ids: listId },
       access: this.props.accessToken,
     });
 
     let notification = this.state.notifications;
-    notification = notification.filter(data => data.id!==id);
+    notification = notification.filter((data) => data.id !== id);
     this.setState({
-      notifications: notification
-    })
+      notifications: notification,
+    });
   };
 
   render() {
@@ -152,11 +162,15 @@ class Navbar extends Component {
             <Badge
               count={notifications.length}
               showZero={false}
-              dot={notifications.length!==0?true: false}
+              dot={notifications.length !== 0 ? true : false}
             >
               <BellOutlined
                 className="nav-items"
-                style={{ fontSize: "20px", marginRight: "-5px", marginTop:"-1px" }}
+                style={{
+                  fontSize: "20px",
+                  marginRight: "-5px",
+                  marginTop: "-1px",
+                }}
                 onClick={this.openNotificationWithIcon}
               />
             </Badge>
@@ -166,7 +180,7 @@ class Navbar extends Component {
               notifications={notifications}
               openNotificationWithIcon={this.openNotificationWithIcon}
               clearAll={this.clearAll}
-              handleClearOneNotification = {this.handleClearOneNotification}
+              handleClearOneNotification={this.handleClearOneNotification}
             />
           )}
           {localStorage.getItem("token") && this.props.accessToken !== "" ? (
@@ -204,6 +218,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   logOutUser: logOutUser,
+  getNotification: getNotifications,
   readNotifications: readNotifications,
 };
 
@@ -215,7 +230,8 @@ Navbar.propTypes = {
   logOutUser: PropTypes.func,
   readNotifications: PropTypes.func,
   history: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  getNotification: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

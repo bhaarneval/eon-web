@@ -19,7 +19,6 @@ import { connect } from "react-redux";
 import * as jwt from 'jsonwebtoken';
 import { Spin } from "antd";
 import Analytics from "../../containers/analytics/analytics";
-import { getNotifications } from "../../actions/commonActions";
 
 const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
@@ -67,18 +66,10 @@ BeforeLogin.propTypes = {
 }
 StyledComp.propTypes = {
   userData: PropTypes.object,
-  userRole: PropTypes.string,
-  accessToken: PropTypes.string,
-  getNotifications: PropTypes.func,
   location: PropTypes.object,
 }
 function StyledComp(props) {
   const isLoggedIn = props.userData.user_id;
-    const {userData, userRole, getNotifications, accessToken} = props;
-
-    if(userData.user_id && userRole === "subscriber" && accessToken !== ""){
-      getNotifications(accessToken);
-    }
   return (
     <div>
       <div className="flex flex-row layoutContainer">
@@ -140,14 +131,14 @@ class LayoutComponent extends React.Component {
       fetchingData,
       fetchingQuestions,
       submittingQuestions,
-      fetchingResponses
+      fetchingResponses,
+      userData
       } = this.props;
-      const {userData, userRole, getNotifications, accessToken} = this.props;
     let isFetching = fetchingEvent || fetchingUser || fetchingData || fetchingQuestions || submittingQuestions || fetchingResponses;
     return (
       <Spin spinning = {isFetching} className="spinner">
         <StyledComp
-        userData={userData} userRole = {userRole} getNotifications = {getNotifications} accessToken= {accessToken}
+        userData={userData}
       />
       </Spin>
     );
@@ -164,7 +155,6 @@ LayoutComponent.propTypes = {
   userData: PropTypes.object,
   userRole: PropTypes.string,
   accessToken: PropTypes.string,
-  getNotifications: PropTypes.func,
 }
 
 const mapStateToProps = ({
@@ -197,9 +187,5 @@ const mapStateToProps = ({
   fetchingResponses
 })
 
-const mapDispatchToProps = {
-  getNotifications: getNotifications
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(LayoutComponent);
+export default connect(mapStateToProps)(LayoutComponent);
 
