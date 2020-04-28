@@ -1,4 +1,3 @@
-/* eslint-disable */
 import "./forgotPassword.css";
 import {
   INVALID_PASSWORD,
@@ -8,8 +7,9 @@ import {
   PASSWORD_INFO,
 } from "../../constants/messages";
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Form, Input, Button, Modal, message} from "antd";
+import { Form, Input, Button, message } from "antd";
 
 import { UserOutlined } from "@ant-design/icons";
 import {
@@ -197,5 +197,13 @@ const mapDispatchToProps = {
   postChangePassword: postChangePassword,
   logOutUser: logOutUser,
 };
+ChangePassword.propTypes = {
+  history: PropTypes.object,
+  postChangePassword: PropTypes.func,
+  logOutUser: PropTypes.func,
+  accessToken: PropTypes.string,
+  userData: PropTypes.object,
+  fetchingUser: PropTypes.bool,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);
