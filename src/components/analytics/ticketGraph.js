@@ -15,14 +15,16 @@ export default function TicketGraph(props) {
 
   const options = {
     chart: {
-        type: 'column'
+        type: 'column',
+        // width: '100%'
     },
     title: {
         text: 'Total vs Sold Tickets'
     },
     credits: {
         enabled: false,
-      },
+    },
+      
     xAxis: {
         categories: name_list,
         title: {
@@ -62,6 +64,7 @@ export default function TicketGraph(props) {
   },
   plotOptions: {
       column: {
+        pointWidth: 50,
           stacking: 'normal',
           dataLabels: {
               enabled: true
