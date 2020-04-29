@@ -17,6 +17,20 @@ import { connect } from "react-redux";
 import moment from "moment";
 import { cancelSubscription, updateInviteeList, setEventUpdate, cancelEvent, sendNotification, getEventData, subscriptionFreeEvent,subscriptionPaidEvent, shareWithFriend, updateWishList } from "../../actions/eventActions";
 
+/**
+ * conatins details for a event
+ * for subscriber
+ * * event details
+ * * subscription and cancellation of events seat booking
+ * * download tickets
+ * for organizers
+ * * updating events
+ * * cancellation of events
+ * * to view submitted feedbacks
+ * * to view number of subscribers
+ * * add invitees/ delete invitees
+ * * share updates and reminders with subscribers
+ */
 class EventDetail extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +57,8 @@ class EventDetail extends Component {
       processing: false,
     };
   }
+
+  //to fetch event data for the event id specified in url params
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
     let searchParam = new URLSearchParams(search);
@@ -62,12 +78,13 @@ class EventDetail extends Component {
     }
   }
 
+  //to handle click of add invitee and show add invitee popup
   inviteButtonClick = () => {
     this.setState({
         showModal: true
     });
   }
-
+//to handle add invitee modal close
   handleModalClose = () => {
     this.setState({
         showModal: false,
@@ -75,7 +92,7 @@ class EventDetail extends Component {
     });
 }
 
-
+//delete all invitees that are present in the table and alreay invited
 deleteAll = (list) => {
     const {updateInviteeList, accessToken, eventData} = this.props;
     updateInviteeList({
@@ -85,12 +102,14 @@ deleteAll = (list) => {
     })
 }
 
+//on discount change for modal
 onDiscountChange = (value) => {
     this.setState({
         discountPercentage: value
     })
 }
 
+//handle send invites to the emails listed in the add invitee popup
 handleSend = (inviteeList) => {
   const {updateInviteeList, eventData, accessToken} = this.props;
   const data = {
@@ -106,6 +125,7 @@ handleSend = (inviteeList) => {
   })
 }
 
+//to handle search in invitee table
 search = (event) => {
   let searchText = event.target.value.toLowerCase();
     this.setState({
@@ -117,6 +137,7 @@ search = (event) => {
     })
 }
 
+//when user has selected number of seats to buy, initiate payment
 payNow = (seats, amount,totalAmount) => {
   if(this.props.eventData.subscription_details.no_of_tickets_bought){
     seats = seats - this.props.eventData.subscription_details.no_of_tickets_bought;
@@ -129,6 +150,7 @@ payNow = (seats, amount,totalAmount) => {
     })
 }
 
+//on submission of bank account details for payment
 onBankSubmit = (accountNo, expiry) => {
     this.setState({
       processing: true
@@ -161,6 +183,8 @@ onBankSubmit = (accountNo, expiry) => {
       }
     });  
 }
+
+//handle free events subscription
 handleFreeTicket = (seats) => {
   this.setState({
     processing: true,
@@ -197,15 +221,20 @@ handleFreeTicket = (seats) => {
     })
   }
 }
+
+//to go back to dashboard
 goBack = () => {
     this.props.history.push("/dashboard");
 }
+
+//to go back to seat selection page
 handlePaymentsBack = () => {
     this.setState({
         showPayment:false
     })
 }
 
+//to show modal for payment success
 handleClose = () => {
     this.setState({
       showPaymentSuccess: false,
@@ -213,11 +242,14 @@ handleClose = () => {
     })
 }
 
+//to show tickets cancel modal
 handleCancel = () => {
     this.setState({
         showCancelModal:true
     })
 }
+
+//on confirm of cancel tickets for the events
 confirmCancel = () => {
     const {eventData, accessToken, cancelSubscription} = this.props;
     cancelSubscription({eventId: eventData.id, accessToken});
@@ -225,11 +257,14 @@ confirmCancel = () => {
       showCancelModal: false
     })
 }
+
+//to handle share of event for friends
 handleShare = () => {
     this.setState({
         showShareModal: !this.state.showShareModal,
     })
 }
+//on share event submission
 shareSubmit = (values) => {
   const {accessToken, shareWithFriend, eventData} = this.props;
   shareWithFriend({
@@ -240,6 +275,8 @@ shareSubmit = (values) => {
         showShareModal: false,
     })
 }
+
+//to handle refund when user is cancelling subscription for few seasts
 handleRefund = (seats) => {
     const {eventData} = this.props;
     const {amount_paid, no_of_tickets_bought} = eventData.subscription_details;
@@ -252,6 +289,7 @@ handleRefund = (seats) => {
     })
 } 
 
+//to initiate refund for user 
 handleRefundConfirm = () => {
   const { userData, eventData,subscriptionPaidEvent,subscriptionFreeEvent,accessToken} = this.props;
   if(eventData.subscription_fee!==0){
@@ -309,6 +347,7 @@ handleRefundConfirm = () => {
   }   
 }
 
+//to notify subscribers with messages and reminders
 handleNotifySubscriber = (message, type) => {
   const {accessToken, sendNotification, eventData } = this.props;
   const data = {
@@ -317,6 +356,7 @@ handleNotifySubscriber = (message, type) => {
     type: type,
   };
 
+// to send notification to usubscribers
 sendNotification({
     data: data,
     accessToken: accessToken
