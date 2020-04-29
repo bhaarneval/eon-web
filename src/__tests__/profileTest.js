@@ -19,7 +19,7 @@ const userProfile = {
   email: "abc@xyz.com",
   contact: "1212121212",
   organization: "abc",
-  interest:[
+  interest: [
     {
       id: 1,
       type: "Sports",
@@ -28,7 +28,7 @@ const userProfile = {
       id: 2,
       type: "festival",
     },
-  ]
+  ],
 };
 const profileComponent = (
   <Profile
@@ -85,15 +85,13 @@ describe("Profile components", () => {
       .dive({ context: { store } })
       .dive();
 
-    wrapper
-      .instance()
-      .handleSubmit({
-        name: "abc",
-        email: "abc@xyz.com",
-        contact_number: "1234567890",
-        address: "address",
-        organization: "xyz",
-      });
+    wrapper.instance().handleSubmit({
+      name: "abc",
+      email: "abc@xyz.com",
+      contact_number: "1234567890",
+      address: "address",
+      organization: "xyz",
+    });
   });
   it("handle submit without error", () => {
     const wrapper = shallow(profileComponent)
@@ -106,15 +104,13 @@ describe("Profile components", () => {
       disableButton: true,
     });
     expect(wrapper.state("disableButton")).toBe(true);
-    wrapper
-      .instance()
-      .handleSubmit({
-        name: "abc",
-        email: "abc@xyz.com",
-        contact_number: "1234567890",
-        address: "address",
-        organization: "xyz",
-      });
+    wrapper.instance().handleSubmit({
+      name: "abc",
+      email: "abc@xyz.com",
+      contact_number: "1234567890",
+      address: "address",
+      organization: "xyz",
+    });
     expect(wrapper.state("disableButton")).toBe(false);
   });
   it("handle submit without error", () => {
@@ -128,15 +124,13 @@ describe("Profile components", () => {
       disableButton: true,
     });
     expect(wrapper.state("disableButton")).toBe(true);
-    wrapper
-      .instance()
-      .handleSubmit({
-        name: "abc",
-        email: "abc@xyz.com",
-        contact_number: "1234567890",
-        address: "address",
-        organization: "xyz",
-      });
+    wrapper.instance().handleSubmit({
+      name: "abc",
+      email: "abc@xyz.com",
+      contact_number: "1234567890",
+      address: "address",
+      organization: "xyz",
+    });
     expect(wrapper.state("disableButton")).toBe(true);
   });
   it("handle go back", () => {
@@ -145,6 +139,16 @@ describe("Profile components", () => {
       .dive();
 
     wrapper.instance().goBack();
+  });
+  it("handle disable changes", () => {
+    const wrapper = shallow(profileComponent)
+      .dive({ context: { store } })
+      .dive();
+    expect(wrapper.state("disableButton")).toBe(false);
+    wrapper.instance().handleDisableChange(true);
+    expect(wrapper.state("disableButton")).toBe(true);
+    wrapper.instance().handleDisableChange(false);
+    expect(wrapper.state("disableButton")).toBe(false);
   });
 });
 
@@ -170,14 +174,14 @@ const profileForm = (
 );
 describe("Profile components", () => {
   it("number of form conatiner for organizer", () => {
-    const wrapper = shallow(profileForm)
+    const wrapper = shallow(profileForm);
     expect(wrapper.find(".changePasswordContainer")).toHaveLength(1);
   });
   it("number of form conatiner for subscribers", () => {
-    const wrapper = shallow(profileForm)
+    const wrapper = shallow(profileForm);
     wrapper.setProps({
-      role: "subscriber"
-    })
+      role: "subscriber",
+    });
     expect(wrapper.find(".event-form-container")).toHaveLength(1);
   });
 });
