@@ -63,7 +63,7 @@ class EventCount extends Component {
                             <div className="detail-card-tile-text">{eventData.sold_tickets}</div>
                         </span>
                         <div>
-                            No of Subscribers
+                            No. of Subscribers
                         </div>
                     </div>
                 </div>
