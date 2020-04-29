@@ -1,6 +1,10 @@
-28th April
-BITS EOn
+Front end 
 
+================================================================================
+SET UP STARTS HERE
+
+git clone https://github.com/bits-pgp-fse/eon-web.git
+ 
 ### `npm install`
 
 Install all the dependencies mentioned in package.json
@@ -10,13 +14,17 @@ Install all the dependencies mentioned in package.json
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-
 ### `npm test`
 
-This command will run all the test cases in 'Test' folder.
+This command will run all the test cases in the 'Test' folder.
 After all the test cases pass, a report will be generated and you can see on this link.
 
-==========================================================================================
+### `npm run lint`
+
+This command will check if best practices are followed in code and gives error if there is some error.
+
+SET UP ENDS HEE
+================================================================================
 
 Main libraries which has been used :
 
@@ -43,18 +51,17 @@ https://www.npmjs.com/package/highcharts-react-official
 ### PDF Download
 https://www.npmjs.com/package/@react-pdf/renderer
 
-### Folder structure
+Folder structure
 
 Components :
 Components are pure screens which can be reused. 
-
-    Analytics : Screens for analytics dashboard.
-    Common Components:
-    -> Back button for all the screens
-    -> Range picker for date picker
-    -> Search boxes for dashboard and analytics
-    -> Dropdowns for status/event/fee
-    -> PDF generator for downloading the pdf
+Analytics : Screens for analytics dashboard.
+Common Components:
+Back button for all the screens
+Range picker for date picker
+Search boxes for dashboard and analytics
+Dropdowns for status/event/fee
+PDF generator for downloading the pdf
 
     Dashboard cards : Cards on dashboard with event details
 
@@ -76,6 +83,7 @@ Components are pure screens which can be reused.
 
     Subscription : Screens for buying/updating/downloading tickets for an event.
 
+
 Containers :
 Containers contains the logic of any module which passes on the information to a component and component just renders that data.
 
@@ -87,8 +95,6 @@ Containers contains the logic of any module which passes on the information to a
     Profile : Logic to show profile information and updating the information.
     Registration : Logic to register an organizer and subscriber.
 
-    Reducers : All the reducers for storing the data in redux stores.
 
-    Sagas : API calls for all the backend interactions.
-
-
+Reducers : All the reducers for storing the data in redux stores.
+Sagas : API calls for all the backend interactions.
