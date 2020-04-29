@@ -13,6 +13,9 @@ const { TabPane } = Tabs;
 import { UserOutlined } from '@ant-design/icons';
 import { EMAIL_VALIDATION} from '../../constants/constants';
 
+/**
+ * login component for users
+ */
 class Login extends Component {
   constructor(props) {
     super(props);

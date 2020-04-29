@@ -18,6 +18,10 @@ BasicDetails.propTypes = {
   values: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired
 };
+
+/**
+ * forms for subscriber registartion
+ */
 export function BasicDetails(props) {
   const { values, handleSubmit } = props;
   const {

@@ -7,6 +7,12 @@ import { Form, Input } from "antd";
 import "./subscription.css";
 import BackButton from "../commonComponents/backButton";
 
+/**
+ * component to take input payment details such as :
+ * Full name
+ * card number
+ * card expiry
+ */
 class Payment extends Component {
     constructor(props) {
         super(props);

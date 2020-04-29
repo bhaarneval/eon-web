@@ -13,6 +13,19 @@ import {
   getNotifications,
 } from "../../actions/commonActions";
 
+/**
+ * top navigation bar that contains
+ * if not logged in:
+ * Login button,
+ * registration drop down
+ * EOn icon,
+ * BITS icon
+ * if logged in :
+ * name || organization name depending upon the role of user,
+ * notification bell for subscribers
+ * dropdown to navigate to change Password or My Profile
+ * dropdown alos consists the logout button
+ */
 class Navbar extends Component {
   constructor(props) {
     super(props);

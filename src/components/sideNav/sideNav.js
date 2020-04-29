@@ -9,6 +9,11 @@ import analytics from "../../assets/Analytics.svg";
 import event from "../../assets/Event Mgment.svg";
 import logo from "../../assets/bitslogo.png";
 
+/**
+ * side navigation panel renderer 
+ * conatins and highlights the active page
+ * like analytics dashboard and the events dashboard
+ */
 class SideNav extends Component {
   constructor(props) {
     super(props);

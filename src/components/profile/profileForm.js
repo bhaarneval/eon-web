@@ -9,6 +9,9 @@ import userImg from "../../assets/user.svg";
 import {ORGANISATION_NAME,ORGANISATION_ADDRESS, CONTACT_NO, INVALID_CONATCT} from '../../constants/messages';
 import { PHONE_VALIDATION} from '../../constants/constants';
 
+/**
+ * Profile form to render when user vists My profile page
+ */
 export default function ProfileForm(props) {
   const { values, handleSubmit, handleCancel, role, interestList, disableButton, handleDisableChange } = props;
   let [interestsList,setInterest] = useState(values.interest);

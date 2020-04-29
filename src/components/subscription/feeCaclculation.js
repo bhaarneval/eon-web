@@ -5,6 +5,15 @@ import "./subscription.css";
 import PDF from "../commonComponents/ticketPdf";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
+/**
+ * component that renders the subscription details for subscribers
+ * conatins info like:
+ * number of seats bought
+ * download ticket button
+ * user can update/cancel their subscription
+ * share the event wit htheir friends
+ * apply coupon code if invited to the event by organizers
+ */
 class FeeCalculation extends Component {
   constructor(props) {
     super(props);

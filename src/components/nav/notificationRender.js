@@ -8,10 +8,8 @@ import deleteIcon from "../../assets/icons8-delete.svg";
 import moment from "moment";
 
 /**
- * @author
- * @class
+ * to render notification on click of notification bell
  **/
-
 class NotificationRender extends Component {
   constructor(props) {
     super(props);
