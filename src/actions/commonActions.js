@@ -1,5 +1,6 @@
 import { actionLoginTypes, actionNotificationsTypes, actionAnalytics, actionFeedbackTypes } from "../constants/actionTypes";
 
+//get user data 
 export const getUser = ({email,password,callback}) => {
   return {
     type: actionLoginTypes.GET_USER,
@@ -9,6 +10,7 @@ export const getUser = ({email,password,callback}) => {
   };
 };
 
+//fetch notifications
 export const getNotifications = (access) => {
   return {
     type: actionNotificationsTypes.GET_NOTIFICATIONS,
@@ -16,6 +18,7 @@ export const getNotifications = (access) => {
   };
 };
 
+//mark notification as read
 export const readNotifications = ({list, access, callback}) => {
   return {
     type: actionNotificationsTypes.READ_NOTIFICATIONS,
@@ -25,6 +28,7 @@ export const readNotifications = ({list, access, callback}) => {
   };
 };
 
+//post user for user creation
 export const postUser = ({data,callback}) => {
   return {
     type: actionLoginTypes.POST_USER,
@@ -32,6 +36,8 @@ export const postUser = ({data,callback}) => {
     callback: callback
   }
 }
+
+//get verification code for forgot password
 export const getVerificationCode = ({data,callback}) => {
   return {
     type: actionLoginTypes.GET_CODE,
@@ -40,6 +46,7 @@ export const getVerificationCode = ({data,callback}) => {
   }
 }
 
+//submit change password request for forgot password
 export const postForgotPassword = ({data, callback}) => {
   return {
     type: actionLoginTypes.FORGOT_PASSWORD,
@@ -47,6 +54,8 @@ export const postForgotPassword = ({data, callback}) => {
     callback: callback
   }
 }
+
+//request change password for logged in user
 export const postChangePassword = ({data,accessToken, callback}) => {
   return {
     type: actionLoginTypes.CHANGE_PASSWORD,
@@ -56,6 +65,7 @@ export const postChangePassword = ({data,accessToken, callback}) => {
   }
 }
 
+//clear store data and local storage and log user out
 export const logOutUser = ({callback}) => {
   return {
     type: actionLoginTypes.LOGGING_OUT,
@@ -63,6 +73,7 @@ export const logOutUser = ({callback}) => {
   }
 }
 
+//get usr profile for my profile
 export const getUserProfile = ({userId, accessToken}) => {
   return {
     type: actionLoginTypes.USER_PROFILE,
@@ -70,6 +81,7 @@ export const getUserProfile = ({userId, accessToken}) => {
   }
 }
 
+// get question for feedbacks
 export const getQuestions = ({accessToken}) => {
   return {
     type: actionFeedbackTypes.QUESTIONS,
@@ -77,7 +89,7 @@ export const getQuestions = ({accessToken}) => {
   }
 }
 
-
+//get feedback answers for organizers to view
 export const getResponses = ({id, accessToken}) => {
   return {
     type: actionFeedbackTypes.RESPONSES,
@@ -86,6 +98,7 @@ export const getResponses = ({id, accessToken}) => {
   }
 }
 
+//submit reponse for feedbacks of subscriber 
 export const postResponses = ({eventId, feedback, accessToken, callback}) => {
   return {
     type: actionFeedbackTypes.POST_QUESTIONS,
@@ -96,6 +109,7 @@ export const postResponses = ({eventId, feedback, accessToken, callback}) => {
   }
 }
 
+//update user profile request
 export const updateUserProfile = ({userId, data, accessToken, callback}) => {
   return {
     type: actionLoginTypes.UPDATE_USER_PROFILE,
@@ -106,6 +120,7 @@ export const updateUserProfile = ({userId, data, accessToken, callback}) => {
   }
 }
 
+// fetch data for analytics dashboard
 export const fetchAnalyticsData = ({accessToken, filterData}) => {
   return {
     type: actionAnalytics.GET_ANALYTICS,

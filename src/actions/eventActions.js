@@ -1,5 +1,6 @@
 import { actionEventTypes, actionSubscription } from "../constants/actionTypes";
 
+//request to create new event
 export const createNewEvent = ({formData,callback,accessToken,}) => {
     return {
       type: actionEventTypes.CREATE_EVENT,
@@ -9,6 +10,7 @@ export const createNewEvent = ({formData,callback,accessToken,}) => {
     };
 }
 
+//update event data request
 export const updateEventData = ({formData, callback, accessToken, eventId}) => {
     return {
         type: actionEventTypes.CREATE_EVENT,
@@ -19,6 +21,7 @@ export const updateEventData = ({formData, callback, accessToken, eventId}) => {
       };
 }
 
+//fetch events for dashboard
 export const fetchEvents = ({userData,accessToken, filterData}) => {
     return {
         type: actionEventTypes.GET_EVENT_LIST,
@@ -28,6 +31,7 @@ export const fetchEvents = ({userData,accessToken, filterData}) => {
     }
 }
 
+//get event details for a particular id
 export const getEventData = ({id,accessToken,userRole,callback, ifUpdate}) => {
     return {
         type: actionEventTypes.GET_EVENT_DATA,
@@ -39,6 +43,7 @@ export const getEventData = ({id,accessToken,userRole,callback, ifUpdate}) => {
     }
 }
 
+//upadte invitee list request
 export const updateInviteeList = ({accessToken,data, updateType}) => {
     return {
         type: actionEventTypes.SAVE_INVITEE,
@@ -48,6 +53,7 @@ export const updateInviteeList = ({accessToken,data, updateType}) => {
     }
 }
 
+//set loaders true when updating event
 export const setEventUpdate = (payload) => {
     return {
         type: actionEventTypes.SET_EVENT_UPDATE,
@@ -55,6 +61,7 @@ export const setEventUpdate = (payload) => {
     }
 }
 
+//cancel event request
 export const cancelEvent = ({message, accessToken, eventId, callback}) => {
     return {
         type: actionEventTypes.CANCEL_EVENT,
@@ -65,6 +72,7 @@ export const cancelEvent = ({message, accessToken, eventId, callback}) => {
     }
 }
 
+//send notifications request
 export const sendNotification = ({data, accessToken}) => {
     return {
         type: actionEventTypes.NOTIFY_SUBSCRIBER,
@@ -73,6 +81,7 @@ export const sendNotification = ({data, accessToken}) => {
     }
 }
 
+//subscribe to free event request
 export const subscriptionFreeEvent = ({data, accessToken, subscriptionType, callback}) => {
     return {
         type: actionSubscription.SUBSCRIBE_FREE,
@@ -82,6 +91,8 @@ export const subscriptionFreeEvent = ({data, accessToken, subscriptionType, call
         callback: callback,
     }
 }
+
+//subscription paid event request
 export const subscriptionPaidEvent = ({data, accessToken,callback}) => {
     return {
         type: actionSubscription.SUBSCRIBE_PAID,
@@ -91,6 +102,7 @@ export const subscriptionPaidEvent = ({data, accessToken,callback}) => {
     }
 }
 
+//cancel subscription request
 export const cancelSubscription = ({eventId, accessToken}) => {
     return {
         type: actionSubscription.CANCEL_SUBSCRIPTION,
@@ -98,6 +110,8 @@ export const cancelSubscription = ({eventId, accessToken}) => {
         accessToken
     }
 }
+
+//share with friend request
 export const shareWithFriend = ({data, accessToken}) => {
     return {
         type: actionEventTypes.SHARE_WITH_FRIEND,
@@ -105,6 +119,8 @@ export const shareWithFriend = ({data, accessToken}) => {
         accessToken: accessToken
     }
 }
+
+//update wishlist request
 export const updateWishList = ({data, accessToken, updateType, callback}) => {
         return {
           type: actionEventTypes.WISHLIST_UPDATE,
