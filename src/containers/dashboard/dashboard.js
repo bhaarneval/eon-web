@@ -18,6 +18,18 @@ import {
 import { statusList, feeTypeList} from '../../constants/constants'
 import BackButton from "../../components/commonComponents/backButton";
 
+/**
+ * Dashboard for events management
+ * consists the events 
+ * filters to filter and search events based on :
+ * name
+ * location
+ * event type
+ * fees
+ * event status
+ * created by me for organizers
+ * also consists of create button for organizers to create a new event
+ */
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +62,7 @@ class Dashboard extends Component {
     }
   }
 
+  //fetch events list based on different filters and searchs
   fetchEventsList = () => {
     const {
       fetchEvents,
@@ -95,6 +108,8 @@ class Dashboard extends Component {
       });
     }
   };
+
+  //to take users to event details page on click of a event card
   handleEventClick = (id) => {
     const { getEventData, accessToken, history, userRole } = this.props;
     getEventData({
@@ -111,6 +126,7 @@ class Dashboard extends Component {
     });
   };
 
+  //to diaply events in rows of 4
   spliceArray = (list) => {
     let splicedList = [];
     splicedList = list.reduce(
@@ -137,6 +153,7 @@ class Dashboard extends Component {
     });
   };
 
+  //to appy different filters
   applyFilters = () => {
     const { fetchEvents, userData, accessToken } = this.props;
     const {
@@ -161,6 +178,8 @@ class Dashboard extends Component {
     };
     fetchEvents({ userData, accessToken, filterData });
   };
+
+  //to remove and reset the filters and search
   removeFilters = () => {
     const { fetchEvents, userData, accessToken } = this.props;
     this.setState(
@@ -186,6 +205,7 @@ class Dashboard extends Component {
     );
   };
 
+  // to handle event type filter change
   handleFilterChange = (value) => {
     this.setState(
       {
@@ -197,6 +217,7 @@ class Dashboard extends Component {
     );
   };
 
+  //to handel event status filter change
   handleStatusFilterChange = (value) => {
     this.setState(
       {
@@ -208,6 +229,7 @@ class Dashboard extends Component {
     );
   };
 
+  //handle fee type filter change
   handleFeeFilterChange = (value) => {
     this.setState(
       {
@@ -219,6 +241,7 @@ class Dashboard extends Component {
     );
   };
 
+  //handle date range change
   handleDateChange = (date, dateString) => {
     if (dateString[0] !== "" && dateString[1] != "") {
       const startDate = moment(dateString[0], "DD-MM-YYYY").format(
@@ -245,10 +268,13 @@ class Dashboard extends Component {
         }
       );
   };
+
+  // handle click of create button for organizers
   handleCreateEvent = () => {
     this.props.history.push("create");
   };
 
+  //to search with the search text and filter events based on location/name
   handleKeyPress = (event) => {
       const searchText = event.target.value;
       this.setState(
@@ -260,6 +286,8 @@ class Dashboard extends Component {
         }
       );
   };
+
+  //handle checkbox is created by me change
   handleCheckChange = () => {
     this.setState(
       {
@@ -271,6 +299,7 @@ class Dashboard extends Component {
     );
   };
 
+  // to come back to dashbaord from wishlist
   goBack = () => {
     this.props.history.push("/dashboard");
   };
