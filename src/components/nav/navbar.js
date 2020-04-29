@@ -7,7 +7,11 @@ import logo from "../../assets/bitslogo.png";
 import NotificationRender from "./notificationRender";
 
 import { LogoutOutlined, DownOutlined, BellOutlined } from "@ant-design/icons";
-import { logOutUser, readNotifications } from "../../actions/commonActions";
+import {
+  logOutUser,
+  readNotifications,
+  getNotifications,
+} from "../../actions/commonActions";
 
 class Navbar extends Component {
   constructor(props) {
@@ -31,6 +35,12 @@ class Navbar extends Component {
       this.setState({
         notifications: this.props.notifications,
       });
+    }
+    if (this.props.userData !== prevProps.userData) {
+      const { userData, userRole, accessToken, getNotification } = this.props;
+      if (userData.user_id && userRole === "subscriber" && accessToken !== "") {
+        getNotification(accessToken);
+      }
     }
   }
 
@@ -212,6 +222,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = {
   logOutUser: logOutUser,
+  getNotification: getNotifications,
   readNotifications: readNotifications,
 };
 
@@ -223,7 +234,8 @@ Navbar.propTypes = {
   logOutUser: PropTypes.func,
   readNotifications: PropTypes.func,
   history: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  getNotification: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

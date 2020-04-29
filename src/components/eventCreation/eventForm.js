@@ -6,30 +6,56 @@ import emptyImg from "../../assets/image.svg";
 import uploadImg from "../../assets/Upload Image.svg";
 import moment from "moment";
 
-import { URLVALIDATION, NUMBERSVALIDATION, MATCH_ANYTHING } from "../../constants/constants";
-import { EVENT_NAME,URL_VALID,ONLY_NUMERIC,EVENT_LOCATION,EVENT_DATE,EVENT_TYPE,EVENT_CAPACITY,EVENT_FEES} from '../../constants/messages';
+import {
+  URLVALIDATION,
+  NUMBERSVALIDATION,
+  MATCH_ANYTHING,
+} from "../../constants/constants";
+import {
+  EVENT_NAME,
+  URL_VALID,
+  ONLY_NUMERIC,
+  EVENT_LOCATION,
+  EVENT_DATE,
+  EVENT_TYPE,
+  EVENT_CAPACITY,
+  EVENT_FEES,
+} from "../../constants/messages";
 
-const {Option}=Select;
+const { Option } = Select;
 export function EventForm(props) {
-  const { values, handleSubmit, handleCancel,updateType, hasErrored, errorMessage, eventType } = props;
+  const {
+    values,
+    handleSubmit,
+    handleCancel,
+    updateType,
+    hasErrored,
+    errorMessage,
+    eventType,
+  } = props;
   const {
     name,
     external_links,
     location,
     date,
     time,
-    subscription_fee=0,
+    subscription_fee = 0,
     event_type,
     description,
     no_of_tickets,
-    images
+    images,
   } = values;
-  let dateTime ="";
-  if(date && time){
-    dateTime =  date+" "+time;
+  let dateTime = "";
+  if (date && time) {
+    dateTime = date + " " + time;
   }
-  const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
-  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm:ss")) : useState("");
+  const [isChecked, setSwitch] =
+    subscription_fee && subscription_fee !== 0
+      ? useState(true)
+      : useState(false);
+  const [eventDate, setDate] = dateTime
+    ? useState(moment(dateTime, "YYYY-MM-DD hh:mm:ss"))
+    : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState({});
 
@@ -53,13 +79,13 @@ export function EventForm(props) {
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("HH:mm:ss");
-    data = {...data, imageFile:file};
-    if(!isChecked){
+    data = { ...data, imageFile: file };
+    if (!isChecked) {
       data.subscription_fee = 0;
     }
     handleSubmit(data);
   }
-  
+
   return (
     <div className="event-form-container">
       <div>
@@ -144,7 +170,7 @@ export function EventForm(props) {
               name="date"
               rules={[
                 {
-                  required: date === "",
+                  required: eventDate === "",
                   message: EVENT_DATE,
                 },
               ]}
@@ -159,7 +185,6 @@ export function EventForm(props) {
                 disabledDate={(current) => {
                   return current && current < moment().startOf("day");
                 }}
-                size="large"
                 className="input-style-date"
               />
               <br />
@@ -204,16 +229,19 @@ export function EventForm(props) {
             >
               <Select
                 placeholder="Event Type"
-                size="large"
                 showSearch={false}
                 showArrow={true}
-                style={{ height: "3em" }}
+                size="middle"
               >
-                {eventType?eventType.map(typeObject => {
-                    return (
-                    <Option key={typeObject.id} value = {typeObject.id}>{typeObject.type}</Option>
-                    )
-                }):null}
+                {eventType
+                  ? eventType.map((typeObject) => {
+                      return (
+                        <Option key={typeObject.id} value={typeObject.id}>
+                          {typeObject.type}
+                        </Option>
+                      );
+                    })
+                  : null}
               </Select>
             </Form.Item>
             <Form.Item
@@ -236,11 +264,19 @@ export function EventForm(props) {
               />
             </Form.Item>
           </div>
-          <Form.Item name="description">
+          <Form.Item
+            name="description"
+            rules={[
+              {
+                required: true,
+                message: "Please provide a description for the event!",
+              },
+            ]}
+          >
             <Input.TextArea
               placeholder="Description"
               autoSize={{ minRows: 4, maxRows: 4 }}
-              className = "input-textarea"
+              className="input-textarea"
             />
           </Form.Item>
           {hasErrored && <div className="error-message">{errorMessage}</div>}
@@ -249,7 +285,7 @@ export function EventForm(props) {
               Cancel
             </Button>
             <Button htmlType="submit" type="primary" className="save-button">
-              {updateType? "Update" : "Save"}
+              {updateType ? "Update" : "Save"}
             </Button>
           </div>
         </Form>
@@ -267,25 +303,38 @@ EventForm.propTypes = {
   eventType: PropTypes.array,
 };
 export function UpdateEventForm(props) {
-  const { values, handleSubmit, handleCancel,updateType, hasErrored, errorMessage, eventType } = props;
+  const {
+    values,
+    handleSubmit,
+    handleCancel,
+    updateType,
+    hasErrored,
+    errorMessage,
+    eventType,
+  } = props;
   const {
     name,
     external_links,
     location,
     date,
     time,
-    subscription_fee=0,
+    subscription_fee = 0,
     event_type,
     description,
     no_of_tickets,
-    images
+    images,
   } = values;
-  let dateTime ="";
-  if(date && time){
-    dateTime =  date+" "+time;
+  let dateTime = "";
+  if (date && time) {
+    dateTime = date + " " + time;
   }
-  const [isChecked, setSwitch] = subscription_fee && subscription_fee!==0?useState(true):useState(false);
-  const [eventDate, setDate] = dateTime? useState(moment(dateTime,"YYYY-MM-DD hh:mm:ss")) : useState("");
+  const [isChecked, setSwitch] =
+    subscription_fee && subscription_fee !== 0
+      ? useState(true)
+      : useState(false);
+  const [eventDate, setDate] = dateTime
+    ? useState(moment(dateTime, "YYYY-MM-DD hh:mm:ss"))
+    : useState("");
   const [file, setFile] = useState({});
   const [currentImg, setImage] = useState({});
 
@@ -309,12 +358,12 @@ export function UpdateEventForm(props) {
   function onFinish(data) {
     data.date = moment(eventDate).format("YYYY-MM-DD");
     data.time = moment(eventDate).format("HH:mm:ss");
-    if(!isChecked){
+    if (!isChecked) {
       delete data.subscription_fee;
       data.subscription_fee = 0;
     }
-    data = {...data, imageFile:file};
-    if(images && images!=""){
+    data = { ...data, imageFile: file };
+    if (images && images != "") {
       data.images = images;
     }
     handleSubmit(data);
@@ -404,7 +453,7 @@ export function UpdateEventForm(props) {
               name="date"
               rules={[
                 {
-                  required: date === "",
+                  required: eventDate === "",
                   message: EVENT_DATE,
                 },
               ]}
@@ -419,7 +468,6 @@ export function UpdateEventForm(props) {
                 disabledDate={(current) => {
                   return current && current < moment().startOf("day");
                 }}
-                size="large"
                 className="input-style-date"
               />
               <br />
@@ -464,16 +512,19 @@ export function UpdateEventForm(props) {
             >
               <Select
                 placeholder="Event Type"
-                size="large"
                 showSearch={false}
                 showArrow={true}
-                style={{ height: "3em" }}
+                size="middle"
               >
-                {eventType?eventType.map(typeObject => {
-                    return (
-                    <Option key={typeObject.id} value = {typeObject.id}>{typeObject.type}</Option>
-                    )
-                }):null}
+                {eventType
+                  ? eventType.map((typeObject) => {
+                      return (
+                        <Option key={typeObject.id} value={typeObject.id}>
+                          {typeObject.type}
+                        </Option>
+                      );
+                    })
+                  : null}
               </Select>
             </Form.Item>
             <Form.Item
@@ -496,11 +547,19 @@ export function UpdateEventForm(props) {
               />
             </Form.Item>
           </div>
-          <Form.Item name="description">
+          <Form.Item
+            name="description"
+            rules={[
+              {
+                required: true,
+                message: "Please provide a description for the event!",
+              },
+            ]}
+          >
             <Input.TextArea
               placeholder="Description"
               autoSize={{ minRows: 4, maxRows: 4 }}
-              className = "input-textarea"
+              className="input-textarea"
             />
           </Form.Item>
           {hasErrored && <div className="error-message">{errorMessage}</div>}
@@ -509,7 +568,7 @@ export function UpdateEventForm(props) {
               Cancel
             </Button>
             <Button htmlType="submit" type="primary" className="save-button">
-              {updateType? "Update" : "Save"}
+              {updateType ? "Update" : "Save"}
             </Button>
           </div>
         </Form>
