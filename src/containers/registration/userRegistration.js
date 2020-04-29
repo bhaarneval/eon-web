@@ -12,6 +12,9 @@ import BasicDetailsImg from "../../assets/Basic Details.svg";
 import PasswordImg from "../../assets/Password_Illustration.svg";
 import { postUser } from "../../actions/commonActions";
 
+/**
+ * container for subscriber registration
+ */
 class UserRegistration extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +29,8 @@ class UserRegistration extends Component {
       errorMessage: "Unable to connect to the server!",
     };
   }
+
+  //handle terms and conditions modal close
   handleModalClose = () => {
     this.setState({
       isChecked: false,
@@ -33,6 +38,7 @@ class UserRegistration extends Component {
     });
   };
 
+  //handle terms and conditions accept button click
   handleAccept = () => {
     if (this.state.isChecked) {
       this.setState({
@@ -55,12 +61,14 @@ class UserRegistration extends Component {
     }
   };
 
+  //handle terms and conditions checkbox change
   handleCheckBoxChange = () => {
     this.setState({
       isChecked: !this.state.isChecked,
     });
   };
 
+  //handle password change to match with confirm password
   handlePassWordChange = (values) => {
     let currentPassword = values.target.value;
     this.setState({
@@ -68,6 +76,7 @@ class UserRegistration extends Component {
     });
   };
 
+  //handle form submission for subscribers
   handleSubmit = (values) => {
     let formData = { ...this.state.formData };
     const activeKey = this.state.activeKey;
@@ -88,6 +97,7 @@ class UserRegistration extends Component {
     }
   };
 
+  //handle going back to basic details on the form
   handleBack = () => {
     this.setState({
       activeKey: this.state.activeKey - 1,

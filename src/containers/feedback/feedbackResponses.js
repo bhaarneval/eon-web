@@ -8,6 +8,9 @@ import { connect } from "react-redux";
 import { getEventData } from "../../actions/eventActions";
 import {getResponses } from "../../actions/commonActions";
 
+/**
+ * feedback answers container
+ */
 class FeedbackResponses extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +19,7 @@ class FeedbackResponses extends Component {
     };
   }
   
+  //fetch event data and responses
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
     let searchParam = new URLSearchParams(search);
@@ -38,7 +42,7 @@ class FeedbackResponses extends Component {
   }
 
 
-
+//go back to event details dash board
 goBack = () => {
   this.props.history.push(`/event-details?id=${this.props.eventData.id}`);
 }
