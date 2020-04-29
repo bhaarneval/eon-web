@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./profile.css";
 import { Button, Form, Input, Checkbox } from "antd";
@@ -10,10 +10,13 @@ import {ORGANISATION_NAME,ORGANISATION_ADDRESS, CONTACT_NO, INVALID_CONATCT} fro
 import { PHONE_VALIDATION} from '../../constants/constants';
 
 export default function ProfileForm(props) {
-  const { values, handleSubmit, handleCancel, role, interestList, disableButton } = props;
+  const { values, handleSubmit, handleCancel, role, interestList, disableButton, handleDisableChange } = props;
   let [interestsList,setInterest] = useState(values.interest);
   let [ifUpdate, setUpdate] = useState(disableButton);
-  
+
+  useEffect(() => {
+    setUpdate(disableButton)
+  }, [disableButton])
 
   function handleChange(values){
     const {name, organization, address, contact_number} = props.values;
@@ -24,8 +27,9 @@ export default function ProfileForm(props) {
     if(id === "profile_address" && address!==value ) ifUpdated = true;
     if(id === "profile_organization" && organization!==value ) ifUpdated = true;
     if(id === "profile_contact_number" && contact_number!==value ) ifUpdated = true;
-    
+    handleDisableChange(ifUpdate);
     setUpdate(ifUpdated);
+
   }
   function onFinish(data) {
     delete data.email;
@@ -94,6 +98,7 @@ ProfileForm.propTypes = {
   role: PropTypes.string.isRequired,
   interestList: PropTypes.array,
   disableButton: PropTypes.bool,
+  handleDisableChange: PropTypes.func,
 };
 
 function Interests(props){

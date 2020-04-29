@@ -40,6 +40,12 @@ class Profile extends Component {
     this.props.history.push("/dashboard");
   };
 
+  handleDisableChange = (flag) => {
+    this.setState({
+      disableButton: flag
+    })
+  }
+
   render() {
     const {userData, userProfile,userRole } = this.props;
     return (
@@ -59,6 +65,7 @@ class Profile extends Component {
                 handleSubmit={this.handleSubmit}
                 handleCancel={this.goBack}
                 interestList = {this.props.eventType}
+                handleDisableChange={this.handleDisableChange}
               />
             </div>
           )}
