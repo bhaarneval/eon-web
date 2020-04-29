@@ -6,6 +6,9 @@ import "./feedback.css";
 import attachImage from "../../assets/Attach-1.svg";
 // import { questionList } from "../../constants/constants";
 
+/**
+ * Component to display feedbacks question from organizer to subscriber
+ */
 class FeedbackQuestions extends Component {
   constructor(props) {
     super(props);

@@ -9,7 +9,9 @@ import emptyImg from "../../assets/image.svg";
 import { Tag } from 'antd';
 
 
-
+/*
+ * event card to display relevant information on dashboard
+ */
 export default function EventCards(props) {
     const {event,onClick} = props;
     let {id, name, sold_tickets, date,time, images, location,subscription_fee, is_subscribed, event_status} = event;

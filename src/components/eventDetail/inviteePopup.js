@@ -6,6 +6,9 @@ import { EMAIL_VALIDATION } from "../../constants/constants";
 const { TextArea } = Input;
 
 
+/**
+ * popup modal for add invitees
+ */
 class InviteesPopup extends Component {
     constructor(props) {
         super(props);

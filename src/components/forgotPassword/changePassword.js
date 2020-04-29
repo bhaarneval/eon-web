@@ -19,6 +19,9 @@ import {
 import BackButton from "../commonComponents/backButton";
 import { postChangePassword, logOutUser } from "../../actions/commonActions";
 
+/**
+ * componet to change password for users
+ */
 class ChangePassword extends Component {
   constructor(props) {
     super(props);
