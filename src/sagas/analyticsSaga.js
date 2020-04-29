@@ -9,7 +9,12 @@ function checkResponse(response, responseJson) {
     throw responseJson;
   } else return;
 }
-
+/**
+ * get analytics dashboard data
+ * @param {accessToken, filterDat} param
+ * accessToken for authorisation
+ * filterdata to apply filters
+ */
 export function* getAnalyticsData(param) {
   const { accessToken, filterData } = param;
   const headers = {

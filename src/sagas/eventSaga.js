@@ -10,6 +10,14 @@ function checkResponse(response, responseJson) {
   } else return;
 }
 
+/**
+ * create new event
+ * @param {accessToken, event data, eventId in case of update, callback method} param
+ * accessToken for authorisation
+ * data to post event data
+ * eventId to hit patch in case of update event
+ * callback: callback method to execute on succesfull post/patch
+ */
 export function* createNewEvent(param) {
   let { data, callback, eventId, accessToken } = param;
   try {
@@ -104,6 +112,12 @@ export function* createNewEvent(param) {
   }
 }
 
+/**
+ * fetch events list
+ * @param {accessToken, filterData} param
+ * accessToken for authorisation
+ * filterData different filters to apply while fetching events list
+ */
 export function* fetchEventsList(param) {
   const {  accessToken,filterData } = param;
   const headers = {
@@ -164,6 +178,14 @@ if(filterData.is_wishlisted)
   }
 }
 
+/**
+ * fetcch event details
+ * @param {accessToken, eventId, callback method} param
+ * accessToken for authorisation
+ * data to post event data
+ * eventId to hit patch in case of update event
+ * callback: callback method 
+ */
 export function* fetchEventData(param) {
   const { eventId, accessToken, callback, ifUpdate } = param;
   const headers = {
@@ -200,6 +222,14 @@ export function* fetchEventData(param) {
   }
 }
 
+/**
+ * delete/ cancel event
+ * @param {accessToken, eventId, message, callback method} param
+ * accessToken for authorisation
+ * eventId which event to cancel
+ * message: message for the subscribers who are alread subscribed
+ * callback: callback method 
+ */
 export function* deleteEvent(param) {
   const {message, accessToken, eventId, callback} = param;
   const headers = {
@@ -231,6 +261,14 @@ export function* deleteEvent(param) {
   }
 }
 
+/**
+ * add invitees to event
+ * @param {accessToken, event data, updateType} param
+ * accessToken for authorisation
+ * data : event data 
+ * eventId to hit patch in case of update event
+ * callback: callback method 
+ */
 export function* saveInvitees(param) {
   const { accessToken, data, updateType } = param;
   const eventId = data.event;
@@ -286,7 +324,12 @@ export function* saveInvitees(param) {
     yield put({ type: actionEventTypes.EVENT_ERROR, error: e });
   }
 }
-
+/**
+ * notify subscribers with message
+ * @param {data,accessToken} param 
+ * data: message to share
+ * accessToken: access token for authorization
+ */
 export function* notifyUsers(param){
   const {data, accessToken} =param;
   const headers = {
@@ -319,6 +362,13 @@ export function* notifyUsers(param){
   }
 }
 
+/**
+ * subscribe  free events
+ * @param {accessToken, event data, callback method} param
+ * accessToken for authorisation
+ * data: event data
+ * callback: callback method
+ */
 export function* subscribeFreeEvent(param){
   const {data, accessToken, callback } = param;
   const headers = {
@@ -367,6 +417,13 @@ export function* subscribeFreeEvent(param){
   }
 }
 
+/**
+ * subcription for paid events
+ * @param {accessToken, event data,  callback method} param
+ * accessToken for authorisation
+ * data: event data
+ * callback: callback method 
+ */
 export function* paidSubscription(param){
   const {data, accessToken, callback} = param;
   const headers = {
@@ -417,6 +474,12 @@ export function* paidSubscription(param){
   }
 }
 
+/**
+ *  cancel subcription for events
+ * @param {accessToken, event id} param
+ * accessToken for authorisation
+ * eventId: event id
+ */
 export function* cancelSubscription(param) {
   const {eventId, accessToken} =param;
   const headers = {
@@ -460,6 +523,12 @@ export function* cancelSubscription(param) {
   }
 }
 
+/**
+ * share event s with friends
+ * @param {accessToken,data} param
+ * accessToken for authorisation
+ * data: mesage to share
+ */
 export function* shareWithFriendPost(param) {
   const {data, accessToken } = param;
   const headers = {
@@ -492,6 +561,14 @@ export function* shareWithFriendPost(param) {
   }
 }
 
+/**
+ * upadte wishlist
+ * @param {accessToken,  data, uodateType, callback method} param
+ * accessToken for authorisation
+ * data: event data
+ * updateType: remove or add
+ * callback: callback method 
+ */
 export function* updateWishlistUser(param){
   const {data, accessToken, updateType, callback} = param;
   const headers = {

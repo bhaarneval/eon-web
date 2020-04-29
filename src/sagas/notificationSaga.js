@@ -2,7 +2,11 @@ import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionNotificationsTypes } from "../constants/actionTypes";
 
-
+/**
+ * fetch new notifications
+ * @param {accessToken} param
+ * accessToken for authorisation
+ */
 export function* getNotifications(param) {
   try {
     let getNotificationsURL = APIService.dev+requestURLS.GET_NOTIFICATIONS_URL;
@@ -29,6 +33,12 @@ export function* getNotifications(param) {
   }
 }
 
+/**
+ * mark notification as read
+ * @param {accessToken, list} param
+ * accessToken for authorisation
+ * list: list of ids of notifications to mark as read
+ */
 export function* readNotifications(param) {
   const { list } = param;
   try {

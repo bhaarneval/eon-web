@@ -14,6 +14,14 @@ export function* logOut(param) {
     });
   }
 }
+
+/**
+ * fetch user data
+ * @param {email, password, callback} param
+ * email: user email,
+ * password: user password,
+ * callback : callback method
+ */
 export function* getUser(param) {
   const { email, password, callback } = param;
   let recievedResponse = {};
@@ -70,6 +78,12 @@ export function* getUser(param) {
   }
 }
 
+/**
+ * post user data/ create new user
+ * @param {data, callback} param
+ * data: user data filled in form
+ * callback : callback method
+ */
 export function* postUser(param) {
   const { data, callback } = param;
   try {
@@ -130,6 +144,12 @@ export function* postUser(param) {
   }
 }
 
+/**
+ * send OTP for forgot password
+ * @param {data, callback} param
+ * data: user email,
+ * callback : callback method
+ */
 export function* getCode(param) {
   const { data, callback } = param;
   try {
@@ -163,6 +183,13 @@ export function* getCode(param) {
   }
 }
 
+/**
+ * change password on forgot password
+ * @param {email, password, callback} param
+ * email: user email,
+ * password: user password,
+ * callback : callback method
+ */
 export function* forgotPassword(param) {
   const { data, callback } = param;
   try {
@@ -198,6 +225,12 @@ export function* forgotPassword(param) {
   }
 }
 
+/**
+ * change user password
+ * @param {data callback} param
+ * data: email , old password, new pasword
+ * callback : callback method
+ */
 export function* changePassword(param) {
   const { data, callback, accessToken } = param;
   try {
@@ -238,6 +271,12 @@ export function* changePassword(param) {
   }
 }
 
+/**
+ * fetch user profile for my profile
+ * @param {userId, accessToken} param
+ * userId: id of user logged in
+ * accessToken: for authorization
+ */
 export function* fetchUserProfile(param){
   const {userId, accessToken } = param;
   const headers = {
@@ -270,6 +309,14 @@ export function* fetchUserProfile(param){
   }
 }
 
+/**
+ * update user data
+ * @param {userId, data, accessToken, callback} param
+ * userId; id of user logged in
+ * data: user prodile data,
+ * accessToken : for authorization
+ * callback : callback method
+ */
 export function* updateUser(param){
   const {userId, data, accessToken, callback } = param;
   const headers = {
