@@ -9,6 +9,9 @@ import {EventForm, UpdateEventForm} from '../../components/eventCreation/eventFo
 import PropTypes from 'prop-types'
 import {createNewEvent, updateEventData, getEventData} from "../../actions/eventActions";
 
+/**
+ * conatiner to render creation and updatio of events
+ */
 class CreateEvent extends Component {
  constructor(props){
    super(props);
@@ -20,6 +23,9 @@ class CreateEvent extends Component {
    }
  }
 
+ //on component load it checks the url parameters and determines the type of form to render
+ //for creation a empty form is displayed
+ //for updation a pre-filled form with data is displayed
  componentDidMount() {
    if (this.props.userRole !== "organizer") {
      this.props.history.push("/dashboard");
@@ -58,6 +64,7 @@ class CreateEvent extends Component {
      })
    }
  }
+ //functions to execute on submission of form
  handleSubmit = (values) => {
    const { userData, accessToken, createNewEvent, updateEventData, eventData } = this.props;
    if (!this.state.updateType) {
@@ -101,6 +108,8 @@ class CreateEvent extends Component {
     }
    }
  }
+
+ //filter values and send in request only the fields that have been modified
  filterValue = (values) => {
    let {eventData} = this.props;
 
@@ -115,6 +124,7 @@ class CreateEvent extends Component {
    return values;
  }
 
+ //to handle go back based on different conditions
  goBack = (event,id) => {
     if(this.state.updateType || event!=="goBack"){
       this.props.history.push(`/event-details?id=${id}`);
