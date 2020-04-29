@@ -103,6 +103,9 @@ MyDocument.propTypes = {
   userData: PropTypes.object,
 };
 
+/*
+ * rendering pdf for tickets download
+ */
 const PDF = (props) => {
   return (
     <div>

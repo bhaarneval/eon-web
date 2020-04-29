@@ -20,6 +20,10 @@ import * as jwt from 'jsonwebtoken';
 import { Spin } from "antd";
 import Analytics from "../../containers/analytics/analytics";
 
+/*
+* function to redirect to dashboard if the user is logged in 
+* and tries to open login or other pages where log in is not required
+*/
 const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
   const hasUserLoggedIn = isLoggedIn;
@@ -42,6 +46,11 @@ AfterLogin.propTypes = {
   isLoggedIn: PropTypes.string,
   location: PropTypes.object,
 }
+
+/*
+* function to redirect to login if the user is not logged in 
+* and tries to open dashboard or other pages where log in is required
+*/
 const BeforeLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
   const hasUserLoggedIn = isLoggedIn;
@@ -64,10 +73,11 @@ BeforeLogin.propTypes = {
   isLoggedIn: PropTypes.string,
   location: PropTypes.object,
 }
-StyledComp.propTypes = {
-  userData: PropTypes.object,
-  location: PropTypes.object,
-}
+
+/**
+ * function to handle different page rendering based on pathname
+ * @param {*} userData
+ */
 function StyledComp(props) {
   const isLoggedIn = props.userData.user_id;
   return (
@@ -111,9 +121,17 @@ function StyledComp(props) {
     </div>
   );
 }
+StyledComp.propTypes = {
+  userData: PropTypes.object,
+  location: PropTypes.object,
+}
 
 class LayoutComponent extends React.Component {
 
+  /*
+  * to check if the user has been logged in for more than 24 hours
+  * Logout user if they are logged in for more than 24 hours
+  */
   UNSAFE_componentWillMount = () => {
     const token = localStorage.getItem('token');
     var decoded = jwt.decode(token, {complete: true});
@@ -134,6 +152,8 @@ class LayoutComponent extends React.Component {
       fetchingResponses,
       userData
       } = this.props;
+
+    //conditions for rendering loader true
     let isFetching = fetchingEvent || fetchingUser || fetchingData || fetchingQuestions || submittingQuestions || fetchingResponses;
     return (
       <Spin spinning = {isFetching} className="spinner">

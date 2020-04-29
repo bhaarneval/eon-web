@@ -4,6 +4,9 @@ import { Select } from "antd";
 
 const { Option } = Select;
 
+/*
+ * dropdown for dashboard to filter event Type, fee type and event status
+ */
 export default function SelectDropDown (props) {
     const {optionsList, placeholder, handleChange, value, allOptionRequired} = props;
     return (

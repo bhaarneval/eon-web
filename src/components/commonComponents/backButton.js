@@ -2,6 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import backImg from "../../assets/Back.svg";
 
+/**
+ * 
+ * @param handleOnClick: to handle what happens on click
+ * @param text: Header text for component 
+ */
 export default function BackButton(props) {
   const { handleOnClick, text } = props;
   return (
