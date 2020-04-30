@@ -98,6 +98,8 @@ class EventInfo extends Component {
         let eventDate = eventData.date + " "+ eventData.time;
         eventDate = moment(eventDate,"YYYY-MM-DD hh:mm A");
         eventDate = eventDate.format("DD MMM' YY, hh:mm A");
+        let event_status = eventData.event_status;
+        const tagColor = `${event_status === 'upcoming' ? 'orange' : ''}${event_status === 'cancelled' ? 'red' : ''}${event_status === 'completed' ? 'green' : ''}`;
         return (
             <div className="detail-card">
                 <div className="detail-card-top">
@@ -145,6 +147,14 @@ class EventInfo extends Component {
                     <div className="detail-card-top-other-box">
                         <div><b>Subscription Fee</b></div>
                     <div>{eventData.subscription_fee===0?"FREE":"₹ "+eventData.subscription_fee}</div>
+                    </div>
+                    <div className="detail-card-top-other-box">
+                        <div><b>Status</b></div>
+                        <div style={{ marginRight: "0px", color:tagColor }} >
+                            <span className="capitalize ellipsis-style">
+                                {event_status}
+                            </span>
+                        </div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>URL</b></div>
