@@ -6,8 +6,8 @@ import organisationImg from "../../assets/Organisation Name.svg";
 import emailImg from "../../assets/Email ID.svg";
 import phoneImg from "../../assets/Phone - .svg";
 import userImg from "../../assets/user.svg";
-import {ORGANISATION_NAME,ORGANISATION_ADDRESS, CONTACT_NO, INVALID_CONATCT} from '../../constants/messages';
-import { PHONE_VALIDATION} from '../../constants/constants';
+import {ORGANISATION_NAME,ORGANISATION_ADDRESS, CONTACT_NO, INVALID_CONATCT, NAME_NO_SPECIAL} from '../../constants/messages';
+import { PHONE_VALIDATION, NAME_VALIDATION} from '../../constants/constants';
 
 export default function ProfileForm(props) {
   const { values, handleSubmit, handleCancel, role, interestList, disableButton, handleDisableChange } = props;
@@ -141,7 +141,8 @@ function FormComponent(props) {
               name="name"
               key={"name"}
               rules={[
-                { required: true, message: "Please enter your name!"  }
+                { required: true, message: "Please enter your name!"  },
+                {pattern: NAME_VALIDATION, message: NAME_NO_SPECIAL}
               ]}
           >
             <Input size = "large"  prefix = {<img src={userImg}/>} placeholder = "Name" className = 'input-style'/>

@@ -2,10 +2,11 @@
 import { Button, } from 'antd';
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {NAME_REQUIRED, INVALID_BANK, BANK_REQUIRED, EXPIRY_REQUIRED} from '../../constants/messages';
+import {NAME_REQUIRED, INVALID_BANK, BANK_REQUIRED, EXPIRY_REQUIRED, NAME_NO_SPECIAL} from '../../constants/messages';
 import { Form, Input } from "antd";
 import "./subscription.css";
 import BackButton from "../commonComponents/backButton";
+import { NAME_VALIDATION } from '../../constants/constants';
 
 class Payment extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class Payment extends Component {
                         >
                             <Form.Item
                                 name="name"
-                                rules={[{ required: true, message: NAME_REQUIRED },{pattern: /^[a-zA-Z ]+$/,message: "Name cannot contain special/numeric characters!"}]}
+                                rules={[{ required: true, message: NAME_REQUIRED },{pattern: NAME_VALIDATION,message: NAME_NO_SPECIAL}]}
                             >
                                 <Input
                                     placeholder="Full Name"
