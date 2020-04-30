@@ -67,6 +67,12 @@ class Analytics extends Component {
     );
   };
 
+  handleSearchTextChange = (event) => {
+    this.setState({
+      searchText: event.target.value,
+    })
+  }
+
   handleDropDownChange = (key) => {
     this.setState(
       {
