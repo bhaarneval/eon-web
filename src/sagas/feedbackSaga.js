@@ -146,7 +146,7 @@ export function* postQuestions(param) {
     });
 
     yield put({type:actionFeedbackTypes.SUBMITTED_QUESTIONS});
-    message.success("Your feedback has been submitted successfully");
+    message.success("Feedback submitted successfully");
     callback(true);
   } catch (e) {
     yield put({
