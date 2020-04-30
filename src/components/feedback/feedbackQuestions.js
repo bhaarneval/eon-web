@@ -125,7 +125,7 @@ class FeedbackQuestions extends Component {
             })}
           <div className="submit-button">
             <Button type="primary" htmlType="submit">
-              Submit feedback
+              Submit Feedback
             </Button>
           </div>
         </Form>
