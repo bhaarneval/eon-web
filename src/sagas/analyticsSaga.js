@@ -3,10 +3,13 @@ import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionAnalytics } from "../constants/actionTypes";
 import { message } from "antd";
-import {checkResponse} from "../actions/commonActions"
+import {checkResponse,ifAccessTokenExpired} from "../actions/commonActions"
 
 export function* getAnalyticsData(param) {
   const { accessToken, filterData } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };

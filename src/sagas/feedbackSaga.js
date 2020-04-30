@@ -3,9 +3,12 @@ import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionFeedbackTypes, actionEventTypes } from "../constants/actionTypes";
 import { message } from "antd";
 import cloneDeep from 'lodash/cloneDeep'
-import {checkResponse} from "../actions/commonActions";
+import {checkResponse, ifAccessTokenExpired} from "../actions/commonActions";
 export function* fetchQuestions(param) {
   const { accessToken } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,
@@ -38,6 +41,9 @@ export function* fetchQuestions(param) {
 
 export function* fetchResponses(param){
   const {accessToken, id } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,
@@ -66,6 +72,9 @@ export function* fetchResponses(param){
 
 export function* postQuestions(param) {
   let { accessToken, feedback, callback } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,

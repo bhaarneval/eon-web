@@ -2,7 +2,7 @@ import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionLoginTypes } from "../constants/actionTypes";
 import {message} from "antd";
-import {checkResponse} from "../actions/commonActions";
+import {checkResponse, ifAccessTokenExpired} from "../actions/commonActions";
 
 export function* logOut(param) {
   try {
@@ -201,6 +201,9 @@ export function* forgotPassword(param) {
 
 export function* changePassword(param) {
   const { data, callback, accessToken } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   try {
     let recievedResponse = {};
     yield put({ type: actionLoginTypes.SET_USER_FETCHING });

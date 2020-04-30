@@ -1,10 +1,13 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionNotificationsTypes } from "../constants/actionTypes";
-import {checkResponse} from "../actions/commonActions";
+import {checkResponse, ifAccessTokenExpired} from "../actions/commonActions";
 
 
 export function* getNotifications(param) {
+  if(ifAccessTokenExpired(param.access)){
+    return;
+  }
   try {
     let getNotificationsURL = APIService.dev+requestURLS.GET_NOTIFICATIONS_URL;
     let headers = {
@@ -36,7 +39,10 @@ export function* getNotifications(param) {
 }
 
 export function* readNotifications(param) {
-  const { list } = param;
+  const { list, access } = param;
+  if(ifAccessTokenExpired(access)){
+    return;
+  }
   try {
     let recievedResponse = {};
     let readNotificationsURL = APIService.dev+requestURLS.READ_NOTIFICATIONS_URL;
