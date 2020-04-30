@@ -110,7 +110,6 @@ class InviteesPopup extends Component {
                                 min={0}
                                 size="large"
                                 max={100}
-                                disabled={this.props.eventData.subscription_fee === 0}
                                 value={discountPercentage}
                                 formatter={value => `${value}%`}
                                 parser={value => value.replace('%', '')}
