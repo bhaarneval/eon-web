@@ -79,7 +79,7 @@ class FeedbackQuestions extends Component {
                       rules={[
                         {
                           required: true,
-                          message: "Answer field cannot be empty",
+                          message: "Answer field cannot be empty!",
                         },
                       ]}
                     >
@@ -125,7 +125,7 @@ class FeedbackQuestions extends Component {
             })}
           <div className="submit-button">
             <Button type="primary" htmlType="submit">
-              Submit feedback
+              Submit
             </Button>
           </div>
         </Form>

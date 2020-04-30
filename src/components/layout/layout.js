@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import * as jwt from 'jsonwebtoken';
 import { Spin } from "antd";
 import Analytics from "../../containers/analytics/analytics";
+import { logOutUser } from "../../actions/commonActions";
 
 const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
@@ -119,8 +120,12 @@ class LayoutComponent extends React.Component {
     var decoded = jwt.decode(token, {complete: true});
     const currentTime = Math.floor(new Date().getTime()/1000);
     if (decoded && currentTime > decoded.payload.exp){
-      localStorage.clear();
-      window.location.replace('/login');
+      this.props.logOutUser({
+        callback: () => {
+          localStorage.clear();
+          window.location.replace('/login');
+        }
+      })
     }
   }
 
@@ -155,6 +160,7 @@ LayoutComponent.propTypes = {
   userData: PropTypes.object,
   userRole: PropTypes.string,
   accessToken: PropTypes.string,
+  logOutUser: PropTypes.func,
 }
 
 const mapStateToProps = ({
@@ -187,5 +193,9 @@ const mapStateToProps = ({
   fetchingResponses
 })
 
-export default connect(mapStateToProps)(LayoutComponent);
+const mapDispatchToProps = {
+  logOutUser: logOutUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayoutComponent);
 

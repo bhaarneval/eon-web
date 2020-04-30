@@ -218,6 +218,11 @@ class Dashboard extends Component {
       }
     );
   };
+  handleSearchTextChange = (value) => {
+    this.setState({
+      searchText: value.target.value,
+    })
+  }
 
   handleDateChange = (date, dateString) => {
     if (dateString[0] !== "" && dateString[1] != "") {

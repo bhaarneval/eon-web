@@ -149,7 +149,7 @@ class Navbar extends Component {
         )}
         <div className="top-nav">
           {this.props.accessToken === "" &&
-          (this.props.location.pathname !== "/login" ||
+          (this.props.location.pathname !== "/login" &&
             this.props.location.pathname !== "/") ? (
             <Button
               style={{ color: "#262C6F", border: "none", fontWeight: "bold" }}

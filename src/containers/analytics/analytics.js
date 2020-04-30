@@ -67,6 +67,12 @@ class Analytics extends Component {
     );
   };
 
+  handleSearchTextChange = (event) => {
+    this.setState({
+      searchText: event.target.value,
+    })
+  }
+
   handleDropDownChange = (key) => {
     this.setState(
       {
@@ -99,11 +105,11 @@ class Analytics extends Component {
                   <div className="revenue-row">
                     <RevenueCard
                       header="Revenue generated"
-                      revenueGenerated={"₹" + analyticsData.total_revenue}
+                      revenueGenerated={"₹" + analyticsData.total_revenue.toLocaleString()}
                     />
                     <RevenueCard
                       header="Upcoming events"
-                      revenueGenerated={analyticsData.ongoing_events}
+                      revenueGenerated={analyticsData.ongoing_events.toLocaleString()}
                     />
                   </div>
                   <div className="pie-chart-div">
