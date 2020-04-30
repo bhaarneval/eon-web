@@ -6,7 +6,7 @@ import {NAME_REQUIRED, INVALID_BANK, BANK_REQUIRED, EXPIRY_REQUIRED, NAME_NO_SPE
 import { Form, Input } from "antd";
 import "./subscription.css";
 import BackButton from "../commonComponents/backButton";
-import { NAME_VALIDATION } from '../../constants/constants';
+import { NAME_VALIDATION, CARD_VALIDATION } from '../../constants/constants';
 
 class Payment extends Component {
     constructor(props) {
@@ -51,13 +51,12 @@ class Payment extends Component {
                                     message: BANK_REQUIRED
                                 },
                                 {
-                                    max: 16,
-                                    min:16,
+                                    pattern: CARD_VALIDATION,
                                     message: INVALID_BANK
                                 }]}
                             >
                                 <Input
-                                    placeholder="Account Number"
+                                    placeholder="Card Number"
                                 />
                             </Form.Item>
                             <Form.Item name="expirydate"
