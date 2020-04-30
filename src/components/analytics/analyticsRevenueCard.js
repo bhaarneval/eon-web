@@ -15,7 +15,7 @@ export default function RevenueCard(props) {
                 {header !== "Upcoming events" &&
                     <img src={revenueImg} style={{height:"100%", width:"15%"}}/>
                 }
-                <div className="value-style ellipsis-style-analytics">{revenueGenerated.toLocaleString()}</div>
+                <div className="value-style ellipsis-style-analytics">{revenueGenerated}</div>
             </div>
         </Card>
     )
@@ -23,7 +23,7 @@ export default function RevenueCard(props) {
 
 
 RevenueCard.propTypes = {
-    revenueGenerated: PropTypes.number.isRequired,
+    revenueGenerated: PropTypes.string.isRequired,
     header: PropTypes.any
 }
  
