@@ -12,6 +12,7 @@ export const PHONE_VALIDATION = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4
 export const ACCOUNT_VALIDATION = /[0-9]{9,18}/
 export const PASSWORD_VALIDATION =/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
 export const NAME_VALIDATION = /^[a-zA-Z ]+$/;
+export const CARD_VALIDATION = /^[0-9]{16,16}$/;
 
 export const statusList = [
     {id : 0, type : 'upcoming'},
