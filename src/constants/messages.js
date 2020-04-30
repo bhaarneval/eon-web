@@ -41,3 +41,4 @@ export const EVENT_TYPE = "Event type cannot be empty!";
 export const ONLY_NUMERIC = "Must contain digits only!"
 export const EVENT_CAPACITY = "Number of seats can't be empty!"
 export const EVENT_FEES = "Subscription fees can't be empty!";
+export const NAME_NO_SPECIAL = "Name cannot contain special/numeric characters!";
