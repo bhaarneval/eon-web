@@ -3,7 +3,7 @@ import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionFeedbackTypes, actionEventTypes } from "../constants/actionTypes";
 import { message } from "antd";
 import cloneDeep from 'lodash/cloneDeep'
-
+import {checkResponse} from "../actions/commonActions";
 export function* fetchQuestions(param) {
   const { accessToken } = param;
   const headers = {
@@ -21,9 +21,7 @@ export function* fetchQuestions(param) {
       return response.json();
     });
 
-    if (!responseObject.ok) {
-      throw responseJson;
-    }
+    checkResponse(responseObject, responseJson);
 
     yield put({
       type: actionFeedbackTypes.FETCHED_QUESTIONS,
@@ -55,9 +53,7 @@ export function* fetchResponses(param){
       return response.json();
     });
 
-    if(!responseObject.ok) {
-      throw responseJson;
-    }
+    checkResponse(responseObject, responseJson);
     yield put({type: actionFeedbackTypes.FETCHED_RESPONSES, payload: responseJson.data});
   }catch (e) {
     yield put({
@@ -92,9 +88,8 @@ export function* postQuestions(param) {
           responseObject = response;
           return response.json();
         });
-        if (!responseObject.ok) {
-          throw responseJson;
-        }
+
+        checkResponse(responseObject, responseJson);
 
         let s3Url = responseJson.data.presigned_url;
         yield fetch(s3Url, {
@@ -103,9 +98,8 @@ export function* postQuestions(param) {
         }).then((response) => {
           responseObject = response;
         });
-        if (!responseObject.ok) {
-          throw { message: "Something went wrong" };
-        }
+        
+        checkResponse(responseObject,  { message: "Something went wrong" });
 
         feedbackList[i].answer.image = responseJson.data.image_name;
       }
@@ -123,9 +117,9 @@ export function* postQuestions(param) {
       responseObject = response;
       return response.json();
     });
-    if(!responseObject.ok){
-      throw responseJson;
-    }
+
+    checkResponse(responseObject, responseJson);
+    
     yield put({type:actionEventTypes.SET_EVENT_FETCHING})
     let getURL = APIService.dev + requestURLS.EVENT_OPERATIONS + `${feedback.event_id}/`;
     responseJson = yield fetch(getURL, {
@@ -136,9 +130,7 @@ export function* postQuestions(param) {
       return response.json();
     });
 
-    if(!responseObject.ok){
-      throw responseJson;
-    }
+    checkResponse(responseObject, responseJson);
 
     yield put({
       type: actionEventTypes.RECEIVED_EVENT_DATA,

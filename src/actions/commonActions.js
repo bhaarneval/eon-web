@@ -113,3 +113,16 @@ export const fetchAnalyticsData = ({accessToken, filterData}) => {
     filterData
   }
 }
+
+export const checkResponse = (response, responseJson) => {
+  if (response.status === 401) {
+    logOutUser({
+      callback: () => {},
+    });
+    localStorage.clear();
+    window.location.replace("/login");
+    throw responseJson;
+  } else if (!response.ok) {
+    throw responseJson;
+  } else return;
+};

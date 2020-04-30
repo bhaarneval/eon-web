@@ -3,12 +3,7 @@ import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionAnalytics } from "../constants/actionTypes";
 import { message } from "antd";
-
-function checkResponse(response, responseJson) {
-  if (!response.ok) {
-    throw responseJson;
-  } else return;
-}
+import {checkResponse} from "../actions/commonActions"
 
 export function* getAnalyticsData(param) {
   const { accessToken, filterData } = param;
@@ -43,6 +38,7 @@ export function* getAnalyticsData(param) {
     });
 
     checkResponse(responseObject, responseJson);
+
     yield put({
       type: actionAnalytics.ANALYTICS_RECIEVED,
       payload: responseJson.data,

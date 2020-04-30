@@ -3,13 +3,7 @@ import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import {message} from "antd";
 import { actionEventTypes, actionSubscription } from "../constants/actionTypes";
-
-function checkResponse(response, responseJson) {
-  if (!response.ok) {
-    throw responseJson;
-  } else return;
-}
-
+import {checkResponse} from "../actions/commonActions";
 export function* createNewEvent(param) {
   let { data, callback, eventId, accessToken } = param;
   try {
@@ -105,7 +99,7 @@ export function* createNewEvent(param) {
 }
 
 export function* fetchEventsList(param) {
-  const {  accessToken,filterData } = param;
+  const { accessToken, filterData } = param;
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };

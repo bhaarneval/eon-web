@@ -1,6 +1,7 @@
 import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionNotificationsTypes } from "../constants/actionTypes";
+import {checkResponse} from "../actions/commonActions";
 
 
 export function* getNotifications(param) {
@@ -10,12 +11,17 @@ export function* getNotifications(param) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${param.access}`
     };
+    let responseObject = {};
     let eventType = yield fetch (getNotificationsURL,{
       headers: headers,
       method: "GET",
     }).then(response=>{
+      responseObject = response;
       return response.json();
     });
+
+    checkResponse(responseObject, eventType);
+
     yield put({
       type: actionNotificationsTypes.NOTIFICATIONS_RECIEVED,
       payload: eventType.data,
@@ -46,9 +52,8 @@ export function* readNotifications(param) {
       recievedResponse = response;
       return response.json();
     });
-    if (!recievedResponse.ok) {
-      throw responseJSON;
-    }
+
+    checkResponse(recievedResponse, responseJSON);
 
     let getNotificationsURL = APIService.dev+requestURLS.GET_NOTIFICATIONS_URL;
 
@@ -60,9 +65,8 @@ export function* readNotifications(param) {
       return response.json();
     });
 
-    if (!recievedResponse.ok) {
-      throw responseJSON;
-    }
+    checkResponse(recievedResponse, responseJSON);
+    
     yield put({
       type: actionNotificationsTypes.NOTIFICATIONS_RECIEVED,
       payload: eventType.data,
