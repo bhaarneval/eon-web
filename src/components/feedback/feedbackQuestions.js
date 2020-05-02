@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Input, Button, Upload, Form } from "antd";
 // const { TextArea } = Input;
+import { ONLY_WHITESPACE } from "../../constants/messages";
+import { WHITESPACE_VALIDATION } from "../../constants/constants"
 import "./feedback.css";
 import attachImage from "../../assets/Attach-1.svg";
 // import { questionList } from "../../constants/constants";
@@ -81,6 +83,7 @@ class FeedbackQuestions extends Component {
                           required: true,
                           message: "Answer field cannot be empty!",
                         },
+                        { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
                       ]}
                     >
                       <Input.TextArea
