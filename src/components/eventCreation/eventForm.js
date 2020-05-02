@@ -142,7 +142,7 @@ export function EventForm(props) {
               { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
-            <Input size="large" max={255} placeholder="Event Name" />
+            <Input size="large" maxLength={32} placeholder="Event Name" />
           </Form.Item>
           <Form.Item
             name="external_links"
@@ -169,7 +169,7 @@ export function EventForm(props) {
             >
               <Input
                 size="large"
-                max={255}
+                maxLength={255}
                 placeholder="Location"
                 className="input-style"
               />
@@ -221,7 +221,7 @@ export function EventForm(props) {
             >
               <Input
                 size="large"
-                max={255}
+                maxLength={255}
                 disabled={isChecked ? !isChecked : true}
                 placeholder="Subscription Fees"
                 className="input-style"
@@ -268,7 +268,7 @@ export function EventForm(props) {
             >
               <Input
                 size="large"
-                max={255}
+                maxLength={255}
                 placeholder="Number of Tickets"
                 className="input-style"
               />
@@ -286,7 +286,7 @@ export function EventForm(props) {
           >
             <Input.TextArea
               placeholder="Description"
-              max={255}
+              maxLength={255}
               autoSize={{ minRows: 4, maxRows: 4 }}
               className="input-textarea"
             />
@@ -437,7 +437,7 @@ export function UpdateEventForm(props) {
               { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
-            <Input size="large" max={255} placeholder="Event Name" />
+            <Input size="large" maxLength={32} placeholder="Event Name" />
           </Form.Item>
           <Form.Item
             name="external_links"
@@ -464,7 +464,7 @@ export function UpdateEventForm(props) {
             >
               <Input
                 size="large"
-                max={255}
+                maxLength={255}
                 placeholder="Location"
                 className="input-style"
               />
@@ -517,7 +517,7 @@ export function UpdateEventForm(props) {
             >
               <Input
                 size="large"
-                max={255}
+                maxLength={255}
                 disabled={!isChecked || ifSubscribed}
                 placeholder="Subscription Fees"
                 className="input-style"
@@ -570,7 +570,7 @@ export function UpdateEventForm(props) {
             >
               <Input
                 size="large"
-                max={255}
+                maxLength={255}
                 placeholder="Number of Tickets"
                 className="input-style"
               />
@@ -588,7 +588,7 @@ export function UpdateEventForm(props) {
           >
             <Input.TextArea
               placeholder="Description"
-              max={255}
+              maxLength={255}
               autoSize={{ minRows: 4, maxRows: 4 }}
               className="input-textarea"
             />
