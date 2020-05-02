@@ -323,7 +323,9 @@ export function UpdateEventForm(props) {
     description,
     no_of_tickets,
     images,
+    sold_tickets,
   } = values;
+  const ifSubscribed = sold_tickets>0?true:false;
   let dateTime = "";
   if (date && time) {
     dateTime = date + " " + time;
@@ -477,6 +479,7 @@ export function UpdateEventForm(props) {
               <Switch
                 checked={isChecked ? isChecked : false}
                 onChange={handleSwitchChange}
+                disabled = {ifSubscribed}
                 size="default"
               />
               <pre>{isChecked ? "Yes" : "No "}</pre>
@@ -496,11 +499,15 @@ export function UpdateEventForm(props) {
             >
               <Input
                 size="large"
-                disabled={isChecked ? !isChecked : true}
+                disabled={!isChecked || ifSubscribed}
                 placeholder="Subscription Fees"
                 className="input-style"
               />
             </Form.Item>
+            {
+              ifSubscribed &&
+              <div className="fees-error">* Fee cannot be updated because users have already subscribed to the event.</div>
+            }
             <Form.Item
               name="event_type"
               rules={[

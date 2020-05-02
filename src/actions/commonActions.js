@@ -1,4 +1,5 @@
 import { actionLoginTypes, actionNotificationsTypes, actionAnalytics, actionFeedbackTypes } from "../constants/actionTypes";
+import * as jwt from 'jsonwebtoken';
 
 export const getUser = ({email,password,callback}) => {
   return {
@@ -113,3 +114,19 @@ export const fetchAnalyticsData = ({accessToken, filterData}) => {
     filterData
   }
 }
+
+export const checkResponse = (response, responseJson) => {
+  if (!response.ok) {
+    throw responseJson;
+  } else return;
+};
+
+export const ifAccessTokenExpired = (token) => {
+  var decoded = jwt.decode(token, { complete: true });
+  const currentTime = Math.floor(new Date().getTime() / 1000);
+  if (decoded && currentTime > decoded.payload.exp) {
+    localStorage.clear();
+    window.location.replace("/login");
+    return true;
+  } else return false;
+};

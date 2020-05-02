@@ -150,11 +150,11 @@ class EventInfo extends Component {
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>Status</b></div>
-                        <div style={{ marginRight: "0px", color:tagColor }} >
+                        <Tag style={{ marginRight: "0px",}} color={tagColor}  >
                             <span className="capitalize ellipsis-style">
                                 {event_status}
                             </span>
-                        </div>
+                        </Tag>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>URL</b></div>

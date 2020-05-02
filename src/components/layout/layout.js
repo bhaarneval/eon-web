@@ -16,10 +16,9 @@ import Dashboard from "../../containers/dashboard/dashboard";
 import CreateEvent from "../../containers/createEvent/createEvent";
 import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
-import * as jwt from 'jsonwebtoken';
 import { Spin } from "antd";
 import Analytics from "../../containers/analytics/analytics";
-import { logOutUser } from "../../actions/commonActions";
+import { logOutUser, ifAccessTokenExpired } from "../../actions/commonActions";
 
 const AfterLogin = ({ component: Component, isLoggedIn, ...rest }) => {
 
@@ -117,16 +116,7 @@ class LayoutComponent extends React.Component {
 
   UNSAFE_componentWillMount = () => {
     const token = localStorage.getItem('token');
-    var decoded = jwt.decode(token, {complete: true});
-    const currentTime = Math.floor(new Date().getTime()/1000);
-    if (decoded && currentTime > decoded.payload.exp){
-      this.props.logOutUser({
-        callback: () => {
-          localStorage.clear();
-          window.location.replace('/login');
-        }
-      })
-    }
+    ifAccessTokenExpired(token);
   }
 
   render() {

@@ -90,7 +90,7 @@ function MyDocument(props) {
             <Text>Email Id: {userData.email}</Text>
             <Text>Contact: {userData.contact_number}</Text>
             <Text>Booking Date: {moment(created_on, "YYYY-MM-DD").format("dddd, DD MMM' YYYY")}</Text>
-            <Text>*Note: Tickets are non-transferable!</Text>
+            <Text>*Note: Ticket is non-transferable!</Text>
           </View>
         </View>
       </Page>
