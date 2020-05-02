@@ -10,6 +10,7 @@ import {
   URLVALIDATION,
   NUMBERSVALIDATION,
   MATCH_ANYTHING,
+  WHITESPACE_VALIDATION,
 } from "../../constants/constants";
 import {
   EVENT_NAME,
@@ -20,6 +21,7 @@ import {
   EVENT_TYPE,
   EVENT_CAPACITY,
   EVENT_FEES,
+  ONLY_WHITESPACE,
 } from "../../constants/messages";
 
 const { Option } = Select;
@@ -135,9 +137,12 @@ export function EventForm(props) {
         >
           <Form.Item
             name="name"
-            rules={[{ required: true, message: EVENT_NAME }]}
+            rules={[
+              { required: true, message: EVENT_NAME },
+              { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
+            ]}
           >
-            <Input size="large" placeholder="Event Name" />
+            <Input size="large" max={255} placeholder="Event Name" />
           </Form.Item>
           <Form.Item
             name="external_links"
@@ -146,6 +151,7 @@ export function EventForm(props) {
                 pattern: URLVALIDATION,
                 message: URL_VALID,
               },
+              { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
             <Input size="large" placeholder="URL" />
@@ -158,10 +164,12 @@ export function EventForm(props) {
                   required: true,
                   message: EVENT_LOCATION,
                 },
+                { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
               ]}
             >
               <Input
                 size="large"
+                max={255}
                 placeholder="Location"
                 className="input-style"
               />
@@ -213,6 +221,7 @@ export function EventForm(props) {
             >
               <Input
                 size="large"
+                max={255}
                 disabled={isChecked ? !isChecked : true}
                 placeholder="Subscription Fees"
                 className="input-style"
@@ -259,6 +268,7 @@ export function EventForm(props) {
             >
               <Input
                 size="large"
+                max={255}
                 placeholder="Number of Tickets"
                 className="input-style"
               />
@@ -271,10 +281,12 @@ export function EventForm(props) {
                 required: true,
                 message: "Please provide a description for the event!",
               },
+              { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
             <Input.TextArea
               placeholder="Description"
+              max={255}
               autoSize={{ minRows: 4, maxRows: 4 }}
               className="input-textarea"
             />
@@ -325,7 +337,7 @@ export function UpdateEventForm(props) {
     images,
     sold_tickets,
   } = values;
-  const ifSubscribed = sold_tickets>0?true:false;
+  const ifSubscribed = sold_tickets > 0 ? true : false;
   let dateTime = "";
   if (date && time) {
     dateTime = date + " " + time;
@@ -420,9 +432,12 @@ export function UpdateEventForm(props) {
         >
           <Form.Item
             name="name"
-            rules={[{ required: true, message: EVENT_NAME }]}
+            rules={[
+              { required: true, message: EVENT_NAME },
+              { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
+            ]}
           >
-            <Input size="large" placeholder="Event Name" />
+            <Input size="large" max={255} placeholder="Event Name" />
           </Form.Item>
           <Form.Item
             name="external_links"
@@ -431,6 +446,7 @@ export function UpdateEventForm(props) {
                 pattern: URLVALIDATION,
                 message: URL_VALID,
               },
+              { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
             <Input size="large" placeholder="URL" />
@@ -443,10 +459,12 @@ export function UpdateEventForm(props) {
                   required: true,
                   message: EVENT_LOCATION,
                 },
+                { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
               ]}
             >
               <Input
                 size="large"
+                max={255}
                 placeholder="Location"
                 className="input-style"
               />
@@ -479,7 +497,7 @@ export function UpdateEventForm(props) {
               <Switch
                 checked={isChecked ? isChecked : false}
                 onChange={handleSwitchChange}
-                disabled = {ifSubscribed}
+                disabled={ifSubscribed}
                 size="default"
               />
               <pre>{isChecked ? "Yes" : "No "}</pre>
@@ -499,15 +517,18 @@ export function UpdateEventForm(props) {
             >
               <Input
                 size="large"
+                max={255}
                 disabled={!isChecked || ifSubscribed}
                 placeholder="Subscription Fees"
                 className="input-style"
               />
             </Form.Item>
-            {
-              ifSubscribed &&
-              <div className="fees-error">* Fee cannot be updated because users have already subscribed to the event.</div>
-            }
+            {ifSubscribed && (
+              <div className="fees-error">
+                * Fee cannot be updated because users have already subscribed to
+                the event.
+              </div>
+            )}
             <Form.Item
               name="event_type"
               rules={[
@@ -549,6 +570,7 @@ export function UpdateEventForm(props) {
             >
               <Input
                 size="large"
+                max={255}
                 placeholder="Number of Tickets"
                 className="input-style"
               />
@@ -561,10 +583,12 @@ export function UpdateEventForm(props) {
                 required: true,
                 message: "Please provide a description for the event!",
               },
+              { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
             <Input.TextArea
               placeholder="Description"
+              max={255}
               autoSize={{ minRows: 4, maxRows: 4 }}
               className="input-textarea"
             />
