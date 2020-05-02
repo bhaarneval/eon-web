@@ -111,7 +111,7 @@ class EventInfo extends Component {
                             </Tag>
                         }
                     </div>
-                    <div className="detail-card-top-descContainer">
+                    <div className="detail-card-top-descContainer ellipsis-style">
                         <h2>{eventData.name}</h2>
                         <div className="detail-card-top-desc">
                             {eventData.description}
