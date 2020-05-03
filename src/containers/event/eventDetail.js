@@ -129,6 +129,15 @@ payNow = (seats, amount,totalAmount) => {
     })
 }
 
+subscriptionPaidEventCallback = (error) => {
+  if(!error){
+    this.setState({
+      showPayment: false,
+      showPaymentSuccess: true,
+    });
+  }
+}
+
 onBankSubmit = (accountNo, expiry) => {
     this.setState({
       processing: true
@@ -151,16 +160,18 @@ onBankSubmit = (accountNo, expiry) => {
     subscriptionPaidEvent({
       data: data,
       accessToken: accessToken,
-      callback: (error) => {
-        if(!error){
-          this.setState({
-            showPayment: false,
-            showPaymentSuccess: true,
-          });
-        }
-      }
+      callback: this.subscriptionPaidEventCallback,
     });  
 }
+
+subscriptionFreeEventCallback = (error) => {
+  if (!error) {
+    this.setState({
+      showPaymentSuccess: true,
+    });
+  }
+}
+
 handleFreeTicket = (seats) => {
   this.setState({
     processing: true,
@@ -181,13 +192,7 @@ handleFreeTicket = (seats) => {
       data,
       accessToken,
       subscriptionType: "subscribe-new",
-      callback: (error) => {
-        if (!error) {
-          this.setState({
-            showPaymentSuccess: true,
-          });
-        }
-      },
+      callback: this.subscriptionFreeEventCallback,
     });
   }
   else if(seats<0){
@@ -252,6 +257,25 @@ handleRefund = (seats) => {
     })
 } 
 
+refundConfirmCallback = (error) => {
+  if(!error){
+    this.setState({
+      noOfSeats:this.state.newSeats,
+      showPaymentSuccess: true,
+  })
+  }
+}
+
+freeSeatsUpdateCallback = (error) => {
+  if (!error) {
+    this.setState({
+      noOfSeats: this.state.newSeats,
+      showUpdateSeatsModal: false,
+      showPaymentSuccess: true,
+    });
+  }
+} 
+
 handleRefundConfirm = () => {
   const { userData, eventData,subscriptionPaidEvent,subscriptionFreeEvent,accessToken} = this.props;
   if(eventData.subscription_fee!==0){
@@ -275,14 +299,7 @@ handleRefundConfirm = () => {
     subscriptionPaidEvent({
       data: data,
       accessToken,
-      callback: (error) => {
-        if(!error){
-          this.setState({
-            noOfSeats:this.state.newSeats,
-            showPaymentSuccess: true,
-        })
-        }
-      }
+      callback: this.refundConfirmCallback
     })
   }
   else {
@@ -296,15 +313,7 @@ handleRefundConfirm = () => {
     subscriptionFreeEvent({
       data,
       accessToken,
-      callback: (error) => {
-        if (!error) {
-          this.setState({
-            noOfSeats: this.state.newSeats,
-            showUpdateSeatsModal: false,
-            showPaymentSuccess: true,
-          });
-        }
-      },
+      callback: this.freeSeatsUpdateCallback,
     });
   }   
 }

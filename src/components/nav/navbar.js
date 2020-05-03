@@ -121,15 +121,16 @@ class Navbar extends Component {
       notifications: notification,
     });
   };
-
-  render() {
-    const menu = (
+  menu = () => {
+    return (
       <Menu onClick={(key) => this.takeMenuAction(key)}>
         <Menu.Item key="1">Organizer Registration</Menu.Item>
         <Menu.Item key="2">Subscriber Registration</Menu.Item>
       </Menu>
     );
-    const menuSidebar = (
+  };
+  menuSidebar = () => {
+    return (
       <Menu onClick={(key) => this.takeMenuAction(key)}>
         <Menu.Item key="3">Change Password</Menu.Item>
         <Menu.Item key="4">Profile</Menu.Item>
@@ -141,6 +142,9 @@ class Navbar extends Component {
         </Menu.Item>
       </Menu>
     );
+  };
+
+  render() {
     const { notifications } = this.state;
     return (
       <div className="nav-container">
@@ -184,7 +188,7 @@ class Navbar extends Component {
             />
           )}
           {localStorage.getItem("token") && this.props.accessToken !== "" ? (
-            <Dropdown overlay={menuSidebar}>
+            <Dropdown overlay={this.menuSidebar}>
               <div className="nav-items">
                 {this.props.userData.name
                   ? this.props.userData.name
@@ -193,7 +197,7 @@ class Navbar extends Component {
               </div>
             </Dropdown>
           ) : (
-            <Dropdown overlay={menu}>
+            <Dropdown overlay={this.menu}>
               <div className="nav-items">
                 Register <DownOutlined />
               </div>
