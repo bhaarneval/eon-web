@@ -40,7 +40,7 @@ export default function EventCards(props) {
         <div className="event-name ellipsis-style">{name}</div>
         <div className="attendies-fees-div">
           <div className="attendies-div ellipsis-style">{sold_tickets} Attendies</div>
-          <div className="fees-div ellipsis-style">{subscription_fee === 0? "Free":"₹"+subscription_fee}</div>
+          <div className="fees-div ellipsis-style">{subscription_fee === 0? "Free":"₹"+subscription_fee.toLocaleString()}</div>
         </div>
         <div className="address-div attendies-fees-div ellipsis-style">
           <div className="ellipsis-style">

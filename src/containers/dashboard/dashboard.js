@@ -112,29 +112,20 @@ class Dashboard extends Component {
   };
 
   spliceArray = (list) => {
-    let splicedList = [];
-    splicedList = list.reduce(
-      (rows, key, index) =>
-        (index % 4 == 0 ? rows.push([key]) : rows[rows.length - 1].push(key)) &&
-        rows,
-      []
+    return (
+      <Row className="cards-row">
+        {list.map((event, index) => {
+          return (
+            <UserEventcards
+              history={this.props.history}
+              key={index}
+              event={event}
+              onClick={this.handleEventClick}
+            />
+          );
+        })}
+      </Row>
     );
-    return splicedList.map((list, index) => {
-      return (
-        <Row key={index} className="cards-row">
-          {list.map((event, index) => {
-            return (
-              <UserEventcards
-                history={this.props.history}
-                key={index}
-                event={event}
-                onClick={this.handleEventClick}
-              />
-            )
-          })}
-        </Row>
-      );
-    });
   };
 
   applyFilters = () => {
