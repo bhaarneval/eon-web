@@ -6,8 +6,8 @@ import organisationImg from "../../assets/Organisation Name.svg";
 import emailImg from "../../assets/Email ID.svg";
 import phoneImg from "../../assets/Phone - .svg";
 import userImg from "../../assets/user.svg";
-import {ORGANISATION_NAME,ORGANISATION_ADDRESS, CONTACT_NO, INVALID_CONATCT, NAME_NO_SPECIAL} from '../../constants/messages';
-import { PHONE_VALIDATION, NAME_VALIDATION} from '../../constants/constants';
+import {ORGANISATION_NAME,ORGANISATION_ADDRESS, CONTACT_NO, INVALID_CONATCT, NAME_NO_SPECIAL, ONLY_WHITESPACE} from '../../constants/messages';
+import { PHONE_VALIDATION, NAME_VALIDATION, WHITESPACE_VALIDATION} from '../../constants/constants';
 
 export default function ProfileForm(props) {
   const { values, handleSubmit, handleCancel, role, interestList, disableButton, handleDisableChange } = props;
@@ -142,7 +142,8 @@ function FormComponent(props) {
               key={"name"}
               rules={[
                 { required: true, message: "Please enter your name!"  },
-                {pattern: NAME_VALIDATION, message: NAME_NO_SPECIAL}
+                { pattern: NAME_VALIDATION, message: NAME_NO_SPECIAL},
+                { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
               ]}
           >
             <Input size = "large"  prefix = {<img src={userImg}/>} placeholder = "Name" className = 'input-style'/>
@@ -152,7 +153,8 @@ function FormComponent(props) {
             name="organization"
             key={"organization"}
             rules={[
-              { required: true, message: ORGANISATION_NAME  }
+              { required: true, message: ORGANISATION_NAME  },
+              { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
             <Input size = "large"  prefix = {<img src={organisationImg}/>} placeholder = "Organisation Name" className = 'input-style'/>
@@ -189,7 +191,8 @@ function FormComponent(props) {
               {
                 required: true,
                 message: role !== "subscriber"? ORGANISATION_ADDRESS : "Please enter your address!"
-              }
+              },
+              { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
             <Input.TextArea placeholder = "Enter Address" autoSize = {{minRows:4, maxRows:4}} className = "input-textarea"/>

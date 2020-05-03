@@ -31,6 +31,7 @@ export const ENTER_OTP = "A verification code has been sent to the registered em
 export const OTP_REQUIRED = "Verification code cannot be empty!";
 export const BANK_REQUIRED = "Please enter your card number";
 export const EXPIRY_REQUIRED = "Please enter expiry date!";
+export const ONLY_WHITESPACE = "Input cannot consist of just whtespaces!"
 
 //create constant messages
 export const EVENT_NAME = "Event name cannot be empty!";
