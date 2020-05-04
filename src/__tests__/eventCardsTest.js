@@ -8,7 +8,7 @@ import UserCards from "../components/eventCards/userEventCards"
 
 const handleOnClick = sinon.spy();
 
-const userCards = (image, isSubscribed, subscriptionFee) => {
+const userCards = (image, isSubscribed, subscriptionFee=500) => {
     return (
         <UserCards event={{images: image, is_subscribed:isSubscribed, subscription_fee: subscriptionFee}} history={{push:(text)=>{console.log(text+' called')}}} onClick={handleOnClick} />
       );
