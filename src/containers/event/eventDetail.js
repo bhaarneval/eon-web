@@ -169,7 +169,6 @@ onBankSubmit = (accountNo, expiry) => {
     let exp = moment(expiry, "MM-YY").format("YYYY");
     const { finalAmount, finalSeats, totalAmount } =this.state;
     const {eventData, userData, accessToken,subscriptionPaidEvent} =this.props;
-
     let data = {
       event_id: eventData.id,
       user_id: userData.user_id,
@@ -178,7 +177,7 @@ onBankSubmit = (accountNo, expiry) => {
       expiry_year: parseInt(exp),
       expiry_month: parseInt(expMonth),
       amount: totalAmount,
-      discount_amount: totalAmount-finalAmount,
+      discount_amount: Math.round((totalAmount-finalAmount)),
     }
     subscriptionPaidEvent({
       data: data,
