@@ -260,7 +260,7 @@ class FeeCalculation extends Component {
                     <div>
                       Discount : - ₹
                       {this.state.codeApplied &&
-                        discountAmount}
+                       this.state.totalAmount - discountAmount}
                     </div>
                   )}
                   <div>
