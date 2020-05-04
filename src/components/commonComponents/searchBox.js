@@ -4,6 +4,9 @@ import {Input} from "antd";
 
 import searchImg from '../../assets/Search.svg';
 
+/*
+ * search box for dashboard and analytics
+ */
 export default function SearchBox (props) {
     const {handleKeyPress, placeholder, value, handleOnChange} = props;
     let [currentValue, setValue] =useState(value);

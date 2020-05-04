@@ -10,6 +10,9 @@ import  BasicDetailsImg from '../../assets/Basic Details.svg';
 import PasswordImg from '../../assets/Password_Illustration.svg';
 import { postUser } from '../../actions/commonActions';
 
+/**
+ * container for organizer registration
+ */
 class OrganiserRegistration extends Component {
     constructor(props) {
         super(props);
@@ -25,6 +28,8 @@ class OrganiserRegistration extends Component {
             showWarningModal: false
         }
     }
+
+//handle terms and conditions modal close
 handleModalClose = () => {
     this.setState({
         isChecked: false,
@@ -32,6 +37,7 @@ handleModalClose = () => {
     });
 }
 
+//handle terms and conditions accept
 handleAccept = () => {
     if (this.state.isChecked) {
       this.setState({
@@ -56,12 +62,14 @@ handleAccept = () => {
     }
 }
 
+//handle termas and conditions check box change
 handleCheckBoxChange = () => {
     this.setState({
         isChecked: !this.state.isChecked
     })
 }
 
+//handle password change to match it with confirm password
 handlePassWordChange = (values) => {
     let currentPassword = values.target.value;
     this.setState({
@@ -69,6 +77,7 @@ handlePassWordChange = (values) => {
     })
 }
 
+//handle form submission to create new organizer profile
  handleSubmit = (values) => {
      let formData = {...this.state.formData};
     const activeKey = this.state.activeKey;
@@ -90,6 +99,7 @@ handlePassWordChange = (values) => {
     }
  }
  
+ //handle going back to basic deatils 
  handleBack = () => {
      this.setState({
          activeKey: this.state.activeKey-1

@@ -5,6 +5,13 @@ import { actionAnalytics } from "../constants/actionTypes";
 import { message } from "antd";
 import {checkResponse,ifAccessTokenExpired} from "../actions/commonActions"
 
+/**
+ * get analytics dashboard data
+ * @param {accessToken, filterDat} param
+ * accessToken for authorisation
+ * filterdata to apply filters
+ */
+
 export function* getAnalyticsData(param) {
   const { accessToken, filterData } = param;
   if(ifAccessTokenExpired(accessToken)){

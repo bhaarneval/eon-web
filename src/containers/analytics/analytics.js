@@ -16,6 +16,12 @@ import { statusList } from "../../constants/constants";
 import AnalyticsTable from "../../components/analytics/analyticsTable";
 import { fetchAnalyticsData } from "../../actions/commonActions";
 
+/**
+ * container fo ranalytics dashboard
+ * conatins different charts displayed
+ * conatins the event table with informato=ion of revenue generated
+ * different charts for different representation
+ */
 class Analytics extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +40,7 @@ class Analytics extends Component {
     }
   }
 
+  //fetch analytics from database
   fetchAnalytic = () => {
     const { accessToken, fetchAnalyticsData } = this.props;
     const { searchText, status } = this.state;
@@ -55,6 +62,7 @@ class Analytics extends Component {
     }
   }
 
+  //search with the provided search text on press of enter
   handleKeyPress = (event) => {
     const searchText = event.target.value;
     this.setState(
@@ -67,12 +75,14 @@ class Analytics extends Component {
     );
   };
 
+  // handle search text change
   handleSearchTextChange = (event) => {
     this.setState({
       searchText: event.target.value,
     })
   }
 
+  //handle dropdown filter change
   handleDropDownChange = (key) => {
     this.setState(
       {
@@ -83,6 +93,7 @@ class Analytics extends Component {
       }
     );
   };
+  //to remove the applied filters
   removeFilters = () => {
     this.setState(
       {
@@ -92,6 +103,7 @@ class Analytics extends Component {
       () => this.fetchAnalytic()
     );
   };
+  
   render() {
     const { searchText, status } = this.state;
     const { analyticsData } = this.props;

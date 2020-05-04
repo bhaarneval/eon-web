@@ -7,6 +7,9 @@ import ProfileForm from "../../components/profile/profileForm";
 import PropTypes from "prop-types";
 import { getUserProfile, updateUserProfile } from "../../actions/commonActions";
 
+/**
+ * profile conatiner to render my profile
+ */
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +23,7 @@ class Profile extends Component {
     getUserProfile({userId: userData.user_id, accessToken});
   }
   
+  //handle update for profile
   handleSubmit = (values) => {
     const {userData, accessToken, updateUserProfile} = this.props;
     updateUserProfile({
@@ -36,10 +40,12 @@ class Profile extends Component {
     });
   };
 
+  //handle go back to dashboard
   goBack = () => {
     this.props.history.push("/dashboard");
   };
 
+  //to disable update button of there's no change
   handleDisableChange = (flag) => {
     this.setState({
       disableButton: flag

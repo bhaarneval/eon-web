@@ -13,6 +13,14 @@ import {
 } from 'react-share';
 
 
+/*
+ * event details for organizer who has created events
+ * count of feedback,
+ * count of subscribers, 
+ * sending updates
+ * sending reminders,
+ * sharing on facebook
+ */
 class EventCount extends Component {
     constructor(props) {
         super(props);

@@ -5,6 +5,9 @@ import userImg from "../../assets/user.svg";
 import emailImg from "../../assets/Email ID.svg";
 import phoneImg from "../../assets/Phone - .svg";
 
+/**
+ * Component to display feedbacks from subscriber to organizer
+ */
 class FeedbackAnswers extends Component {
     constructor(props) {
         super(props);

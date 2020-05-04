@@ -4,6 +4,13 @@ import { actionFeedbackTypes, actionEventTypes } from "../constants/actionTypes"
 import { message } from "antd";
 import cloneDeep from 'lodash/cloneDeep'
 import {checkResponse, ifAccessTokenExpired} from "../actions/commonActions";
+
+/**
+ * fetch questions for feedback
+ * @param {accessToken} param
+ * accessToken for authorisation
+ */
+
 export function* fetchQuestions(param) {
   const { accessToken } = param;
   if(ifAccessTokenExpired(accessToken)){
@@ -39,6 +46,11 @@ export function* fetchQuestions(param) {
   }
 }
 
+/**
+ * fetch responses of feedback
+ * @param {accessToken} param
+ * accessToken for authorisation
+ */
 export function* fetchResponses(param){
   const {accessToken, id } = param;
   if(ifAccessTokenExpired(accessToken)){
@@ -70,6 +82,13 @@ export function* fetchResponses(param){
   }
 }
 
+/**
+ * post feedbacks 
+ * @param {accessToken, feedback, callback} param
+ * accessToken for authorisation
+ * feedback: reponses of subscribers,
+ * callback: callback method
+ */
 export function* postQuestions(param) {
   let { accessToken, feedback, callback } = param;
   if(ifAccessTokenExpired(accessToken)){

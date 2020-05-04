@@ -8,6 +8,9 @@ import { connect } from "react-redux";
 import { getEventData } from "../../actions/eventActions";
 import { getQuestions, postResponses } from "../../actions/commonActions";
 
+/**
+ * feedback question container
+ */
 class Feedback extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +19,7 @@ class Feedback extends Component {
     };
   }
   
+  //fetch questions and event data
   componentDidMount(){
     const {eventData, location:{search}, getEventData,accessToken, userRole, history} = this.props;
     if(!eventData || !eventData.id){
@@ -37,12 +41,14 @@ class Feedback extends Component {
     getQuestions({accessToken})
   }
 
+  //callback after submission
   submitCallback = (success) => {
     if(success){
       this.props.history.push(`/event-details?id=${this.props.eventData.id}`);
     }
   }
 
+  //submission of answers
   onSubmit = (data) => {
     const {eventData,accessToken,} = this.props;
     this.props.postResponses({
@@ -53,6 +59,7 @@ class Feedback extends Component {
     })
   }
 
+  //go back to the event details page
   goBack = () => {
     this.props.history.push(`/event-details?id=${this.props.eventData.id}`);
   }

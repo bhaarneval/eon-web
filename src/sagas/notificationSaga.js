@@ -3,7 +3,11 @@ import { APIService, requestURLS } from "../constants/APIConstant";
 import { actionNotificationsTypes } from "../constants/actionTypes";
 import {checkResponse, ifAccessTokenExpired} from "../actions/commonActions";
 
-
+/**
+ * fetch new notifications
+ * @param {accessToken} param
+ * accessToken for authorisation
+ */
 export function* getNotifications(param) {
   if(ifAccessTokenExpired(param.access)){
     return;
@@ -38,6 +42,12 @@ export function* getNotifications(param) {
   }
 }
 
+/**
+ * mark notification as read
+ * @param {accessToken, list} param
+ * accessToken for authorisation
+ * list: list of ids of notifications to mark as read
+ */
 export function* readNotifications(param) {
   const { list, access } = param;
   if(ifAccessTokenExpired(access)){

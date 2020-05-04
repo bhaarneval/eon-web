@@ -25,6 +25,10 @@ import {
 } from "../../constants/messages";
 
 const { Option } = Select;
+
+/*
+ * form for creation of event
+ */
 export function EventForm(props) {
   const {
     values,
@@ -314,6 +318,10 @@ EventForm.propTypes = {
   errorMessage: PropTypes.string,
   eventType: PropTypes.array,
 };
+
+/*
+ * form for updation of event
+ */
 export function UpdateEventForm(props) {
   const {
     values,

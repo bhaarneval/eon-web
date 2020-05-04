@@ -9,6 +9,12 @@ import moment from "moment";
 import BackButton from "../commonComponents/backButton";
 import { NAME_VALIDATION, CARD_VALIDATION, WHITESPACE_VALIDATION } from '../../constants/constants';
 
+/**
+ * component to take input payment details such as :
+ * Full name
+ * card number
+ * card expiry
+ */
 class Payment extends Component {
     constructor(props) {
         super(props);

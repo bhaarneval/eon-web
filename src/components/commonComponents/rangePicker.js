@@ -5,6 +5,11 @@ import moment from "moment";
 
 const { RangePicker } = DatePicker;
 
+/**
+ * 
+ * @param handleChange: to handle on date select
+ * @param values: to sustain selected values 
+ */
 export default function StyledRangePicker (props) {
     const {handleChange, values} = props;
     return <RangePicker

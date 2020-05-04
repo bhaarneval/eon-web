@@ -22,6 +22,8 @@ const columns = [
   },
 ];
 
+
+//invitee table for event details
 class EventTable extends React.Component {
   state = {
     selectedRowKeys: [],

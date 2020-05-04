@@ -19,6 +19,24 @@ import {
 } from 'react-share';
 
 
+/*
+ * event info 
+ * images
+ * name
+ * description
+ * event type
+ * subscription fees
+ * url
+ * date and time of event
+ * actions for organizers and subscribers like:
+ * subscribers:
+ * sharing event
+ * sharing event on facebook
+ * wishlisting the event
+ * organizers: the ones who created the event
+ * edit event details
+ * cancel events
+ */
 class EventInfo extends Component {
     constructor(props) {
         super(props);
@@ -29,6 +47,7 @@ class EventInfo extends Component {
         }
       }
 
+      //handle dropdown menu selection
     takeMenuAction = (input) => {
         if(input.key === "1")
           this.setState({
@@ -40,18 +59,22 @@ class EventInfo extends Component {
         }
             
     }
+
+    //to handle cancel event popup close
     handleClose = () => {
         this.setState({
             cancelPopup: false
         })
     }
 
+    //to save message for update/reminders/share
     onChange = (event) => {
         this.setState({
             message: event.target.value,
         })
     }
 
+    // function to handle confirmation of event cancellation
     cancel = () => {
         this.setState({
             cancelPopup: false,
@@ -71,6 +94,8 @@ class EventInfo extends Component {
             }
         });
     }
+
+    //handle wishlist operations
     handleBookmark = () => {
         let currentState = this.state.bookmarked;
         const {eventData, handleWishlist, accessToken} = this.props;
