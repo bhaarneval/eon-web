@@ -11,8 +11,8 @@ import lockImg from '../../../assets/Password_login.svg';
 import organisationImg from "../../../assets/Organisation Name.svg";
 import phoneImg from "../../../assets/Phone - .svg";
 import emailImg from "../../../assets/Email ID.svg";
-import {ORGANISATION_NAME,ORGANISATION_ADDRESS,EMAIL_REQUIRED,CONTACT_NO,INVALID_CONATCT,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD, PASSWORD_INFO,} from '../../../constants/messages';
-import { EMAIL_VALIDATION, PHONE_VALIDATION, PASSWORD_VALIDATION} from '../../../constants/constants';
+import {ORGANISATION_NAME,ORGANISATION_ADDRESS,EMAIL_REQUIRED,CONTACT_NO,INVALID_CONATCT,SIGNUP_PASSWORD_REQUIRED,CONFIRM_PASSWORD,PASSWORD_DO_NOT_MATCH,INVALID_PASSWORD, PASSWORD_INFO, ONLY_WHITESPACE} from '../../../constants/messages';
+import { EMAIL_VALIDATION, PHONE_VALIDATION, PASSWORD_VALIDATION, WHITESPACE_VALIDATION} from '../../../constants/constants';
 
 BasicDetails.propTypes = {
   values: PropTypes.object.isRequired,
@@ -46,7 +46,8 @@ export function BasicDetails(props) {
       <Form.Item
         name="organization"
         rules={[
-          { required: true, message: ORGANISATION_NAME  }
+          { required: true, message: ORGANISATION_NAME  },
+          { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
         ]}
       >
         <Input size = "large"  prefix = {<img src={organisationImg}/>} placeholder = "Organization Name" className = 'input-style'/>
@@ -85,7 +86,8 @@ export function BasicDetails(props) {
           {
             required: true,
             message: ORGANISATION_ADDRESS
-          }
+          },
+          { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
         ]}
       >
         <Input.TextArea placeholder = "Enter Address" autoSize = {{minRows:3, maxRows: 3}} className = "input-textarea"/>

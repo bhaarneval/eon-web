@@ -30,6 +30,22 @@ class FeeCalculation extends Component {
     };
   }
 
+  componentDidUpdate (prevProps) {
+    if(this.props.noOfSeats !== prevProps.noOfSeats){
+      this.setState({
+        seats: this.props.noOfSeats,
+        boughtSeats: this.props.noOfSeats,
+        amountPaid: this.props.amountPaid,
+        totalAmountAfterPromo: this.props.noOfSeats * this.props.perHeadAmount,
+        totalAmount: this.props.noOfSeats * this.props.perHeadAmount,
+        codeApplied: false,
+        isSubscribed: this.props.eventData.is_subscribed || false,
+        isUpdate: false,
+        soldOutError: '',
+      })
+    }
+  }
+
   onIncDecSeats = (type) => {
     let { seats, totalAmount, codeApplied} = this.state;
     const { perHeadAmount, discountPercentage, remainingTickets, eventData, noOfSeats } = this.props;

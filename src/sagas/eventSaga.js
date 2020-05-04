@@ -3,12 +3,7 @@ import { put, takeLatest } from "redux-saga/effects";
 import { APIService, requestURLS } from "../constants/APIConstant";
 import {message} from "antd";
 import { actionEventTypes, actionSubscription } from "../constants/actionTypes";
-
-function checkResponse(response, responseJson) {
-  if (!response.ok) {
-    throw responseJson;
-  } else return;
-}
+import {checkResponse,ifAccessTokenExpired} from "../actions/commonActions";
 
 /**
  * create new event
@@ -20,6 +15,9 @@ function checkResponse(response, responseJson) {
  */
 export function* createNewEvent(param) {
   let { data, callback, eventId, accessToken } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   try {
     yield put({ type: actionEventTypes.SET_EVENT_FETCHING });
     const method = eventId ? "PATCH" : "POST";
@@ -119,7 +117,10 @@ export function* createNewEvent(param) {
  * filterData different filters to apply while fetching events list
  */
 export function* fetchEventsList(param) {
-  const {  accessToken,filterData } = param;
+  const { accessToken, filterData } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
@@ -188,6 +189,9 @@ if(filterData.is_wishlisted)
  */
 export function* fetchEventData(param) {
   const { eventId, accessToken, callback, ifUpdate } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
@@ -232,6 +236,9 @@ export function* fetchEventData(param) {
  */
 export function* deleteEvent(param) {
   const {message, accessToken, eventId, callback} = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,
@@ -271,6 +278,9 @@ export function* deleteEvent(param) {
  */
 export function* saveInvitees(param) {
   const { accessToken, data, updateType } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const eventId = data.event;
   const headers = {
     "Content-Type": "application/json",
@@ -332,6 +342,9 @@ export function* saveInvitees(param) {
  */
 export function* notifyUsers(param){
   const {data, accessToken} =param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,
@@ -371,6 +384,9 @@ export function* notifyUsers(param){
  */
 export function* subscribeFreeEvent(param){
   const {data, accessToken, callback } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
@@ -426,6 +442,9 @@ export function* subscribeFreeEvent(param){
  */
 export function* paidSubscription(param){
   const {data, accessToken, callback} = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
@@ -482,6 +501,9 @@ export function* paidSubscription(param){
  */
 export function* cancelSubscription(param) {
   const {eventId, accessToken} =param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     Authorization: `Bearer ${accessToken}`
   }
@@ -531,6 +553,9 @@ export function* cancelSubscription(param) {
  */
 export function* shareWithFriendPost(param) {
   const {data, accessToken } = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
@@ -571,6 +596,9 @@ export function* shareWithFriendPost(param) {
  */
 export function* updateWishlistUser(param){
   const {data, accessToken, updateType, callback} = param;
+  if(ifAccessTokenExpired(accessToken)){
+    return;
+  }
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`

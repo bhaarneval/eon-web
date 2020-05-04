@@ -142,9 +142,9 @@ class CreateEvent extends Component {
       <BackButton handleOnClick={()=>this.goBack("goBack", this.props.eventData.id)} text = {updateType?"Update Event":"Create Event"} />
       <div className="form-div">
           { updateType && eventData.id?
-          <UpdateEventForm values = { eventData } handleSubmit={this.handleSubmit} handleCancel={this.goBack} updateType={updateType}
+          <UpdateEventForm values = { eventData } handleSubmit={this.handleSubmit} handleCancel={()=>this.goBack("notUpdate",eventData.id)} updateType={updateType}
           hasErrored={hasErrored} errorMessage = {errorMessage} eventType = {this.props.eventType}/>:
-          <EventForm values = {{}} handleSubmit={this.handleSubmit} handleCancel={this.goBack} updateType={updateType}
+          <EventForm values = {{}} handleSubmit={this.handleSubmit} handleCancel={() => this.goBack("goBack")} updateType={updateType}
           hasErrored={hasErrored} errorMessage = {errorMessage} eventType = {this.props.eventType}/>
         }
       </div>

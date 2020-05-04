@@ -34,20 +34,22 @@ class Login extends Component {
       })
     }
 
+  callback = (res, data)=> {
+    if(res === 'success'){
+      this.props.history.push("/dashboard");
+      this.props.getNotifications(data.access)
+    }
+    else{
+      this.setState({
+        hasErrored: true,
+        errorMessage: data,
+      })
+    }
+}
+
   onFinish = values => {
     this.props.getUser({...values,
-    callback: (res, data)=> {
-        if(res === 'success'){
-          this.props.history.push("/dashboard");
-          this.props.getNotifications(data.access)
-        }
-        else{
-          this.setState({
-            hasErrored: true,
-            errorMessage: data,
-          })
-        }
-    }});
+    callback: this.callback});
   };
 
   onFinishFailed = errorInfo => {

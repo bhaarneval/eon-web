@@ -16,9 +16,9 @@ import Dashboard from "../../containers/dashboard/dashboard";
 import CreateEvent from "../../containers/createEvent/createEvent";
 import Profile from "../../containers/profile/profile";
 import { connect } from "react-redux";
-import * as jwt from 'jsonwebtoken';
 import { Spin } from "antd";
 import Analytics from "../../containers/analytics/analytics";
+import { logOutUser, ifAccessTokenExpired } from "../../actions/commonActions";
 
 /*
 * function to redirect to dashboard if the user is logged in 
@@ -134,12 +134,7 @@ class LayoutComponent extends React.Component {
   */
   UNSAFE_componentWillMount = () => {
     const token = localStorage.getItem('token');
-    var decoded = jwt.decode(token, {complete: true});
-    const currentTime = Math.floor(new Date().getTime()/1000);
-    if (decoded && currentTime > decoded.payload.exp){
-      localStorage.clear();
-      window.location.replace('/login');
-    }
+    ifAccessTokenExpired(token);
   }
 
   render() {
@@ -175,6 +170,7 @@ LayoutComponent.propTypes = {
   userData: PropTypes.object,
   userRole: PropTypes.string,
   accessToken: PropTypes.string,
+  logOutUser: PropTypes.func,
 }
 
 const mapStateToProps = ({
@@ -207,5 +203,9 @@ const mapStateToProps = ({
   fetchingResponses
 })
 
-export default connect(mapStateToProps)(LayoutComponent);
+const mapDispatchToProps = {
+  logOutUser: logOutUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayoutComponent);
 

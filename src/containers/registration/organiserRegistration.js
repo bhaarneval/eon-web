@@ -106,6 +106,8 @@ handlePassWordChange = (values) => {
      })
  }
 
+ acceptWarning = () =>this.props.history.push("/login")
+
  render() {
      const {
        showModal,
@@ -154,7 +156,7 @@ handlePassWordChange = (values) => {
         ) : null}
         {
           showWarningModal && 
-          <WarningModal handleAccept={()=>this.props.history.push("/login")}/>
+          <WarningModal handleAccept={this.acceptWarning}/>
         }
       </div>
     </div>

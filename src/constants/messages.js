@@ -22,15 +22,16 @@ export const NAME_REQUIRED = "Please enter your full name!";
 export const EMAIL_REQUIRED = "Please enter a valid email!";
 export const CONTACT_NO = "Please enter your contact information!";
 export const INVALID_CONATCT = "Contact number that should contain only digits!";
-export const INVALID_BANK = "Account number should contain only digits!";
+export const INVALID_BANK = "Please enter a valid card number!";
 export const SIGNUP_PASSWORD_REQUIRED = "Please enter a password!";
 export const INVALID_PASSWORD = "Password doesn't meet all the given requirements!";
 export const CONFIRM_PASSWORD = "Please confirm your password!";
 export const PASSWORD_DO_NOT_MATCH = "Passwords do not match!";
 export const ENTER_OTP = "A verification code has been sent to the registered email ID";
 export const OTP_REQUIRED = "Verification code cannot be empty!";
-export const BANK_REQUIRED = "Please enter your bank account no.";
+export const BANK_REQUIRED = "Please enter your card number";
 export const EXPIRY_REQUIRED = "Please enter expiry date!";
+export const ONLY_WHITESPACE = "Input cannot consist of just whtespaces!"
 
 //create constant messages
 export const EVENT_NAME = "Event name cannot be empty!";
@@ -41,3 +42,4 @@ export const EVENT_TYPE = "Event type cannot be empty!";
 export const ONLY_NUMERIC = "Must contain digits only!"
 export const EVENT_CAPACITY = "Number of seats can't be empty!"
 export const EVENT_FEES = "Subscription fees can't be empty!";
+export const NAME_NO_SPECIAL = "Name cannot contain special/numeric characters!";

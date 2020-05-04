@@ -27,6 +27,7 @@ const columns = [
 class EventTable extends React.Component {
   state = {
     selectedRowKeys: [],
+    hasSelected: false
   };
 
   start = () => {
@@ -38,7 +39,7 @@ class EventTable extends React.Component {
   };
 
   onSelectChange = (selectedRowKeys) => {
-    this.setState({ selectedRowKeys });
+    this.setState({ selectedRowKeys, hasSelected: selectedRowKeys.length>0 });
   };
 
   getTableData = () => {
@@ -58,11 +59,10 @@ class EventTable extends React.Component {
   };
 
   render() {
-    const { selectedRowKeys } = this.state;
+    const { hasSelected } = this.state;
     const rowSelection = {
       onChange: this.onSelectChange,
     };
-    const hasSelected = selectedRowKeys.length > 0;
 
     let tableData = this.getTableData();
 

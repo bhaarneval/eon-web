@@ -35,15 +35,11 @@ class ChangePassword extends Component {
     };
   }
 
-  logout = () => {
-    this.props.logOutUser({
-      callback: () => {
-        localStorage.clear();
-        if (!localStorage.getItem("token")) {
-          window.location.replace("/login");
-        }
-      },
-    });
+  logoutCallback = () => {
+    localStorage.clear();
+    if (!localStorage.getItem("token")) {
+      window.location.replace("/login");
+    }
   };
 
   onFinish = (values) => {
@@ -56,7 +52,9 @@ class ChangePassword extends Component {
         if (!error) {
           message.success("Password updated successfully");
           setTimeout(() => {
-            this.logout();
+            this.props.logOutUser({
+              callback: this.logoutCallback,
+            });
           }, 1000);
         } else {
           this.setState({
@@ -176,7 +174,11 @@ class ChangePassword extends Component {
                 <Button type="default" onClick={this.goBack}>
                   Cancel
                 </Button>
-                <Button htmlType="submit" type="primary" className="save-button">
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  className="save-button"
+                >
                   Reset
                 </Button>
               </div>

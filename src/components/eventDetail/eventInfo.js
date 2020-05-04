@@ -123,6 +123,8 @@ class EventInfo extends Component {
         let eventDate = eventData.date + " "+ eventData.time;
         eventDate = moment(eventDate,"YYYY-MM-DD hh:mm A");
         eventDate = eventDate.format("DD MMM' YY, hh:mm A");
+        let event_status = eventData.event_status;
+        const tagColor = `${event_status === 'upcoming' ? 'orange' : ''}${event_status === 'cancelled' ? 'red' : ''}${event_status === 'completed' ? 'green' : ''}`;
         return (
             <div className="detail-card">
                 <div className="detail-card-top">
@@ -157,7 +159,7 @@ class EventInfo extends Component {
                 <div className="detail-card-top-other">
                     <div className="detail-card-top-other-box">
                         <div><b>Type of Event</b></div>
-                    <div>{eventType.length>0 && (eventData.event_type||eventData.type)?eventType.find(option => (eventData.event_type === option.id)||(eventData.type===option.id)).type.toUpperCase():""}</div>
+                    <div className="capitalize">{eventType.length>0 && (eventData.event_type||eventData.type)?eventType.find(option => (eventData.event_type === option.id)||(eventData.type===option.id)).type:""}</div>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>No. of Tickets</b></div>
@@ -169,7 +171,15 @@ class EventInfo extends Component {
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>Subscription Fee</b></div>
-                    <div>{eventData.subscription_fee===0?"FREE":eventData.subscription_fee}</div>
+                    <div>{eventData.subscription_fee===0?"FREE":"₹ "+eventData.subscription_fee}</div>
+                    </div>
+                    <div className="detail-card-top-other-box">
+                        <div><b>Status</b></div>
+                        <Tag style={{ marginRight: "0px",}} color={tagColor}  >
+                            <span className="capitalize ellipsis-style">
+                                {event_status}
+                            </span>
+                        </Tag>
                     </div>
                     <div className="detail-card-top-other-box">
                         <div><b>URL</b></div>

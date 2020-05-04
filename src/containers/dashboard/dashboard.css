@@ -1,6 +1,8 @@
 .events-container-flex {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .events-heading {
@@ -14,7 +16,7 @@
 .cards-row{
     width: 100%;
     height: 18em;
-    margin: 4% 0;
+    margin: 2% 0;
 }
 .dashboard-actions-container {
     padding: 1%;
