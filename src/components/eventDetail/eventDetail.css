@@ -17,6 +17,7 @@
 
 .detail-card-top-desc{
     padding: 1% 0;
+    word-wrap: break-word;
 }
 
 .detail-card-top-other{
