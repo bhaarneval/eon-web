@@ -437,7 +437,7 @@ export function UpdateEventForm(props) {
               { pattern: WHITESPACE_VALIDATION, message: ONLY_WHITESPACE },
             ]}
           >
-            <Input size="large" maxLength={32} placeholder="Event Name" />
+            <Input size="large" maxLength={20} placeholder="Event Name" />
           </Form.Item>
           <Form.Item
             name="external_links"
