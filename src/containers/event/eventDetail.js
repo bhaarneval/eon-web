@@ -154,7 +154,7 @@ onBankSubmit = (accountNo, expiry) => {
       expiry_year: parseInt(exp),
       expiry_month: parseInt(expMonth),
       amount: totalAmount,
-      discount_amount: (totalAmount-finalAmount).toFixed(2),
+      discount_amount: Math.round((totalAmount-finalAmount)),
     }
     subscriptionPaidEvent({
       data: data,

@@ -253,20 +253,20 @@ class FeeCalculation extends Component {
               <div className="subscription-left">
                 <h3>Breakdown details</h3>
                 <div className="breakdown">
-                  <div>Total Amount : ₹{this.state.totalAmount.toFixed(2)}</div>
+                  <div>Total Amount : ₹{Math.round(this.state.totalAmount)}</div>
                   {this.state.codeApplied && (
                     <div>
                       Discount : - ₹
                       {this.state.codeApplied &&
-                        (this.state.totalAmount *
-                          (this.props.discountPercentage / 100)).toFixed(2)}
+                        Math.round(this.state.totalAmount *
+                          (this.props.discountPercentage / 100))}
                     </div>
                   )}
                   <div>
                     Amount payble: ₹
                     {this.state.codeApplied
-                      ? this.state.totalAmountAfterPromo.toFixed(2)
-                      : this.state.totalAmount.toFixed(2)}
+                      ? Math.round(this.state.totalAmountAfterPromo)
+                      : Math.round(this.state.totalAmount)}
                   </div>
                 </div>
                 <div
@@ -291,9 +291,9 @@ class FeeCalculation extends Component {
                       this.props.payNow(
                         this.state.seats,
                         this.state.codeApplied
-                          ? this.state.totalAmountAfterPromo.toFixed(2)
-                          : this.state.totalAmount.toFixed(2),
-                        this.state.totalAmount.toFixed(2)
+                          ? Math.round(this.state.totalAmountAfterPromo)
+                          : Math.round(this.state.totalAmount),
+                        Math.round(this.state.totalAmount)
                       )
                     }
                   >
