@@ -148,6 +148,8 @@ class FeeCalculation extends Component {
   render() {
     const {eventData} = this.props;
     const actionAllowed = eventData && eventData.event_status === 'upcoming';
+    let discountAmount  = this.state.totalAmount - Math.round(this.state.totalAmount *
+      (this.props.discountPercentage / 100));
     return (
       <div>
         <div className="detail-card">
@@ -258,15 +260,13 @@ class FeeCalculation extends Component {
                     <div>
                       Discount : - ₹
                       {this.state.codeApplied &&
-                        Math.round(this.state.totalAmount *
-                          (this.props.discountPercentage / 100))}
+                        discountAmount}
                     </div>
                   )}
                   <div>
                     Amount payble: ₹
                     {this.state.codeApplied
-                      ? this.state.totalAmount - Math.round(this.state.totalAmount *
-                        (this.props.discountPercentage / 100))
+                      ? discountAmount
                       : this.state.totalAmount}
                   </div>
                 </div>
@@ -292,10 +292,9 @@ class FeeCalculation extends Component {
                       this.props.payNow(
                         this.state.seats,
                         this.state.codeApplied
-                          ? this.state.totalAmount - Math.round(this.state.totalAmount *
-                            (this.props.discountPercentage / 100))
-                          : Math.round(this.state.totalAmount),
-                        Math.round(this.state.totalAmount)
+                          ? discountAmount
+                          : this.state.totalAmount,
+                        this.state.totalAmount
                       )
                     }
                   >
