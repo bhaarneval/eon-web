@@ -109,7 +109,7 @@ onDiscountChange = (value) => {
     })
 }
 
-//handle send invites to the emails listed in the add invitee popup
+//handle send invites to the emails listed in the add invitee pop up
 handleSend = (inviteeList) => {
   const {updateInviteeList, eventData, accessToken} = this.props;
   const data = {
