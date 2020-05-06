@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Pushing to S3') {
             steps {
-		withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'da6ee98b-75e9-4e90-b6d9-61fc5387f891']]) {
+		    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: '${AWS_CREDENTIALS}']]) {
 		sh 'aws s3 ls'
                 sh 'aws s3 rm s3://${bucket_name}  --recursive'
                 sh 'aws s3 sync build/ s3://${bucket_name}'
