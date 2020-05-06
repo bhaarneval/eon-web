@@ -19,7 +19,9 @@ pipeline {
 	}
         stage('Cloudfront invalidation') {
             steps {
-                sh 'aws cloudfront create-invalidation  --distribution-id ${cloudfront_distro_id}  --paths "/*"'
+		withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'da6ee98b-75e9-4e90-b6d9-61fc5387f891']]) {
+		sh 'aws cloudfront create-invalidation  --distribution-id ${cloudfront_distro_id}  --paths "/*"'
+		}
             }
         }
     }
