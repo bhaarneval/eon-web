@@ -19,19 +19,41 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 This command will run all the test cases in the 'Test' folder.
 After all the test cases pass, a report will be generated and you can see on this link.
 
+For single file:
+npm test src/__tests__/loginTest.js
+
 ### `npm run lint`
 
 This command will check if best practices are followed in code and gives error if there is some error.
 
+For single file:
+npm run lint --files src/components/login/login.js
+
+
 SET UP ENDS HEE
 ================================================================================
 
-Main libraries which has been used :
+Common design patterns used in WEB:
 
-### Antd
+### Antd for UI designs
 An enterprise-class UI design language and React UI library with a set of high-quality React components, one of best React UI libraries for enterprises.
 
 https://ant.design/docs/react/introduce
+
+### Highcharts for graphs
+This is for analytics board of an organizer which has multiple bar graphs, line charts and pie chart.
+https://www.npmjs.com/package/highcharts-react-official
+
+### PDF Download
+This is for downloading the pdf for ticket.
+https://www.npmjs.com/package/@react-pdf/renderer
+
+### react-share
+This is for social media sharing.
+https://www.npmjs.com/package/react-share
+
+
+Storage of data in WEB:
 
 ### Redux 
 Redux is a predictable state container for JavaScript apps.
@@ -40,16 +62,20 @@ It helps you write applications that behave consistently, run in different envir
 
 https://redux.js.org/introduction/getting-started
 
+Communication patterns to interact with external APIs:
+
 ### Redux Saga
 redux-saga is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, easy to test, and better at handling failures.
 
 https://redux-saga.js.org/
 
-### Highcharts
-https://www.npmjs.com/package/highcharts-react-official
+Testing
 
-### PDF Download
-https://www.npmjs.com/package/@react-pdf/renderer
+### Enzyme
+Enzyme is a JavaScript Testing utility for React that makes it easier to test your React Components' output. You can also manipulate, traverse, and in some ways simulate runtime given the output.
+
+https://www.npmjs.com/package/enzyme
+
 
 Folder structure
 
