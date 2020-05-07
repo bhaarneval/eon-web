@@ -1,5 +1,5 @@
 const BASE_URL =
-  window.location.href === "https://frontend.bits-pilani-eon.net/" ? 
+  window.location.host === "frontend.bits-pilani-eon.net" ? 
     "https://backend.bits-pilani-eon.net/" :
     "http://bitspilanieonbackend-env.eba-iewfgdnb.us-east-1.elasticbeanstalk.com/";
 
