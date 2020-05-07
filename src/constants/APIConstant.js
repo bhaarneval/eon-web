@@ -7,6 +7,12 @@ export const APIService = {
   dev: BASE_URL,
 };
 
+export const FB_URL =
+  window.location.host === "frontend.bits-pilani-eon.net" ? 
+    "https://frontend.bits-pilani-eon.net/" :
+    "http://d10crzu2ups2gn.cloudfront.net/";
+
+
 export const requestURLS = {
   LOGIN: "authentication/login",
   GET_NOTIFICATIONS_URL: "core/notification/",

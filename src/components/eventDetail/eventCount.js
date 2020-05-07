@@ -8,6 +8,7 @@ import user from '../../assets/user_yellow.svg';
 import {Modal, Input, Button} from 'antd';
 const { TextArea } = Input;
 import React, { Component } from "react";
+import { FB_URL } from "../../constants/APIConstant";
 import {
     FacebookShareButton,
 } from 'react-share';
@@ -85,7 +86,7 @@ class EventCount extends Component {
                 </div>
                 <div className="detail-card-tile detail-card-container">
                     <div>
-                        <FacebookShareButton url={`https://frontend.bits-pilani-eon.net/event-details?id=${eventData.id}`}>
+                        <FacebookShareButton url={`${FB_URL}event-details?id=${eventData.id}`}>
                             <img className="subscriber-image" src={fb}/>
                         </FacebookShareButton>
                         <div className="cursor">

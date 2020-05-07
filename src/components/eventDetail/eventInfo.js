@@ -9,10 +9,11 @@ import fb from '../../assets/fb.svg';
 import {
     MoreOutlined,
   } from '@ant-design/icons';
-  import URLIMage from "../../assets/URL.svg";
-  import shareImg from "../../assets/share.svg";
-  import AddBookmark from "../../assets/addBookmark.svg";
-  import Bookmarked from "../../assets/bookmarked.svg";
+import URLIMage from "../../assets/URL.svg";
+import shareImg from "../../assets/share.svg";
+import AddBookmark from "../../assets/addBookmark.svg";
+import Bookmarked from "../../assets/bookmarked.svg";
+import { FB_URL } from "../../constants/APIConstant";
 import moment from 'moment';
 import {
     FacebookShareButton,
@@ -150,7 +151,7 @@ class EventInfo extends Component {
                         <div>
                             <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={handleShare}/>
                             <img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/>
-                            <FacebookShareButton url={`https://frontend.bits-pilani-eon.net/event-details?id=${eventData.id}`}>
+                            <FacebookShareButton url={`${FB_URL}event-details?id=${eventData.id}`}>
                                 <img className="subscriber-image" src={fb}/>
                             </FacebookShareButton>
                         </div>
