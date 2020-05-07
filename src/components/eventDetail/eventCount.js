@@ -85,7 +85,7 @@ class EventCount extends Component {
                 </div>
                 <div className="detail-card-tile detail-card-container">
                     <div>
-                        <FacebookShareButton url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
+                        <FacebookShareButton url={`https://frontend.bits-pilani-eon.net/event-details?id=${eventData.id}`}>
                             <img className="subscriber-image" src={fb}/>
                         </FacebookShareButton>
                         <div className="cursor">

@@ -150,7 +150,7 @@ class EventInfo extends Component {
                         <div>
                             <img src={shareImg}  style={{height:"20px",width:"20px",cursor:"pointer"}} onClick={handleShare}/>
                             <img src={bookMarkImg} style={{height:"20px",width:"20px",cursor:"pointer", marginLeft:"10px"}} onClick={this.handleBookmark}/>
-                            <FacebookShareButton url={`http://d10crzu2ups2gn.cloudfront.net/event-details?id=${eventData.id}`}>
+                            <FacebookShareButton url={`https://frontend.bits-pilani-eon.net/event-details?id=${eventData.id}`}>
                                 <img className="subscriber-image" src={fb}/>
                             </FacebookShareButton>
                         </div>
