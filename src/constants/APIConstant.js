@@ -1,6 +1,6 @@
 const BASE_URL =
   window.location.href === "https://frontend.bits-pilani-eon.net/" ? 
-    "http://bitspilanieonbackenddeployebs-prod.eba-v3hw7gqp.ap-south-1.elasticbeanstalk.com/" :
+    "https://backend.bits-pilani-eon.net/" :
     "http://bitspilanieonbackend-env.eba-iewfgdnb.us-east-1.elasticbeanstalk.com/";
 
 export const APIService = {
